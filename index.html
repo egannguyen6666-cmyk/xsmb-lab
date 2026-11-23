@@ -258,9 +258,9 @@ p{margin:0 0 10px;max-width:72ch}
   <section class="view" id="v-du-doan">
    <div class="grid">
     <div class="card c12">
-     <h2 id="pdT">Danh sách cho kỳ tiếp theo</h2>
+     <h2 id="pdT">Mô hình xác suất cho kỳ tới</h2>
      <p class="sub" id="pdS"></p>
-     <div class="seg" id="pdInd" role="group" aria-label="Chọn chỉ báo"></div>
+     <div class="seg" id="pdInd" role="group" aria-label="Chọn mô hình"></div>
      <div class="seg" id="pdK" role="group" aria-label="Số lượng"><span class="lab">Lấy top</span></div>
      <div class="balls" id="pdBalls"></div>
      <div class="acts" id="pdCopy"></div>
@@ -269,7 +269,7 @@ p{margin:0 0 10px;max-width:72ch}
     <div class="card c6 verdict" id="pdVerdict"></div>
     <div class="card c6" id="pdWhy"></div>
     <div class="card c12">
-     <h2>Dàn số (4, 6, 10 số)</h2>
+     <h2>Dàn số theo mô hình (4, 6, 10 số)</h2>
      <p class="sub">Ba cách lập dàn phổ biến, tính tự động từ dữ liệu đến kỳ trước. Dàn 4 nằm trong dàn 6, dàn 6 nằm trong dàn 10. Bấm vào một dàn để xem cách tính và timeline trúng/trượt theo giai đoạn.</p>
      <div id="ovDan"></div>
     </div>
@@ -370,7 +370,7 @@ p{margin:0 0 10px;max-width:72ch}
   <section class="view" id="v-dan">
    <div class="grid">
     <div class="card c12">
-     <p style="margin:0 0 8px"><a href="#du-doan" style="color:var(--red);text-decoration:none;font-weight:500">‹ Về Dự đoán</a></p>
+     <p style="margin:0 0 8px"><a href="#du-doan" style="color:var(--red);text-decoration:none;font-weight:500">‹ Về Mô hình</a></p>
      <h2 id="dnT"></h2>
      <p class="sub" id="dnS"></p>
      <div class="seg" id="dnM" role="group" aria-label="Cách lập dàn"><span class="lab">Cách lập</span></div>
@@ -397,7 +397,7 @@ p{margin:0 0 10px;max-width:72ch}
 <script src="core.js"></script>
 <script>
 {
-const VIEWS=[['ket-qua','Kết quả','i-home'],['du-doan','Dự đoán','i-target'],['nhat-ky','Nhật ký','i-book'],['quy-token','Quỹ token','i-wallet'],['kiem-chung','Kiểm chứng','i-chart'],['ban-do','Bản đồ số','i-grid']];
+const VIEWS=[['ket-qua','Kết quả','i-home'],['du-doan','Mô hình','i-target'],['nhat-ky','Nhật ký','i-book'],['quy-token','Quỹ token','i-wallet'],['kiem-chung','Kiểm chứng','i-chart'],['ban-do','Bản đồ số','i-grid']];
 const $=id=>document.getElementById(id);
 const pad=k=>String(k).padStart(2,'0');
 const fmt=(x,d=2)=>(x*100).toFixed(d).replace('.',',')+'%';
@@ -589,8 +589,8 @@ function renderPredict(){
  seg($('pdInd'),IND.map(i=>[i.nm,i.id]),st.ind,v=>{st.ind=v;renderPredict();});
  seg($('pdK'),[5,10,20].map(k=>[k+' số',k]),st.k,v=>{st.k=v;renderPredict();});
  const t=N-1,s=scores(st.ind,t),top=topK(s,t,st.k),ind=IND.find(x=>x.id===st.ind),f1=freq(t,S.W[0]);
- $('pdT').textContent=`${where()} · danh sách cho kỳ ${wd(nextDate)}, ${vnDate(nextDate)}`;
- $('pdS').textContent=`Tính từ dữ liệu đến hết ${vnDate(dates[t])}. Chọn chỉ báo để xem danh sách và tỷ lệ trúng đã kiểm chứng của nó.`;
+ $('pdT').textContent=`${where()} · mô hình xác suất cho kỳ ${wd(nextDate)}, ${vnDate(nextDate)}`;
+ $('pdS').textContent=`Mục này dùng để học cách các mô hình thống kê xếp hạng 100 số; tỷ lệ trúng thực tế của từng mô hình luôn hiện bên cạnh. Tính từ dữ liệu đến hết ${vnDate(dates[t])}.`;
  $('pdBalls').innerHTML=top.map((k,i)=>{let lab;
   if(st.ind==='gan')lab=ganA[t*100+k]+' kỳ gan';else if(st.ind==='roi')lab=cnt[t*100+k]+' nháy kỳ trước';
   else if(st.ind==='combo')lab='z '+dec(s[k],2);else if(st.ind==='rand')lab=f1[k]+' lần/'+S.WL[0];
