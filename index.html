@@ -139,6 +139,18 @@ p{margin:0 0 10px;max-width:72ch}
 .rng label{display:block;font-size:12px;color:var(--mute);margin-bottom:3px}
 .rng input{font-size:16px;min-height:40px;padding:0 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
 .rng button{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font-weight:500;cursor:pointer}
+.pager{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:14px}
+.pager button{min-width:40px;min-height:40px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);cursor:pointer;font-weight:500}
+.pager button[aria-current=page]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pager button:disabled{opacity:.4;cursor:default}.pager span{font-size:13px;color:var(--mute);margin-left:6px}
+.lo{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0 4px}
+.cbar{display:grid;grid-template-columns:150px minmax(0,1fr) 150px;gap:12px;align-items:center;padding:8px 6px;border-top:1px solid var(--line);cursor:pointer;border-radius:8px}
+.cbar:hover{background:var(--band)}.cbar.sel b{font-weight:700}
+.cbar .tr{position:relative;height:18px;background:var(--band);border-radius:4px}
+.cbar .tr i{position:absolute;left:0;top:0;bottom:0;background:var(--red);border-radius:4px;opacity:.85}
+.cbar .tr u{position:absolute;top:-4px;bottom:-4px;border-left:2px solid var(--ink)}
+.cbar .v{text-align:right;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}.cbar .v small{display:block;color:var(--mute);font-size:12px}
+@media(max-width:820px){.cbar{grid-template-columns:90px minmax(0,1fr) 110px;gap:8px}}
 .loading{padding:60px 0;color:var(--mute)}
 .tab{display:none}
 @media(max-width:1020px){.c8,.c7,.c6,.c5,.c4{grid-column:span 12}}
@@ -231,10 +243,35 @@ p{margin:0 0 10px;max-width:72ch}
   <section class="view" id="v-nhat-ky">
    <div class="grid">
     <div class="card c12">
-     <h2>Nhật ký dự đoán khóa trước</h2>
-     <p class="sub">Mỗi tối sau khi có kết quả, Top 3 và 10 số của cả 8 chỉ báo cho kỳ kế tiếp được lưu cố định trước giờ quay. Hôm sau app tự chấm. Nhật ký chỉ được thêm dòng mới, không xóa hay sửa dòng cũ. Bấm một dòng để xem chi tiết.</p>
+     <h2>Nhật ký từng ngày</h2>
+     <p class="sub">Xem số đã chọn, kết quả thực tế và lãi/lỗ token của từng kỳ. <b>Nhật ký khóa trước</b> là danh sách đã lưu cố định trước giờ quay (chỉ thêm, không sửa). <b>Tính lùi</b> áp dụng đúng cách chọn đó cho các ngày đã qua, mỗi ngày chỉ dùng dữ liệu đến hôm trước.</p>
+     <div class="form">
+      <div><label for="lgSrc">Nguồn</label><select id="lgSrc"><option value="hist">Tính lùi theo lịch sử</option><option value="log">Nhật ký khóa trước</option></select></div>
+      <div><label for="lgInd">Danh sách số theo</label><select id="lgInd"></select></div>
+      <div><label for="lgPts">Số điểm mỗi số (27 token/điểm)</label><input id="lgPts" type="number" min="1" step="1" value="1" inputmode="numeric"></div>
+     </div>
+     <div class="seg" id="lgPer" role="group" aria-label="Giai đoạn"><span class="lab">Giai đoạn</span></div>
+     <div class="rng"><div><label for="lgFrom">Từ ngày</label><input type="date" id="lgFrom"></div><div><label for="lgTo">Đến ngày</label><input type="date" id="lgTo"></div><button id="lgApply">Xem khoảng này</button></div>
+     <p class="note" id="lgRange" style="margin:-4px 0 0"></p>
+    </div>
+    <div class="card c6" id="lgLast"></div>
+    <div class="card c6" id="lgNext"></div>
+    <div class="c12"><div class="kpis" id="lgK"></div></div>
+    <div class="card c12">
+     <h2>Kỳ vọng và thực tế</h2>
+     <p class="sub" id="lgCmpS"></p>
+     <div class="fig"><svg id="lgChart" role="img" aria-label="Số trúng thực tế so với kỳ vọng"></svg><div class="tip" id="lgTip"></div></div>
+     <div class="legend"><span><s style="height:10px;background:var(--red);opacity:.3"></s>Số trúng từng ngày</span><span><s style="border-top:2px solid var(--red)"></s>Trúng cộng dồn (thực tế)</span><span><s style="border-top:2px dashed var(--ink)"></s>Cộng dồn kỳ vọng</span></div>
+     <h2 style="margin-top:22px">So sánh các chỉ báo trong cùng giai đoạn</h2>
+     <p class="sub">Độ dài cột là tỷ lệ trúng thực tế, vạch đen là mức kỳ vọng 23,77%. Bên phải ghi số trúng so với kỳ vọng. Bấm một dòng để chọn chỉ báo.</p>
+     <div id="lgBars"></div>
+    </div>
+    <div class="card c12">
+     <h2>Bảng từng ngày</h2>
+     <p class="sub">Số tô đỏ là số đã về, ×2 là về 2 nháy. Bấm một dòng để xem đủ kết quả và các chỉ báo của ngày đó.</p>
      <div class="tbl" id="lgTable"></div>
-     <div class="lists" id="lgLists"></div>
+     <div class="pager" id="lgPager"></div>
+     <div id="lgDetail"></div>
     </div>
    </div>
   </section>
@@ -463,20 +500,112 @@ function renderPredict(){
   <p class="note">Chọn ${st.k} số thì trung bình mỗi ngày trúng ${(r.p*st.k).toFixed(1).replace('.',',')} số; chọn bừa được ${(P*st.k).toFixed(1).replace('.',',')} số.</p>`;
 }
 
-/* ---------- log ---------- */
-let logSel=null;
-function renderLog(){
- if(!LOG.length){$('lgTable').innerHTML='<p class="note">Chưa có dự đoán nào được lưu.</p>';$('lgLists').innerHTML='';return;}
+/* ---------- journal ---------- */
+const LGKEY='xsmb-log-v1';
+const lg={src:'hist',ind:'top3',pts:1,per:30,from:null,to:null,page:1,sel:null,ready:false};
+function lgRows(){
+ // returns rows oldest→newest in the chosen period: {date,i,picks(all),locked,made_at,based_on}
  const di=Object.fromEntries(dates.map((d,i)=>[d,i]));
- const rows=LOG.map(e=>{const i=di[e.target],hits={};if(i!==undefined)for(const x of LOGCOLS)hits[x.id]=(e.picks[x.id]||[]).filter(k=>cnt[i*100+k]).length;return {e,i,hits};}).reverse();
- if(logSel===null||!rows.find(r=>r.e.target===logSel))logSel=rows[0].e.target;
- const done=rows.filter(r=>r.i!==undefined);
- const cell=(r,x)=>!r.e.picks[x.id]?'–':r.i===undefined?(r.e.target<dates[N-1]?'không quay':'chờ'):r.hits[x.id]+'/'+r.e.picks[x.id].length;
- $('lgTable').innerHTML=`<table><thead><tr><th>Kỳ quay</th>${LOGCOLS.map(x=>`<th>${x.nm}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr class="r${r.e.target===logSel?' on':''}" data-t="${r.e.target}"><td>${vnDate(r.e.target)}</td>${LOGCOLS.map(x=>`<td${x.id==='top3'?' class="h"':''}>${cell(r,x)}</td>`).join('')}</tr>`).join('')}</tbody>${done.length?`<tfoot><tr><td>Cộng dồn ${done.length} kỳ</td>${LOGCOLS.map(x=>{let h=0,n=0;for(const r of done){h+=r.hits[x.id]||0;n+=(r.e.picks[x.id]||[]).length;}return `<td>${n?fmt(h/n,1):'–'}</td>`;}).join('')}</tr></tfoot>`:''}</table><p class="note" style="margin-top:8px">Lý thuyết ${fmt(P)}. ${done.length<60?'Cần vài tháng thì tỷ lệ cộng dồn mới ổn định.':''}</p>`;
- $('lgTable').querySelectorAll('tr.r').forEach(tr=>tr.onclick=()=>{logSel=tr.dataset.t;renderLog();});
- const r=rows.find(x=>x.e.target===logSel);
- $('lgLists').innerHTML=`<p class="note" style="grid-column:1/-1;margin:0">Kỳ ${vnDate(r.e.target)}: khóa lúc ${r.e.made_at}, dựa trên dữ liệu đến hết ${vnDate(r.e.based_on)}. ${r.i===undefined?'Chưa có kết quả.':'Ô đỏ là số đã về.'}</p>`+
-  `<div style="grid-column:1/-1">${copyBtn('Sao chép tất cả danh sách kỳ này',allText(r.e.picks,r.e.target))}</div>`+LOGCOLS.map(x=>r.e.picks[x.id]?`<div><b>${x.nm}${r.i===undefined?'':' · '+r.hits[x.id]+'/'+r.e.picks[x.id].length}${copyBtn('Chép',numTxt(r.e.picks[x.id]),'xs')}</b>${r.e.picks[x.id].map(k=>`<span class="n${r.i!==undefined&&cnt[r.i*100+k]?' h':''}">${pad(k)}</span>`).join('')}</div>`:'').join('');
+ let lo,hi;
+ if(lg.per==='custom'&&lg.from&&lg.to){lo=lg.from;hi=lg.to;}
+ else{const n=Math.min(lg.per,N-startT-2);lo=dates[Math.max(startT+1,N-n)];hi='9999';}
+ const rows=[];
+ if(lg.src==='log'){for(const e of LOG){if(e.target<lo||e.target>hi)continue;rows.push({date:e.target,i:di[e.target],picks:e.picks,locked:true,made_at:e.made_at,based_on:e.based_on});}}
+ else{for(let i=Math.max(startT+1,dates.findIndex(d=>d>=lo));i<N&&i>=0;i++){if(dates[i]>hi)break;rows.push({date:dates[i],i,picks:allPicks(i-1),locked:false,based_on:dates[i-1]});}}
+ return rows.sort((a,b)=>a.date<b.date?-1:1);
+}
+function lgScore(r,id,pts){
+ const p=r.picks[id]||[];if(r.i===undefined)return {p,done:false,K:p.length};
+ const nh=p.map(k=>cnt[r.i*100+k]),hits=nh.filter(x=>x>0).length,nhSum=nh.reduce((a,b)=>a+b,0),cost=27*pts*p.length,win=99*pts*nhSum;
+ return {p,nh,hits,nhSum,cost,win,pl:win-cost,done:true,K:p.length};
+}
+function lotoChips(i,hl){const a=[];for(let k=0;k<100;k++)for(let c=0;c<cnt[i*100+k];c++)a.push(k);a.sort((x,y)=>x-y);return a.map(k=>`<span class="n${hl&&hl.includes(k)?' h':''}">${pad(k)}</span>`).join('');}
+function renderLog(){
+ if(!lg.ready){
+  let sv={};try{sv=JSON.parse(localStorage.getItem(LGKEY)||'{}');}catch(e){}
+  Object.assign(lg,{src:sv.src||'hist',ind:sv.ind||'top3',pts:+sv.pts||1,per:sv.per==='custom'?'custom':(+sv.per||30),from:sv.from||null,to:sv.to||null});
+  $('lgInd').innerHTML=LOGCOLS.map(x=>`<option value="${x.id}">${x.nm}${x.id==='top3'?' (3 số)':' (10 số)'}</option>`).join('');
+  $('lgSrc').value=lg.src;$('lgInd').value=lg.ind;$('lgPts').value=lg.pts;
+  $('lgFrom').min=$('lgTo').min=dates[startT+1];$('lgFrom').max=$('lgTo').max=dates[N-1];
+  const d=new Date(dates[N-1]+'T00:00:00Z');d.setUTCDate(d.getUTCDate()-29);$('lgFrom').value=lg.from||d.toISOString().slice(0,10);$('lgTo').value=lg.to||dates[N-1];
+  const save=()=>{try{localStorage.setItem(LGKEY,JSON.stringify({src:lg.src,ind:lg.ind,pts:lg.pts,per:lg.per,from:lg.from,to:lg.to}));}catch(e){}};
+  $('lgSrc').onchange=()=>{lg.src=$('lgSrc').value;lg.page=1;lg.sel=null;save();renderLog();};
+  $('lgInd').onchange=()=>{lg.ind=$('lgInd').value;save();renderLog();};
+  $('lgPts').onchange=()=>{lg.pts=Math.max(1,Math.floor(+$('lgPts').value||1));save();renderLog();};
+  $('lgApply').onclick=()=>{let f=$('lgFrom').value,t=$('lgTo').value;if(!f||!t)return;if(f>t)[f,t]=[t,f];lg.from=f;lg.to=t;lg.per='custom';lg.page=1;lg.sel=null;save();renderLog();};
+  lg.save=save;lg.ready=true;}
+ seg($('lgPer'),[['7 ngày',7],['30 ngày',30],['90 ngày',90],['180 ngày',180],['1 năm',365]],lg.per,v=>{lg.per=v;lg.page=1;lg.sel=null;lg.save();renderLog();});
+ const rows=lgRows(),id=lg.ind,pts=lg.pts,nm=LOGCOLS.find(x=>x.id===id).nm;
+ const S=rows.map(r=>({r,sc:lgScore(r,id,pts)})),done=S.filter(x=>x.sc.done);
+ $('lgRange').textContent=rows.length?`${lg.src==='log'?'Nhật ký khóa trước':'Tính lùi'} · ${done.length} kỳ đã có kết quả${rows.length>done.length?', '+(rows.length-done.length)+' kỳ đang chờ':''}${rows.length?`, từ ${vnDate(rows[0].date)} đến ${vnDate(rows[rows.length-1].date)}`:''}.`:(lg.src==='log'?'Nhật ký khóa trước chưa có kỳ nào trong giai đoạn này.':'Không có kỳ quay nào trong giai đoạn này.');
+ // last scored + next
+ const last=done[done.length-1];
+ if(last){const r=last.r,sc=last.sc;
+  $('lgLast').innerHTML=`<h2>Kỳ vừa chấm · ${wd(r.date)}, ${vnDate(r.date)}</h2><p class="sub">${r.locked?`Đã khóa lúc ${r.made_at}`:'Tính lùi'}, dựa trên dữ liệu đến hết ${vnDate(r.based_on)}.</p>
+   <p class="note" style="margin:0">Số đã chọn (${nm})</p><div class="balls" style="gap:8px;margin:8px 0 12px">${sc.p.map((k,j)=>ball(k,sc.nh[j]?'r sm':'sm dim',sc.nh[j]?(sc.nh[j]>1?'về ×'+sc.nh[j]:'về'):'trượt')).join('')}</div>
+   <p class="note" style="margin:0">Lô tô 27 giải thực tế (đỏ là số trùng với danh sách)</p><div class="lo">${lotoChips(r.i,sc.p)}</div>
+   <div class="kpis" style="margin-top:12px"><div class="kpi"><b>${sc.hits}/${sc.K}</b><span>số trúng · kỳ vọng ${(sc.K*P).toFixed(1).replace('.',',')}</span></div><div class="kpi"><b class="${sc.pl>=0?'pos':'neg'}">${sg(sc.pl)}</b><span>token (chi ${vn(sc.cost)}, thu ${vn(sc.win)})</span></div></div>
+   <div class="acts">${copyBtn('Chép số đã chọn',numTxt(sc.p))}</div>`;}
+ else $('lgLast').innerHTML='<h2>Kỳ vừa chấm</h2><p class="note">Chưa có kỳ nào được chấm trong giai đoạn này.</p>';
+ const nxt=LOG.find(e=>e.target===nextDate),np=nxt?nxt.picks:allPicks(N-1);
+ $('lgNext').innerHTML=`<h2>Kỳ tiếp theo · ${wd(nextDate)}, ${vnDate(nextDate)}</h2><p class="sub">${nxt?`Đã khóa lúc ${nxt.made_at}`:'Chưa khóa; đây là danh sách tính từ dữ liệu hiện có'}. Chờ kết quả.</p>
+  <div class="balls" style="gap:8px;margin:8px 0 12px">${(np[id]||[]).map(k=>ball(k,'r sm')).join('')}</div>
+  <p class="note">Chi dự kiến ${vn(27*pts*(np[id]||[]).length)} token cho ${(np[id]||[]).length} số × ${pts} điểm. Kỳ vọng thu về trung bình ${vn(0.27*99*pts*(np[id]||[]).length)} token.</p>
+  <div class="acts">${copyBtn('Chép số kỳ tiếp theo',numTxt(np[id]||[]))}${copyBtn('Chép tất cả chỉ báo',allText(np,nextDate))}</div>`;
+ // KPIs
+ const tot=done.reduce((a,x)=>({h:a.h+x.sc.hits,n:a.n+x.sc.K,c:a.c+x.sc.cost,w:a.w+x.sc.win}),{h:0,n:0,c:0,w:0});
+ const pl=tot.w-tot.c,expH=tot.n*P,expPL=-0.01*tot.c;
+ $('lgK').innerHTML=done.length?[[`${tot.h} / ${vn(tot.n)}`,`số trúng trên số đã chọn (${fmt(tot.h/tot.n,1)})`],[`${expH.toFixed(1).replace('.',',')}`,`số trúng kỳ vọng (${fmt(P,2)})`],[`<span class="${pl>=0?'pos':'neg'}">${sg(pl)}</span>`,`lãi/lỗ token (chi ${vn(tot.c)}, thu ${vn(tot.w)})`],[`${sg(Math.round(expPL))}`,'lãi/lỗ kỳ vọng (−1% số đã đặt)']].map(([v,l])=>`<div class="kpi"><b>${v}</b><span>${l}</span></div>`).join(''):'';
+ const diff=tot.h-expH,sd=Math.sqrt(tot.n*P*(1-P));
+ $('lgCmpS').textContent=done.length?`${nm}: trúng ${tot.h} số so với kỳ vọng ${expH.toFixed(1).replace('.',',')} (chênh ${diff>=0?'+':''}${diff.toFixed(1).replace('.',',')}). Với ${vn(tot.n)} lượt chọn, dao động ±${(1.96*sd).toFixed(1).replace('.',',')} số quanh kỳ vọng là bình thường, nên ${Math.abs(diff)<=1.96*sd?'kết quả này nằm trong mức may rủi':'kết quả này vượt mức may rủi thông thường trong giai đoạn đã chọn'}.`:'';
+ lgDraw(done);
+ // bars across indicators
+ const all=LOGCOLS.map(x=>{let h=0,n=0;for(const {r} of done){const sc=lgScore(r,x.id,pts);if(sc.done){h+=sc.hits;n+=sc.K;}}return {x,h,n,e:n*P};}).filter(o=>o.n);
+ const top=Math.max(0.4,...all.map(o=>o.h/o.n*1.1));
+ $('lgBars').innerHTML=all.map(o=>`<div class="cbar${o.x.id===id?' sel':''}" data-id="${o.x.id}"><b style="font-weight:500;font-size:14px">${o.x.nm}</b><div class="tr"><i style="width:${o.h/o.n/top*100}%"></i><u style="left:${P/top*100}%"></u></div><div class="v">${o.h} / kỳ vọng ${o.e.toFixed(1).replace('.',',')}<small>${fmt(o.h/o.n,1)} trên ${vn(o.n)} lượt</small></div></div>`).join('')||'<p class="note">Chưa có dữ liệu.</p>';
+ $('lgBars').querySelectorAll('.cbar').forEach(el=>el.onclick=()=>{lg.ind=el.dataset.id;$('lgInd').value=lg.ind;lg.save();renderLog();});
+ // table with pagination (newest first, 10 per page)
+ const desc=[...S].reverse(),pages=Math.max(1,Math.ceil(desc.length/10));if(lg.page>pages)lg.page=pages;
+ const view=desc.slice((lg.page-1)*10,lg.page*10);
+ let run=0;const cum={};for(const x of S){if(x.sc.done){run+=x.sc.pl;cum[x.r.date]=run;}}
+ $('lgTable').innerHTML=desc.length?`<table><thead><tr><th>Kỳ quay</th><th class="left">Số đã chọn</th><th>Trúng</th><th>Kỳ vọng</th><th>Chi</th><th>Thu</th><th>Lãi/lỗ</th><th>Lũy kế</th></tr></thead><tbody>${view.map(({r,sc})=>{const nmTxt=sc.p.map((k,j)=>sc.done&&sc.nh[j]?`<span class="h">${pad(k)}${sc.nh[j]>1?'×'+sc.nh[j]:''}</span>`:pad(k)).join(' ');
+   const st=!sc.done?(r.date<dates[N-1]?'không quay':'chờ'):null;
+   return `<tr class="r${r.date===lg.sel?' on':''}" data-d="${r.date}"><td>${vnDate(r.date)}${r.locked?'':''}</td><td class="left">${nmTxt}</td><td>${st||sc.hits+'/'+sc.K}</td><td>${(sc.K*P).toFixed(1).replace('.',',')}</td><td>${st?'–':vn(sc.cost)}</td><td>${st?'–':vn(sc.win)}</td><td class="${st?'':sc.pl>=0?'pos':'neg'}">${st?'–':sg(sc.pl)}</td><td>${st?'–':sg(cum[r.date])}</td></tr>`;}).join('')}</tbody></table>`:'<p class="note">Không có dòng nào.</p>';
+ $('lgTable').querySelectorAll('tr.r').forEach(tr=>tr.onclick=()=>{lg.sel=lg.sel===tr.dataset.d?null:tr.dataset.d;renderLog();if(lg.sel)$('lgDetail').scrollIntoView({behavior:'smooth',block:'nearest'});});
+ const btn=(lab,pg,dis,cur)=>`<button data-p="${pg}"${dis?' disabled':''}${cur?' aria-current="page"':''}>${lab}</button>`;
+ let nums=[];for(let pg=1;pg<=pages;pg++)if(pg===1||pg===pages||Math.abs(pg-lg.page)<=2)nums.push(pg);
+ let ph='',prev=0;for(const pg of nums){if(pg-prev>1)ph+='<span>…</span>';ph+=btn(pg,pg,false,pg===lg.page);prev=pg;}
+ $('lgPager').innerHTML=pages>1?btn('‹ Trước',lg.page-1,lg.page===1)+ph+btn('Sau ›',lg.page+1,lg.page===pages)+`<span>Trang ${lg.page}/${pages} · ${desc.length} kỳ</span>`:'';
+ $('lgPager').querySelectorAll('button[data-p]').forEach(b=>b.onclick=()=>{lg.page=+b.dataset.p;renderLog();$('lgTable').scrollIntoView({behavior:'smooth',block:'start'});});
+ // detail
+ const dr=lg.sel&&rows.find(r=>r.date===lg.sel);
+ if(dr){const rec=REC.find(x=>x.date===dr.date);
+  const tk=rec?`<div class="ticket" style="margin:10px 0">${[['ĐB','db'],['G1','g1'],['G2','g2'],['G3','g3'],['G4','g4'],['G5','g5'],['G6','g6'],['G7','g7']].map(([lb,g])=>`<div class="row ${g==='db'?'db':''}"><div class="lb">${lb}</div><div class="nums">${rec[g].map(n=>`<span>${n.slice(0,-2)}<b>${n.slice(-2)}</b></span>`).join('')}</div></div>`).join('')}</div>`:'';
+  $('lgDetail').innerHTML=`<div style="border-top:2px solid var(--ink);margin-top:18px;padding-top:14px"><h2>Chi tiết kỳ ${wd(dr.date)}, ${vnDate(dr.date)}</h2><p class="sub">${dr.locked?`Đã khóa lúc ${dr.made_at}`:'Tính lùi'}, dựa trên dữ liệu đến hết ${vnDate(dr.based_on)}.</p>
+   ${dr.i!==undefined?`${tk||''}<p class="note" style="margin:0">Lô tô 27 giải</p><div class="lo">${lotoChips(dr.i)}</div>`:'<p class="note">Chưa có kết quả.</p>'}
+   <div class="lists">${LOGCOLS.map(x=>{const sc=lgScore(dr,x.id,pts);if(!sc.p.length)return '';return `<div><b>${x.nm}${sc.done?` · ${sc.hits}/${sc.K} · <span class="${sc.pl>=0?'pos':'neg'}">${sg(sc.pl)}</span>`:''}${copyBtn('Chép',numTxt(sc.p),'xs')}</b>${sc.p.map((k,j)=>`<span class="n${sc.done&&sc.nh[j]?' h':''}">${pad(k)}${sc.done&&sc.nh[j]>1?'×'+sc.nh[j]:''}</span>`).join('')}</div>`;}).join('')}</div></div>`;}
+ else $('lgDetail').innerHTML='';
+}
+let lgDone=[];
+function lgDraw(done){
+ if(done)lgDone=done;done=lgDone;
+ const svg=$('lgChart'),W=svg.clientWidth,Hh=svg.clientHeight;if(!W){return;}if(!done.length){svg.innerHTML='';return;}
+ const n=done.length,K=done[0].sc.K;let c=0;const pts=done.map((x,i)=>{c+=x.sc.hits;return {d:x.r.date,h:x.sc.hits,c,e:(i+1)*K*P,K:x.sc.K};});
+ const y1=Math.max(pts[n-1].c,pts[n-1].e)*1.08||1,y1b=Math.max(...pts.map(p=>p.h),1);
+ const m={l:W<520?34:44,r:44,t:12,b:28},bw=(W-m.l-m.r)/n,X=i=>m.l+(i+0.5)*bw,Y=v=>m.t+(1-v/y1)*(Hh-m.t-m.b),Yb=v=>m.t+(1-v/(y1b*2.2))*(Hh-m.t-m.b);
+ const ticks=axisTicks(0,y1),lab=[...new Set([0,Math.floor((n-1)/2),n-1])],g=Math.min(2,bw*0.15);
+ svg.innerHTML=`${ticks.map(v=>`<line x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${m.l-6}" y="${Y(v)+4}" text-anchor="end" font-size="12" fill="var(--mute)">${vn(v)}</text>`).join('')}
+  ${pts.map((p,i)=>`<rect x="${(m.l+i*bw+g).toFixed(1)}" y="${Yb(p.h)}" width="${Math.max(1,bw-2*g).toFixed(1)}" height="${Math.max(0,Yb(0)-Yb(p.h))}" fill="var(--red)" opacity=".3" rx="${Math.min(3,bw/4)}"/>`).join('')}
+  ${lab.map(i=>`<text x="${X(i)}" y="${Hh-8}" font-size="12" fill="var(--mute)" text-anchor="${i===0?'start':i===n-1?'end':'middle'}">${vnDate(pts[i].d).slice(0,5)}</text>`).join('')}
+  <path d="${pts.map((p,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(p.e).toFixed(1)).join('')}" fill="none" stroke="var(--ink)" stroke-dasharray="6 4" stroke-width="1.8"/>
+  <path d="${pts.map((p,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(p.c).toFixed(1)).join('')}" fill="none" stroke="var(--red)" stroke-width="2.4"/>
+  <text x="${W-m.r+4}" y="${Y(pts[n-1].c)+4}" font-size="12" fill="var(--red)">${pts[n-1].c}</text><text x="${W-m.r+4}" y="${Y(pts[n-1].e)+(pts[n-1].e>pts[n-1].c?-6:14)}" font-size="12" fill="var(--ink)">${pts[n-1].e.toFixed(0)}</text>
+  <circle id="lc" r="5" fill="var(--red)" stroke="var(--panel)" stroke-width="2" opacity="0"/><rect x="${m.l}" y="0" width="${W-m.l-m.r}" height="${Hh}" fill="transparent" id="lhit"/>`;
+ const tip=$('lgTip'),lc=svg.querySelector('#lc');
+ svg.querySelector('#lhit').onpointermove=e=>{const r=svg.getBoundingClientRect();let i=Math.floor((e.clientX-r.left-m.l)/bw);i=Math.max(0,Math.min(n-1,i));const p=pts[i];
+  lc.setAttribute('cx',X(i));lc.setAttribute('cy',Y(p.c));lc.setAttribute('opacity',1);tip.style.left=X(i)+'px';tip.style.top=Y(p.c)+'px';tip.style.opacity=1;
+  tip.textContent=`${vnDate(p.d)}: ${p.h}/${p.K} · cộng dồn ${p.c} (kỳ vọng ${p.e.toFixed(1).replace('.',',')})`;};
+ svg.querySelector('#lhit').onpointerleave=()=>{tip.style.opacity=0;lc.setAttribute('opacity',0);};
 }
 
 /* ---------- token fund ---------- */
@@ -630,8 +759,8 @@ function build(txt){
  for(let i=0;i<N;i++)for(let k=0;k<100;k++){pref[(i+1)*100+k]=pref[i*100+k]+cnt[i*100+k];ganA[i*100+k]=cnt[i*100+k]?0:(i?ganA[(i-1)*100+k]:0)+1;}
  nextDate=nextDraw(dates[N-1]);
 }
-const ro=new ResizeObserver(()=>{if(!N)return;const v=(location.hash||'#tong-quan').slice(1);if(v==='quy-token')drawSim();if(v==='kiem-chung')drawRoll();if(v==='tong-quan')drawFundMini(simulate(loadSim()));});
-['simC','roll','ovFund'].forEach(id=>ro.observe($(id)));
+const ro=new ResizeObserver(()=>{if(!N)return;const v=(location.hash||'#tong-quan').slice(1);if(v==='quy-token')drawSim();if(v==='kiem-chung')drawRoll();if(v==='tong-quan')drawFundMini(simulate(loadSim()));if(v==='nhat-ky')lgDraw();});
+['simC','roll','ovFund','lgChart'].forEach(id=>ro.observe($(id)));
 loadAll().then(({csv,log,rec,src})=>{
  build(csv);LOG=Array.isArray(log)?log:[];REC=Array.isArray(rec)?rec:[];
  $('status').innerHTML=`<i></i>Dữ liệu đến ${vnDate(dates[N-1])}`;
