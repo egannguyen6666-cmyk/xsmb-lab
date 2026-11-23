@@ -1,4 +1,4 @@
-# XSMB Lab: bản tự chạy trên GitHub (không cần Claude)
+# XS Lab: kết quả & thống kê XSMB, XSMN (tự chạy trên GitHub, không cần Claude)
 
 Ứng dụng học xác suất thống kê với dữ liệu Xổ số miền Bắc. Bản này chạy miễn phí:
 - **GitHub Pages** lưu trang web để mở trên điện thoại và máy tính.
@@ -45,8 +45,14 @@ Vào tab **Actions** → **Cập nhật XSMB hằng ngày** → **Run workflow**
 
 ---
 
+## Miền Nam (XSMN)
+- Chọn **Miền Nam** ở góc trên, rồi chọn đài. Mỗi đài là một chuỗi kỳ quay riêng (đa số đài quay 1 lần/tuần, TP.HCM 2 lần).
+- Chỉ báo tính theo kỳ của đài: 10, 26, 52 kỳ (khoảng 2,5 tháng, 6 tháng, 1 năm). Mỗi đài có 18 giải nên xác suất một số về là 1 − 0,99¹⁸ ≈ 16,55%.
+- Dữ liệu từ 2008, gộp và đối chiếu 2 bộ dữ liệu mở (tuanseo5t-alt/xosomn-xosomt và Hpbt/xsmn-thong-ke).
+- Nhập tay XSMN khi nguồn chậm: tab Actions → Run workflow → điền ô mn_ngay, mn_dai (ví dụ tp-hcm) và mn_ket_qua (18 số theo thứ tự ĐB, G1, G2, G3×2, G4×7, G5, G6×3, G7, G8).
+
 ## Lịch tự động
-- Chạy lúc **18:40, 19:40 và 22:40** giờ Việt Nam. GitHub đôi khi chạy trễ 5–30 phút.
+- Chạy lúc **16:50** (sau XSMN), **18:40, 19:40 và 22:40** (sau XSMB) giờ Việt Nam. GitHub đôi khi chạy trễ 5–30 phút.
 - Dữ liệu lấy từ 4 bộ dữ liệu mở trên GitHub, tự chọn bộ mới nhất. Các bộ này có hôm cập nhật chậm.
 - Kỳ quay kế tiếp được tính tự động, bỏ qua kỳ nghỉ Tết (từ 30 Tết đến hết mùng 3). Lịch Tết đã có sẵn đến năm 2040.
 
@@ -70,10 +76,13 @@ Vào tab **Actions** → **Cập nhật XSMB hằng ngày** → **Run workflow**
 | `predictions.json` | Nhật ký danh sách khóa trước, chỉ thêm, không xóa |
 | `tools/update.py` | Tải và gộp dữ liệu |
 | `tools/add_day.py` | Nhập tay một kỳ (có kiểm tra) |
-| `tools/predict.js` | Tính 8 chỉ báo + Top 3, khóa cho kỳ kế tiếp |
+| `core.js` | Bộ tính toán chung cho trang web và script |
+| `xsmn.csv`, `recent_mn.json`, `predictions_mn.json` | Dữ liệu, kết quả đủ giải 60 ngày và nhật ký khóa trước của XSMN |
+| `tools/update_mn.py`, `tools/add_day_mn.py` | Tải/gộp dữ liệu XSMN, nhập tay một đài |
+| `tools/predict.js` | Khóa danh sách (8 chỉ báo + Top 3) cho kỳ kế tiếp của XSMB và từng đài XSMN |
 | `.github/workflows/update.yml` | Lịch chạy tự động |
 
 Lưu ý: kho công khai thì ai có link cũng xem được trang. Đây là công cụ học thống kê; các danh sách số chỉ là xếp hạng theo dữ liệu quá khứ, xác suất mỗi số về trong ngày luôn khoảng 23,77%.
 
 ---
-Dữ liệu: bộ dữ liệu mở [kina2711/vietnam-lottery-xsmb](https://github.com/kina2711/vietnam-lottery-xsmb) (giấy phép MIT) và các bộ tương tự trên GitHub.
+Dữ liệu: XSMB từ [kina2711/vietnam-lottery-xsmb](https://github.com/kina2711/vietnam-lottery-xsmb) (giấy phép MIT) và các bộ tương tự; XSMN từ [tuanseo5t-alt/xosomn-xosomt](https://github.com/tuanseo5t-alt/xosomn-xosomt) và [Hpbt/xsmn-thong-ke](https://github.com/Hpbt/xsmn-thong-ke).
