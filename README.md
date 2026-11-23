@@ -74,3 +74,6 @@ Vào tab **Actions** → **Cập nhật XSMB hằng ngày** → **Run workflow**
 | `.github/workflows/update.yml` | Lịch chạy tự động |
 
 Lưu ý: kho công khai thì ai có link cũng xem được trang. Đây là công cụ học thống kê; các danh sách số chỉ là xếp hạng theo dữ liệu quá khứ, xác suất mỗi số về trong ngày luôn khoảng 23,77%.
+
+---
+Dữ liệu: bộ dữ liệu mở [kina2711/vietnam-lottery-xsmb](https://github.com/kina2711/vietnam-lottery-xsmb) (giấy phép MIT) và các bộ tương tự trên GitHub.
