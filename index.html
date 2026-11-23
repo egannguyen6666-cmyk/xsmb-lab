@@ -232,10 +232,13 @@ p{margin:0 0 10px;max-width:72ch}
     <div class="card hero c7">
      <h2 id="ovNextT">Kỳ tiếp theo</h2>
      <p class="sub" id="ovNextS"></p>
+     <div id="ovSingle">
      <div class="balls" id="ovTop3" style="gap:18px;margin:8px 0 18px"></div>
      <p class="sub" style="margin:0 0 8px">10 số của chỉ báo Tổng hợp nóng</p>
      <div class="balls" id="ovTop10" style="gap:8px"></div>
      <div class="acts" id="ovCopy"></div>
+     </div>
+     <div id="ovMulti" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:6px;position:relative;z-index:1"></div>
      <div id="ovHeroFoot" style="margin-top:auto;padding-top:20px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;border-top:1px solid #ffffff1f;position:relative;z-index:1"></div>
     </div>
     <div class="card c5">
@@ -422,7 +425,7 @@ function useSeries(){
   {id:'hot30',nm:'Nóng '+W[0],d:`Những số về nhiều nháy nhất trong ${W[0]} gần nhất.`},{id:'hot90',nm:'Nóng '+W[1],d:`Những số về nhiều nháy nhất trong ${W[1]} gần nhất.`},{id:'hot180',nm:'Nóng '+W[2],d:`Những số về nhiều nháy nhất trong ${W[2]} gần nhất.`},
   {id:'cold30',nm:'Lạnh '+W[0],d:`Những số về ít nhất trong ${W[0]}, theo lối nghĩ "đến lúc phải bù".`},{id:'gan',nm:'Lô gan',d:'Những số lâu nhất chưa xuất hiện.'},
   {id:'roi',nm:'Lô rơi',d:'Những số vừa về ở kỳ trước, về nhiều nháy thì xếp trên.'},{id:'rand',nm:'Chọn ngẫu nhiên',d:'Mốc so sánh: chọn bừa, không dùng thống kê.'}];
- LOGCOLS=[{id:'top3',nm:'Top 3 đề xuất'},...IND];
+ LOGCOLS=[{id:'top3',nm:'Top 3 xác suất'},...IND];
 }
 const where=()=>R.region==='mb'?'XSMB':ST[R.st];
 const freq=(t,w)=>XS.freq(S,t,w),scores=(id,t)=>XS.scores(S,id,t),topK=XS.topK,allPicks=t=>XS.allPicks(S,t),picksFor=(id,t)=>XS.picksFor(S,id,t),danPicks=(m,n,t)=>XS.danPicks(S,m,n,t);
@@ -522,13 +525,27 @@ function regionDates(){return R.region==='mb'?dates:RAW.mnDates;}
 function renderHome(){
  const hero=document.querySelector('#v-ket-qua .hero'),rc=$('rsBoard').closest('.card');hero.classList.toggle('c7',R.region==='mb');hero.classList.toggle('c12',R.region==='mn');rc.classList.toggle('c5',R.region==='mb');rc.classList.toggle('c12',R.region==='mn');
  const t=N-1,e=LOG.find(x=>x.target===nextDate),picks=e?e.picks:allPicks(t),f1=freq(t,S.W[0]);
- $('ovNextT').textContent=`Kỳ tiếp theo · ${R.region==='mn'?ST[R.st]+' · ':''}${wd(nextDate)}, ${vnDate(nextDate)}`;
- $('ovNextS').textContent=e?`Top 3 đề xuất đã khóa lúc ${e.made_at}, dựa trên dữ liệu đến hết ${vnDate(e.based_on)}.`:`Top 3 đề xuất tính từ dữ liệu đến hết ${vnDate(dates[t])}.`;
+ $('ovSingle').style.display=R.region==='mb'?'':'none';$('ovMulti').style.display=R.region==='mn'?'grid':'none';
+ if(R.region==='mn'){
+  const nd=XS.addDays(RAW.mnLast,1),w0=XS.weekday(nd),sts=Object.keys(RAW.sch).filter(x=>RAW.sch[x].includes(w0)).sort((a,b)=>a==='tp-hcm'?-1:b==='tp-hcm'?1:ST[a].localeCompare(ST[b],'vi'));
+  const items=sts.map(x=>{const S2=seriesFor('mn',x),lk=LOG_MN.find(e=>e.target===nd&&e.station===x),pk=lk?lk.picks:XS.allPicks(S2,S2.N-1);return {x,lk,pk,S2};});
+  $('ovNextT').textContent=`XSMN kỳ tiếp theo · ${wd(nd)}, ${vnDate(nd)} · ${sts.length} đài`;
+  $('ovNextS').textContent=`Top 3 xác suất của từng đài, tính từ kỳ gần nhất của đài đó${items.every(i=>i.lk)?' (đã khóa trước giờ quay)':''}. Bấm tên đài để xem chi tiết đài đó.`;
+  $('ovMulti').innerHTML=items.map(({x,lk,pk,S2})=>{const f1=XS.freq(S2,S2.N-1,S2.W[0]);return `<div style="border:1px solid #ffffff26;border-radius:14px;padding:12px;background:#ffffff0a">
+   <button data-st="${x}" style="all:unset;cursor:pointer;font-weight:700;font-size:16px;color:#fff">${ST[x]} ›</button><div class="sub" style="font-size:12px;margin:2px 0 10px">${lk?'Đã khóa lúc '+lk.made_at.replace(' (giờ VN)',''):'Từ dữ liệu đến '+vnDate(S2.dates[S2.N-1])}</div>
+   <div class="balls" style="gap:10px;margin-bottom:10px">${pk.top3.map(k=>ball(k,'r',f1[k]+' lần/10 kỳ')).join('')}</div>
+   <div class="balls" style="gap:5px;margin-bottom:10px">${pk.combo.map(k=>`<div class="ball sm" style="width:30px;height:30px;font-size:13px">${pad(k)}</div>`).join('')}</div>
+   <div class="acts" style="margin-top:0">${copyBtn('Chép Top 3',numTxt(pk.top3))}${copyBtn('Chép 10 số',numTxt(pk.combo))}</div></div>`;}).join('')
+   +`<div style="grid-column:1/-1">${copyBtn('Chép tất cả đài',[`XSMN kỳ ${vnDate(nd)}`,...items.map(i=>`${ST[i.x]}: Top 3 xác suất ${numTxt(i.pk.top3)} · Tổng hợp nóng ${numTxt(i.pk.combo)}`)].join('\n'))}</div>`;
+  $('ovMulti').querySelectorAll('button[data-st]').forEach(b=>b.onclick=()=>setRegion('mn',b.dataset.st));
+ } else
+ $('ovNextT').textContent=`Kỳ tiếp theo · ${wd(nextDate)}, ${vnDate(nextDate)}`;
+ if(R.region==='mb')$('ovNextS').textContent=e?`Top 3 xác suất đã khóa lúc ${e.made_at}, dựa trên dữ liệu đến hết ${vnDate(e.based_on)}.`:`Top 3 xác suất tính từ dữ liệu đến hết ${vnDate(dates[t])}.`;
  $('ovTop3').innerHTML=picks.top3.map(k=>ball(k,'r lg',`${f1[k]} lần / ${S.WL[0]}`)).join('');
  $('ovTop10').innerHTML=picks.combo.map(k=>ball(k,'sm')).join('');
  $('ovCopy').innerHTML=copyBtn('Sao chép Top 3',numTxt(picks.top3))+copyBtn('Sao chép 10 số',numTxt(picks.combo))+copyBtn('Sao chép tất cả chỉ báo',allText(picks,nextDate));
  const pAny3=1-Math.pow(1-3/100,M);
- $('ovHeroFoot').innerHTML=[[fmt(P),`xác suất một số về trong một kỳ (${M} giải)`],[fmt(pAny3,0),'kỳ có ít nhất 1/3 số về (lý thuyết)'],[vn(N),`kỳ trong dữ liệu ${where()}`]].map(([v,l])=>`<div><b style="font-size:22px;display:block;color:#fff">${v}</b><span style="font-size:12px;color:#bdb7c6">${l}</span></div>`).join('');
+ $('ovHeroFoot').innerHTML=[[fmt(P),`xác suất một số về trong một kỳ (${M} giải)`],[fmt(pAny3,0),'kỳ có ít nhất 1/3 số về (lý thuyết)'],(R.region==='mb'?[vn(N),'kỳ trong dữ liệu XSMB']:[vn(Object.values(RAW.mn).reduce((a,x)=>a+x.length,0)),`kết quả của ${Object.keys(RAW.mn).length} đài từ ${RAW.mnDates[0].slice(0,4)}`])].map(([v,l])=>`<div><b style="font-size:22px;display:block;color:#fff">${v}</b><span style="font-size:12px;color:#bdb7c6">${l}</span></div>`).join('');
  renderBoard();renderBook();
  const [a,b]=rangeIdx(R.region==='mb'?1095:156),H=backtest(10),r=rate(H.combo,a,b,10);
  let lh=0,ln=0;const di=Object.fromEntries(dates.map((d,i)=>[d,i]));for(const x of LOG){const i=di[x.target];if(i===undefined)continue;for(const k of x.picks.combo){ln++;if(cnt[i*100+k])lh++;}}
