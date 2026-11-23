@@ -561,10 +561,12 @@ function renderOvDan(){
   const st=n=>{const r=danSeries(m.id,n,lo,'9999',1);const h=r.reduce((a,x)=>a+x.hits,0),k=r.reduce((a,x)=>a+x.K,0),any=r.filter(x=>x.hits).length;return {rate:h/k,any:any/r.length,n:r.length};};
   return `<div style="border-top:1px solid var(--line);padding:14px 0">
    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;align-items:baseline"><b style="font-size:16px">${m.nm}</b><span class="note">${m.d}</span></div>
-   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:10px">${[[4,p4],[6,p6],[10,p10]].map(([n,p])=>{const x=st(n);return `<a href="#dan-${m.id}-${n}" style="text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:12px;padding:12px;display:block;background:var(--bg)">
+   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:10px">${[[4,p4],[6,p6],[10,p10]].map(([n,p])=>{const x=st(n);return `<div style="border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg);display:flex;flex-direction:column">
+    <a href="#dan-${m.id}-${n}" style="text-decoration:none;color:inherit;display:block">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b>Dàn ${n} số</b><span class="tag">30 ngày: ${fmt(x.rate,1)}</span></div>
     <div class="balls" style="gap:6px">${p.map(k=>`<div class="ball sm" style="width:34px;height:34px;font-size:14px">${pad(k)}</div>`).join('')}</div>
-    <p class="note" style="margin:8px 0 0">${Math.round(x.any*100)}% số ngày có ít nhất 1 số về · xem timeline ›</p></a>`;}).join('')}</div></div>`;}).join('')+`<p class="note" style="margin:6px 0 0">Kỳ vọng nếu chọn bừa: mỗi số 23,77%; ngày có ít nhất 1 số về: dàn 4 ≈ ${fmt(1-Math.pow(0.96,27),0)}, dàn 6 ≈ ${fmt(1-Math.pow(0.94,27),0)}, dàn 10 ≈ ${fmt(1-Math.pow(0.90,27),0)}.</p>`;
+    <p class="note" style="margin:8px 0 0">${Math.round(x.any*100)}% số ngày có ít nhất 1 số về · xem timeline ›</p></a>
+    <div class="acts" style="margin-top:10px">${copyBtn('Chép dàn '+n+' số',numTxt(p))}</div></div>`;}).join('')}</div></div>`;}).join('')+`<div class="acts">${copyBtn('Chép tất cả dàn',[`XSMB Lab · dàn số kỳ ${vnDate(nextDate)}`,...DANM.flatMap(m=>[4,6,10].map(n=>`${m.nm} ${n} số: ${numTxt(danPicks(m.id,n,t))}`))].join('\n'))}</div>`+`<p class="note" style="margin:6px 0 0">Kỳ vọng nếu chọn bừa: mỗi số 23,77%; ngày có ít nhất 1 số về: dàn 4 ≈ ${fmt(1-Math.pow(0.96,27),0)}, dàn 6 ≈ ${fmt(1-Math.pow(0.94,27),0)}, dàn 10 ≈ ${fmt(1-Math.pow(0.90,27),0)}.</p>`;
 }
 const DNKEY='xsmb-dan-v1';
 function renderDan(){
