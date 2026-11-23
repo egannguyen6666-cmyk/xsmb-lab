@@ -204,6 +204,11 @@ p{margin:0 0 10px;max-width:72ch}
      <p class="sub" id="ovResS"></p>
      <div class="ticket" id="ovTicket"></div>
     </div>
+    <div class="card c12">
+     <h2>Dàn số (4, 6, 10 số)</h2>
+     <p class="sub">Ba cách lập dàn phổ biến, tính tự động mỗi ngày từ dữ liệu đến hôm trước. Dàn 4 nằm trong dàn 6, dàn 6 nằm trong dàn 10. Bấm vào một dàn để xem cách tính và timeline trúng/trượt theo giai đoạn.</p>
+     <div id="ovDan"></div>
+    </div>
     <div class="c12"><div class="kpis" id="ovKpis"></div></div>
     <div class="card c6">
      <h2>Nhật ký 10 kỳ gần nhất</h2>
@@ -318,6 +323,31 @@ p{margin:0 0 10px;max-width:72ch}
    </div>
   </section>
 
+  <section class="view" id="v-dan">
+   <div class="grid">
+    <div class="card c12">
+     <p style="margin:0 0 8px"><a href="#tong-quan" style="color:var(--red);text-decoration:none;font-weight:500">‹ Về Tổng quan</a></p>
+     <h2 id="dnT"></h2>
+     <p class="sub" id="dnS"></p>
+     <div class="seg" id="dnM" role="group" aria-label="Cách lập dàn"><span class="lab">Cách lập</span></div>
+     <div class="seg" id="dnN" role="group" aria-label="Số lượng"><span class="lab">Dàn</span></div>
+     <div class="seg" id="dnPer" role="group" aria-label="Giai đoạn"><span class="lab">Giai đoạn</span></div>
+     <div class="rng"><div><label for="dnFrom">Từ ngày</label><input type="date" id="dnFrom"></div><div><label for="dnTo">Đến ngày</label><input type="date" id="dnTo"></div><div><label for="dnPts">Điểm mỗi số</label><input type="number" id="dnPts" min="1" step="1" value="1" inputmode="numeric" style="width:90px"></div><button id="dnApply">Xem khoảng này</button></div>
+     <p class="note" id="dnRange" style="margin:-4px 0 0"></p>
+    </div>
+    <div class="card c6 hero" id="dnNext"></div>
+    <div class="card c6" id="dnLast"></div>
+    <div class="c12"><div class="kpis" id="dnK"></div></div>
+    <div class="card c12">
+     <h2>Timeline kỳ vọng và thực tế</h2>
+     <p class="sub" id="dnCmp"></p>
+     <div class="fig"><svg id="dnChart" role="img" aria-label="Timeline số trúng của dàn"></svg><div class="tip" id="dnTip"></div></div>
+     <div class="legend"><span><s style="height:10px;background:var(--red);opacity:.3"></s>Số trúng từng ngày</span><span><s style="border-top:2px solid var(--red)"></s>Trúng cộng dồn (thực tế)</span><span><s style="border-top:2px dashed var(--ink)"></s>Cộng dồn kỳ vọng</span></div>
+    </div>
+    <div class="card c12"><h2>Bảng từng ngày</h2><p class="sub">Số tô đỏ là số đã về, ×2 là về 2 nháy.</p><div class="tbl" id="dnTable"></div><div class="pager" id="dnPager"></div></div>
+   </div>
+  </section>
+
   <section class="view" id="v-ban-do">
    <div class="grid">
     <div class="card c8">
@@ -410,7 +440,13 @@ function axisTicks(y0,y1,n=4){const raw=(y1-y0)/n,mag=Math.pow(10,Math.floor(Mat
 function navHTML(){return VIEWS.map(([id,nm,ic])=>`<a href="#${id}" data-v="${id}"><svg aria-hidden="true"><use href="#${ic}"/></svg><span>${nm}</span></a>`).join('');}
 $('nav').innerHTML=navHTML();$('tab').innerHTML=navHTML();
 function route(){
- const v=(location.hash||'#tong-quan').slice(1),cur=VIEWS.find(x=>x[0]===v)?v:'tong-quan';
+ const v=(location.hash||'#tong-quan').slice(1);
+ const dm=v.match(/^dan-([a-z-]+)-(\d+)$/);
+ if(dm||v==='dan'){if(dm&&DANM.find(x=>x.id===dm[1]))dn.m=dm[1];if(dm&&[4,6,10].includes(+dm[2]))dn.n=+dm[2];
+  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-dan'));
+  document.querySelectorAll('.nav a,.tab a').forEach(a=>{if(a.dataset.v==='tong-quan')a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  $('vtitle').textContent='Dàn số';if(N)renderDan();window.scrollTo(0,0);return;}
+ const cur=VIEWS.find(x=>x[0]===v)?v:'tong-quan';
  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+cur));
  document.querySelectorAll('.nav a,.tab a').forEach(a=>{if(a.dataset.v===cur)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
  $('vtitle').textContent=VIEWS.find(x=>x[0]===cur)[1];
@@ -440,6 +476,7 @@ function renderOverview(){
  $('ovTop10').innerHTML=picks.combo.map(k=>ball(k,'sm')).join('');
  $('ovCopy').innerHTML=copyBtn('Sao chép Top 3',numTxt(picks.top3))+copyBtn('Sao chép 10 số',numTxt(picks.combo))+copyBtn('Sao chép tất cả chỉ báo',allText(picks,nextDate));
  renderTicket();
+ renderOvDan();
  $('ovHeroFoot').innerHTML=[['24,5%','mỗi số trong Top 3 trúng (kiểm chứng 10 năm)'],['~57%','số ngày có ít nhất 1/3 số về'],['23,77%','lý thuyết cho bất kỳ số nào']].map(([v,l])=>`<div><b style="font-size:24px;display:block;color:#fff">${v}</b><span style="font-size:12px;color:#bdb7c6">${l}</span></div>`).join('');
  const [a,b]=range(),H=backtest(10),r=rate(H.combo,a,b,10);
  let lh=0,ln=0,l3=0,n3=0;const di=Object.fromEntries(dates.map((d,i)=>[d,i]));
@@ -498,6 +535,76 @@ function renderPredict(){
   <div class="big">${fmt(r.p,1)}</div>
   <p class="note">± ${fmt(r.ci,1)} (khoảng tin cậy 95%). Lý thuyết ${fmt(P,1)}. Chênh ${diff>=0?'+':''}${(diff*100).toFixed(2).replace('.',',')} điểm %, ${Math.abs(diff)>r.ci?'vượt khoảng tin cậy ở giai đoạn này, cần xem có lặp lại ở giai đoạn khác không.':'nằm trong mức dao động ngẫu nhiên.'}</p>
   <p class="note">Chọn ${st.k} số thì trung bình mỗi ngày trúng ${(r.p*st.k).toFixed(1).replace('.',',')} số; chọn bừa được ${(P*st.k).toFixed(1).replace('.',',')} số.</p>`;
+}
+
+
+/* ---------- dàn số ---------- */
+const DANM=[
+ {id:'tan-suat',nm:'Dàn tần suất',d:'Lấy các số về nhiều hơn kỳ vọng nhất, tính bằng trung bình độ lệch chuẩn (z) của tần suất 30, 90 và 180 ngày (giống chỉ báo Tổng hợp nóng).'},
+ {id:'cau-chay',nm:'Dàn cầu chạy',d:'Ưu tiên số đang "chạy": về nhiều ngày nhất trong 3 kỳ gần nhất, rồi đến số nháy trong 7 ngày, rồi 30 ngày.'},
+ {id:'cap-lon',nm:'Dàn cặp số lộn',d:'Lấy số nóng nhất theo tần suất, ghép kèm số lộn của nó (ví dụ 34 đi với 43). Số kép như 11, 22 tính một số.'}];
+const dn={m:'tan-suat',n:6,per:30,from:null,to:null,pts:1,page:1,ready:false};
+const rev=k=>(k%10)*10+Math.floor(k/10);
+function danPicks(m,size,t){
+ if(m==='tan-suat')return topK(scores('combo',t),t,size);
+ if(m==='cau-chay'){const f7=freq(t,7),f30=freq(t,30),s=new Float64Array(100);
+  for(let k=0;k<100;k++){let d=0;for(let i=t;i>t-3&&i>=0;i--)if(cnt[i*100+k])d++;s[k]=d*1000+f7[k]*20+f30[k];}
+  return topK(s,t,size);}
+ const order=topK(scores('combo',t),t,100),out=[];
+ for(const k of order){if(out.length>=size)break;if(out.includes(k))continue;out.push(k);const r=rev(k);if(r!==k&&out.length<size&&!out.includes(r))out.push(r);}
+ return out;
+}
+function scoreList(i,p,pts){const nh=p.map(k=>cnt[i*100+k]),hits=nh.filter(x=>x).length,ns=nh.reduce((a,b)=>a+b,0),cost=27*pts*p.length,win=99*pts*ns;return {p,nh,hits,cost,win,pl:win-cost,K:p.length};}
+function danSeries(m,size,lo,hi,pts){const rows=[];let a=Math.max(startT+1,dates.findIndex(d=>d>=lo));if(a<1)a=N;for(let i=a;i<N;i++){if(dates[i]>hi)break;rows.push({d:dates[i],i,...scoreList(i,danPicks(m,size,i-1),pts)});}return rows;}
+function renderOvDan(){
+ const t=N-1,lo=dates[Math.max(startT+1,N-30)];
+ $('ovDan').innerHTML=DANM.map(m=>{const p10=danPicks(m.id,10,t),p6=danPicks(m.id,6,t),p4=danPicks(m.id,4,t);
+  const st=n=>{const r=danSeries(m.id,n,lo,'9999',1);const h=r.reduce((a,x)=>a+x.hits,0),k=r.reduce((a,x)=>a+x.K,0),any=r.filter(x=>x.hits).length;return {rate:h/k,any:any/r.length,n:r.length};};
+  return `<div style="border-top:1px solid var(--line);padding:14px 0">
+   <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;align-items:baseline"><b style="font-size:16px">${m.nm}</b><span class="note">${m.d}</span></div>
+   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:10px">${[[4,p4],[6,p6],[10,p10]].map(([n,p])=>{const x=st(n);return `<a href="#dan-${m.id}-${n}" style="text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:12px;padding:12px;display:block;background:var(--bg)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b>Dàn ${n} số</b><span class="tag">30 ngày: ${fmt(x.rate,1)}</span></div>
+    <div class="balls" style="gap:6px">${p.map(k=>`<div class="ball sm" style="width:34px;height:34px;font-size:14px">${pad(k)}</div>`).join('')}</div>
+    <p class="note" style="margin:8px 0 0">${Math.round(x.any*100)}% số ngày có ít nhất 1 số về · xem timeline ›</p></a>`;}).join('')}</div></div>`;}).join('')+`<p class="note" style="margin:6px 0 0">Kỳ vọng nếu chọn bừa: mỗi số 23,77%; ngày có ít nhất 1 số về: dàn 4 ≈ ${fmt(1-Math.pow(0.96,27),0)}, dàn 6 ≈ ${fmt(1-Math.pow(0.94,27),0)}, dàn 10 ≈ ${fmt(1-Math.pow(0.90,27),0)}.</p>`;
+}
+const DNKEY='xsmb-dan-v1';
+function renderDan(){
+ if(!dn.ready){let sv={};try{sv=JSON.parse(localStorage.getItem(DNKEY)||'{}');}catch(e){}
+  dn.per=sv.per==='custom'?'custom':(+sv.per||30);dn.from=sv.from||null;dn.to=sv.to||null;dn.pts=+sv.pts||1;
+  $('dnFrom').min=$('dnTo').min=dates[startT+1];$('dnFrom').max=$('dnTo').max=dates[N-1];
+  const d=new Date(dates[N-1]+'T00:00:00Z');d.setUTCDate(d.getUTCDate()-29);$('dnFrom').value=dn.from||d.toISOString().slice(0,10);$('dnTo').value=dn.to||dates[N-1];$('dnPts').value=dn.pts;
+  dn.save=()=>{try{localStorage.setItem(DNKEY,JSON.stringify({per:dn.per,from:dn.from,to:dn.to,pts:dn.pts}));}catch(e){}};
+  $('dnApply').onclick=()=>{let f=$('dnFrom').value,t=$('dnTo').value;if(!f||!t)return;if(f>t)[f,t]=[t,f];dn.from=f;dn.to=t;dn.per='custom';dn.page=1;dn.save();renderDan();};
+  $('dnPts').onchange=()=>{dn.pts=Math.max(1,Math.floor(+$('dnPts').value||1));dn.save();renderDan();};
+  dn.ready=true;}
+ const go=(m,n)=>{const h='#dan-'+m+'-'+n;if(location.hash!==h)location.hash=h;else renderDan();};
+ seg($('dnM'),DANM.map(x=>[x.nm,x.id]),dn.m,v=>{dn.page=1;go(v,dn.n);});
+ seg($('dnN'),[4,6,10].map(n=>[n+' số',n]),dn.n,v=>{dn.page=1;go(dn.m,v);});
+ seg($('dnPer'),[['7 ngày',7],['30 ngày',30],['90 ngày',90],['180 ngày',180],['1 năm',365]],dn.per,v=>{dn.per=v;dn.page=1;dn.save();renderDan();});
+ const M=DANM.find(x=>x.id===dn.m),n=dn.n,pts=dn.pts;
+ let lo,hi;if(dn.per==='custom'&&dn.from){lo=dn.from;hi=dn.to;}else{lo=dates[Math.max(startT+1,N-dn.per)];hi='9999';}
+ const R=danSeries(dn.m,n,lo,hi,pts);
+ $('dnT').textContent=`${M.nm} · ${n} số`;$('dnS').textContent=M.d+' Mỗi ngày dàn được tính lại chỉ từ dữ liệu đến hôm trước, nên timeline dưới đây là kết quả thật nếu áp dụng đều đặn.';
+ $('dnRange').textContent=R.length?`${R.length} kỳ, từ ${vnDate(R[0].d)} đến ${vnDate(R[R.length-1].d)}.`:'Không có kỳ quay nào trong khoảng này.';
+ const np=danPicks(dn.m,n,N-1),f30=freq(N-1,30);
+ $('dnNext').innerHTML=`<h2>Dàn cho kỳ ${wd(nextDate)}, ${vnDate(nextDate)}</h2><p class="sub">Tính từ dữ liệu đến hết ${vnDate(dates[N-1])}.</p><div class="balls" style="gap:12px;margin:10px 0 14px">${np.map(k=>ball(k,'r',f30[k]+' lần/30n')).join('')}</div><p class="sub" style="margin:0 0 8px">Chi dự kiến ${vn(27*pts*n)} token · kỳ vọng thu về ${vn(0.27*99*pts*n)} token</p><div class="acts">${copyBtn('Chép dàn '+n+' số',numTxt(np))}</div>`;
+ const L=R[R.length-1];
+ $('dnLast').innerHTML=L?`<h2>Kỳ gần nhất · ${vnDate(L.d)}</h2><p class="sub">Dàn đã dùng (tính từ dữ liệu đến hết ${vnDate(dates[L.i-1])}) và kết quả.</p><div class="balls" style="gap:8px;margin:8px 0 12px">${L.p.map((k,j)=>ball(k,L.nh[j]?'r sm':'sm dim',L.nh[j]?(L.nh[j]>1?'về ×'+L.nh[j]:'về'):'trượt')).join('')}</div><p class="note" style="margin:0">Lô tô 27 giải</p><div class="lo">${lotoChips(L.i,L.p)}</div><p class="note" style="margin-top:10px">Trúng ${L.hits}/${L.K} · <span class="${L.pl>=0?'pos':'neg'}">${sg(L.pl)} token</span></p>`:'<h2>Kỳ gần nhất</h2><p class="note">Chưa có dữ liệu.</p>';
+ const T=R.reduce((a,x)=>({h:a.h+x.hits,k:a.k+x.K,c:a.c+x.cost,w:a.w+x.win,any:a.any+(x.hits?1:0)}),{h:0,k:0,c:0,w:0,any:0}),pl=T.w-T.c,eH=T.k*P,sdv=Math.sqrt(T.k*P*(1-P)),eAny=1-Math.pow(1-n/100,27);
+ $('dnK').innerHTML=R.length?[[`${T.h}/${vn(T.k)}`,`số trúng (${fmt(T.h/T.k,1)}) · kỳ vọng ${eH.toFixed(1).replace('.',',')}`],[`${T.any}/${R.length}`,`ngày có ít nhất 1 số về (${fmt(T.any/R.length,0)}) · kỳ vọng ${fmt(eAny,0)}`],[`<span class="${pl>=0?'pos':'neg'}">${sg(pl)}</span>`,`lãi/lỗ token (chi ${vn(T.c)}, thu ${vn(T.w)})`],[sg(Math.round(-0.01*T.c)),'lãi/lỗ kỳ vọng (−1% số đã đặt)']].map(([v,l])=>`<div class="kpi"><b>${v}</b><span>${l}</span></div>`).join(''):'';
+ $('dnCmp').textContent=R.length?`Trúng ${T.h} số so với kỳ vọng ${eH.toFixed(1).replace('.',',')}. Với ${vn(T.k)} lượt chọn, lệch ±${(1.96*sdv).toFixed(1).replace('.',',')} số là mức may rủi bình thường; ${Math.abs(T.h-eH)<=1.96*sdv?'kết quả nằm trong mức đó':'kết quả vượt mức đó trong giai đoạn này, nên thử thêm các giai đoạn khác'}.`:'';
+ let c=0;dn.pts_=R.map((x,i)=>{c+=x.hits;return {d:x.d,h:x.hits,c,e:(i+1)*x.K*P,K:x.K};});cumChart('dnChart','dnTip',dn.pts_);
+ const desc=[...R].reverse(),pages=Math.max(1,Math.ceil(desc.length/10));if(dn.page>pages)dn.page=pages;
+ let run=0;const cum={};for(const x of R){run+=x.pl;cum[x.d]=run;}
+ $('dnTable').innerHTML=desc.length?`<table><thead><tr><th>Kỳ quay</th><th class="left">Dàn đã dùng</th><th>Trúng</th><th>Chi</th><th>Thu</th><th>Lãi/lỗ</th><th>Lũy kế</th></tr></thead><tbody>${desc.slice((dn.page-1)*10,dn.page*10).map(x=>`<tr><td>${vnDate(x.d)}</td><td class="left">${x.p.map((k,j)=>x.nh[j]?`<span class="h">${pad(k)}${x.nh[j]>1?'×'+x.nh[j]:''}</span>`:pad(k)).join(' ')}</td><td>${x.hits}/${x.K}</td><td>${vn(x.cost)}</td><td>${vn(x.win)}</td><td class="${x.pl>=0?'pos':'neg'}">${sg(x.pl)}</td><td>${sg(cum[x.d])}</td></tr>`).join('')}</tbody></table>`:'';
+ pager($('dnPager'),dn.page,pages,desc.length,pg=>{dn.page=pg;renderDan();$('dnTable').scrollIntoView({behavior:'smooth',block:'start'});});
+}
+function pager(el,page,pages,total,onGo){
+ const btn=(lab,pg,dis,cur)=>`<button data-p="${pg}"${dis?' disabled':''}${cur?' aria-current="page"':''}>${lab}</button>`;
+ let nums=[];for(let pg=1;pg<=pages;pg++)if(pg===1||pg===pages||Math.abs(pg-page)<=2)nums.push(pg);
+ let ph='',prev=0;for(const pg of nums){if(pg-prev>1)ph+='<span>…</span>';ph+=btn(pg,pg,false,pg===page);prev=pg;}
+ el.innerHTML=pages>1?btn('‹ Trước',page-1,page===1)+ph+btn('Sau ›',page+1,page===pages)+`<span>Trang ${page}/${pages} · ${total} kỳ</span>`:'';
+ el.querySelectorAll('button[data-p]').forEach(b=>b.onclick=()=>onGo(+b.dataset.p));
 }
 
 /* ---------- journal ---------- */
@@ -587,10 +694,10 @@ function renderLog(){
  else $('lgDetail').innerHTML='';
 }
 let lgDone=[];
-function lgDraw(done){
- if(done)lgDone=done;done=lgDone;
- const svg=$('lgChart'),W=svg.clientWidth,Hh=svg.clientHeight;if(!W){return;}if(!done.length){svg.innerHTML='';return;}
- const n=done.length,K=done[0].sc.K;let c=0;const pts=done.map((x,i)=>{c+=x.sc.hits;return {d:x.r.date,h:x.sc.hits,c,e:(i+1)*K*P,K:x.sc.K};});
+function lgDraw(done){if(done)lgDone=done;let c=0;cumChart('lgChart','lgTip',lgDone.map((x,i)=>{c+=x.sc.hits;return {d:x.r.date,h:x.sc.hits,c,e:(i+1)*x.sc.K*P,K:x.sc.K};}));}
+function cumChart(svgId,tipId,pts){
+ const svg=$(svgId),W=svg.clientWidth,Hh=svg.clientHeight;if(!W)return;if(!pts.length){svg.innerHTML='';return;}
+ const n=pts.length;
  const y1=Math.max(pts[n-1].c,pts[n-1].e)*1.08||1,y1b=Math.max(...pts.map(p=>p.h),1);
  const m={l:W<520?34:44,r:44,t:12,b:28},bw=(W-m.l-m.r)/n,X=i=>m.l+(i+0.5)*bw,Y=v=>m.t+(1-v/y1)*(Hh-m.t-m.b),Yb=v=>m.t+(1-v/(y1b*2.2))*(Hh-m.t-m.b);
  const ticks=axisTicks(0,y1),lab=[...new Set([0,Math.floor((n-1)/2),n-1])],g=Math.min(2,bw*0.15);
@@ -601,7 +708,7 @@ function lgDraw(done){
   <path d="${pts.map((p,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(p.c).toFixed(1)).join('')}" fill="none" stroke="var(--red)" stroke-width="2.4"/>
   <text x="${W-m.r+4}" y="${Y(pts[n-1].c)+4}" font-size="12" fill="var(--red)">${pts[n-1].c}</text><text x="${W-m.r+4}" y="${Y(pts[n-1].e)+(pts[n-1].e>pts[n-1].c?-6:14)}" font-size="12" fill="var(--ink)">${pts[n-1].e.toFixed(0)}</text>
   <circle id="lc" r="5" fill="var(--red)" stroke="var(--panel)" stroke-width="2" opacity="0"/><rect x="${m.l}" y="0" width="${W-m.l-m.r}" height="${Hh}" fill="transparent" id="lhit"/>`;
- const tip=$('lgTip'),lc=svg.querySelector('#lc');
+ const tip=$(tipId),lc=svg.querySelector('#lc');
  svg.querySelector('#lhit').onpointermove=e=>{const r=svg.getBoundingClientRect();let i=Math.floor((e.clientX-r.left-m.l)/bw);i=Math.max(0,Math.min(n-1,i));const p=pts[i];
   lc.setAttribute('cx',X(i));lc.setAttribute('cy',Y(p.c));lc.setAttribute('opacity',1);tip.style.left=X(i)+'px';tip.style.top=Y(p.c)+'px';tip.style.opacity=1;
   tip.textContent=`${vnDate(p.d)}: ${p.h}/${p.K} · cộng dồn ${p.c} (kỳ vọng ${p.e.toFixed(1).replace('.',',')})`;};
@@ -759,8 +866,8 @@ function build(txt){
  for(let i=0;i<N;i++)for(let k=0;k<100;k++){pref[(i+1)*100+k]=pref[i*100+k]+cnt[i*100+k];ganA[i*100+k]=cnt[i*100+k]?0:(i?ganA[(i-1)*100+k]:0)+1;}
  nextDate=nextDraw(dates[N-1]);
 }
-const ro=new ResizeObserver(()=>{if(!N)return;const v=(location.hash||'#tong-quan').slice(1);if(v==='quy-token')drawSim();if(v==='kiem-chung')drawRoll();if(v==='tong-quan')drawFundMini(simulate(loadSim()));if(v==='nhat-ky')lgDraw();});
-['simC','roll','ovFund','lgChart'].forEach(id=>ro.observe($(id)));
+const ro=new ResizeObserver(()=>{if(!N)return;const v=(location.hash||'#tong-quan').slice(1);if(v==='quy-token')drawSim();if(v==='kiem-chung')drawRoll();if(v==='tong-quan')drawFundMini(simulate(loadSim()));if(v==='nhat-ky')lgDraw();if(v.startsWith('dan')&&dn.pts_)cumChart('dnChart','dnTip',dn.pts_);});
+['simC','roll','ovFund','lgChart','dnChart'].forEach(id=>ro.observe($(id)));
 loadAll().then(({csv,log,rec,src})=>{
  build(csv);LOG=Array.isArray(log)?log:[];REC=Array.isArray(rec)?rec:[];
  $('status').innerHTML=`<i></i>Dữ liệu đến ${vnDate(dates[N-1])}`;
