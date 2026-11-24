@@ -106,7 +106,8 @@ def org_ld(base):
 
 THEME_HEAD = "<script>try{var t=JSON.parse(localStorage.getItem('xs-theme'));if(t&&t!=='auto')document.documentElement.dataset.theme=t}catch(e){}</script>"
 
-MENU_CSS = """.mbar details .mdd:before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
+MENU_CSS = """@media(hover:hover) and (pointer:fine){.mbar summary::after{display:none}}
+.mbar details .mdd:before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
 html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7ee);--sidemute:light-dark(#6c6975,#8e8a99);--sidehov:light-dark(#0000000a,#ffffff12);--sideln:light-dark(#e7e4df,#ffffff22)}html .side{border-right:1px solid var(--line)}html .side .nav a:hover{background:var(--sidehov)}html .side .nav a[aria-current=page]:hover{background:#d01f3c}html .side .themebtn{background:var(--sidehov);border-color:var(--sideln);color:var(--sideink)}html .brand:hover b{color:#d01f3c}html .tab{border-top:1px solid var(--line)}
 @media(min-width:1500px){.app{max-width:1488px;margin:0 auto}html[data-theme=dark] body{background:linear-gradient(90deg,var(--side) calc((100vw - 1488px)/2 + 24px),var(--bg) 0) no-repeat,var(--bg)}}@media(min-width:1500px) and (prefers-color-scheme:dark){html:not([data-theme=light]) body{background:linear-gradient(90deg,var(--side) calc((100vw - 1488px)/2 + 24px),var(--bg) 0) no-repeat,var(--bg)}}
 .subnav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:-8px 0 16px;padding:2px 0 4px;-webkit-overflow-scrolling:touch}.subnav::-webkit-scrollbar{display:none}.subnav a{flex:0 0 auto;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);text-decoration:none;font-size:14px;font-weight:600;white-space:nowrap}.subnav a:hover{border-color:#d01f3c;color:#d01f3c}.subnav a[aria-current=page]{background:#d01f3c;border-color:#d01f3c;color:#fff}
