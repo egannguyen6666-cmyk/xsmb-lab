@@ -1896,7 +1896,8 @@ function renderLive(){
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&curView()==='truc-tiep')lvTick();});
 function lvRender(){
  const n=nowVN(),reg=LV.reg,sts=lvStations(reg,n.date),phase=lvPhase(reg,n),G=reg==='mb'?LV_MB:LV_MN;
- const items=sts.map(s=>({s,d:LV.data[reg+':'+s]}));
+ const [wa]=LVWIN[reg],blank=()=>{const pr={};let t=0;for(const [,g,c] of G){pr[g]=Array(c).fill('');t+=c;}return {date:n.date,pr,done:0,tot:t,at:n.time,blank:true};};
+ const items=sts.map(s=>{let d=LV.data[reg+':'+s];if(phase==='live'&&n.min>=wa&&(!d||d.date!==n.date))d=Object.assign(blank(),d?{ve:d.ve}:{});return {s,d};});
  const tot=items.reduce((a,x)=>a+(x.d?x.d.tot:(reg==='mb'?27:18)),0),done=items.reduce((a,x)=>a+(x.d&&x.d.date===n.date?x.d.done:0),0);
  const todayAll=items.length&&items.every(x=>x.d&&x.d.date===n.date),complete=todayAll&&done===tot;
  const [a,b]=LVWIN[reg],hm=v=>`${pad(Math.floor(v/60))}:${pad(v%60)}`;
