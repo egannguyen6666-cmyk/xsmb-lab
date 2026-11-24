@@ -1,7 +1,9 @@
 # Cập nhật kết quả Vietlott Mega 6/45 và Power 6/55 từ bộ dữ liệu mở vietvudanh/vietlott-data.
-# Usage: python3 tools/update_vietlott.py
+# Usage: python3 tools/update_vietlott.py        (tất cả)
+#        python3 tools/update_vietlott.py keno   (chỉ Keno, dùng cho lịch chạy mỗi giờ)
 # Ghi vietlott_645.csv (ky,date,6 số) và vietlott_655.csv (ky,date,6 số,số đặc biệt). Giữ các kỳ đã có, kiểm tra trước khi ghi.
-import json, os, urllib.request
+import json, os, sys, urllib.request
+ONLY_KENO = len(sys.argv) > 1 and sys.argv[1] == "keno"
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = "https://raw.githubusercontent.com/vietvudanh/vietlott-data/master/data/{}.jsonl"
@@ -17,7 +19,7 @@ def load(path):
     return rows
 
 
-for game, (mx, n, fname, head) in GAMES.items():
+for game, (mx, n, fname, head) in ({} if ONLY_KENO else GAMES).items():
     path = os.path.join(ROOT, fname)
     rows = load(path)
     try:
@@ -52,7 +54,7 @@ def fetch(name):
 
 
 # Max 3D và Max 3D Pro: 20 bộ ba số mỗi kỳ (ĐB 2, Nhất 4, Nhì 6, Ba 8)
-for src, fname in (("3d", "vietlott_3d.csv"), ("3d_pro", "vietlott_3dpro.csv")):
+for src, fname in (() if ONLY_KENO else (("3d", "vietlott_3d.csv"), ("3d_pro", "vietlott_3dpro.csv"))):
     path = os.path.join(ROOT, fname); rows = load(path); added = 0
     try:
         text = fetch(src)

@@ -207,6 +207,19 @@ p{margin:0 0 10px;max-width:72ch}
 .mnb th.sel{background:#d01f3c;color:#fff}
 .ball.y{--b:#f2b705;--h:#ffe38a;--s:#a77a00;color:#1b1a20}
 .novreg .top .ctrls{display:none}
+.kcd{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:4px 0 14px;background:var(--bg)}
+.kcd b.t{font-size:clamp(44px,9vw,72px);line-height:1;color:var(--red);font-variant-numeric:tabular-nums;letter-spacing:1px}
+.kcd small{display:block;color:var(--mute);font-size:13px}
+.ktb{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}.ktb select{min-height:40px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:0 10px;font-size:15px}
+.kr{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:10px}
+.kr.sel{border-color:var(--red);box-shadow:0 0 0 1px var(--red)}
+.kh{display:flex;justify-content:space-between;gap:8px;padding:7px 10px;background:var(--band);font-size:14px}.kh button{all:unset;cursor:pointer;color:var(--red);font-weight:600}.kh span{color:var(--mute)}
+.kn{display:grid;grid-template-columns:repeat(10,minmax(0,1fr))}.kn span{text-align:center;padding:7px 0;font-size:18px;font-variant-numeric:tabular-nums;border-top:1px solid var(--line);border-left:1px solid var(--line)}.kn span:nth-child(10n+1){border-left:0}
+.kf{display:grid;grid-template-columns:1fr 1fr 2.2fr 1fr 1fr 2.2fr;border-top:1px solid var(--line);font-size:14px}
+.kf>*{padding:7px 4px;text-align:center;border-left:1px solid var(--line);display:flex;align-items:center;justify-content:center}.kf>*:first-child{border-left:0}
+.kf .on{background:#d01f3c;color:#fff;font-weight:600}.kf em{font-style:normal;color:var(--red)}.kf .hoa{grid-column:span 2}
+.kn.kpend span{color:var(--mute)}
+@media(max-width:600px){.kn span{font-size:15px;padding:6px 0}.kf{grid-template-columns:1fr 1fr 2.4fr}.kf>*:nth-child(4){border-left:0}.kf>*:nth-child(n+4){border-top:1px solid var(--line)}.kcd{grid-template-columns:1fr}}
 .seo h2{font-size:20px}.seo h3{font-size:16px;margin:18px 0 6px}.seo table{border-collapse:collapse;width:100%;max-width:720px;font-size:14px;margin:6px 0}.seo th,.seo td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}.seo th{background:var(--band)}
 .links{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 0 0;padding:0;list-style:none}.links a{color:var(--mute)}
 #vlKy{flex:1 1 0;min-width:0}#v-vietlott .datenav{flex-wrap:nowrap}
@@ -491,9 +504,10 @@ p{margin:0 0 10px;max-width:72ch}
     <div class="card c12">
      <div class="regsw" id="vlGame" role="group" aria-label="Chọn sản phẩm" style="margin-bottom:12px;flex-wrap:wrap;border-radius:18px"><button data-g="keno">Keno</button><button data-g="645" aria-pressed="true">Mega 6/45</button><button data-g="655">Power 6/55</button><button data-g="3d">Max 3D</button><button data-g="3dpro">Max 3D Pro</button></div>
      <h2 id="vlT">Vietlott</h2>
-     <div class="datenav"><button id="vlPrev" aria-label="Kỳ trước">‹</button><select id="vlKy" class="stsel" aria-label="Chọn kỳ quay"></select><button id="vlNext" aria-label="Kỳ sau">›</button><button id="vlLatest" style="padding:0 12px;font-weight:500">Mới nhất</button></div>
+     <div class="datenav" id="vlNavRow"><button id="vlPrev" aria-label="Kỳ trước">‹</button><select id="vlKy" class="stsel" aria-label="Chọn kỳ quay"></select><button id="vlNext" aria-label="Kỳ sau">›</button><button id="vlLatest" style="padding:0 12px;font-weight:500">Mới nhất</button></div>
      <div class="balls" id="vlBalls"></div>
      <p class="note" id="vlNote" style="margin-top:12px"></p>
+     <div id="vlKeno" hidden></div>
     </div>
     <div class="card c12">
      <h2>Dò vé Vietlott</h2>
@@ -508,6 +522,7 @@ p{margin:0 0 10px;max-width:72ch}
      <div class="seg" id="vlWin" role="group" aria-label="Khung thời gian"><span class="lab">Trong</span></div>
      <div class="vlg" id="vlFreq"></div>
     </div>
+    <div class="card c12" id="vlKS" style="display:none"></div>
     <div class="card c6" id="vlHot"></div>
     <div class="card c6" id="vlGan"></div>
     <div class="card c12"><h2>Sổ kết quả gần đây</h2><p class="sub">Bấm một kỳ để xem ở bảng phía trên.</p><div class="book" id="vlBook"></div></div>
@@ -775,7 +790,7 @@ p{margin:0 0 10px;max-width:72ch}
 <nav class="tab" id="tab" aria-label="Điều hướng"></nav>
 <div class="sheet" id="sheet" role="dialog" aria-label="Các mục khác"><div id="sheetIn"></div></div>
 <script>var XS_ROOT='../';var XS_PAGE={"view": "vietlott", "game": "keno"};</script>
-<script src="../core.js?v=202611240151"></script>
+<script src="../core.js?v=202611240157"></script>
 <script>
 {
 const VIEWS=[['ket-qua','Kết quả','i-home'],['truc-tiep','Trực tiếp','i-live'],['do-ve','Dò vé','i-ticket'],['thong-ke','Thống kê','i-stats'],['vietlott','Vietlott','i-vl'],['thong-ke-dan','Thống kê dàn','i-target'],['ban-do','Bản đồ số','i-grid'],['kiem-dinh','Kiểm định','i-chart'],['mo-phong','Mô phỏng','i-wallet'],['ve-du-lieu','Về dữ liệu','i-info']];
@@ -1400,6 +1415,7 @@ function vlNav(rows,redraw){const N2=rows.length;if(VL.ky===null||!rows.some(r=>
 function vlBook(rows,redraw,fmt1){$('vlBook').innerHTML=rows.slice(-10).reverse().map(x=>`<a href="#vietlott" data-ky="${x.ky}"><div><b>#${String(x.ky).padStart(5,'0')}</b><br><small>${wd(x.date)}, ${vnDate(x.date)}</small></div><div class="chipline">${fmt1(x)}</div></a>`).join('');
  $('vlBook').querySelectorAll('a').forEach(a=>a.onclick=ev=>{ev.preventDefault();VL.ky=+a.dataset.ky;redraw(rows);$('vlT').scrollIntoView({behavior:'smooth',block:'start'});});}
 function vlDraw(rows){
+ $('vlNavRow').style.display='';$('vlKeno').hidden=true;$('vlKS').style.display='none';
  const g=VL.g,G=VLG[g],mx=G.mx,N2=rows.length;if(!N2)return;
  $('vlFormS').textContent='Nhập 6 số trên vé, ngăn cách bằng dấu phẩy hoặc dấu cách. App dò với kỳ đang chọn ở trên và đếm bộ số này đã trùng bao nhiêu số ở các kỳ trong quá khứ.';$('vlIn').placeholder='05, 12, 23, 34, 40, 44';
  const {i,r}=vlNav(rows,vlDraw);$('vlFreq').style.gridTemplateColumns='';
@@ -1424,6 +1440,7 @@ function vlDraw(rows){
  vlBook(rows,vlDraw,x=>x.n.map(k=>`<b>${pad(k)}</b>`).join(' ')+(g==='655'&&x.db?` <span>| ĐB <b style="color:#b08000">${pad(x.db)}</b></span>`:''));}
 /* Max 3D, Max 3D Pro */
 function vlDraw3(rows){
+ $('vlNavRow').style.display='';$('vlKeno').hidden=true;$('vlKS').style.display='none';
  const g=VL.g,G=VLG[g],N2=rows.length,pro=g==='3dpro';if(!N2)return;const {i,r}=vlNav(rows,vlDraw3);
  $('vlT').textContent=`${G.nm} · kỳ #${String(r.ky).padStart(5,'0')} · ${wd(r.date)}, ${vnDate(r.date)}`;
  $('vlBalls').innerHTML=`<div class="tbl" style="width:100%"><table><tbody>${G3.map(([k,nm])=>`<tr><td class="left" style="width:120px"><b>${nm}</b></td><td class="left" style="font-size:20px;letter-spacing:1px">${r[k].map(x=>`<b style="color:var(--red);margin-right:14px;display:inline-block">${x}</b>`).join('')}</td></tr>`).join('')}</tbody></table></div>`;
@@ -1464,25 +1481,72 @@ function vlCheck3(rows,silent){
   return `<div class="dvone${notes.length?' win':''}"><h4>${a} ${b}</h4>${notes.length?`<ul>${notes.map(x=>`<li>${x}</li>`).join('')}</ul>`:'<p class="note" style="margin:0">Không bộ số nào trùng kết quả kỳ này.</p>'}</div>`;}).join('');
  $('vlOut').innerHTML=`<div class="vlres"><p class="note" style="margin:0">Kỳ #${kp} (${vnDate(r.date)}).${pro?' Giá trị từng hạng giải và các trường hợp trúng nhiều giải xem trong thể lệ Max 3D Pro của Vietlott.':' Giá trị giải cho mỗi 10.000 đồng: Đặc biệt 1.000.000 đ, Nhất 350.000 đ, Nhì 210.000 đ, Ba 100.000 đ.'}</p>${html}<p class="note" style="margin:0">Đối chiếu với vé thật và kết quả chính thức do Vietlott công bố trước khi đi lĩnh thưởng.</p></div>`;}
 /* Keno */
+/* Keno: lịch quay suy ra từ dữ liệu: 119 kỳ/ngày, 8 phút/kỳ, kỳ đầu 06:08 */
+const KN={first:368,step:8,n:119,day:null,shown:12,timer:null};
+function knFirst(byDate,d){const y=byDate[XS.addDays(d,-1)];if(y&&y.length===KN.n)return Math.max(...y.map(x=>x.ky))+1;const t=byDate[d];if(t&&t.length===KN.n)return Math.min(...t.map(x=>x.ky));
+ const n=byDate[XS.addDays(d,1)];if(n&&n.length===KN.n)return Math.min(...n.map(x=>x.ky))-KN.n;return t?Math.min(...t.map(x=>x.ky)):null;}
+const knHM=i=>{const m=KN.first+KN.step*i;return pad(Math.floor(m/60))+':'+pad(m%60);};
+function knLB(n){const big=n.filter(k=>k>40).length,ev=n.filter(k=>k%2===0).length;return {big,ev,lb:big>10?'L':big<10?'B':'H',cl:ev>10?'C':ev<10?'Le':'H'};}
+function knFoot(n){const x=knLB(n);const lb=x.lb==='H'?`<span class="on hoa">Hòa lớn – bé</span><em>10 số 01–40 và 10 số 41–80</em>`:`<span class="${x.lb==='L'?'on':''}">Lớn</span><span class="${x.lb==='B'?'on':''}">Bé</span><em>${x.lb==='L'?x.big+' số lớn hơn 40':(20-x.big)+' số từ 01 đến 40'}</em>`;
+ const cl=x.cl==='H'?`<span class="on hoa">Hòa chẵn – lẻ</span><em>10 số chẵn và 10 số lẻ</em>`:`<span class="${x.cl==='C'?'on':''}">Chẵn</span><span class="${x.cl==='Le'?'on':''}">Lẻ</span><em>${x.cl==='C'?x.ev+' số chẵn':(20-x.ev)+' số lẻ'}</em>`;
+ return `<div class="kf">${lb}${cl}</div>`;}
 function vlDrawK(rows){
- const N2=rows.length;if(!N2)return;const {i,r}=vlNav(rows,vlDrawK);
- const ev=r.n.filter(k=>k%2===0).length,big=r.n.filter(k=>k>40).length;
- $('vlT').textContent=`Keno · kỳ #${String(r.ky).padStart(7,'0')} · ${wd(r.date)}, ${vnDate(r.date)}`;
- $('vlBalls').innerHTML=r.n.map(k=>`<div class="ball sm r">${pad(k)}</div>`).join('');
- $('vlNote').innerHTML=`Kỳ này: <b>${ev}</b> số chẵn, <b>${20-ev}</b> số lẻ · <b>${20-big}</b> số nhỏ (01–40), <b>${big}</b> số lớn (41–80). Keno quay ${VLG.keno.days} (119 kỳ mỗi ngày); mỗi kỳ chọn ngẫu nhiên 20 số từ 01 đến 80. App lưu ${vn(N2)} kỳ gần nhất (từ ${vnDate(rows[0].date)}).`;
- $('vlFormS').textContent='Nhập từ 1 đến 10 số (01–80) trên vé Keno, ngăn cách bằng dấu phẩy hoặc dấu cách. App đếm số trùng với kỳ đang chọn và với các kỳ đã lưu.';$('vlIn').placeholder='05, 18, 27, 44, 61';
+ const N2=rows.length;if(!N2)return;
+ const byDate={};for(const x of rows)(byDate[x.date]=byDate[x.date]||[]).push(x);const byKy=new Map(rows.map(x=>[x.ky,x]));
+ if(VL.ky===null||!byKy.has(VL.ky))VL.ky=rows[N2-1].ky;const r=byKy.get(VL.ky);
+ $('vlNavRow').style.display='none';$('vlKeno').hidden=false;$('vlKS').style.display='';$('vlBalls').innerHTML='';
+ $('vlT').textContent='Keno · kết quả theo ngày';
+ $('vlNote').innerHTML=`Keno quay 119 kỳ mỗi ngày, cách nhau 8 phút, từ 06:08 đến 21:52 (giờ quay suy ra từ dữ liệu); mỗi kỳ chọn ngẫu nhiên 20 số từ 01 đến 80. "Lớn" khi có hơn 10 số từ 41 đến 80, "Chẵn" khi có hơn 10 số chẵn, 10–10 là hòa. App lưu ${vn(N2)} kỳ gần nhất; dữ liệu Keno được cập nhật khoảng mỗi giờ nên các kỳ vừa quay có thể chưa có.`;
+ const now=nowVN(),dates=Object.keys(byDate).sort();if(!dates.includes(now.date))dates.push(now.date);
+ if(!KN.day||!dates.includes(KN.day))KN.day=now.date;
+ const d=KN.day,first=knFirst(byDate,d)??(knFirst(byDate,XS.addDays(d,-1))!=null?knFirst(byDate,XS.addDays(d,-1))+KN.n:null);
+ let upto=KN.n-1;if(d===now.date){const sec=(+now.time.slice(0,2)*3600+(+now.time.slice(3,5))*60+(+now.time.slice(6,8)));upto=Math.min(KN.n-1,Math.floor((sec-KN.first*60)/(KN.step*60)));}
+ const slots=[];if(first!=null)for(let i=upto;i>=0;i--)slots.push({i,ky:first+i,x:byKy.get(first+i)});
+ const have=slots.filter(s=>s.x).length;
+ $('vlKeno').innerHTML=`<div class="kcd" id="knCd"></div>
+  <div class="ktb"><label for="knDay" class="sub" style="margin:0">Ngày</label><select id="knDay">${dates.slice(-60).reverse().map(x=>`<option value="${x}">${wd(x)}, ${vnDate(x)}</option>`).join('')}</select><span class="sub" style="margin:0">${slots.length?`${have}/${slots.length} kỳ đã có dữ liệu`:'Chưa có kỳ nào'}</span></div>
+  <div id="knList">${slots.slice(0,KN.shown).map(s=>`<div class="kr${s.x&&s.ky===VL.ky?' sel':''}"><div class="kh">${s.x?`<button data-ky="${s.ky}">#${String(s.ky).padStart(7,'0')} · ${knHM(s.i)}</button><span>Bấm để dò vé kỳ này</span>`:`<b style="color:var(--mute)">#${String(s.ky).padStart(7,'0')} · ${knHM(s.i)}</b><span>chưa có dữ liệu</span>`}</div>
+   ${s.x?`<div class="kn">${s.x.n.map(k=>`<span>${pad(k)}</span>`).join('')}</div>${knFoot(s.x.n)}`:`<div class="kn kpend">${'<span>…</span>'.repeat(20)}</div>`}</div>`).join('')}</div>
+  ${slots.length>KN.shown?`<button class="copy" id="knMore">Xem thêm ${Math.min(12,slots.length-KN.shown)} kỳ</button>`:''}`;
+ $('knDay').value=d;$('knDay').onchange=()=>{KN.day=$('knDay').value;KN.shown=12;vlDrawK(rows);};
+ if($('knMore'))$('knMore').onclick=()=>{KN.shown+=12;vlDrawK(rows);};
+ $('knList').querySelectorAll('button[data-ky]').forEach(b=>b.onclick=()=>{VL.ky=+b.dataset.ky;vlDrawK(rows);$('vlIn').closest('.card').scrollIntoView({behavior:'smooth',block:'start'});});
+ // countdown
+ const todayFirst=knFirst(byDate,now.date)??(knFirst(byDate,XS.addDays(now.date,-1))!=null?knFirst(byDate,XS.addDays(now.date,-1))+KN.n:null);
+ const tick=()=>{const el=$('knCd');if(!el||curView()!=='vietlott'||VL.g!=='keno'){clearInterval(KN.timer);KN.timer=null;return;}const n=nowVN(),sec=+n.time.slice(0,2)*3600+(+n.time.slice(3,5))*60+(+n.time.slice(6,8));
+  let i=Math.ceil((sec-KN.first*60)/(KN.step*60)),tom=false;if(i<0)i=0;if(i>KN.n-1){i=0;tom=true;}
+  const at=(KN.first+KN.step*i)*60+(tom?86400:0),left=at-sec,ky=todayFirst!=null?todayFirst+i+(tom?KN.n:0):null;
+  el.innerHTML=`<div><small>Kỳ quay Keno tiếp theo${ky?` · #${String(ky).padStart(7,'0')}`:''}</small><b>${tom?'Ngày mai ':''}${knHM(i)}</b></div><div><small>Đếm ngược</small><b class="t">${left>=3600?Math.floor(left/3600)+':':''}${pad(Math.floor(left%3600/60))}:${pad(left%60)}</b></div>`;};
+ clearInterval(KN.timer);tick();KN.timer=setInterval(tick,1000);
+ // dò vé
+ $('vlFormS').textContent=`Nhập từ 1 đến 10 số (01–80) trên vé Keno, ngăn cách bằng dấu phẩy hoặc dấu cách. App dò với kỳ #${String(r.ky).padStart(7,'0')} (bấm tên kỳ ở danh sách trên để đổi) và đếm số trùng ở các kỳ đã lưu.`;$('vlIn').placeholder='05, 18, 27, 44, 61';
  $('vlForm').onsubmit=e=>{e.preventDefault();vlCheckK(rows);};if($('vlIn').value.trim())vlCheckK(rows,true);else $('vlOut').innerHTML='';
+ // tần suất
  const W=[['100 kỳ',100],['500 kỳ',500],['1.000 kỳ',1000],['Tất cả đã lưu',1e9]];if(![100,500,1000,1e9].includes(VL.win))VL.win=500;seg($('vlWin'),W,VL.win,v=>{VL.win=v;vlDrawK(rows);});
  const win=rows.slice(Math.max(0,N2-VL.win)),c=new Array(81).fill(0);for(const x of win)for(const k of x.n)c[k]++;const e=win.length/4,cmax=Math.max(...c);
  $('vlFreq').style.gridTemplateColumns='';
- $('vlFS').textContent=`Số lần mỗi số xuất hiện trong ${vn(win.length)} kỳ gần nhất. Mỗi kỳ ra 20/80 số nên trung bình mỗi số về ${dec(e,0)} lần; số viền đỏ là số có mặt ở kỳ đang chọn.`;
+ $('vlFS').textContent=`Số lần mỗi số xuất hiện trong ${vn(win.length)} kỳ gần nhất. Mỗi kỳ ra 20/80 số nên trung bình mỗi số về ${dec(e,0)} lần; số viền đỏ là số có mặt ở kỳ đang chọn để dò.`;
  $('vlFreq').innerHTML=[...Array(80).keys()].map(j=>{const k=j+1;return `<div class="${r.n.includes(k)?'hi':''}" title="${pad(k)}: ${c[k]} lần"><i style="height:${(c[k]/cmax*100).toFixed(0)}%"></i><b>${pad(k)}</b><span>${c[k]}</span></div>`;}).join('');
  const ord=[...Array(80).keys()].map(j=>j+1).sort((a,b)=>c[b]-c[a]||a-b);const last=new Array(81).fill(-1);rows.forEach((x,ix)=>{for(const k of x.n)last[k]=ix;});
  const gan=[...Array(80).keys()].map(j=>j+1).map(k=>({k,g:N2-1-last[k]})).sort((a,b)=>b.g-a.g||a.k-b.k);
- let ce=0,cb=0,ch=0;for(const x of win){const e2=x.n.filter(k=>k%2===0).length,b2=x.n.filter(k=>k>40).length;if(e2>10)ce++;if(b2>10)cb++;if(e2===10)ch++;}
  const li=a=>`<div class="tbl"><table><tbody>${a}</tbody></table></div>`;
- $('vlHot').innerHTML=`<h2>Về nhiều nhất, ít nhất</h2><p class="sub">Trong ${vn(win.length)} kỳ gần nhất. Kỳ nhiều số chẵn hơn: ${ce}, hòa 10–10: ${ch}; kỳ nhiều số lớn hơn: ${cb}.</p>${li(ord.slice(0,5).map(k=>`<tr><td class="left"><b>${pad(k)}</b></td><td>${c[k]} lần</td><td class="left">nhiều</td></tr>`).join('')+ord.slice(-5).reverse().map(k=>`<tr><td class="left"><b>${pad(k)}</b></td><td>${c[k]} lần</td><td class="left">ít</td></tr>`).join(''))}`;
- $('vlGan').innerHTML=`<h2>Số lâu chưa về</h2><p class="sub">Số kỳ liên tiếp chưa xuất hiện tính đến kỳ mới nhất. Mỗi kỳ một số có xác suất về 25%, nên chuỗi 15–20 kỳ chưa về vẫn xảy ra thường xuyên.</p>${li(gan.slice(0,10).map(x=>`<tr><td class="left"><b>${pad(x.k)}</b></td><td>${x.g} kỳ</td></tr>`).join(''))}`;
+ $('vlHot').innerHTML=`<h2>Về nhiều nhất, ít nhất</h2><p class="sub">Trong ${vn(win.length)} kỳ gần nhất (trung bình ${dec(e,0)} lần).</p>${li(ord.slice(0,5).map(k=>`<tr><td class="left"><b>${pad(k)}</b></td><td>${c[k]} lần</td><td class="left">nhiều</td></tr>`).join('')+ord.slice(-5).reverse().map(k=>`<tr><td class="left"><b>${pad(k)}</b></td><td>${c[k]} lần</td><td class="left">ít</td></tr>`).join(''))}`;
+ $('vlGan').innerHTML=`<h2>Số lâu chưa về</h2><p class="sub">Số kỳ liên tiếp chưa xuất hiện tính đến kỳ mới nhất đã có dữ liệu. Mỗi kỳ một số có xác suất về 25%, nên chuỗi 15–20 kỳ chưa về vẫn xảy ra thường xuyên.</p>${li(gan.slice(0,10).map(x=>`<tr><td class="left"><b>${pad(x.k)}</b></td><td>${x.g} kỳ</td></tr>`).join(''))}`;
+ // thống kê chẵn lẻ, lớn bé
+ const C=vlComb,pHoa=C(40,10)*C(40,10)/C(80,20);
+ const days=Object.keys(byDate).sort().slice(-10).reverse();
+ const agg=a=>{const o={L:0,B:0,HL:0,C:0,Le:0,HC:0};for(const x of a){const q=knLB(x.n);o[q.lb==='H'?'HL':q.lb]++;o[q.cl==='H'?'HC':q.cl]++;}return o;};
+ const streak=(key)=>{let k=0,lab=null;for(let j=N2-1;j>=0;j--){const q=knLB(rows[j].n)[key];if(lab===null)lab=q;if(q!==lab)break;k++;}return {lab,k};};
+ const sLB=streak('lb'),sCL=streak('cl'),nm={L:'Lớn',B:'Bé',H:'Hòa',C:'Chẵn',Le:'Lẻ'};
+ const maxRun=(a,key)=>{let best={lab:null,k:0},cur=null,k=0;for(const x of a){const q=knLB(x.n)[key];if(q===cur)k++;else{cur=q;k=1;}if(k>best.k&&q!=='H')best={lab:q,k};}return best;};
+ const W2=agg(win),hist=new Array(21).fill(0);for(const x of win)hist[knLB(x.n).big]++;const hmax=Math.max(...hist);
+ $('vlKS').innerHTML=`<h2>Thống kê chẵn – lẻ, lớn – bé</h2>
+  <p class="sub">Theo xác suất, mỗi kỳ có khoảng ${fmt(pHoa,1)} khả năng hòa 10–10; còn lại chia đều cho hai bên (mỗi bên ≈ ${fmt((1-pHoa)/2,1)}).</p>
+  <div class="kpis" style="margin:10px 0"><div class="kpi"><b>${nm[sLB.lab]} ${sLB.k} kỳ</b><span>chuỗi lớn – bé hiện tại (tính đến kỳ mới nhất đã có)</span></div><div class="kpi"><b>${nm[sCL.lab]} ${sCL.k} kỳ</b><span>chuỗi chẵn – lẻ hiện tại</span></div><div class="kpi"><b>${fmt(W2.L/win.length,1)} · ${fmt(W2.B/win.length,1)}</b><span>Lớn · Bé trong ${vn(win.length)} kỳ (hòa ${fmt(W2.HL/win.length,1)})</span></div><div class="kpi"><b>${fmt(W2.C/win.length,1)} · ${fmt(W2.Le/win.length,1)}</b><span>Chẵn · Lẻ trong ${vn(win.length)} kỳ (hòa ${fmt(W2.HC/win.length,1)})</span></div></div>
+  <div class="tbl"><table><thead><tr><th class="left">Ngày</th><th>Số kỳ</th><th>Lớn</th><th>Bé</th><th>Hòa L–B</th><th>Chẵn</th><th>Lẻ</th><th>Hòa C–L</th><th>Chuỗi dài nhất</th></tr></thead><tbody>${days.map(dd=>{const a=byDate[dd].slice().sort((p,q)=>p.ky-q.ky),o=agg(a),m1=maxRun(a,'lb'),m2=maxRun(a,'cl');return `<tr><td class="left">${wd(dd)}, ${vnDate(dd)}</td><td>${a.length}</td><td>${o.L}</td><td>${o.B}</td><td>${o.HL}</td><td>${o.C}</td><td>${o.Le}</td><td>${o.HC}</td><td>${m1.lab?nm[m1.lab]+' '+m1.k:''}${m2.lab?' · '+nm[m2.lab]+' '+m2.k:''}</td></tr>`;}).join('')}</tbody></table></div>
+  <h3 style="font-size:15px;margin:16px 0 4px">Số lượng số lớn (41–80) mỗi kỳ, trong ${vn(win.length)} kỳ</h3>
+  <div class="dd" style="grid-template-columns:repeat(13,minmax(0,1fr));height:120px">${[...Array(13).keys()].map(j=>j+4).map(b=>`<div title="${b} số lớn: ${hist[b]} kỳ"><i style="height:${hmax?(hist[b]/hmax*100).toFixed(0):0}%;${b===10?'background:var(--ink)':''}"></i><span>${b}</span></div>`).join('')}</div>
+  <p class="note" style="margin-top:6px">Cột đậm là 10 (hòa). Bên trái là Bé, bên phải là Lớn.</p>`;
  vlBook(rows,vlDrawK,x=>x.n.map(pad).join(' '));}
 function vlCheckK(rows,silent){
  const nums=($('vlIn').value.match(/\d+/g)||[]).map(Number);$('vlErr').textContent='';
