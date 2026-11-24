@@ -97,6 +97,7 @@ Vào tab **Actions** → **Cập nhật XSMB hằng ngày** → **Run workflow**
 | `vietlott_*.csv`, `tools/update_vietlott.py` | Kết quả Vietlott Keno (6.000 kỳ gần nhất), Mega 6/45, Power 6/55, Max 3D, Max 3D Pro và script cập nhật (từ vietvudanh/vietlott-data) |
 | `xsmb/`, `xsmn/`, `xsmt/`, `truc-tiep-xsmb/`, `truc-tiep-xsmn/`, `truc-tiep-xsmt/`, `xsmb-30-ngay/`, `xsmn-30-ngay/`, `xsmt-30-ngay/`, `truc-tiep/`, `do-ve/`, `thong-ke/`, `thong-ke-dan/`, `vietlott/`, `keno/`, `mega-645/`, `power-655/`, `max-3d/`, `max-3d-pro/`, `ve-du-lieu/` | Trang con cho công cụ tìm kiếm (tiêu đề, mô tả, đường dẫn riêng), tạo từ cùng mã nguồn |
 | `robots.txt`, `sitemap.xml`, `rss.xml`, `tools/make_rss.py` | Cho công cụ tìm kiếm; nguồn RSS kết quả các kỳ gần nhất (tạo lại mỗi lần cập nhật) |
+| `xsmb/<ngày>/`, `xsmn/<ngày>/`, `xsmt/<ngày>/`, `xsmn/<đài>/`, `xsmt/<đài>/`, `*/thu-2/`…`*/chu-nhat/`, `*/so-ket-qua/`, `tools/make_pages.py` | Trang tĩnh cho SEO: kết quả từng ngày (giữ vĩnh viễn, mỗi ngày thêm trang mới), từng đài, theo thứ, sổ kết quả; tạo lại sitemap.xml mỗi lần cập nhật |
 | `hoi-dap/`, `mien-tru-trach-nhiem/`, `chinh-sach-bao-mat/`, `cookies/`, `rss/` | Hỏi đáp, tuyên bố miễn trừ trách nhiệm, chính sách bảo mật, chính sách cookie, hướng dẫn RSS |
 | `.github/workflows/update.yml` | Lịch chạy tự động |
 
