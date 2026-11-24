@@ -228,6 +228,14 @@ p{margin:0 0 10px;max-width:72ch}
 .mhead{display:none}
 @media(max-width:820px){.mhead{display:flex;align-items:center;justify-content:space-between;margin:-6px 0 10px}.mlogo{display:flex;align-items:center;gap:8px;color:var(--ink);text-decoration:none;font-size:18px}.mlogo svg{width:32px;height:32px}
 .mtheme{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--panel);display:grid;place-items:center;cursor:pointer;color:var(--ink)}.mtheme svg{width:20px;height:20px}}
+.nm i,.nm u{font-style:normal;text-decoration:none}html[data-dg="2"] .nm i,html[data-dg="2"] .nm u,html[data-dg="3"] .nm i{display:none}
+.dgsw{margin:10px 0 12px}.dgsw button{min-height:36px;font-size:13px}
+.lt4{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;margin-top:12px}.lt4 th{background:var(--band);font-size:12px;font-weight:600;padding:6px 4px;border:1px solid var(--line);color:var(--mute)}.lt4 td{border:1px solid var(--line);padding:5px 8px;text-align:left}.lt4 td.k{width:42px;text-align:center;color:var(--red);font-weight:700;background:var(--band)}.lt4 th:nth-child(3),.lt4 td:nth-child(3){text-align:right}.lt4 th:nth-child(2),.lt4 th:nth-child(3){width:calc(50% - 42px)}
+.loto{display:block!important}.lt h4{margin:0 0 2px}.lt .lt4{margin-top:4px;font-size:13px}.lt .lt4 td{padding:4px 5px}.lt .lt4 td.k{width:30px}
+#dvNum{width:100%;min-height:64px;resize:vertical;font:inherit;font-size:17px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--band);color:var(--ink);letter-spacing:.3px}
+.dvbtn{display:flex;gap:8px}.dvbtn button{flex:1}.dvbtn .ghost{background:var(--panel)!important;color:var(--ink)!important;border:1px solid var(--line)!important;flex:0 0 auto;padding:0 18px}
+.lch{display:flex;flex-wrap:wrap;gap:6px}.lch span{min-width:44px;text-align:center;padding:6px 8px;border-radius:10px;border:1px solid var(--line);background:var(--panel);font-weight:600;font-variant-numeric:tabular-nums;color:var(--mute)}.lch span.on{background:#d01f3c;border-color:#d01f3c;color:#fff}.lch sup{font-size:11px;margin-left:2px}
+.dvt{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px;background:var(--panel)}.dvt th,.dvt td{border:1px solid var(--line);padding:6px 8px;text-align:left}.dvt th{background:var(--band);font-size:13px}.dvt td:nth-child(1),.dvt td:nth-child(2){text-align:center;width:56px}.dvt b{color:var(--red)}
 .lvday ul{padding-left:20px;margin:0 0 12px}.lvday li{margin-bottom:5px}.lvday h3{font-size:16px;margin:16px 0 8px}.lvday table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;margin:4px 0 10px}.lvday th,.lvday td{border:1px solid var(--line);padding:6px 4px;text-align:center}.lvday th{background:var(--band);font-size:13px;font-weight:600}.lvday td b,.lvday li b{color:var(--red)}@media(max-width:600px){.lvday th,.lvday td{font-size:13px;padding:5px 2px}}
 .nav{overflow-y:auto;gap:2px}.nav h3{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--sidemute);margin:12px 12px 4px;font-weight:600}.nav h3:first-child{margin-top:0}.nav a{min-height:38px;font-size:14px}
 .sheet h3{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin:10px 10px 2px}.sheet>div{max-height:80vh;overflow-y:auto}
@@ -258,7 +266,7 @@ p{margin:0 0 10px;max-width:72ch}
 @media(max-width:600px){.mnb table{min-width:0;table-layout:fixed}.mnb th{font-size:12px;padding:7px 2px;line-height:1.3;word-break:break-word}.mnb td{font-size:14px;padding:6px 1px;letter-spacing:-.2px}
 .mnb th:first-child,.mnb td:first-child{width:30px;font-size:11px}.mnb tr.g8 td:not(:first-child){font-size:18px}.mnb tr.db td:not(:first-child){font-size:15px}
 .lvsched{gap:6px}.lvsched button{padding:8px}.lvsched b{font-size:14px}.lvsched span{font-size:11px}}
-.lt{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:12px}
+.lt{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px}
 .lt>div{border:1px solid var(--line);border-radius:10px;padding:8px 10px}
 .lt h4{margin:0 0 4px;font-size:14px}
 .lt p{margin:0;font-size:13px;font-variant-numeric:tabular-nums;display:grid;grid-template-columns:18px minmax(0,1fr);gap:6px;border-bottom:1px dashed var(--line);padding:2px 0}
@@ -381,6 +389,7 @@ p{margin:0 0 10px;max-width:72ch}
     <div class="card c7" id="rsCard">
      <h2 id="rsT">Kết quả</h2>
      <div class="datenav"><button id="rsPrev" aria-label="Kỳ trước">‹</button><input type="date" id="rsDate" aria-label="Chọn ngày"><button id="rsNext" aria-label="Kỳ sau">›</button><button id="rsLatest" style="padding:0 12px;font-weight:500">Mới nhất</button></div>
+     <div class="seg dgsw" role="group" aria-label="Cách hiển thị số"><button type="button" data-dg="0" aria-pressed="true">Đầy đủ</button><button type="button" data-dg="3" aria-pressed="false">3 số cuối</button><button type="button" data-dg="2" aria-pressed="false">2 số cuối</button></div>
      <div id="rsBoard"></div><!--/rsb-->
     </div>
     <div class="card c5" id="hlCard">
@@ -430,7 +439,7 @@ p{margin:0 0 10px;max-width:72ch}
      <div class="lvprog"><i id="lvProg" style="width:0"></i></div>
      <div class="acts" style="margin-top:12px"><button class="copy" id="lvRefresh">Làm mới</button><span class="sub" id="lvTime" style="align-self:center;margin:0"></span></div>
     </div>
-    <div class="card c12"><h2 id="lvBT">Bảng kết quả</h2><p class="sub" id="lvBS"></p><div id="lvBoard"></div></div>
+    <div class="card c12"><h2 id="lvBT">Bảng kết quả</h2><p class="sub" id="lvBS"></p><div class="seg dgsw" role="group" aria-label="Cách hiển thị số"><button type="button" data-dg="0" aria-pressed="true">Đầy đủ</button><button type="button" data-dg="3" aria-pressed="false">3 số cuối</button><button type="button" data-dg="2" aria-pressed="false">2 số cuối</button></div><div id="lvBoard"></div></div>
     <div class="card c12"><h2 id="lvInsT">Thống kê nổi bật của kỳ đang quay</h2><p class="sub" id="lvInsS">So các số vừa về với dữ liệu quá khứ đến hết kỳ trước của từng đài. Cập nhật theo từng giải.</p><div id="lvIns"></div></div>
     <div class="card c12"><h2>Lô tô đang về</h2><p class="sub">2 số cuối của các giải đã ra, xếp theo đầu. Cập nhật cùng bảng kết quả.</p><div id="lvLoto"></div></div>
     <!--LVDAY--><div class="card c12 doc lvday"><h2>Dữ liệu thống kê XSMN thứ Hai 23/11/2026</h2><p class="sub">So lô tô từng đài ngày 23/11/2026 với các kỳ trước của chính đài đó (mỗi đài quay 1 kỳ mỗi tuần).</p><h3>TP.HCM (kỳ thứ 1.934 trong dữ liệu)</h3><p>16 lô khác nhau; về lại sau gan dài nhất: <b>08</b> (18 kỳ của đài), <b>81</b> (8 kỳ của đài); nhiều nháy: 02, 08.</p><h3>Cà Mau (kỳ thứ 967 trong dữ liệu)</h3><p>17 lô khác nhau; về lại sau gan dài nhất: <b>41</b> (7 kỳ của đài), <b>69</b> (6 kỳ của đài); nhiều nháy: 57.</p><h3>Đồng Tháp (kỳ thứ 968 trong dữ liệu)</h3><p>18 lô khác nhau; về lại sau gan dài nhất: <b>42</b> (19 kỳ của đài), <b>15</b> (12 kỳ của đài).</p></div><div class="card c12 doc lvday"><h2>Dữ liệu thống kê XSMT thứ Hai 23/11/2026</h2><p class="sub">So lô tô từng đài ngày 23/11/2026 với các kỳ trước của chính đài đó (mỗi đài quay 1 kỳ mỗi tuần).</p><h3>Phú Yên (kỳ thứ 926 trong dữ liệu)</h3><p>15 lô khác nhau; về lại sau gan dài nhất: <b>83</b> (14 kỳ của đài), <b>29</b> (13 kỳ của đài); nhiều nháy: 35, 44, 34.</p><h3>Thừa Thiên Huế (kỳ thứ 1.179 trong dữ liệu)</h3><p>17 lô khác nhau; về lại sau gan dài nhất: <b>60</b> (23 kỳ của đài), <b>99</b> (21 kỳ của đài); nhiều nháy: 80.</p></div><div class="card c12 doc lvday"><h2>Dữ liệu thống kê XSMB thứ Hai 23/11/2026</h2><p class="sub">So kết quả XSMB ngày 23/11/2026 với 7.895 kỳ trước đó (từ 01/01/2005). Bảng tự tạo lại sau mỗi kỳ quay.</p><ul><li>Giải Đặc biệt <b>94495</b>; 2 số cuối 95 lần trước làm giải Đặc biệt ngày 19/03/2026 (249 kỳ trước).</li><li>23 lô khác nhau trên 27 giải; về nhiều nháy: <b>50</b> (2 nháy), <b>51</b> (2 nháy), <b>61</b> (2 nháy), <b>89</b> (2 nháy).</li><li>Về lại sau thời gian gan dài nhất: <b>23</b> (6 kỳ), <b>79</b> (6 kỳ), <b>24</b> (5 kỳ).</li><li>Đầu câm: không có · Đuôi câm: không có.</li><li>Lô kép: 00 · Cặp số đảo cùng về: 12 – 21, 36 – 63, 57 – 75.</li><li>Lô gan nhất sau kỳ này: <b>37</b> (21 kỳ), <b>55</b> (20 kỳ), <b>30</b> (18 kỳ), <b>18</b> (13 kỳ), <b>88</b> (12 kỳ).</li></ul></div><!--/LVDAY-->
@@ -503,13 +512,13 @@ p{margin:0 0 10px;max-width:72ch}
    <div class="grid">
     <div class="card c12">
      <h2>Dò vé số</h2>
-     <p class="sub" id="dvS">Chọn miền, đài, ngày quay rồi nhập số. Mỗi số từ 2 chữ số trở lên (2 chữ số là dò lô, đủ 5 hoặc 6 chữ số là dò cả vé); dò cùng lúc tối đa 17 số, ngăn cách bằng dấu phẩy. Dữ liệu đủ giải có cho 60 ngày gần nhất.</p>
+     <p class="sub" id="dvS">Chọn miền, ngày quay rồi nhập hoặc dán cả dàn số, ngăn cách bằng dấu cách, dấu phẩy hay xuống dòng (tối đa 100 số). Số 2 chữ số được dò với 2 số cuối mọi giải (miền Nam, miền Trung dò cả các đài trong ngày); số đủ 5 hoặc 6 chữ số được dò như vé thật. Dãy số được lưu trên máy bạn, lần sau mở lại tự dò với kỳ mới nhất.</p>
      <form class="dv" id="dvForm">
       <div><label for="dvReg">Miền</label><select id="dvReg"><option value="mb">XSMB</option><option value="mn">XSMN</option><option value="mt">XSMT</option></select></div>
       <div id="dvStW" style="display:none"><label for="dvSt">Đài</label><select id="dvSt"></select></div>
       <div><label for="dvDate">Ngày quay</label><select id="dvDate"></select></div>
-      <div style="grid-column:span 2;min-width:0"><label for="dvNum" id="dvNumL">Số trên vé</label><input id="dvNum" inputmode="numeric" autocomplete="off" placeholder="123456, 789, 45"></div>
-      <button>Dò vé</button>
+      <div style="grid-column:1/-1;min-width:0"><label for="dvNum" id="dvNumL">Số cần dò</label><textarea id="dvNum" inputmode="numeric" autocomplete="off" rows="2" placeholder="12, 34, 56"></textarea></div>
+      <div class="dvbtn"><button>Dò số</button><button type="button" class="ghost" id="dvClear">Xoá</button></div>
      </form>
      <div id="dvOut" aria-live="polite"></div>
      <p class="note" id="dvRule" style="margin-top:14px"></p>
@@ -1089,6 +1098,8 @@ function renderHighlights(){
  $('hlS').textContent=`So các số của kỳ này với dữ liệu ${R.region==='mb'?'XSMB':'đài '+ST[st]} đến hết kỳ trước (${i>0?vnDate(S2.dates[i-1]):'—'}).`;
  const two=rows[i].two;$('hlOut').innerHTML=html+drawStats(S2,rows,i-1,countsOf(two),two.slice(0,2),S2.m,S2.m);
  $('hlOut').querySelectorAll('button[data-hs]').forEach(b=>b.onclick=()=>{hl.st=b.dataset.hs;renderHighlights();});}
+function nsp(n,cls){return `<span class="nm${cls?' '+cls:''}"><i>${n.slice(0,-3)}</i><u>${n.length>2?n.slice(-3,-2):''}</u><b>${n.slice(-2)}</b></span>`;}
+function lotoT(arr){const H=[...Array(10)].map(()=>[]),T=[...Array(10)].map(()=>[]);for(const k of [...arr].sort((p,q)=>p-q)){H[Math.floor(k/10)].push(k%10);T[k%10].push(Math.floor(k/10));}return `<table class="lt4"><thead><tr><th>Đầu</th><th>Đuôi</th><th>Đầu</th><th>Đuôi</th></tr></thead><tbody>${H.map((h,i)=>`<tr><td class="k">${i}</td><td>${h.join(', ')||'–'}</td><td>${T[i].join(', ')||'–'}</td><td class="k">${i}</td></tr>`).join('')}</tbody></table>`;}
 function lotoHeads(arr){const h=[...Array(10)].map(()=>[]);for(const k of arr)h[Math.floor(k/10)].push(k%10);return h;}
 function renderBoard(){
  const RD=regionDates();if(!rs.date||!RD.includes(rs.date))rs.date=RD[RD.length-1];
@@ -1100,17 +1111,17 @@ function renderBoard(){
  if(R.region==='mb'){
   $('rsT').textContent=`XSMB ${wd(d)}, ${vnDate(d)}`;const lvr=REC_MB.find(x=>x.date===d&&x.live);
   const rec=REC_MB.find(x=>x.date===d),ix=dates.indexOf(d);const lo=[];for(let k=0;k<100;k++)for(let c=0;c<cnt[ix*100+k];c++)lo.push(k);
-  const board=rec?`<div class="ticket">${MB_G.map(([lb,g])=>`<div class="row ${g==='db'?'db':''}"><div class="lb">${lb}</div><div class="nums">${rec[g].map(n=>`<span>${n.slice(0,-2)}<b>${n.slice(-2)}</b></span>`).join('')}</div></div>`).join('')}</div>`:`<p class="note">Bảng đủ giải chỉ lưu 60 kỳ gần nhất; kỳ này hiện lô tô 27 giải.</p>`;
+  const board=rec?`<div class="ticket">${MB_G.map(([lb,g])=>`<div class="row ${g==='db'?'db':''}"><div class="lb">${lb}</div><div class="nums">${rec[g].map(n=>nsp(n)).join('')}</div></div>`).join('')}</div>`:`<p class="note">Bảng đủ giải chỉ lưu 60 kỳ gần nhất; kỳ này hiện lô tô 27 giải.</p>`;
   const hd=lotoHeads(lo);
-  $('rsBoard').innerHTML=(lvr?'<p class="note" style="margin:0 0 8px"><span class="pchip hi">Từ trực tiếp · chờ đối chiếu</span></p>':'')+board+`<div class="loto">${hd.map((a,j)=>`<div><b>${j}</b><span>${a.length?a.join(', '):'–'}</span></div>`).join('')}</div>`;
+  $('rsBoard').innerHTML=(lvr?'<p class="note" style="margin:0 0 8px"><span class="pchip hi">Từ trực tiếp · chờ đối chiếu</span></p>':'')+board+`<div class="loto">${lotoT(lo)}</div>`;
  }else{
   const sts=Object.keys(RG().by).filter(s=>RG().idx[s][d]!==undefined).sort((a,b)=>(a==='tp-hcm'?-1:b==='tp-hcm'?1:ST[a].localeCompare(ST[b],'vi')));
   $('rsT').textContent=`${RLAB[R.region]} ${wd(d)}, ${vnDate(d)}`;
   const full=sts.map(s=>RG().rec.find(x=>x.date===d&&x.station===s));
   let html;
-  if(full.every(Boolean)){html=`<div class="mnb"><table><thead><tr><th>Giải</th>${sts.map(s=>`<th class="${s===R.st?'sel':''}">${ST[s]}</th>`).join('')}</tr></thead><tbody>${MN_G.map(([lb,g])=>`<tr class="${g}"><td>${lb}</td>${full.map(f=>`<td>${f[g].map(n=>`<span>${n.slice(0,-2)}<b>${n.slice(-2)}</b></span>`).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
+  if(full.every(Boolean)){html=`<div class="mnb"><table><thead><tr><th>Giải</th>${sts.map(s=>`<th class="${s===R.st?'sel':''}">${ST[s]}</th>`).join('')}</tr></thead><tbody>${MN_G.map(([lb,g])=>`<tr class="${g}"><td>${lb}</td>${full.map(f=>`<td>${f[g].map(n=>nsp(n)).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
   else html=`<p class="note">Bảng đủ giải chỉ lưu 60 ngày gần nhất; ngày này hiện lô tô.</p>`;
-  html+=`<div class="lt">${sts.map(s=>{const two=RG().by[s][RG().idx[s][d]].two,lo=[];for(let j=0;j<36;j+=2)lo.push(+two.substr(j,2));lo.sort((a,b)=>a-b);return `<div><h4>${ST[s]}</h4>${lotoHeads(lo).map((a,j)=>`<p><b>${j}</b><span>${a.length?a.join(', '):'–'}</span></p>`).join('')}</div>`;}).join('')}</div>`;
+  html+=`<div class="lt">${sts.map(s=>{const two=RG().by[s][RG().idx[s][d]].two,lo=[];for(let j=0;j<36;j+=2)lo.push(+two.substr(j,2));lo.sort((a,b)=>a-b);return `<div><h4>${ST[s]}</h4>${lotoT(lo)}</div>`;}).join('')}</div>`;
   if(full.some(f=>f&&f.live))html='<p class="note" style="margin:0 0 8px"><span class="pchip hi">Có kết quả từ trực tiếp · chờ đối chiếu</span></p>'+html;
   $('rsBoard').innerHTML=html;}}
 function renderBook(){
@@ -1488,7 +1499,7 @@ function renderDoVe(){
   $('dvReg').onchange=()=>{dv.reg=$('dvReg').value;dv.st=null;dv.date=null;renderDoVe();};
   $('dvSt').onchange=()=>{dv.st=$('dvSt').value;dv.date=null;renderDoVe();};
   $('dvDate').onchange=()=>{dv.date=$('dvDate').value;};
-  autoSep($('dvNum'));
+  autoSep($('dvNum'));if(!dv.num){dv.num=store.get('xs-dvnum','');$('dvNum').value=dv.num;}$('dvNum').addEventListener('input',()=>store.set('xs-dvnum',$('dvNum').value));$('dvClear').onclick=()=>{$('dvNum').value='';dv.num='';store.set('xs-dvnum','');$('dvOut').innerHTML='';$('dvNum').focus();};
   f.onsubmit=e=>{e.preventDefault();dv.date=$('dvDate').value;dv.num=$('dvNum').value;checkTicket();};}
  if(!dv.reg)dv.reg=R.region;if(dv.reg!=='mb'&&!RAW[dv.reg])dv.reg='mb';
  $('dvReg').value=dv.reg;const recs=dvRecs(),L=dv.reg==='mb'?5:6;
@@ -1498,7 +1509,7 @@ function renderDoVe(){
  const ds2=recs.filter(r=>dv.reg==='mb'||r.station===dv.st).map(r=>r.date).sort().reverse();
  if(!dv.date||!ds2.includes(dv.date))dv.date=ds2[0];
  $('dvDate').innerHTML=ds2.map(d=>`<option value="${d}">${wd(d)}, ${vnDate(d)}</option>`).join('');if(dv.date)$('dvDate').value=dv.date;
- $('dvNum').placeholder=L===5?'12345, 678, 90':'123456, 789, 45';$('dvNumL').textContent=`Số cần dò (2–${L} chữ số, tối đa 17 số)`;
+ $('dvNum').placeholder=L===5?'12345, 678, 90':'123456, 789, 45';$('dvNumL').textContent=`Số cần dò: 2 chữ số (dò lô tô) hoặc 3–${L} chữ số (dò vé), tối đa 100 số`;
  $('dvRule').innerHTML=dv.reg==='mb'?'Cách dò XSMB: giải Đặc biệt, Nhất, Nhì, Ba trùng cả 5 số; giải Tư, Năm trùng 4 số cuối; giải Sáu trùng 3 số cuối; giải Bảy trùng 2 số cuối. Trùng 5 số giải Đặc biệt nhưng khác ký hiệu vé là giải phụ; trùng 2 số cuối giải Đặc biệt là giải khuyến khích. Vé trúng nhiều giải được lĩnh tất cả. '+'<b>Vui lòng kiểm tra lại kết quả chính thức được công bố bởi các công ty xổ số kiến thiết.</b>':
   'Cách dò XSMN, XSMT (vé 6 chữ số): giải Đặc biệt trùng cả 6 số; giải Nhất đến giải Tư trùng 5 số cuối; giải Năm, Sáu trùng 4 số cuối; giải Bảy trùng 3 số cuối; giải Tám trùng 2 số cuối. Giải phụ đặc biệt: trùng 5 số cuối giải Đặc biệt, sai chữ số đầu. Giải khuyến khích: đúng chữ số đầu và sai đúng 1 trong 5 chữ số còn lại của giải Đặc biệt. Vé trúng nhiều giải được lĩnh tất cả. '+'<b>Vui lòng kiểm tra lại kết quả chính thức được công bố bởi các công ty xổ số kiến thiết.</b>';
  if(dv.num)checkTicket();else $('dvOut').innerHTML='';}
@@ -1511,17 +1522,31 @@ function ticketWins(num,rec){
    else if(num[0]===db[0]){let df=0;for(let i=1;i<6;i++)if(num[i]!==db[i])df++;if(df===1)win.push(`<b>Giải khuyến khích</b> — sai 1 chữ số so với giải Đặc biệt (${db})`);}}}
  else if(dv.reg==='mb'&&n>=2&&n<5&&num.slice(-2)===db.slice(-2))win.push(`<b>Giải khuyến khích</b> — trùng 2 số cuối giải Đặc biệt (${db})`);
  return {win,near};}
+function dvLo(num,rec){const G=dv.reg==='mb'?DV_MB:DV_MN,hit=[];for(const [g,nm] of G)for(const v of rec[g])if(v.slice(-2)===num)hit.push(nm.replace('Giải ',''));return hit;}
 function checkTicket(){
  const recs=dvRecs(),rec=recs.find(r=>r.date===dv.date&&(dv.reg==='mb'||r.station===dv.st)),L=dv.reg==='mb'?5:6,out=$('dvOut');
  if(!rec){out.innerHTML='<div class="dvres"><p class="note" style="margin:0">Chưa có kết quả đủ giải cho ngày này.</p></div>';return;}
- const parts=dv.num.split(/[,;\n]+/).map(x=>x.replace(/\s+/g,'')).filter(Boolean);
- const bad=parts.filter(x=>!new RegExp('^\\d{2,'+L+'}$').test(x));
- if(!parts.length||bad.length||parts.length>17){out.innerHTML=`<div class="dvres"><p class="note" style="margin:0;color:var(--red)">${parts.length>17?`Tối đa 17 số mỗi lần dò (đang có ${parts.length}).`:bad.length?`Số không hợp lệ: ${bad.slice(0,5).join(', ')}. Mỗi số gồm 2 đến ${L} chữ số.`:'Nhập ít nhất một số.'}</p></div>`;return;}
- const where2=dv.reg==='mb'?'XSMB':`${RLAB[dv.reg]} ${ST[dv.st]}`,live=rec.live?' <span class="pchip hi">kết quả từ trực tiếp, chờ đối chiếu</span>':'';
- const res=[...new Set(parts)].map(num=>({num,...ticketWins(num,rec)})),nw=res.filter(r=>r.win.length).length;
- out.innerHTML=`<div class="dvres${nw?' win':''}"><h3>${res.length} số · ${nw?nw+' số trùng giải':'không số nào trùng giải'}</h3><p class="note" style="margin:0">${where2} · ${wd(dv.date)}, ${vnDate(dv.date)}${live}</p>
+ const parts=[...new Set((dv.num||'').split(/[^\d]+/).filter(Boolean))];
+ const bad=parts.filter(x=>x.length<2||x.length>L);
+ if(!parts.length||bad.length||parts.length>100){out.innerHTML=`<div class="dvres"><p class="note" style="margin:0;color:var(--red)">${parts.length>100?`Tối đa 100 số mỗi lần dò (đang có ${parts.length}).`:bad.length?`Số không hợp lệ: ${bad.slice(0,5).join(', ')}. Mỗi số gồm 2 đến ${L} chữ số.`:'Nhập ít nhất một số.'}</p></div>`;return;}
+ const live=rec.live?' <span class="pchip hi">kết quả từ trực tiếp, chờ đối chiếu</span>':'',day=`${wd(dv.date)}, ${vnDate(dv.date)}`;let html='';
+ const twos=parts.filter(x=>x.length===2),tix=parts.filter(x=>x.length>2);
+ if(twos.length){
+  const recsDay=dv.reg==='mb'?[rec]:recs.filter(r=>r.date===dv.date).sort((x,y)=>(x.station==='tp-hcm'?-1:y.station==='tp-hcm'?1:ST[x.station].localeCompare(ST[y.station],'vi')));
+  const res=twos.map(n=>{const by=recsDay.map(r=>({s:r.station,h:dvLo(n,r)})).filter(x=>x.h.length);return {n,by,c:by.reduce((t,x)=>t+x.h.length,0)};});
+  const on=res.filter(r=>r.c),tot=on.reduce((t,r)=>t+r.c,0);
+  const where=dv.reg==='mb'?'XSMB':`${recsDay.length} đài ${RLAB[dv.reg]} (${recsDay.map(r=>ST[r.station]).join(', ')})`;
+  html+=`<div class="dvres${on.length?' win':''}"><h3>Dò 2 số cuối: ${on.length}/${res.length} số có mặt${tot?` · ${tot} nháy`:''}</h3><p class="note" style="margin:0 0 10px">${where} · ${day}${live}</p>
+  <div class="lch">${res.map(r=>`<span class="${r.c?'on':''}">${r.n}${r.c>1?`<sup>×${r.c}</sup>`:''}</span>`).join('')}</div>
+  ${on.length?`<table class="dvt"><thead><tr><th>Số</th><th>Nháy</th><th>Về ở giải</th></tr></thead><tbody>${on.sort((x,y)=>y.c-x.c||x.n.localeCompare(y.n)).map(r=>`<tr><td><b>${r.n}</b></td><td>${r.c}</td><td>${r.by.map(x=>(dv.reg==='mb'?'':`<b>${ST[x.s]}</b>: `)+x.h.join(', ')).join(' · ')}</td></tr>`).join('')}</tbody></table>`:''}
+  <p class="note" style="margin:10px 0 0">Số có 2 chữ số được so với 2 số cuối của tất cả các giải${dv.reg==='mb'?'':' ở mọi đài quay ngày này'}. Muốn biết vé có trúng thưởng không, hãy nhập đủ ${L} chữ số của vé.</p></div>`;}
+ if(tix.length){
+  const where2=dv.reg==='mb'?'XSMB':`${RLAB[dv.reg]} ${ST[dv.st]}`;
+  const res=tix.map(num=>({num,...ticketWins(num,rec)})),nw=res.filter(r=>r.win.length).length;
+  html+=`<div class="dvres${nw?' win':''}"><h3>Dò vé: ${res.length} số · ${nw?nw+' số trùng giải':'không số nào trùng giải'}</h3><p class="note" style="margin:0">${where2} · ${day}${live}</p>
   ${res.map(r=>`<div class="dvone${r.win.length?' win':''}"><h4>${r.num} · ${r.win.length?'trùng '+r.win.length+' giải':'không trùng giải'}</h4>${r.win.length||r.near.length?`<ul>${r.win.map(x=>`<li>${x}</li>`).join('')}${r.near.map(x=>`<li class="note">${x}</li>`).join('')}</ul>`:''}</div>`).join('')}
   ${nw?'<p class="note" style="margin:10px 0 0">Đối chiếu với vé thật và kết quả chính thức của công ty xổ số kiến thiết trước khi đi lĩnh thưởng.</p>':''}</div>`;}
+ out.innerHTML=html;}
 
 /* ---------- Vietlott ---------- */
 const VL={g:(window.XS_PAGE&&XS_PAGE.game)||store.get('xs-vl','645'),data:{},ky:null,win:100,loading:null};
@@ -1752,6 +1777,8 @@ function renderAbout(){
 /* ---------- theme ---------- */
 const THEMES=[['auto','Tự động'],['light','Sáng'],['dark','Tối']];let theme=store.get('xs-theme','auto');
 function applyTheme(){if(theme==='auto')delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme=theme;const l='Giao diện: '+THEMES.find(x=>x[0]===theme)[1];$('themeBtn').textContent=l;const sb=document.getElementById('sheetTheme');if(sb)sb.querySelector('span').textContent=l;}
+let DG=store.get('xs-dg','0');function applyDG(){if(DG==='0')delete document.documentElement.dataset.dg;else document.documentElement.dataset.dg=DG;document.querySelectorAll('.dgsw button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.dg===DG));}
+document.addEventListener('click',e=>{const b=e.target.closest('.dgsw button');if(!b)return;DG=b.dataset.dg;store.set('xs-dg',DG);applyDG();});applyDG();
 function cycleTheme(){const i=THEMES.findIndex(x=>x[0]===theme);theme=THEMES[(i+1)%3][0];store.set('xs-theme',theme);applyTheme();}
 $('themeBtn').onclick=cycleTheme;document.querySelectorAll('.mtheme').forEach(b=>b.onclick=cycleTheme);applyTheme();
 
@@ -1823,15 +1850,15 @@ function lvRender(){
  const last=items.map(x=>x.d&&x.d.at).filter(Boolean).sort().pop();
  $('lvTime').textContent=[todayAll||phase!=='before'?`Đã ra ${done}/${tot} giải`:'',last?`cập nhật lúc ${last}`:''].filter(Boolean).join(' · ');
  if(LV.failed&&!items.some(x=>x.d)){$('lvBoard').innerHTML=`<p class="note">Mở trang trực tiếp: <a href="https://www.xoso.net/xo-so-truc-tiep.html" style="color:var(--red)">xoso.net/xo-so-truc-tiep.html</a></p>`;$('lvLoto').innerHTML='';return;}
- const cellHTML=(key,g,i,v)=>{if(!v)return '<span class="pend">• • •</span>';const id=`${key}|${g}|${i}`,isNew=LV.seen[id]!==v;LV.seen[id]=v;return `<span class="${isNew&&LV.seen.__init?'flash':''}">${v.slice(0,-2)}<b>${v.slice(-2)}</b></span>`;};
+ const cellHTML=(key,g,i,v)=>{if(!v)return '<span class="pend">• • •</span>';const id=`${key}|${g}|${i}`,isNew=LV.seen[id]!==v;LV.seen[id]=v;return nsp(v,isNew&&LV.seen.__init?'flash':'');};
  $('lvBT').textContent=`Bảng kết quả ${RLAB[reg]}`;
  const dnote=items.filter(x=>x.d&&x.d.date!==n.date).map(x=>`${reg==='mb'?'XSMB':ST[x.s]}: đang hiện kỳ ${x.d.date?vnDate(x.d.date):'trước'}`);
  const mn2=(LV.notes||[]).filter(x=>x.r===reg).map(x=>x.m);$('lvBS').textContent=[dnote.length?dnote.join(' · ')+'.':'',...mn2].filter(Boolean).join(' ');
  if(reg==='mb'){const d=items[0]&&items[0].d;
   $('lvBoard').innerHTML=d?`<div class="ticket">${G.map(([lb,g])=>`<div class="row ${g==='db'?'db':''}"><div class="lb">${lb}</div><div class="nums">${d.pr[g].map((v,i)=>cellHTML('mien-bac',g,i,v)).join('')}</div></div>`).join('')}</div>`:'<p class="note">Đang tải…</p>';}
  else{$('lvBoard').innerHTML=items.length?`<div class="mnb"><table><thead><tr><th>Giải</th>${items.map(x=>`<th>${ST[x.s]}${x.d&&x.d.ve?`<br><small style="font-weight:400">${x.d.ve}</small>`:''}</th>`).join('')}</tr></thead><tbody>${G.map(([lb,g,c])=>`<tr class="${g}"><td>${lb}</td>${items.map(x=>`<td>${x.d?x.d.pr[g].map((v,i)=>cellHTML(x.s,g,i,v)).join(''):'<span class="pend">• • •</span>'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:'<p class="note">Hôm nay không có đài nào quay.</p>';}
- const loto=x=>{const a=[];if(x.d)for(const [,g] of G)for(const v of x.d.pr[g])if(v)a.push(+v.slice(-2));a.sort((p,q)=>p-q);const h=[...Array(10)].map(()=>[]);for(const k of a)h[Math.floor(k/10)].push(k%10);return h;};
- $('lvLoto').innerHTML=`<div class="lt">${items.map(x=>`<div><h4>${reg==='mb'?'XSMB':ST[x.s]}</h4>${loto(x).map((a,j)=>`<p><b>${j}</b><span>${a.length?a.join(', '):'–'}</span></p>`).join('')}</div>`).join('')}</div>`;
+ const loto=x=>{const a=[];if(x.d)for(const [,g] of G)for(const v of x.d.pr[g])if(v)a.push(+v.slice(-2));return a;};
+ $('lvLoto').innerHTML=`<div class="lt">${items.map(x=>`<div><h4>${reg==='mb'?'XSMB':ST[x.s]}</h4>${lotoT(loto(x))}</div>`).join('')}</div>`;
  if(items.some(x=>x.d))LV.seen.__init=true;
  lvInsights(reg,items,n);
  for(const x of items)if(x.d&&x.d.date===n.date&&x.d.done===x.d.tot&&n.min>=LVWIN[reg][0])lvMerge(reg,x.s,x.d);}

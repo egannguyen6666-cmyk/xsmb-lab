@@ -147,7 +147,7 @@ p{margin:0 0 10px}.note{color:var(--mute);font-size:14px}
 table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}th,td{border:1px solid var(--line);padding:7px 6px;text-align:center}th{background:var(--band);font-size:14px;font-weight:600}
 td.l{width:48px;color:var(--mute);font-weight:600;background:var(--band);font-size:13px}td span{display:inline-block;margin:2px 8px;font-size:18px;font-weight:600}td b{color:var(--red)}
 tr.db td span,tr.g8 td span{font-size:22px;font-weight:700;color:var(--red)}
-.lt td{text-align:left}.lt td:first-child{width:44px;text-align:center;color:var(--red);font-weight:700}
+.lt td{text-align:left}.lt td:first-child,.lt td.k{width:44px;text-align:center;color:var(--red);font-weight:700;background:var(--band)}.lt td.r{text-align:right}
 .pn{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:10px 0}.pn a{text-decoration:none;font-weight:600}
 .cta{display:inline-flex;align-items:center;min-height:40px;background:#d01f3c;color:#fff!important;text-decoration:none;padding:0 16px;border-radius:999px;font-weight:600;font-size:14px;margin:4px 6px 4px 0}.cta:hover{background:#b3172f}
 ul.ls{columns:2;padding-left:18px}@media(min-width:700px){ul.ls{columns:4}}

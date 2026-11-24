@@ -75,9 +75,9 @@ def lotos(r, G): return sorted(int(v[-2:]) for _, g in G for v in r[g])
 
 
 def loto_table(lo):
-    h = [[] for _ in range(10)]
-    for k in lo: h[k // 10].append(str(k % 10))
-    return '<table class="lt"><tr><th>Đầu</th><th>Đuôi</th></tr>' + ''.join(f'<tr><td>{i}</td><td>{", ".join(x) or "–"}</td></tr>' for i, x in enumerate(h)) + '</table>'
+    H = [[] for _ in range(10)]; T = [[] for _ in range(10)]
+    for k in sorted(lo): H[k // 10].append(str(k % 10)); T[k % 10].append(str(k // 10))
+    return '<table class="lt"><tr><th>Đầu</th><th>Đuôi</th><th>Đầu</th><th>Đuôi</th></tr>' + ''.join(f'<tr><td>{i}</td><td>{", ".join(H[i]) or "–"}</td><td class="r">{", ".join(T[i]) or "–"}</td><td class="k">{i}</td></tr>' for i in range(10)) + '</table>'
 
 
 def facts(lo):
@@ -352,21 +352,26 @@ page("thong-ke/bang-thong-ke/", "Bảng thống kê xổ số XSMB, XSMN, XSMT �
 
 # ---------- hiện sẵn bảng kết quả mới nhất trong trang ứng dụng (tải nhanh, không nhảy bố cục) ----------
 WDV = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'CN']
+def nsp(n): return f'<span class="nm"><i>{n[:-3]}</i><u>{n[-3:-2] if len(n) > 2 else ""}</u><b>{n[-2:]}</b></span>'
+def lotoT(lo):
+    H = [[] for _ in range(10)]; T = [[] for _ in range(10)]
+    for k in sorted(lo): H[k // 10].append(str(k % 10)); T[k % 10].append(str(k // 10))
+    return '<table class="lt4"><thead><tr><th>Đầu</th><th>Đuôi</th><th>Đầu</th><th>Đuôi</th></tr></thead><tbody>' + ''.join(f'<tr><td class="k">{i}</td><td>{", ".join(H[i]) or "–"}</td><td>{", ".join(T[i]) or "–"}</td><td class="k">{i}</td></tr>' for i in range(10)) + '</tbody></table>'
 def heads(lo):
     h = [[] for _ in range(10)]
     for k in sorted(lo): h[k // 10].append(str(k % 10))
     return h
 def pre_mb():
     r = mb[-1]; d = r["date"]
-    b = '<div class="ticket">' + ''.join(f'<div class="row {"db" if g == "db" else ""}"><div class="lb">{lb}</div><div class="nums">' + ''.join(f'<span>{n[:-2]}<b>{n[-2:]}</b></span>' for n in r[g]) + '</div></div>' for lb, g in MB_G) + '</div>'
-    b += '<div class="loto">' + ''.join(f'<div><b>{j}</b><span>{", ".join(a) or "–"}</span></div>' for j, a in enumerate(heads(lotos(r, MB_G)))) + '</div>'
+    b = '<div class="ticket">' + ''.join(f'<div class="row {"db" if g == "db" else ""}"><div class="lb">{lb}</div><div class="nums">' + ''.join(nsp(n) for n in r[g]) + '</div></div>' for lb, g in MB_G) + '</div>'
+    b += '<div class="loto">' + lotoT(lotos(r, MB_G)) + '</div>'
     return f"XSMB {WDV[wdi(d)]}, {vn(d)}", b
 def pre_mn(fn, lab, sel):
     rec = json.load(open(os.path.join(ROOT, fn))); d = max(r["date"] for r in rec)
     rs = sorted([r for r in rec if r["date"] == d], key=lambda r: (r["station"] != "tp-hcm", ST.get(r["station"], "")))
     b = '<div class="mnb"><table><thead><tr><th>Giải</th>' + ''.join(f'<th class="{"sel" if r["station"] == sel else ""}">{ST.get(r["station"], r["station"])}</th>' for r in rs) + '</tr></thead><tbody>'
-    b += ''.join(f'<tr class="{g}"><td>{lb}</td>' + ''.join('<td>' + ''.join(f'<span>{n[:-2]}<b>{n[-2:]}</b></span>' for n in r[g]) + '</td>' for r in rs) + '</tr>' for lb, g in MN_G) + '</tbody></table></div>'
-    b += '<div class="lt">' + ''.join(f'<div><h4>{ST.get(r["station"], r["station"])}</h4>' + ''.join(f'<p><b>{j}</b><span>{", ".join(a) or "–"}</span></p>' for j, a in enumerate(heads(lotos(r, MN_G)))) + '</div>' for r in rs) + '</div>'
+    b += ''.join(f'<tr class="{g}"><td>{lb}</td>' + ''.join('<td>' + ''.join(nsp(n) for n in r[g]) + '</td>' for r in rs) + '</tr>' for lb, g in MN_G) + '</tbody></table></div>'
+    b += '<div class="lt">' + ''.join(f'<div><h4>{ST.get(r["station"], r["station"])}</h4>' + lotoT(lotos(r, MN_G)) + '</div>' for r in rs) + '</div>'
     return f"{lab} {WDV[wdi(d)]}, {vn(d)}", b
 PRE = {"mb": pre_mb(), "mn": pre_mn("recent_mn.json", "XSMN", "tp-hcm"), "mt": pre_mn("recent_mt.json", "XSMT", "da-nang")}
 for f, reg in (("index.html", "mb"), ("xsmb/index.html", "mb"), ("xsmb-30-ngay/index.html", "mb"), ("xsmn/index.html", "mn"), ("xsmn-30-ngay/index.html", "mn"), ("xsmt/index.html", "mt"), ("xsmt-30-ngay/index.html", "mt")):
