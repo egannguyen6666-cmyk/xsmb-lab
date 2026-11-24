@@ -1,4 +1,4 @@
-# XS Lab: kết quả & thống kê XSMB, XSMN (tự chạy trên GitHub, không cần Claude)
+# XS Lab: kết quả & thống kê XSMB, XSMN, XSMT (tự chạy trên GitHub, không cần Claude)
 
 Ứng dụng học xác suất thống kê với dữ liệu Xổ số miền Bắc. Bản này chạy miễn phí:
 - **GitHub Pages** lưu trang web để mở trên điện thoại và máy tính.
@@ -51,8 +51,16 @@ Vào tab **Actions** → **Cập nhật XSMB hằng ngày** → **Run workflow**
 - Dữ liệu từ 2008, gộp và đối chiếu 2 bộ dữ liệu mở (tuanseo5t-alt/xosomn-xosomt và Hpbt/xsmn-thong-ke).
 - Nhập tay XSMN khi nguồn chậm: tab Actions → Run workflow → điền ô mn_ngay, mn_dai (ví dụ tp-hcm) và mn_ket_qua (18 số theo thứ tự ĐB, G1, G2, G3×2, G4×7, G5, G6×3, G7, G8).
 
+## Miền Trung (XSMT)
+- Chọn **Miền Trung** ở góc trên rồi chọn đài (14 đài). Cách tính giống miền Nam (18 giải/đài, khung 10/26/52 kỳ).
+- Dữ liệu từ 2009, bộ dữ liệu mở tuanseo5t-alt/xosomn-xosomt. Nhập tay: ô mt_ngay, mt_dai, mt_ket_qua trong Run workflow.
+
+## Trực tiếp
+- Mục **Trực tiếp** hiện bảng quay số của cả 3 miền (16:15 Nam, 17:15 Trung, 18:15 Bắc), vẽ lại theo giao diện XS Lab từ mã nhúng miễn phí của Xổ Số Minh Ngọc.
+- Trang chỉ tải lại khoảng 5 giây một lần và chỉ trong khung giờ quay. Kết quả trực tiếp mang tính tham khảo.
+
 ## Lịch tự động
-- Chạy lúc **16:50** (sau XSMN), **18:40, 19:40 và 22:40** (sau XSMB) giờ Việt Nam. GitHub đôi khi chạy trễ 5–30 phút.
+- Chạy lúc **16:50** (sau XSMN), **17:50** (sau XSMT), **18:40, 19:40 và 22:40** (sau XSMB) giờ Việt Nam. GitHub đôi khi chạy trễ 5–30 phút.
 - Dữ liệu lấy từ 4 bộ dữ liệu mở trên GitHub, tự chọn bộ mới nhất. Các bộ này có hôm cập nhật chậm.
 - Kỳ quay kế tiếp được tính tự động, bỏ qua kỳ nghỉ Tết (từ 30 Tết đến hết mùng 3). Lịch Tết đã có sẵn đến năm 2040.
 
@@ -78,7 +86,8 @@ Vào tab **Actions** → **Cập nhật XSMB hằng ngày** → **Run workflow**
 | `tools/add_day.py` | Nhập tay một kỳ (có kiểm tra) |
 | `core.js` | Bộ tính toán chung cho trang web và script |
 | `xsmn.csv`, `recent_mn.json`, `predictions_mn.json` | Dữ liệu, kết quả đủ giải 60 ngày và nhật ký khóa trước của XSMN |
-| `tools/update_mn.py`, `tools/add_day_mn.py` | Tải/gộp dữ liệu XSMN, nhập tay một đài |
+| `xsmt.csv`, `recent_mt.json`, `predictions_mt.json` | Dữ liệu, kết quả đủ giải và nhật ký của XSMT |
+| `tools/update_mn.py`, `tools/add_day_mn.py` | Tải/gộp dữ liệu XSMN hoặc XSMT, nhập tay một đài |
 | `tools/predict.js` | Khóa danh sách (8 chỉ báo + Top 3) cho kỳ kế tiếp của XSMB và từng đài XSMN |
 | `.github/workflows/update.yml` | Lịch chạy tự động |
 

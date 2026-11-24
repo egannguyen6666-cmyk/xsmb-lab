@@ -1,9 +1,9 @@
-name: Cập nhật xổ số hằng ngày
+name: Cập nhật xổ số hằng ngày (XSMB, XSMN, XSMT)
 
 on:
   schedule:
-    # Giờ UTC. 09:50 = 16:50 VN (sau XSMN), 11:40 = 18:40 VN (sau XSMB), 12:40 = 19:40, 15:40 = 22:40
-    - cron: "50 9 * * *"
+    # Giờ UTC. 09:50 = 16:50 VN (sau XSMN), 10:50 = 17:50 VN (sau XSMT), 11:40 = 18:40 VN (sau XSMB), 12:40 = 19:40, 15:40 = 22:40
+    - cron: "50 9,10 * * *"
     - cron: "40 11,12,15 * * *"
   workflow_dispatch:
     inputs:
@@ -22,6 +22,15 @@ on:
       mn_ket_qua:
         description: "XSMN: 18 số theo thứ tự ĐB G1 G2 G3(2) G4(7) G5 G6(3) G7 G8"
         required: false
+      mt_ngay:
+        description: "Nhập tay XSMT (không bắt buộc): ngày quay"
+        required: false
+      mt_dai:
+        description: "XSMT: mã đài, ví dụ da-nang, khanh-hoa, thua-thien-hue, phu-yen, quang-nam, dak-lak"
+        required: false
+      mt_ket_qua:
+        description: "XSMT: 18 số theo thứ tự ĐB G1 G2 G3(2) G4(7) G5 G6(3) G7 G8"
+        required: false
 
 permissions:
   contents: write
@@ -35,17 +44,22 @@ jobs:
         run: python3 tools/update.py xsmb.csv
       - name: Tải dữ liệu XSMN
         run: python3 tools/update_mn.py xsmn.csv
+      - name: Tải dữ liệu XSMT
+        run: python3 tools/update_mn.py xsmt.csv
       - name: Nhập tay XSMB (nếu có)
         if: ${{ github.event.inputs.ngay != '' && github.event.inputs.ket_qua != '' }}
         run: python3 tools/add_day.py xsmb.csv recent.json "${{ github.event.inputs.ngay }}" "${{ github.event.inputs.ket_qua }}"
       - name: Nhập tay XSMN (nếu có)
         if: ${{ github.event.inputs.mn_ngay != '' && github.event.inputs.mn_dai != '' && github.event.inputs.mn_ket_qua != '' }}
         run: python3 tools/add_day_mn.py xsmn.csv recent_mn.json "${{ github.event.inputs.mn_ngay }}" "${{ github.event.inputs.mn_dai }}" "${{ github.event.inputs.mn_ket_qua }}"
+      - name: Nhập tay XSMT (nếu có)
+        if: ${{ github.event.inputs.mt_ngay != '' && github.event.inputs.mt_dai != '' && github.event.inputs.mt_ket_qua != '' }}
+        run: python3 tools/add_day_mn.py xsmt.csv recent_mt.json "${{ github.event.inputs.mt_ngay }}" "${{ github.event.inputs.mt_dai }}" "${{ github.event.inputs.mt_ket_qua }}"
       - name: Khóa danh sách cho kỳ tiếp theo
         run: node tools/predict.js
       - name: Lưu thay đổi
         run: |
           git config user.name "xsmb-lab-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add xsmb.csv recent.json predictions.json xsmn.csv recent_mn.json predictions_mn.json
+          git add xsmb.csv recent.json predictions.json xsmn.csv recent_mn.json predictions_mn.json xsmt.csv recent_mt.json predictions_mt.json
           git diff --cached --quiet && echo "Không có gì mới" || (git commit -m "Cập nhật dữ liệu $(TZ=Asia/Ho_Chi_Minh date +'%d/%m/%Y %H:%M')" && git pull --rebase -q && git push)

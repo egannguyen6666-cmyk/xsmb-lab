@@ -1,8 +1,9 @@
 # Nhập tay kết quả một đài XSMN (có kiểm tra).
-# Usage: python3 tools/add_day_mn.py xsmn.csv recent_mn.json 2026-11-23 tp-hcm "321463 33527 13225 42438 60051 73797 ... 061 35"
+# Usage: python3 tools/add_day_mn.py xsmn.csv recent_mn.json   (hoặc xsmt.csv recent_mt.json cho miền Trung)
+#        python3 tools/add_day_mn.py xsmn.csv recent_mn.json 2026-11-23 tp-hcm "321463 33527 13225 42438 60051 73797 ... 061 35"
 #   18 số theo thứ tự ĐB, G1, G2, G3(2), G4(7), G5, G6(3), G7, G8.  Mã đài: tp-hcm, dong-thap, ca-mau, ...
 import json, re, sys, datetime
-SL = ['an-giang','bac-lieu','ben-tre','binh-duong','binh-phuoc','binh-thuan','ca-mau','can-tho','da-lat','dong-nai','dong-thap','hau-giang','kien-giang','long-an','soc-trang','tay-ninh','tien-giang','tra-vinh','vinh-long','vung-tau','tp-hcm']
+SL = ['binh-dinh','da-nang','dak-lak','dak-nong','gia-lai','khanh-hoa','kon-tum','ninh-thuan','phu-yen','quang-binh','quang-nam','quang-ngai','quang-tri','thua-thien-hue','an-giang','bac-lieu','ben-tre','binh-duong','binh-phuoc','binh-thuan','ca-mau','can-tho','da-lat','dong-nai','dong-thap','hau-giang','kien-giang','long-an','soc-trang','tay-ninh','tien-giang','tra-vinh','vinh-long','vung-tau','tp-hcm']
 G = [("db",1,(5,6)),("g1",1,(5,)),("g2",1,(5,)),("g3",2,(5,)),("g4",7,(5,)),("g5",1,(4,)),("g6",3,(4,)),("g7",1,(3,)),("g8",1,(2,))]
 csv_path, rec_path, date, st, raw = sys.argv[1:6]
 datetime.date.fromisoformat(date)

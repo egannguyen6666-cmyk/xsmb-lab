@@ -227,6 +227,24 @@ p{margin:0 0 10px;max-width:72ch}
 .sheet a:hover,.sheet button.row:hover{background:var(--band)}.sheet svg{width:22px;height:22px}
 .themebtn{border:1px solid var(--line);background:var(--panel);min-height:38px;border-radius:999px;padding:0 12px;cursor:pointer;font-size:14px}
 .side .themebtn{background:#ffffff12;border-color:#ffffff22;color:var(--sideink);width:100%}
+.lvhead{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.lvst{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;padding:6px 12px;border-radius:999px;background:#ffffff14;color:#fff}
+.lvst i{width:9px;height:9px;border-radius:50%;background:#9a96a3}
+.lvst.live i{background:#ff5872;box-shadow:0 0 0 0 #ff587299;animation:pulse 1.4s infinite}
+.lvst.done i{background:#6fd08f}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #ff587299}70%{box-shadow:0 0 0 10px #ff587200}100%{box-shadow:0 0 0 0 #ff587200}}
+.lvprog{height:6px;border-radius:3px;background:#ffffff22;overflow:hidden;margin-top:14px}.lvprog i{display:block;height:100%;background:#ff5872;transition:width .6s}
+.pend{display:inline-block;letter-spacing:2px;color:var(--mute);animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.25}}
+.flash{animation:flash 2.4s ease-out}
+@keyframes flash{0%{background:#ffd54f;color:#000;border-radius:6px}100%{background:transparent}}
+.lvsched{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}
+.lvsched button{all:unset;cursor:pointer;border:1px solid #ffffff26;border-radius:12px;padding:10px 12px;color:#fff;background:#ffffff0a}
+.lvsched button[aria-pressed=true]{background:#d01f3c;border-color:#d01f3c}
+.lvsched b{display:block;font-size:15px}.lvsched span{font-size:12px;opacity:.8}
+.lvsched button:focus-visible{outline:3px solid #ff5872}
+#box_kqxs_minhngoc{position:absolute;left:-9999px;top:0;width:500px;height:10px;overflow:hidden}
+@media(prefers-reduced-motion:reduce){.lvst.live i,.pend,.flash{animation:none}}
 </style>
 </head>
 <body>
@@ -242,6 +260,7 @@ p{margin:0 0 10px;max-width:72ch}
  <symbol id="i-stats" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 20V11M10 20V5M15 20v-7M20 20V8"/></g></symbol>
  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v6M12 7.5v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
  <symbol id="i-more" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></g></symbol>
+ <symbol id="i-live" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="2.2" fill="currentColor"/><path d="M8 8a5.6 5.6 0 0 0 0 8M16 8a5.6 5.6 0 0 1 0 8M5 5a9.9 9.9 0 0 0 0 14M19 5a9.9 9.9 0 0 1 0 14"/></g></symbol>
  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
 </svg>
 <div class="app">
@@ -257,7 +276,7 @@ p{margin:0 0 10px;max-width:72ch}
   <div class="top">
    <h1 id="vtitle">Kết quả</h1>
    <div class="ctrls">
-    <div class="regsw" role="group" aria-label="Chọn miền"><button data-r="mb" aria-pressed="true">Miền Bắc</button><button data-r="mn" aria-pressed="false">Miền Nam</button></div>
+    <div class="regsw" role="group" aria-label="Chọn miền"><button data-r="mb" aria-pressed="true">Miền Bắc</button><button data-r="mn" aria-pressed="false">Miền Nam</button><button data-r="mt" aria-pressed="false">Miền Trung</button></div>
     <select id="stSel" class="stsel" aria-label="Chọn đài" hidden></select>
     <span class="pill" id="status"><i></i>Đang tải…</span>
    </div>
@@ -289,6 +308,22 @@ p{margin:0 0 10px;max-width:72ch}
     </div>
     <div class="c12"><div class="kpis" id="ovKpis"></div></div>
    </div>
+  </section>
+
+  <section class="view" id="v-truc-tiep">
+   <div class="grid">
+    <div class="card hero c12">
+     <div class="lvhead"><h2 id="lvT" style="margin:0">Trực tiếp xổ số</h2><span class="lvst" id="lvSt"><i></i><span>Đang kết nối…</span></span></div>
+     <p class="sub" id="lvS" style="margin:8px 0 0"></p>
+     <div class="lvsched" id="lvSched"></div>
+     <div class="lvprog"><i id="lvProg" style="width:0"></i></div>
+     <div class="acts" style="margin-top:12px"><button class="copy" id="lvRefresh">Làm mới</button><span class="sub" id="lvTime" style="align-self:center;margin:0"></span></div>
+    </div>
+    <div class="card c12"><h2 id="lvBT">Bảng kết quả</h2><p class="sub" id="lvBS"></p><div id="lvBoard"></div></div>
+    <div class="card c12"><h2>Lô tô đang về</h2><p class="sub">2 số cuối của các giải đã ra, xếp theo đầu. Cập nhật cùng bảng kết quả.</p><div id="lvLoto"></div></div>
+    <div class="card c12"><p class="note" style="margin:0">Nguồn dữ liệu trực tiếp: <a href="https://www.minhngoc.net.vn" style="color:inherit">Xổ Số Minh Ngọc</a> (mã nhúng miễn phí), vẽ lại theo giao diện XS Lab. App chỉ tải lại khoảng 5 giây một lần và chỉ trong khung giờ quay. Kết quả trực tiếp mang tính tham khảo; kết quả chính thức là biên bản do hội đồng giám sát xổ số ký sau mỗi kỳ.</p></div>
+   </div>
+   <div id="box_kqxs_minhngoc" aria-hidden="true"></div>
   </section>
 
   <section class="view" id="v-thong-ke">
@@ -507,7 +542,7 @@ p{margin:0 0 10px;max-width:72ch}
 <script src="core.js"></script>
 <script>
 {
-const VIEWS=[['ket-qua','Kết quả','i-home'],['thong-ke','Thống kê','i-stats'],['du-doan','Mô hình','i-target'],['nhat-ky','Nhật ký','i-book'],['quy-token','Quỹ token','i-wallet'],['kiem-chung','Kiểm chứng','i-chart'],['ban-do','Bản đồ số','i-grid'],['ve-du-lieu','Về dữ liệu','i-info']];
+const VIEWS=[['ket-qua','Kết quả','i-home'],['truc-tiep','Trực tiếp','i-live'],['thong-ke','Thống kê','i-stats'],['du-doan','Mô hình','i-target'],['nhat-ky','Nhật ký','i-book'],['quy-token','Quỹ token','i-wallet'],['kiem-chung','Kiểm chứng','i-chart'],['ban-do','Bản đồ số','i-grid'],['ve-du-lieu','Về dữ liệu','i-info']];
 const $=id=>document.getElementById(id);
 const pad=k=>String(k).padStart(2,'0');
 const fmt=(x,d=2)=>(x*100).toFixed(d).replace('.',',')+'%';
@@ -521,15 +556,18 @@ const ST=XS.STATIONS;
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
 
 /* ---------- data & current series ---------- */
-const R=Object.assign({region:'mb',st:'tp-hcm'},store.get('xs-region',{}));
-let RAW={},SER={},LOG_MB=[],LOG_MN=[],REC_MB=[],REC_MN=[];
+const R=Object.assign({region:'mb',sts:{mn:'tp-hcm',mt:'da-nang'}},store.get('xs-region2',{}));
+Object.defineProperty(R,'st',{get(){return R.sts[R.region]||'';},set(v){if(R.region!=='mb')R.sts[R.region]=v;}});
+const RLAB={mb:'XSMB',mn:'XSMN',mt:'XSMT'},RNAME={mb:'Miền Bắc',mn:'Miền Nam',mt:'Miền Trung'};
+let RAW={},SER={},LOG_MB=[],REC_MB=[];
+const RG=()=>RAW[R.region];
 let S,N=0,dates=[],cnt,pref,ganA,P,M,startT,nextDate,LOG=[],REC=[],IND=[],LOGCOLS=[],UNIT='ngày';
-function seriesFor(region,st){const key=region==='mb'?'mb':'mn:'+st;if(!SER[key])SER[key]=region==='mb'?XS.makeSeries(RAW.mb,XS.MB):XS.makeSeries(RAW.mn[st],Object.assign({station:st},XS.MN));return SER[key];}
+function seriesFor(region,st){const key=region==='mb'?'mb':region+':'+st;if(!SER[key])SER[key]=region==='mb'?XS.makeSeries(RAW.mb,XS.MB):XS.makeSeries(RAW[region].by[st],Object.assign({station:st},region==='mt'?XS.MT:XS.MN));return SER[key];}
 function useSeries(){
- if(R.region==='mn'&&!RAW.mn[R.st])R.st=Object.keys(RAW.mn).sort()[0];
+ if(R.region!=='mb'&&!RG().by[R.st])R.st=Object.keys(RG().by).sort()[0];
  S=seriesFor(R.region,R.st);N=S.N;dates=S.dates;cnt=S.cnt;pref=S.pref;ganA=S.gan;P=S.P;M=S.m;startT=S.start;UNIT=S.unit;
  if(R.region==='mb'){LOG=LOG_MB;REC=REC_MB;nextDate=XS.nextDrawMB(dates[N-1]);}
- else{LOG=LOG_MN.filter(e=>e.station===R.st);REC=REC_MN.filter(e=>e.station===R.st);nextDate=XS.nextDrawStation(RAW.sch,R.st,dates[N-1])||XS.addDays(dates[N-1],7);}
+ else{LOG=RG().log.filter(e=>e.station===R.st);REC=RG().rec.filter(e=>e.station===R.st);nextDate=XS.nextDrawStation(RG().sch,R.st,dates[N-1])||XS.addDays(dates[N-1],7);}
  const W=S.WL;
  IND=[{id:'combo',nm:'Tổng hợp nóng',d:`Trung bình độ lệch chuẩn (z) của tần suất ${W.join(', ')}. Số về nhiều hơn kỳ vọng ở cả ba khung xếp trên cùng.`},
   {id:'hot30',nm:'Nóng '+W[0],d:`Những số về nhiều nháy nhất trong ${W[0]} gần nhất.`},{id:'hot90',nm:'Nóng '+W[1],d:`Những số về nhiều nháy nhất trong ${W[1]} gần nhất.`},{id:'hot180',nm:'Nóng '+W[2],d:`Những số về nhiều nháy nhất trong ${W[2]} gần nhất.`},
@@ -584,7 +622,7 @@ function cumChart(svgId,tipId,pts){
   tip.textContent=`${vnDate(p.d)}: ${p.h}/${p.K} · cộng dồn ${p.c} (kỳ vọng ${dec(p.e)})`;};
  svg.querySelector('#'+svgId+'h').onpointerleave=()=>{tip.style.opacity=0;lc.setAttribute('opacity',0);};}
 function scoreList(i,p,pts){const nh=p.map(k=>cnt[i*100+k]),hits=nh.filter(x=>x).length,ns=nh.reduce((a,b)=>a+b,0),cost=M*pts*p.length,win=99*pts*ns;return {p,nh,hits,cost,win,pl:win-cost,K:p.length};}
-const tokenNote=()=>`Một điểm cho một số tốn ${M} token (${M} giải mỗi kỳ ${R.region==='mb'?'XSMB':'của một đài XSMN'}). Số về bao nhiêu nháy thì nhận 99 token × số nháy × số điểm. Trung bình mỗi token chỉ thu về 0,99.`;
+const tokenNote=()=>`Một điểm cho một số tốn ${M} token (${M} giải mỗi kỳ ${R.region==='mb'?'XSMB':'của một đài '+RLAB[R.region]}). Số về bao nhiêu nháy thì nhận 99 token × số nháy × số điểm. Trung bình mỗi token chỉ thu về 0,99.`;
 
 /* ---------- navigation ---------- */
 const navA=([id,nm,ic])=>`<a href="#${id}" data-v="${id}"><svg aria-hidden="true"><use href="#${ic}"/></svg><span>${nm}</span></a>`;
@@ -606,28 +644,28 @@ function route(){
 addEventListener('hashchange',route);
 function renderView(v){
  if(v==='ket-qua')renderHome();if(v==='du-doan')renderPredict();if(v==='nhat-ky')renderLog();if(v==='quy-token')runSim();
- if(v==='kiem-chung'){renderBars();drawRoll();renderRandom();}if(v==='ban-do')renderHeat();if(v==='dan')renderDan();if(v==='thong-ke')renderStats();if(v==='ve-du-lieu')renderAbout();
+ if(v==='kiem-chung'){renderBars();drawRoll();renderRandom();}if(v==='ban-do')renderHeat();if(v==='dan')renderDan();if(v==='thong-ke')renderStats();if(v==='truc-tiep')renderLive();else lvStop();if(v==='ve-du-lieu')renderAbout();
  if(v==='quy-token'){$('msS').textContent=`Mô phỏng 1.000 quỹ chạy song song trên kết quả ngẫu nhiên đúng luật ${where()} (${M} giải mỗi kỳ, ${M} token mỗi điểm, 99 token mỗi nháy). Mục đích: xem các cách đặt khác nhau thay đổi hình dạng kết quả ra sao, và vì sao không cách nào vượt được kỳ vọng âm.`;$('msRun').onclick=runStrategy;if(!MS||MS.M!==M){runStrategy();MS.M=M;}else drawStrategy();}}
 
 /* ---------- region / station controls ---------- */
 function stationOptions(){
- const nd=XS.addDays(RAW.mnLast,1),w=XS.weekday(nd),tom=Object.keys(RAW.sch).filter(s=>RAW.sch[s].includes(w)).sort((a,b)=>ST[a].localeCompare(ST[b],'vi'));
- const rest=Object.keys(RAW.mn).filter(s=>!tom.includes(s)).sort((a,b)=>ST[a].localeCompare(ST[b],'vi'));
- const lab=s=>`${ST[s]} (${RAW.sch[s].sort().map(x=>x===0?'CN':'T'+(x+1)).join(', ')})`;
+ const nd=XS.addDays(RG().last,1),w=XS.weekday(nd),tom=Object.keys(RG().sch).filter(s=>RG().sch[s].includes(w)).sort((a,b)=>ST[a].localeCompare(ST[b],'vi'));
+ const rest=Object.keys(RG().by).filter(s=>!tom.includes(s)).sort((a,b)=>ST[a].localeCompare(ST[b],'vi'));
+ const lab=s=>`${ST[s]} (${RG().sch[s].sort().map(x=>x===0?'CN':'T'+(x+1)).join(', ')})`;
  return `<optgroup label="Quay kỳ tới: ${wd(nd)}, ${vnDate(nd)}">${tom.map(s=>`<option value="${s}">${lab(s)}</option>`).join('')}</optgroup><optgroup label="Các đài khác">${rest.map(s=>`<option value="${s}">${lab(s)}</option>`).join('')}</optgroup>`;}
 function setRegion(r,st){
- R.region=r;if(st)R.st=st;store.set('xs-region',{region:R.region,st:R.st});
+ R.region=r;if(st)R.st=st;store.set('xs-region2',{region:R.region,sts:R.sts});
  document.querySelectorAll('.regsw button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.r===R.region));
- $('stSel').hidden=R.region!=='mn';if(R.region==='mn')$('stSel').value=R.st;
+ $('stSel').hidden=R.region==='mb';if(R.region!=='mb')$('stSel').innerHTML=stationOptions();if(R.region!=='mb')$('stSel').value=R.st;
  useSeries();resetStates();refreshChrome();renderView(curView());}
 document.querySelectorAll('.regsw button').forEach(b=>b.onclick=()=>setRegion(b.dataset.r));
-$('stSel').onchange=()=>setRegion('mn',$('stSel').value);
+$('stSel').onchange=()=>setRegion(R.region,$('stSel').value);
 function refreshChrome(){
  $('status').innerHTML=`<i></i>${where()} · dữ liệu đến ${vnDate(dates[N-1])}`;
  const t=XS.TET[+dates[N-1].slice(0,4)]&&XS.TET[+dates[N-1].slice(0,4)]>dates[N-1]?XS.TET[+dates[N-1].slice(0,4)]:XS.TET[+dates[N-1].slice(0,4)+1];
- const tet=R.region==='mb'&&t?`<br><br>Nghỉ Tết sắp tới: ${vnDate(XS.addDays(t,-1))} – ${vnDate(XS.addDays(t,2))} (30 Tết đến mùng 3), quay lại ${vnDate(XS.addDays(t,3))}.`:(R.region==='mn'?'<br><br>XSMN quay cả dịp Tết.':'');
- $('sideFoot').innerHTML=`${R.region==='mb'?'Miền Bắc':'Miền Nam · '+ST[R.st]}<br>${vn(N)} kỳ · ${vnDate(dates[0])} – ${vnDate(dates[N-1])}${tet}`;
- document.title=R.region==='mb'?'XS Lab · Miền Bắc':'XS Lab · '+ST[R.st];}
+ const tet=R.region==='mb'&&t?`<br><br>Nghỉ Tết sắp tới: ${vnDate(XS.addDays(t,-1))} – ${vnDate(XS.addDays(t,2))} (30 Tết đến mùng 3), quay lại ${vnDate(XS.addDays(t,3))}.`:(R.region!=='mb'?`<br><br>${RLAB[R.region]} quay cả dịp Tết.`:'');
+ $('sideFoot').innerHTML=`${R.region==='mb'?'Miền Bắc':RNAME[R.region]+' · '+ST[R.st]}<br>${vn(N)} kỳ · ${vnDate(dates[0])} – ${vnDate(dates[N-1])}${tet}`;
+ document.title=R.region==='mb'?'XS Lab · Miền Bắc':'XS Lab · '+RNAME[R.region]+' · '+ST[R.st];}
 function resetStates(){
  const P0=PERS();st.per=P0[P0.length-1][1];st.num=null;st.from=st.to=null;
  lg.per=P0[1][1];lg.page=1;lg.sel=null;lg.from=lg.to=null;lg.ready=false;
@@ -637,23 +675,23 @@ function resetStates(){
 const rs={date:null};
 const MB_G=[['ĐB','db'],['G1','g1'],['G2','g2'],['G3','g3'],['G4','g4'],['G5','g5'],['G6','g6'],['G7','g7']];
 const MN_G=[['G8','g8'],['G7','g7'],['G6','g6'],['G5','g5'],['G4','g4'],['G3','g3'],['G2','g2'],['G1','g1'],['ĐB','db']];
-function regionDates(){return R.region==='mb'?dates:RAW.mnDates;}
+function regionDates(){return R.region==='mb'?dates:RG().dates;}
 function renderHome(){
- const hero=document.querySelector('#v-ket-qua .hero'),rc=$('rsBoard').closest('.card');hero.classList.toggle('c7',R.region==='mb');hero.classList.toggle('c12',R.region==='mn');rc.classList.toggle('c5',R.region==='mb');rc.classList.toggle('c12',R.region==='mn');
+ const hero=document.querySelector('#v-ket-qua .hero'),rc=$('rsBoard').closest('.card');hero.classList.toggle('c7',R.region==='mb');hero.classList.toggle('c12',R.region!=='mb');rc.classList.toggle('c5',R.region==='mb');rc.classList.toggle('c12',R.region!=='mb');
  const t=N-1,e=LOG.find(x=>x.target===nextDate),picks=e?e.picks:allPicks(t),f1=freq(t,S.W[0]);
- $('ovSingle').style.display=R.region==='mb'?'':'none';$('ovMulti').style.display=R.region==='mn'?'grid':'none';
- if(R.region==='mn'){
-  const nd=XS.addDays(RAW.mnLast,1),w0=XS.weekday(nd),sts=Object.keys(RAW.sch).filter(x=>RAW.sch[x].includes(w0)).sort((a,b)=>a==='tp-hcm'?-1:b==='tp-hcm'?1:ST[a].localeCompare(ST[b],'vi'));
-  const items=sts.map(x=>{const S2=seriesFor('mn',x),lk=LOG_MN.find(e=>e.target===nd&&e.station===x),pk=lk?lk.picks:XS.allPicks(S2,S2.N-1);return {x,lk,pk,S2};});
-  $('ovNextT').textContent=`XSMN kỳ tiếp theo · ${wd(nd)}, ${vnDate(nd)} · ${sts.length} đài`;
+ $('ovSingle').style.display=R.region==='mb'?'':'none';$('ovMulti').style.display=R.region!=='mb'?'grid':'none';
+ if(R.region!=='mb'){
+  const nd=XS.addDays(RG().last,1),w0=XS.weekday(nd),sts=Object.keys(RG().sch).filter(x=>RG().sch[x].includes(w0)).sort((a,b)=>a==='tp-hcm'?-1:b==='tp-hcm'?1:ST[a].localeCompare(ST[b],'vi'));
+  const items=sts.map(x=>{const S2=seriesFor(R.region,x),lk=RG().log.find(e=>e.target===nd&&e.station===x),pk=lk?lk.picks:XS.allPicks(S2,S2.N-1);return {x,lk,pk,S2};});
+  $('ovNextT').textContent=`${RLAB[R.region]} kỳ tiếp theo · ${wd(nd)}, ${vnDate(nd)} · ${sts.length} đài`;
   $('ovNextS').textContent=`Top 3 xác suất của từng đài, tính từ kỳ gần nhất của đài đó${items.every(i=>i.lk)?' (đã khóa trước giờ quay)':''}. Bấm tên đài để xem chi tiết đài đó.`;
   $('ovMulti').innerHTML=items.map(({x,lk,pk,S2})=>{const f1=XS.freq(S2,S2.N-1,S2.W[0]);return `<div style="border:1px solid #ffffff26;border-radius:14px;padding:12px;background:#ffffff0a">
    <button data-st="${x}" style="all:unset;cursor:pointer;font-weight:700;font-size:16px;color:#fff">${ST[x]} ›</button><div class="sub" style="font-size:12px;margin:2px 0 10px">${lk?'Đã khóa lúc '+lk.made_at.replace(' (giờ VN)',''):'Từ dữ liệu đến '+vnDate(S2.dates[S2.N-1])}</div>
    <div class="balls" style="gap:10px;margin-bottom:10px">${pk.top3.map(k=>ball(k,'r',f1[k]+' lần/10 kỳ')).join('')}</div>
    <div class="balls" style="gap:5px;margin-bottom:10px">${pk.combo.map(k=>`<div class="ball sm" style="width:30px;height:30px;font-size:13px">${pad(k)}</div>`).join('')}</div>
    <div class="acts" style="margin-top:0">${copyBtn('Chép Top 3',numTxt(pk.top3))}${copyBtn('Chép 10 số',numTxt(pk.combo))}</div></div>`;}).join('')
-   +`<div style="grid-column:1/-1">${copyBtn('Chép tất cả đài',[`XSMN kỳ ${vnDate(nd)}`,...items.map(i=>`${ST[i.x]}: Top 3 xác suất ${numTxt(i.pk.top3)} · Tổng hợp nóng ${numTxt(i.pk.combo)}`)].join('\n'))}</div>`;
-  $('ovMulti').querySelectorAll('button[data-st]').forEach(b=>b.onclick=()=>setRegion('mn',b.dataset.st));
+   +`<div style="grid-column:1/-1">${copyBtn('Chép tất cả đài',[`${RLAB[R.region]} kỳ ${vnDate(nd)}`,...items.map(i=>`${ST[i.x]}: Top 3 xác suất ${numTxt(i.pk.top3)} · Tổng hợp nóng ${numTxt(i.pk.combo)}`)].join('\n'))}</div>`;
+  $('ovMulti').querySelectorAll('button[data-st]').forEach(b=>b.onclick=()=>setRegion(R.region,b.dataset.st));
  } else
  $('ovNextT').textContent=`Kỳ tiếp theo · ${wd(nextDate)}, ${vnDate(nextDate)}`;
  if(R.region==='mb')$('ovNextS').textContent=e?`Top 3 xác suất đã khóa lúc ${e.made_at}, dựa trên dữ liệu đến hết ${vnDate(e.based_on)}.`:`Top 3 xác suất tính từ dữ liệu đến hết ${vnDate(dates[t])}.`;
@@ -661,7 +699,7 @@ function renderHome(){
  $('ovTop10').innerHTML=picks.combo.map(k=>ball(k,'sm')).join('');
  $('ovCopy').innerHTML=copyBtn('Sao chép Top 3',numTxt(picks.top3))+copyBtn('Sao chép 10 số',numTxt(picks.combo))+copyBtn('Sao chép tất cả chỉ báo',allText(picks,nextDate));
  const pAny3=1-Math.pow(1-3/100,M);
- $('ovHeroFoot').innerHTML=[[fmt(P),`xác suất một số về trong một kỳ (${M} giải)`],[fmt(pAny3,0),'kỳ có ít nhất 1/3 số về (lý thuyết)'],(R.region==='mb'?[vn(N),'kỳ trong dữ liệu XSMB']:[vn(Object.values(RAW.mn).reduce((a,x)=>a+x.length,0)),`kết quả của ${Object.keys(RAW.mn).length} đài từ ${RAW.mnDates[0].slice(0,4)}`])].map(([v,l])=>`<div><b style="font-size:22px;display:block;color:#fff">${v}</b><span style="font-size:12px;color:#bdb7c6">${l}</span></div>`).join('');
+ $('ovHeroFoot').innerHTML=[[fmt(P),`xác suất một số về trong một kỳ (${M} giải)`],[fmt(pAny3,0),'kỳ có ít nhất 1/3 số về (lý thuyết)'],(R.region==='mb'?[vn(N),'kỳ trong dữ liệu XSMB']:[vn(Object.values(RG().by).reduce((a,x)=>a+x.length,0)),`kết quả của ${Object.keys(RG().by).length} đài từ ${RG().dates[0].slice(0,4)}`])].map(([v,l])=>`<div><b style="font-size:22px;display:block;color:#fff">${v}</b><span style="font-size:12px;color:#bdb7c6">${l}</span></div>`).join('');
  renderBoard();renderBook();
  const [a,b]=rangeIdx(R.region==='mb'?1095:156),H=backtest(10),r=rate(H.combo,a,b,10);
  let lh=0,ln=0;const di=Object.fromEntries(dates.map((d,i)=>[d,i]));for(const x of LOG){const i=di[x.target];if(i===undefined)continue;for(const k of x.picks.combo){ln++;if(cnt[i*100+k])lh++;}}
@@ -681,13 +719,13 @@ function renderBoard(){
   const hd=lotoHeads(lo);
   $('rsBoard').innerHTML=board+`<div class="loto">${hd.map((a,j)=>`<div><b>${j}</b><span>${a.length?a.join(', '):'–'}</span></div>`).join('')}</div>`;
  }else{
-  const sts=Object.keys(RAW.mn).filter(s=>RAW.mnIdx[s][d]!==undefined).sort((a,b)=>(a==='tp-hcm'?-1:b==='tp-hcm'?1:ST[a].localeCompare(ST[b],'vi')));
-  $('rsT').textContent=`XSMN ${wd(d)}, ${vnDate(d)}`;
-  const full=sts.map(s=>REC_MN.find(x=>x.date===d&&x.station===s));
+  const sts=Object.keys(RG().by).filter(s=>RG().idx[s][d]!==undefined).sort((a,b)=>(a==='tp-hcm'?-1:b==='tp-hcm'?1:ST[a].localeCompare(ST[b],'vi')));
+  $('rsT').textContent=`${RLAB[R.region]} ${wd(d)}, ${vnDate(d)}`;
+  const full=sts.map(s=>RG().rec.find(x=>x.date===d&&x.station===s));
   let html;
   if(full.every(Boolean)){html=`<div class="mnb"><table><thead><tr><th>Giải</th>${sts.map(s=>`<th class="${s===R.st?'sel':''}">${ST[s]}</th>`).join('')}</tr></thead><tbody>${MN_G.map(([lb,g])=>`<tr class="${g}"><td>${lb}</td>${full.map(f=>`<td>${f[g].map(n=>`<span>${n.slice(0,-2)}<b>${n.slice(-2)}</b></span>`).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
   else html=`<p class="note">Bảng đủ giải chỉ lưu 60 ngày gần nhất; ngày này hiện lô tô.</p>`;
-  html+=`<div class="lt">${sts.map(s=>{const two=RAW.mn[s][RAW.mnIdx[s][d]].two,lo=[];for(let j=0;j<36;j+=2)lo.push(+two.substr(j,2));lo.sort((a,b)=>a-b);return `<div><h4>${ST[s]}</h4>${lotoHeads(lo).map((a,j)=>`<p><b>${j}</b><span>${a.length?a.join(', '):'–'}</span></p>`).join('')}</div>`;}).join('')}</div>`;
+  html+=`<div class="lt">${sts.map(s=>{const two=RG().by[s][RG().idx[s][d]].two,lo=[];for(let j=0;j<36;j+=2)lo.push(+two.substr(j,2));lo.sort((a,b)=>a-b);return `<div><h4>${ST[s]}</h4>${lotoHeads(lo).map((a,j)=>`<p><b>${j}</b><span>${a.length?a.join(', '):'–'}</span></p>`).join('')}</div>`;}).join('')}</div>`;
   $('rsBoard').innerHTML=html;}}
 function renderBook(){
  const RD=regionDates(),last=RD.slice(-10).reverse();
@@ -695,8 +733,8 @@ function renderBook(){
   $('book').innerHTML=last.map(d=>{const rec=REC_MB.find(x=>x.date===d),ix=dates.indexOf(d),lo=[];for(let k=0;k<100;k++)for(let c=0;c<cnt[ix*100+k];c++)lo.push(k);lo.sort((a,b)=>a-b);
    return `<a href="#ket-qua" data-d="${d}"><div><b>${vnDate(d)}</b><br><small>${wd(d)}</small></div><div><div style="margin-bottom:4px">ĐB <b style="color:var(--red);font-size:18px">${rec?rec.db[0]:'–'}</b></div><div class="chipline">${lo.map(pad).join(' ')}</div></div></a>`;}).join('');
  }else{
-  $('book').innerHTML=last.map(d=>{const sts=Object.keys(RAW.mn).filter(s=>RAW.mnIdx[s][d]!==undefined).sort((a,b)=>ST[a].localeCompare(ST[b],'vi'));
-   return `<a href="#ket-qua" data-d="${d}"><div><b>${vnDate(d)}</b><br><small>${wd(d)}</small></div><div class="chipline">${sts.map(s=>{const rec=REC_MN.find(x=>x.date===d&&x.station===s);const two=RAW.mn[s][RAW.mnIdx[s][d]].two;return `<span>${ST[s]}: ĐB <b>${rec?rec.db[0]:'…'+two.slice(0,2)}</b></span>`;}).join('')}</div></a>`;}).join('');}
+  $('book').innerHTML=last.map(d=>{const sts=Object.keys(RG().by).filter(s=>RG().idx[s][d]!==undefined).sort((a,b)=>ST[a].localeCompare(ST[b],'vi'));
+   return `<a href="#ket-qua" data-d="${d}"><div><b>${vnDate(d)}</b><br><small>${wd(d)}</small></div><div class="chipline">${sts.map(s=>{const rec=RG().rec.find(x=>x.date===d&&x.station===s);const two=RG().by[s][RG().idx[s][d]].two;return `<span>${ST[s]}: ĐB <b>${rec?rec.db[0]:'…'+two.slice(0,2)}</b></span>`;}).join('')}</div></a>`;}).join('');}
  $('book').querySelectorAll('a').forEach(a=>a.onclick=e=>{e.preventDefault();rs.date=a.dataset.d;renderBoard();$('rsT').scrollIntoView({behavior:'smooth',block:'start'});});}
 
 /* ---------- predict + dàn ---------- */
@@ -954,11 +992,11 @@ function renderNum(k){
 function erf(x){const t=1/(1+0.3275911*Math.abs(x)),y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x);return x>=0?y:-y;}
 function chi2p(x,k){const z=(Math.pow(x/k,1/3)-(1-2/(9*k)))/Math.sqrt(2/(9*k));return 0.5*(1-erf(z/Math.SQRT2));}
 function chi2Of(Sx,a,b){const c=new Float64Array(100);let n=0;for(let i=a;i<b;i++){n++;for(let k=0;k<100;k++)c[k]+=Sx.cnt[i*100+k];}const e=Sx.m*n/100;let x=0;for(let k=0;k<100;k++)x+=(c[k]-e)**2/e;return {x,p:chi2p(x,99),n};}
-function rawRows(){return R.region==='mb'?RAW.mb:RAW.mn[R.st];}
+function rawRows(){return R.region==='mb'?RAW.mb:RG().by[R.st];}
 function recordGan(k){let g=0,best=0,bestEnd=-1;for(let i=0;i<N;i++){if(cnt[i*100+k]){if(g>best){best=g;bestEnd=i;}g=0;}else g++;}if(g>best){best=g;bestEnd=N;}return {best,from:bestEnd-best,to:bestEnd-1};}
 const stt={win:0,pb:0,db:0,q:''};
 function renderStats(){
- $('cmpCard').style.display=R.region==='mn'?'':'none';
+ $('cmpCard').style.display=R.region!=='mb'?'':'none';
  // --- tra cứu
  $('qForm').onsubmit=e=>{e.preventDefault();stt.q=$('qIn').value;runQuery();};
  if(stt.q){$('qIn').value=stt.q;runQuery();}else{$('qOut').innerHTML='';$('qErr').textContent='';}
@@ -974,7 +1012,7 @@ function renderStats(){
  const lh=new Array(10).fill(0),lt=new Array(10).fill(0);for(let k=0;k<100;k++)for(let c=0;c<cnt[t*100+k];c++){lh[Math.floor(k/10)]++;lt[k%10]++;}
  const hm=lh.map((v,i)=>v?null:i).filter(x=>x!==null),tm=lt.map((v,i)=>v?null:i).filter(x=>x!==null);
  $('ddMute').innerHTML=`Kỳ ${vnDate(dates[t])}: đầu câm <b>${hm.length?hm.join(', '):'không có'}</b> · đuôi câm <b>${tm.length?tm.join(', '):'không có'}</b>. Với ${M} số mỗi kỳ, xác suất một chữ số bị "câm" là ${fmt(Math.pow(0.9,M),1)}, nên kỳ nào cũng thường có vài đầu hoặc đuôi câm.`;
- renderDB();renderGanTable();renderDist();if(R.region==='mn')renderCompare();}
+ renderDB();renderGanTable();renderDist();if(R.region!=='mb')renderCompare();}
 function parseQuery(s){
  s=s.trim();if(!s)return {err:'Hãy nhập ít nhất một số.'};
  if(!s.includes(',')){if(/\s/.test(s))return {err:'Nhiều số phải ngăn cách bằng dấu phẩy, ví dụ: 34, 43, 52'};if(!/^\d{1,2}$/.test(s))return {err:'Mỗi số gồm 1 hoặc 2 chữ số, từ 00 đến 99.'};return {nums:[+s]};}
@@ -1043,10 +1081,11 @@ function renderDist(){
  $('pbOut').innerHTML=sets.map(([title,g,ex])=>{const exs=g.map(([l])=>ex!==null?ex:(l==='Lô kép'?0.1:0.9)),top=Math.max(...g.map(([,v],i)=>Math.max(v/tot,exs[i])))*1.15;
   return `<h3 style="font-size:15px;margin:16px 0 4px">${title}</h3>`+g.map(([l,v],i)=>`<div class="cbar" style="cursor:default"><b style="font-weight:500;font-size:14px">${l}</b><div class="tr"><i style="width:${v/tot/top*100}%"></i><u style="left:${exs[i]/top*100}%"></u></div><div class="v">${fmt(v/tot,1)}<small>kỳ vọng ${fmt(exs[i],0)} · ${vn(v)} lượt</small></div></div>`).join('');}).join('');}
 function renderCompare(){
- const rows=Object.keys(RAW.mn).sort((a,b)=>ST[a].localeCompare(ST[b],'vi')).map(s=>{const Sx=seriesFor('mn',s),c=chi2Of(Sx,0,Sx.N);let h=0,n=0;for(let t=Math.max(Sx.start,Sx.N-53);t<Sx.N-1;t++){for(const k of XS.topK(XS.scores(Sx,'combo',t),t,10))if(Sx.cnt[(t+1)*100+k])h++;n+=10;}
-  return {s,N:Sx.N,from:Sx.dates[0],last:Sx.dates[Sx.N-1],p:c.p,rate:n?h/n:0,db:RAW.mn[s][Sx.N-1].two.slice(0,2),sch:RAW.sch[s]};});
- $('cmpT').innerHTML=`<table><thead><tr><th>Đài</th><th>Lịch</th><th>Số kỳ</th><th>Từ</th><th>Kỳ gần nhất</th><th>ĐB (2 số)</th><th>p-value cả lịch sử</th><th>Tổng hợp nóng, 52 kỳ</th></tr></thead><tbody>${rows.map(r=>`<tr class="r${r.s===R.st?' on':''}" data-st="${r.s}"><td><b>${ST[r.s]}</b></td><td>${r.sch.sort().map(x=>x===0?'CN':'T'+(x+1)).join(', ')}</td><td>${vn(r.N)}</td><td>${r.from.slice(0,4)}</td><td>${vnDate(r.last)}</td><td><b class="h">${r.db}</b></td><td><span class="pchip ${r.p<0.05?'hi':'ok'}">${dec(r.p,3)}</span></td><td>${fmt(r.rate,1)}</td></tr>`).join('')}</tbody></table><p class="note" style="margin-top:8px">Lý thuyết cho mỗi đài: ${fmt(XS.MN.m?1-Math.pow(0.99,18):0)} mỗi số mỗi kỳ.</p>`;
- $('cmpT').querySelectorAll('tr.r').forEach(tr=>tr.onclick=()=>setRegion('mn',tr.dataset.st));}
+ $('cmpCard').querySelector('h2').textContent='So sánh các đài '+RNAME[R.region].toLowerCase();
+ const rows=Object.keys(RG().by).sort((a,b)=>ST[a].localeCompare(ST[b],'vi')).map(s=>{const Sx=seriesFor(R.region,s),c=chi2Of(Sx,0,Sx.N);let h=0,n=0;for(let t=Math.max(Sx.start,Sx.N-53);t<Sx.N-1;t++){for(const k of XS.topK(XS.scores(Sx,'combo',t),t,10))if(Sx.cnt[(t+1)*100+k])h++;n+=10;}
+  return {s,N:Sx.N,from:Sx.dates[0],last:Sx.dates[Sx.N-1],p:c.p,rate:n?h/n:0,db:RG().by[s][Sx.N-1].two.slice(0,2),sch:RG().sch[s]};});
+ $('cmpT').innerHTML=`<table><thead><tr><th>Đài</th><th>Lịch</th><th>Số kỳ</th><th>Từ</th><th>Kỳ gần nhất</th><th>ĐB (2 số)</th><th>p-value cả lịch sử</th><th>Tổng hợp nóng, 52 kỳ</th></tr></thead><tbody>${rows.map(r=>`<tr class="r${r.s===R.st?' on':''}" data-st="${r.s}"><td><b>${ST[r.s]}</b></td><td>${r.sch.sort().map(x=>x===0?'CN':'T'+(x+1)).join(', ')}</td><td>${vn(r.N)}</td><td>${r.from.slice(0,4)}</td><td>${vnDate(r.last)}</td><td><b class="h">${r.db}</b></td><td><span class="pchip ${r.p<0.05?'hi':'ok'}">${dec(r.p,3)}</span></td><td>${fmt(r.rate,1)}</td></tr>`).join('')}</tbody></table><p class="note" style="margin-top:8px">Lý thuyết cho mỗi đài: ${fmt(1-Math.pow(0.99,18))} mỗi số mỗi kỳ.</p>`;
+ $('cmpT').querySelectorAll('tr.r').forEach(tr=>tr.onclick=()=>setRegion(R.region,tr.dataset.st));}
 
 /* ---------- randomness by year ---------- */
 function renderRandom(){
@@ -1093,30 +1132,31 @@ function drawStrategy(){
 
 /* ---------- about ---------- */
 function renderAbout(){
- const mb=RAW.mb,mbN=mb.length,mnN=Object.values(RAW.mn).reduce((a,x)=>a+x.length,0);
+ const mb=RAW.mb,mbN=mb.length,cntR=r=>RAW[r]?Object.values(RAW[r].by).reduce((a,x)=>a+x.length,0):0,mnN=cntR('mn'),mtN=cntR('mt');
  const gaps=(ds,skipTet)=>{const g=[];for(let i=1;i<ds.length;i++){const d=Math.round((Date.parse(ds[i])-Date.parse(ds[i-1]))/864e5);if(d>1){let tet=false;if(skipTet){for(let j=1;j<d;j++){const x=XS.addDays(ds[i-1],j);const y=+x.slice(0,4);for(const yy of [y,y+1]){const t=XS.TET[yy]||null;}}}g.push([ds[i-1],ds[i],d-1]);}}return g;};
- const mbg=gaps(mb.map(r=>r.date)).filter(([,,n])=>n>5),mng=gaps(RAW.mnDates).filter(([,,n])=>n>5);
- const lastMN=RAW.mnLast;
+ const mbg=gaps(mb.map(r=>r.date)).filter(([,,n])=>n>5),mng=gaps(RAW.mn.dates).filter(([,,n])=>n>5),mtg=RAW.mt?gaps(RAW.mt.dates).filter(([,,n])=>n>5):[];
+ const lastMN=RAW.mn.last;
  $('aboutDoc').innerHTML=`<h2>Về dữ liệu</h2><p class="sub">Toàn bộ dữ liệu, cách cập nhật và cách tính của XS Lab. App là công cụ học xác suất thống kê; các danh sách số là kết quả xếp hạng của mô hình, không phải lời khuyên mua vé hay đặt cược.</p>
- <div class="kpis" style="margin:10px 0"><div class="kpi"><b>${vn(mbN)}</b><span>kỳ XSMB · ${vnDate(mb[0].date)} – ${vnDate(mb[mbN-1].date)}</span></div><div class="kpi"><b>${vn(mnN)}</b><span>kết quả đài XSMN · ${vnDate(RAW.mnDates[0])} – ${vnDate(lastMN)}</span></div><div class="kpi"><b>${Object.keys(RAW.mn).length}</b><span>đài miền Nam</span></div><div class="kpi"><b>${vn(LOG_MB.length+LOG_MN.length)}</b><span>danh sách đã khóa trong nhật ký</span></div></div>
+ <div class="kpis" style="margin:10px 0"><div class="kpi"><b>${vn(mbN)}</b><span>kỳ XSMB · ${vnDate(mb[0].date)} – ${vnDate(mb[mbN-1].date)}</span></div><div class="kpi"><b>${vn(mnN)}</b><span>kết quả đài XSMN (${Object.keys(RAW.mn.by).length} đài) · ${vnDate(RAW.mn.dates[0])} – ${vnDate(lastMN)}</span></div><div class="kpi"><b>${vn(mtN)}</b><span>kết quả đài XSMT (${RAW.mt?Object.keys(RAW.mt.by).length:0} đài) · ${RAW.mt?vnDate(RAW.mt.dates[0])+' – '+vnDate(RAW.mt.last):''}</span></div><div class="kpi"><b>${vn(LOG_MB.length+RAW.mn.log.length+(RAW.mt?RAW.mt.log.length:0))}</b><span>danh sách đã khóa trong nhật ký</span></div></div>
  <h3>Nguồn</h3><ul>
   <li><b>XSMB</b>: bộ dữ liệu mở <a href="https://github.com/kina2711/vietnam-lottery-xsmb">kina2711/vietnam-lottery-xsmb</a> (giấy phép MIT, thu thập từ Minh Ngọc), đối chiếu với 3 bộ tương tự (khiemdoan, daiduong-eth, xmanzero); mỗi lần cập nhật lấy bộ mới nhất.</li>
   <li><b>XSMN</b>: gộp 2 bộ độc lập <a href="https://github.com/tuanseo5t-alt/xosomn-xosomt">tuanseo5t-alt/xosomn-xosomt</a> và <a href="https://github.com/Hpbt/xsmn-thong-ke">Hpbt/xsmn-thong-ke</a>.</li>
+  <li><b>XSMT</b>: bộ dữ liệu mở <a href="https://github.com/tuanseo5t-alt/xosomn-xosomt">tuanseo5t-alt/xosomn-xosomt</a> (từ 2009, 14 đài); đã đối chiếu ngẫu nhiên với bảng kết quả của Minh Ngọc.</li>
   <li><b>Khi nguồn mở chậm</b>: kết quả trong ngày được lấy từ trang kết quả (xskt.com.vn, xosodaiphat.com) và chỉ ghi vào khi hai trang khớp hoàn toàn và đủ số giải, đúng số chữ số.</li></ul>
  <h3>Kiểm tra chất lượng</h3><ul>
   <li>XSMN: hai nguồn trùng nhau ở 21.239 kết quả đài và <b>khớp 100%</b>; nguồn thứ hai bù thêm 33 kết quả còn thiếu ở nguồn thứ nhất. Đã đối chiếu ngẫu nhiên với kết quả đăng trên báo.</li>
   <li>XSMB: loại 1 dòng bị sao chép trùng trong nguồn (13/02/2009 trùng với 17/06/2006).</li>
-  <li>Mỗi kỳ được kiểm tra đủ số giải (27 với XSMB, 18 với mỗi đài XSMN) và đúng số chữ số từng giải.</li></ul>
+  <li>Mỗi kỳ được kiểm tra đủ số giải (27 với XSMB, 18 với mỗi đài XSMN, XSMT) và đúng số chữ số từng giải.</li></ul>
  <h3>Khoảng trống trong dữ liệu</h3><ul>
-  <li>XSMB nghỉ từ 30 Tết đến hết mùng 3 (4 ngày, từ 2010; trước đó 2 ngày). XSMN quay cả dịp Tết.</li>
+  <li>XSMB nghỉ từ 30 Tết đến hết mùng 3 (4 ngày, từ 2010; trước đó 2 ngày). XSMN và XSMT quay cả dịp Tết.</li>
   ${mbg.map(([a,b,n])=>`<li>XSMB: ${vnDate(a)} → ${vnDate(b)} (${n} ngày không có kết quả)${n>20?' — tạm dừng quay vì dịch COVID-19':''}</li>`).join('')}
-  ${mng.map(([a,b,n])=>`<li>XSMN: ${vnDate(a)} → ${vnDate(b)} (${n} ngày)${n>20?' — tạm dừng quay vì dịch COVID-19':''}</li>`).join('')}</ul>
- <h3>Lịch cập nhật</h3><ul><li>Bản GitHub tự chạy lúc 16:50 (sau XSMN), 18:40, 19:40 và 22:40 (sau XSMB) mỗi ngày.</li><li>Mỗi lần chạy: tải dữ liệu mới → chấm điểm kỳ vừa quay → khóa danh sách cho kỳ tới. Nhật ký chỉ được thêm dòng, không bao giờ sửa hay xóa.</li></ul>
+  ${mng.map(([a,b,n])=>`<li>XSMN: ${vnDate(a)} → ${vnDate(b)} (${n} ngày)${n>20?' — tạm dừng quay vì dịch COVID-19':''}</li>`).join('')}${mtg.map(([a,b,n])=>`<li>XSMT: ${vnDate(a)} → ${vnDate(b)} (${n} ngày)${n>20?' — tạm dừng quay vì dịch COVID-19':''}</li>`).join('')}</ul>
+ <h3>Lịch cập nhật</h3><ul><li>Bản GitHub tự chạy lúc 16:50 (sau XSMN), 17:50 (sau XSMT), 18:40, 19:40 và 22:40 (sau XSMB) mỗi ngày.</li><li>Mỗi lần chạy: tải dữ liệu mới → chấm điểm kỳ vừa quay → khóa danh sách cho kỳ tới. Nhật ký chỉ được thêm dòng, không bao giờ sửa hay xóa.</li></ul>
  <h3>Cách tính</h3><ul>
-  <li>Mỗi kỳ XSMB có 27 giải, mỗi đài XSMN có 18 giải. "Về" nghĩa là 2 số cuối của ít nhất một giải trùng với số đó. Xác suất lý thuyết: 1 − 0,99<sup>27</sup> ≈ 23,77% (XSMB) và 1 − 0,99<sup>18</sup> ≈ 16,55% (một đài XSMN), như nhau cho mọi số.</li>
-  <li>Các mô hình (Tổng hợp nóng, Nóng, Lạnh, Lô gan, Lô rơi, Top 3 xác suất, dàn số) xếp hạng 100 số chỉ bằng dữ liệu đến kỳ trước. XSMB dùng khung 30/90/180 ngày; XSMN dùng 10/26/52 kỳ của từng đài.</li>
+  <li>Mỗi kỳ XSMB có 27 giải, mỗi đài XSMN, XSMT có 18 giải. "Về" nghĩa là 2 số cuối của ít nhất một giải trùng với số đó. Xác suất lý thuyết: 1 − 0,99<sup>27</sup> ≈ 23,77% (XSMB) và 1 − 0,99<sup>18</sup> ≈ 16,55% (một đài XSMN hoặc XSMT), như nhau cho mọi số.</li>
+  <li>Các mô hình (Tổng hợp nóng, Nóng, Lạnh, Lô gan, Lô rơi, Top 3 xác suất, dàn số) xếp hạng 100 số chỉ bằng dữ liệu đến kỳ trước. XSMB dùng khung 30/90/180 ngày; XSMN, XSMT dùng 10/26/52 kỳ của từng đài.</li>
   <li>Kiểm chứng: mỗi kỳ trong quá khứ đều được tính lại như thể đứng ở thời điểm đó, rồi chấm với kết quả kỳ sau. Khoảng tin cậy 95% theo phân phối nhị thức.</li>
-  <li>Quỹ token: 1 điểm cho 1 số tốn 27 token (XSMB) hoặc 18 token (XSMN), mỗi nháy về nhận 99 token. Trung bình mỗi token chỉ thu về 0,99.</li></ul>
+  <li>Quỹ token: 1 điểm cho 1 số tốn 27 token (XSMB) hoặc 18 token (XSMN, XSMT), mỗi nháy về nhận 99 token. Trung bình mỗi token chỉ thu về 0,99.</li></ul>
  <h3>Thuật ngữ</h3><dl>
   <dt>Lô / số</dt><dd>2 chữ số cuối của một giải, từ 00 đến 99.</dd><dt>Nháy</dt><dd>Số lần một số xuất hiện trong cùng một kỳ.</dd><dt>Gan</dt><dd>Số kỳ liên tiếp một số chưa về.</dd><dt>Đầu / đuôi</dt><dd>Chữ số hàng chục / hàng đơn vị của số.</dd><dt>Đầu câm, đuôi câm</dt><dd>Chữ số không làm đầu (đuôi) của số nào trong kỳ.</dd><dt>Kỳ vọng</dt><dd>Giá trị trung bình nếu lặp lại rất nhiều lần.</dd><dt>Khoảng tin cậy 95%</dt><dd>Dải mà tỷ lệ thật nhiều khả năng nằm trong, với cỡ mẫu hiện có.</dd><dt>p-value</dt><dd>Xác suất thấy độ lệch như vậy nếu kết quả hoàn toàn ngẫu nhiên; nhỏ hơn 0,05 thường coi là "lệch".</dd></dl>
  <h3>Lưu ý</h3><p>Mỗi kỳ quay độc lập; không mô hình nào làm thay đổi xác suất về của một số. Phần Kiểm chứng và Nhật ký luôn cho thấy tỷ lệ thực tế của từng mô hình dao động quanh mức lý thuyết. Đánh lô đề là hành vi trái pháp luật tại Việt Nam.</p>`;}
@@ -1127,19 +1167,99 @@ function applyTheme(){if(theme==='auto')delete document.documentElement.dataset.
 function cycleTheme(){const i=THEMES.findIndex(x=>x[0]===theme);theme=THEMES[(i+1)%3][0];store.set('xs-theme',theme);applyTheme();}
 $('themeBtn').onclick=cycleTheme;applyTheme();
 
+
+/* ---------- live draw (Minh Ngọc widget, redrawn in XS Lab style) ---------- */
+const LVWIN={mn:[16*60+15,16*60+45],mt:[17*60+15,17*60+45],mb:[18*60+15,18*60+40]};
+const LVORD=['mn','mt','mb'];
+const LV_MB=[['ĐB','db',1],['G1','g1',1],['G2','g2',2],['G3','g3',6],['G4','g4',4],['G5','g5',6],['G6','g6',3],['G7','g7',4]];
+const LV_MN=[['G8','g8',1],['G7','g7',1],['G6','g6',3],['G5','g5',1],['G4','g4',7],['G3','g3',2],['G2','g2',1],['G1','g1',1],['ĐB','db',1]];
+const LV={reg:null,data:{},seen:{},timer:null,rr:0,busy:false,failed:false,jq:null};
+function nowVN(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Ho_Chi_Minh',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).formatToParts(new Date());const g=k=>p.find(x=>x.type===k).value;return {date:`${g('year')}-${g('month')}-${g('day')}`,min:(+g('hour')%24)*60+(+g('minute')),time:`${g('hour')}:${g('minute')}:${g('second')}`};}
+function lvStations(reg,date){if(reg==='mb')return XS.tetBreak(date)?[]:['mien-bac'];const R0=RAW[reg];if(!R0)return [];const w=XS.weekday(date);return Object.keys(R0.sch).filter(s=>R0.sch[s].includes(w)).sort((a,b)=>a==='tp-hcm'?-1:b==='tp-hcm'?1:ST[a].localeCompare(ST[b],'vi'));}
+function lvPhase(reg,n){const [a,b]=LVWIN[reg];if(n.min<a-5)return 'before';if(n.min<=b+15)return 'live';return 'after';}
+function lvAuto(){const n=nowVN();for(const r of LVORD)if(lvPhase(r,n)==='live')return r;for(const r of LVORD)if(lvPhase(r,n)==='before')return r;return 'mb';}
+function lvJQ(){if(window.jQuery)return Promise.resolve();if(LV.jq)return LV.jq;window.bgcolor='#9c0303';window.titlecolor='#ffffff';window.dbcolor='#0000c2';window.fsize='14px';window.kqwidth='500px';
+ LV.jq=new Promise((ok,no)=>{const s=document.createElement('script');s.src='https://www.minhngoc.net.vn/jquery/jquery-1.7.2.js';s.onload=()=>ok();s.onerror=()=>no(new Error('jq'));document.head.appendChild(s);});return LV.jq;}
+function lvParse(reg,slug){
+ const b=document.getElementById('box_kqxs_minhngoc'),cell=c=>b.querySelector('td.'+c),txt=c=>{const e=cell(c);return e?e.textContent.replace(/\s+/g,' ').trim():'';};
+ const thu=txt('thu'),ng=txt('ngay'),m=ng.match(/(\d{2})\/(\d{2})\/(\d{4})/);let date=m?`${m[3]}-${m[2]}-${m[1]}`:null;
+ const G=reg==='mb'?LV_MB:LV_MN,pr={};let done=0,tot=0;
+ for(const [,g,cnt] of G){const e=cell(g==='db'?'giaidb':'giai'+g.slice(1));const vals=e?e.textContent.split('-').map(x=>x.replace(/\s+/g,'').trim()):[];const arr=[];for(let i=0;i<cnt;i++){const v=vals[i]||'';arr.push(/^\d{2,6}$/.test(v)?v:'');}pr[g]=arr;tot+=cnt;done+=arr.filter(Boolean).length;}
+ if(!date){const n=nowVN(),wmap={'chủ nhật':0,'thứ hai':1,'thứ ba':2,'thứ tư':3,'thứ năm':4,'thứ sáu':5,'thứ bảy':6},w=wmap[thu.toLowerCase()];if(w!==undefined){let d=n.date;for(let i=0;i<7&&XS.weekday(d)!==w;i++)d=XS.addDays(d,-1);
+  if(d===n.date){const prev=XS.addDays(d,-7),rec=RAW[reg]&&RAW[reg].rec.find(x=>x.date===prev&&x.station===slug);if(n.min<LVWIN[reg][0]||(rec&&rec.db[0]===pr.db[0]&&rec.g8[0]===pr.g8[0]))d=prev;}
+  date=d;}}
+ return {slug,date,thu,ve:/Loại vé/.test(ng)?ng.replace('Loại vé:','').trim():'',pr,done,tot,at:nowVN().time};}
+function lvLoad(reg,slug){return lvJQ().then(()=>new Promise((ok,no)=>{const old=document.getElementById('lvScript');if(old)old.remove();
+ const s=document.createElement('script');s.id='lvScript';s.src=`https://www.minhngoc.net.vn/getkqxs/${slug}.js?t=${Date.now()}`;let tm=setTimeout(()=>no(new Error('timeout')),9000);
+ s.onload=()=>setTimeout(()=>{clearTimeout(tm);try{ok(lvParse(reg,slug));}catch(e){no(e);}},150);s.onerror=()=>{clearTimeout(tm);no(new Error('load'));};document.body.appendChild(s);}));}
+function lvStop(){if(LV.timer){clearTimeout(LV.timer);LV.timer=null;}}
+async function lvTick(){
+ lvStop();if(curView()!=='truc-tiep'||document.hidden)return;
+ const n=nowVN(),reg=LV.reg,sts=lvStations(reg,n.date),phase=lvPhase(reg,n);
+ if(!sts.length){lvRender();return;}
+ const slug=sts[LV.rr%sts.length];LV.rr++;
+ try{LV.busy=true;const d=await lvLoad(reg,slug);LV.data[reg+':'+slug]=d;LV.failed=false;}catch(e){LV.failed=true;}
+ LV.busy=false;lvRender();
+ const all=sts.map(s=>LV.data[reg+':'+s]);const complete=all.every(d=>d&&d.date===n.date&&d.done===d.tot);
+ const needInit=all.some(d=>!d);
+ if(LV.failed&&!all.some(Boolean))return;
+ if(needInit)LV.timer=setTimeout(lvTick,1200);
+ else if(phase==='live'&&!complete)LV.timer=setTimeout(lvTick,5000);}
+function lvStart(reg){lvStop();LV.reg=reg;LV.rr=0;lvRender();lvTick();}
+function renderLive(){
+ if(!LV.reg)LV.reg=lvAuto();
+ const n=nowVN();
+ $('lvSched').innerHTML=LVORD.map(r=>{const [a]=LVWIN[r],p=lvPhase(r,n),sts=lvStations(r,n.date);return `<button data-r="${r}" aria-pressed="${r===LV.reg}"><b>${RNAME[r]}</b><span>${pad(Math.floor(a/60))}:${pad(a%60)} · ${sts.length?sts.length+(r==='mb'?' kỳ':' đài'):'nghỉ'} · ${p==='live'?'đang trong giờ quay':p==='before'?'chưa quay':'đã quay'}</span></button>`;}).join('');
+ $('lvSched').querySelectorAll('button').forEach(b=>b.onclick=()=>lvStart(b.dataset.r));
+ $('lvRefresh').onclick=()=>{LV.rr=0;lvTick();};
+ lvStart(LV.reg);}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&curView()==='truc-tiep')lvTick();});
+function lvRender(){
+ const n=nowVN(),reg=LV.reg,sts=lvStations(reg,n.date),phase=lvPhase(reg,n),G=reg==='mb'?LV_MB:LV_MN;
+ const items=sts.map(s=>({s,d:LV.data[reg+':'+s]}));
+ const tot=items.reduce((a,x)=>a+(x.d?x.d.tot:(reg==='mb'?27:18)),0),done=items.reduce((a,x)=>a+(x.d&&x.d.date===n.date?x.d.done:0),0);
+ const todayAll=items.length&&items.every(x=>x.d&&x.d.date===n.date),complete=todayAll&&done===tot;
+ const [a,b]=LVWIN[reg],hm=v=>`${pad(Math.floor(v/60))}:${pad(v%60)}`;
+ let st,cls;
+ if(LV.failed&&!items.some(x=>x.d)){st='Không tải được dữ liệu trực tiếp';cls='';}
+ else if(!sts.length){st='Hôm nay không quay';cls='';}
+ else if(complete){st='Đã quay xong';cls='done';}
+ else if(phase==='live'){st=n.min<a?'Sắp quay':'Đang quay';cls='live';}
+ else if(phase==='before'){st=`Quay lúc ${hm(a)}`;cls='';}
+ else {st=todayAll?'Đã quay xong':'Đang chờ kết quả';cls=todayAll?'done':'';}
+ $('lvSt').className='lvst '+cls;$('lvSt').querySelector('span').textContent=st;
+ $('lvT').textContent=`Trực tiếp ${RLAB[reg]} · ${wd(n.date)}, ${vnDate(n.date)}`;
+ $('lvS').textContent=LV.failed&&!items.some(x=>x.d)?'Trình duyệt không tải được mã nhúng của Minh Ngọc (bản trên Claude chặn script từ trang khác). Hãy mở bản GitHub của XS Lab, hoặc xem trực tiếp tại xoso.net.':
+  phase==='live'&&!complete?`Bảng tự cập nhật khoảng 5 giây một lần đến khi đủ ${tot} giải. Giải mới về sẽ sáng lên.`:phase==='before'?`${RNAME[reg]} quay lúc ${hm(a)}. Bảng dưới đây là kỳ gần nhất; khi đến giờ quay, mở trang này để xem từng giải về.`:'Bảng dưới đây là kỳ gần nhất của các đài quay hôm nay.';
+ $('lvProg').style.width=tot?Math.round(done/tot*100)+'%':'0';
+ const last=items.map(x=>x.d&&x.d.at).filter(Boolean).sort().pop();
+ $('lvTime').textContent=(todayAll||phase!=='before'?`Đã ra ${done}/${tot} giải`:'')+(last?` · cập nhật lúc ${last}`:'');
+ if(LV.failed&&!items.some(x=>x.d)){$('lvBoard').innerHTML=`<p class="note">Mở trang trực tiếp: <a href="https://www.xoso.net/xo-so-truc-tiep.html" style="color:var(--red)">xoso.net/xo-so-truc-tiep.html</a></p>`;$('lvLoto').innerHTML='';return;}
+ const cellHTML=(key,g,i,v)=>{if(!v)return '<span class="pend">• • •</span>';const id=`${key}|${g}|${i}`,isNew=LV.seen[id]!==v;LV.seen[id]=v;return `<span class="${isNew&&LV.seen.__init?'flash':''}">${v.slice(0,-2)}<b>${v.slice(-2)}</b></span>`;};
+ $('lvBT').textContent=`Bảng kết quả ${RLAB[reg]}`;
+ const dnote=items.filter(x=>x.d&&x.d.date!==n.date).map(x=>`${reg==='mb'?'XSMB':ST[x.s]}: đang hiện kỳ ${x.d.date?vnDate(x.d.date):'trước'}`);
+ $('lvBS').textContent=dnote.length?dnote.join(' · ')+'.':'';
+ if(reg==='mb'){const d=items[0]&&items[0].d;
+  $('lvBoard').innerHTML=d?`<div class="ticket">${G.map(([lb,g])=>`<div class="row ${g==='db'?'db':''}"><div class="lb">${lb}</div><div class="nums">${d.pr[g].map((v,i)=>cellHTML('mien-bac',g,i,v)).join('')}</div></div>`).join('')}</div>`:'<p class="note">Đang tải…</p>';}
+ else{$('lvBoard').innerHTML=items.length?`<div class="mnb"><table><thead><tr><th>Giải</th>${items.map(x=>`<th>${ST[x.s]}${x.d&&x.d.ve?`<br><small style="font-weight:400">${x.d.ve}</small>`:''}</th>`).join('')}</tr></thead><tbody>${G.map(([lb,g,c])=>`<tr class="${g}"><td>${lb}</td>${items.map(x=>`<td>${x.d?x.d.pr[g].map((v,i)=>cellHTML(x.s,g,i,v)).join(''):'<span class="pend">• • •</span>'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:'<p class="note">Hôm nay không có đài nào quay.</p>';}
+ const loto=x=>{const a=[];if(x.d)for(const [,g] of G)for(const v of x.d.pr[g])if(v)a.push(+v.slice(-2));a.sort((p,q)=>p-q);const h=[...Array(10)].map(()=>[]);for(const k of a)h[Math.floor(k/10)].push(k%10);return h;};
+ $('lvLoto').innerHTML=`<div class="lt">${items.map(x=>`<div><h4>${reg==='mb'?'XSMB':ST[x.s]}</h4>${loto(x).map((a,j)=>`<p><b>${j}</b><span>${a.length?a.join(', '):'–'}</span></p>`).join('')}</div>`).join('')}</div>`;
+ if(items.some(x=>x.d))LV.seen.__init=true;}
+
 /* ---------- loading ---------- */
 async function loadAll(){
  const get=(f,j)=>fetch(f,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(f);return j?r.json():r.text();});
- const [mb,mn,lmb,lmn,rmb,rmn]=await Promise.all([get('xsmb.csv'),get('xsmn.csv'),get('predictions.json',1).catch(()=>[]),get('predictions_mn.json',1).catch(()=>[]),get('recent.json',1).catch(()=>[]),get('recent_mn.json',1).catch(()=>[])]);
- return {mb,mn,lmb,lmn,rmb,rmn};}
+ const [mb,mn,mt,lmb,lmn,lmt,rmb,rmn,rmt]=await Promise.all([get('xsmb.csv'),get('xsmn.csv'),get('xsmt.csv').catch(()=>''),get('predictions.json',1).catch(()=>[]),get('predictions_mn.json',1).catch(()=>[]),get('predictions_mt.json',1).catch(()=>[]),get('recent.json',1).catch(()=>[]),get('recent_mn.json',1).catch(()=>[]),get('recent_mt.json',1).catch(()=>[])]);
+ return {mb,mn,mt,lmb,lmn,lmt,rmb,rmn,rmt};}
 const ro=new ResizeObserver(()=>{if(!N)return;const v=curView();if(v==='kiem-chung')renderRandom();if(v==='quy-token')drawStrategy();if(v==='quy-token')drawSim();if(v==='kiem-chung')drawRoll();if(v==='nhat-ky'&&lg.pts_)cumChart('lgChart','lgTip',lg.pts_);if(v==='dan'&&dn.pts_)cumChart('dnChart','dnTip',dn.pts_);});
 ['simC','roll','lgChart','dnChart','rnC','msC'].forEach(id=>ro.observe($(id)));
 loadAll().then(d=>{
- RAW.mb=XS.parseMB(d.mb);RAW.mn=XS.parseMN(d.mn);const sc=XS.mnSchedule(RAW.mn);RAW.sch=sc.sch;RAW.mnLast=sc.last;
- RAW.mnIdx={};const ds=new Set();for(const s in RAW.mn){RAW.mnIdx[s]={};RAW.mn[s].forEach((r,i)=>{RAW.mnIdx[s][r.date]=i;ds.add(r.date);});}RAW.mnDates=[...ds].sort();
- LOG_MB=Array.isArray(d.lmb)?d.lmb:[];LOG_MN=Array.isArray(d.lmn)?d.lmn:[];REC_MB=Array.isArray(d.rmb)?d.rmb:[];REC_MN=Array.isArray(d.rmn)?d.rmn:[];
- $('stSel').innerHTML=stationOptions();
- setRegion(R.region,R.st);
+ RAW.mb=XS.parseMB(d.mb);
+ for(const [r,txt,log,rec] of [['mn',d.mn,d.lmn,d.rmn],['mt',d.mt,d.lmt,d.rmt]]){if(!txt)continue;const by=XS.parseMN(txt),sc=XS.mnSchedule(by),idx={},ds=new Set();for(const s in by){idx[s]={};by[s].forEach((x,i)=>{idx[s][x.date]=i;ds.add(x.date);});}
+  RAW[r]={by,sch:sc.sch,last:sc.last,idx,dates:[...ds].sort(),log:Array.isArray(log)?log:[],rec:Array.isArray(rec)?rec:[]};}
+ LOG_MB=Array.isArray(d.lmb)?d.lmb:[];REC_MB=Array.isArray(d.rmb)?d.rmb:[];
+ if(!RAW[R.region])R.region='mb';
+ setRegion(R.region);
 }).catch(e=>{$('status').textContent='Không tải được dữ liệu: '+e.message;});
 route();
 }

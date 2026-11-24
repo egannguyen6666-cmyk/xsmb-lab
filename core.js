@@ -17,7 +17,7 @@
   function nextDrawMB(iso) { let d = addDays(iso, 1); while (tetBreak(d)) d = addDays(d, 1); return d; }
   const weekday = iso => new Date(iso + 'T00:00:00Z').getUTCDay();
 
-  const STATIONS = {'an-giang':'An Giang','bac-lieu':'Bạc Liêu','ben-tre':'Bến Tre','binh-duong':'Bình Dương','binh-phuoc':'Bình Phước','binh-thuan':'Bình Thuận','ca-mau':'Cà Mau','can-tho':'Cần Thơ','da-lat':'Đà Lạt','dong-nai':'Đồng Nai','dong-thap':'Đồng Tháp','hau-giang':'Hậu Giang','kien-giang':'Kiên Giang','long-an':'Long An','soc-trang':'Sóc Trăng','tay-ninh':'Tây Ninh','tien-giang':'Tiền Giang','tra-vinh':'Trà Vinh','vinh-long':'Vĩnh Long','vung-tau':'Vũng Tàu','tp-hcm':'TP.HCM'};
+  const STATIONS = {'an-giang':'An Giang','bac-lieu':'Bạc Liêu','ben-tre':'Bến Tre','binh-duong':'Bình Dương','binh-phuoc':'Bình Phước','binh-thuan':'Bình Thuận','ca-mau':'Cà Mau','can-tho':'Cần Thơ','da-lat':'Đà Lạt','dong-nai':'Đồng Nai','dong-thap':'Đồng Tháp','hau-giang':'Hậu Giang','kien-giang':'Kiên Giang','long-an':'Long An','soc-trang':'Sóc Trăng','tay-ninh':'Tây Ninh','tien-giang':'Tiền Giang','tra-vinh':'Trà Vinh','vinh-long':'Vĩnh Long','vung-tau':'Vũng Tàu','tp-hcm':'TP.HCM','binh-dinh':'Bình Định','da-nang':'Đà Nẵng','dak-lak':'Đắk Lắk','dak-nong':'Đắk Nông','gia-lai':'Gia Lai','khanh-hoa':'Khánh Hòa','kon-tum':'Kon Tum','ninh-thuan':'Ninh Thuận','phu-yen':'Phú Yên','quang-binh':'Quảng Bình','quang-nam':'Quảng Nam','quang-ngai':'Quảng Ngãi','quang-tri':'Quảng Trị','thua-thien-hue':'Thừa Thiên Huế'};
 
   function jit(t, k) { let h = (t * 2654435761 ^ (k + 1) * 40503) >>> 0; h ^= h >>> 15; h = Math.imul(h, 2246822507) >>> 0; h ^= h >>> 13; return h / 4294967296; }
 
@@ -62,6 +62,7 @@
   /* Cấu hình theo miền */
   const MB = { region: 'mb', m: 27, W: [30, 90, 180], WC: [7, 30], WL: ['30 ngày', '90 ngày', '180 ngày'], start: 180, unit: 'ngày' };
   const MN = { region: 'mn', m: 18, W: [10, 26, 52], WC: [3, 10], WL: ['10 kỳ', '26 kỳ', '52 kỳ'], start: 52, unit: 'kỳ' };
+  const MT = Object.assign({}, MN, { region: 'mt' });
   function parseMB(text) { return text.trim().split(/\r?\n/).slice(1).map(l => { const [date, two] = l.split(','); return { date, two }; }); }
   function parseMN(text) { const by = {}; for (const l of text.trim().split(/\r?\n/).slice(1)) { const [date, st, two] = l.split(','); (by[st] = by[st] || []).push({ date, two }); } for (const s in by) by[s].sort((a, b) => a.date < b.date ? -1 : 1); return by; }
   /* Lịch quay XSMN: thứ trong tuần của mỗi đài, suy từ 10 tuần dữ liệu gần nhất */
@@ -73,5 +74,5 @@
   }
   function nextDrawStation(sch, s, afterIso) { let d = addDays(afterIso, 1); for (let i = 0; i < 14; i++) { if (sch[s].includes(weekday(d))) return d; d = addDays(d, 1); } return null; }
 
-  root.XS = { TET, tetBreak, addDays, nextDrawMB, weekday, STATIONS, jit, makeSeries, freq, scores, topK, IDS, top3From, allPicks, picksFor, rev, danPicks, MB, MN, parseMB, parseMN, mnSchedule, nextDrawStation };
+  root.XS = { TET, tetBreak, addDays, nextDrawMB, weekday, STATIONS, jit, makeSeries, freq, scores, topK, IDS, top3From, allPicks, picksFor, rev, danPicks, MB, MN, MT, parseMB, parseMN, mnSchedule, nextDrawStation };
 })(typeof module !== 'undefined' ? module.exports : window);
