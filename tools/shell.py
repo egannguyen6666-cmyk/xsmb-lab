@@ -17,15 +17,16 @@ MENU = [
     ("XSMN", _reg("xsmn", "XSMN") + [("", "Giải 8 XSMN", "thong-ke/giai-8-xsmn/"), ("", "Thống kê dàn XSMN", "thong-ke-dan-xsmn/")]),
     ("XSMT", _reg("xsmt", "XSMT") + [("", "Giải 8 XSMT", "thong-ke/giai-8-xsmt/"), ("", "Thống kê dàn XSMT", "thong-ke-dan-xsmt/")]),
     ("Vietlott", [("", "Keno", "keno/"), ("", "Mega 6/45", "mega-645/"), ("", "Power 6/55", "power-655/"), ("", "Max 3D, Max 3D+", "max-3d/"), ("", "Max 3D Pro", "max-3d-pro/"), ("", "Tất cả Vietlott", "vietlott/")]),
-    ("Thống kê", [("", "Tra cứu số 00–99", "so/"), ("", "Bảng thống kê", "thong-ke/bang-thong-ke/"), ("", "Thống kê lô tô", "thong-ke/"), ("", "Lô gan XSMB", "thong-ke/lo-gan-xsmb/"), ("", "Tần suất lô tô", "thong-ke/tan-suat-lo-to-xsmb/"), ("", "Đầu đuôi", "thong-ke/dau-duoi-xsmb/"), ("", "Giải nhất", "thong-ke/giai-nhat-xsmb/"), ("", "Lô kép", "thong-ke/lo-kep-xsmb/"), ("", "Số đảo", "thong-ke/so-dao-xsmb/"), ("", "Số gánh", "thong-ke/so-ganh-xsmb/"), ("", "Tổng, chẵn lẻ ĐB", "thong-ke/tong-chan-le-dac-biet-xsmb/"), ("h", "Công cụ", ""), ("", "Thống kê dàn, 3 càng", "thong-ke-dan/"), ("", "Bản đồ số", "ban-do-so/"), ("", "Kiểm định", "kiem-dinh/"), ("", "Mô phỏng", "mo-phong/")]),
+    ("Thống kê", [("", "Tra cứu số 00–99", "so/"), ("", "Bảng thống kê", "thong-ke/bang-thong-ke/"), ("", "Thống kê lô tô", "thong-ke/"), ("", "Lô gan XSMB", "thong-ke/lo-gan-xsmb/"), ("", "Tần suất lô tô", "thong-ke/tan-suat-lo-to-xsmb/"), ("", "Đầu đuôi", "thong-ke/dau-duoi-xsmb/"), ("", "Giải nhất", "thong-ke/giai-nhat-xsmb/"), ("", "Lô kép", "thong-ke/lo-kep-xsmb/"), ("", "Số đảo", "thong-ke/so-dao-xsmb/"), ("", "Số gánh", "thong-ke/so-ganh-xsmb/"), ("", "Tổng, chẵn lẻ ĐB", "thong-ke/tong-chan-le-dac-biet-xsmb/"), ("h", "Công cụ", ""), ("", "Thống kê dàn, 3 càng", "thong-ke-dan/"), ("", "Bản đồ số", "ban-do-so/")]),
+    ("Mô phỏng", [("", "Quay thử XSMB", "mo-phong/quay-thu-xsmb/"), ("", "Quay thử XSMN", "mo-phong/quay-thu-xsmn/"), ("", "Quay thử XSMT", "mo-phong/quay-thu-xsmt/"), ("", "Mô phỏng cách chơi", "mo-phong/"), ("", "Kiểm định ngẫu nhiên", "kiem-dinh/")]),
 ]
 
 
 def menu_html(up, cur=""):
-    o = ['<nav class="mbar" aria-label="Menu chính">']
+    o = ['<nav class="mbar" aria-label="Menu chính"><div class="mrow">']
     for lab, items in MENU:
         here = any(u and u == cur for _, _, u in items)
-        hub = {"XSMB": "xsmb/", "XSMN": "xsmn/", "XSMT": "xsmt/", "Vietlott": "vietlott/", "Thống kê": "thong-ke/"}.get(lab, "")
+        hub = {"XSMB": "xsmb/", "XSMN": "xsmn/", "XSMT": "xsmt/", "Vietlott": "vietlott/", "Thống kê": "thong-ke/", "Mô phỏng": "mo-phong/"}.get(lab, "")
         o.append('<details' + (' class="is-cur"' if here else '') + (f' data-href="{up}{hub}"' if hub else '') + f'><summary>{lab}</summary><div class="mdd">')
         for k, t, u in items:
             if k == "h":
@@ -33,6 +34,7 @@ def menu_html(up, cur=""):
             else:
                 o.append(f'<a href="{up}{u}"' + (' aria-current="page"' if u == cur else '') + f'>{t}</a>')
         o.append('</div></details>')
+    o.append('</div>')
     o.append(f'<a class="dv" href="{up}do-ve/"' + (' aria-current="page"' if cur == "do-ve/" else '') + '>Dò vé</a></nav>')
     return ''.join(o)
 
@@ -112,7 +114,7 @@ html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7e
 @media(min-width:1500px){.app{max-width:1488px;margin:0 auto}html[data-theme=dark] body{background:linear-gradient(90deg,var(--side) calc((100vw - 1488px)/2 + 24px),var(--bg) 0) no-repeat,var(--bg)}}@media(min-width:1500px) and (prefers-color-scheme:dark){html:not([data-theme=light]) body{background:linear-gradient(90deg,var(--side) calc((100vw - 1488px)/2 + 24px),var(--bg) 0) no-repeat,var(--bg)}}
 .subnav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:-8px 0 16px;padding:2px 0 4px;-webkit-overflow-scrolling:touch}.subnav::-webkit-scrollbar{display:none}.subnav a{flex:0 0 auto;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);text-decoration:none;font-size:14px;font-weight:600;white-space:nowrap}.subnav a:hover{border-color:#d01f3c;color:#d01f3c}.subnav a[aria-current=page]{background:#d01f3c;border-color:#d01f3c;color:#fff}
 .mbar{position:relative;display:flex;align-items:center;gap:2px;margin:0 0 18px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px;z-index:30}
-.mbar details{position:relative}.mbar summary,.mbar>a{list-style:none;display:flex;align-items:center;gap:7px;min-height:40px;padding:0 14px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;color:var(--ink);text-decoration:none;white-space:nowrap;-webkit-user-select:none;user-select:none}
+.mrow{display:flex;align-items:center;gap:2px;flex:1 1 auto;min-width:0}.mbar details{position:relative}.mbar summary,.mbar>a{list-style:none;display:flex;align-items:center;gap:7px;min-height:40px;padding:0 14px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;color:var(--ink);text-decoration:none;white-space:nowrap;-webkit-user-select:none;user-select:none}
 .mbar summary::-webkit-details-marker{display:none}.mbar summary::marker{content:""}
 .mbar summary::after{content:"";width:6px;height:6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);opacity:.5;transition:transform .15s}
 .mbar details[open]>summary::after{transform:translateY(1px) rotate(-135deg)}
@@ -123,9 +125,9 @@ html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7e
 .mbar .mdd a{display:block;padding:9px 12px;border-radius:9px;color:var(--ink);text-decoration:none;font-size:14px;line-height:1.3}
 .mbar .mdd a:hover{background:var(--band)}.mbar .mdd a[aria-current=page]{color:var(--red);font-weight:600;background:var(--redsoft)}
 .mbar .mdd .h{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);padding:10px 12px 3px;font-weight:600;grid-column:1/-1}
-@media(max-width:820px){.mbar{gap:1px;padding:3px;margin:0 0 14px}.mbar details{position:static;flex:1 1 auto}.mbar summary{justify-content:center;padding:0 3px;font-size:13px;min-height:40px;gap:4px;letter-spacing:-.1px}.mbar summary::after{width:4px;height:4px;border-width:0 1.5px 1.5px 0}.mbar>a.dv{display:none}
+@media(max-width:820px){.mbar{gap:1px;padding:3px;margin:0 0 14px}.mrow{overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}.mrow.end{-webkit-mask-image:none;mask-image:none}.mrow::-webkit-scrollbar{display:none}.mbar details{position:static;flex:0 0 auto}.mbar summary{justify-content:center;padding:0 10px;font-size:13.5px;min-height:40px;gap:4px;letter-spacing:-.1px}.mbar summary::after{width:4px;height:4px;border-width:0 1.5px 1.5px 0}.mbar>a.dv{display:none}
 .mbar .mdd{left:0;right:0;min-width:0;grid-template-columns:1fr 1fr;top:calc(100% + 6px)}.mbar .mdd a{padding:11px 10px}}
-@media(max-width:374px){.mbar summary::after{display:none}.mbar summary{font-size:12.5px;padding:0 2px}}
+@media(max-width:374px){.mbar summary{font-size:13px;padding:0 8px}}
 .brand{display:flex;gap:12px;align-items:center;padding:4px 8px;color:var(--sideink);text-decoration:none;border-radius:12px}.brand:hover b{color:#fff}.brand:focus-visible{outline:3px solid #ff5872}
 .brand b{display:block;font-size:19px;letter-spacing:.2px}.brand span{font-size:13px;color:var(--sidemute)}
 .nav{scrollbar-width:none}.nav::-webkit-scrollbar{display:none}
@@ -136,6 +138,8 @@ html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7e
 
 MENU_JS = """(function(){var D=document.querySelectorAll('.mbar details');function closeAll(x){D.forEach(function(d){if(d!==x)d.open=false})}
 D.forEach(function(d){d.addEventListener('toggle',function(){if(d.open)closeAll(d)})});
+var MR=document.querySelector('.mrow');if(MR){var me=function(){MR.classList.toggle('end',MR.scrollLeft+MR.clientWidth>=MR.scrollWidth-4)};MR.addEventListener('scroll',me,{passive:true});addEventListener('resize',me);me();
+var cu=MR.querySelector('.is-cur');if(cu&&cu.offsetLeft+cu.offsetWidth>MR.clientWidth)MR.scrollLeft=cu.offsetLeft-12;}
 document.addEventListener('click',function(e){if(!e.target.closest('.mbar'))closeAll()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll()});
 if(window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches)D.forEach(function(d){var t;

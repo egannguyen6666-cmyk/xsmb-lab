@@ -1,5 +1,7 @@
 (function(){var D=document.querySelectorAll('.mbar details');function closeAll(x){D.forEach(function(d){if(d!==x)d.open=false})}
 D.forEach(function(d){d.addEventListener('toggle',function(){if(d.open)closeAll(d)})});
+var MR=document.querySelector('.mrow');if(MR){var me=function(){MR.classList.toggle('end',MR.scrollLeft+MR.clientWidth>=MR.scrollWidth-4)};MR.addEventListener('scroll',me,{passive:true});addEventListener('resize',me);me();
+var cu=MR.querySelector('.is-cur');if(cu&&cu.offsetLeft+cu.offsetWidth>MR.clientWidth)MR.scrollLeft=cu.offsetLeft-12;}
 document.addEventListener('click',function(e){if(!e.target.closest('.mbar'))closeAll()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll()});
 if(window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches)D.forEach(function(d){var t;

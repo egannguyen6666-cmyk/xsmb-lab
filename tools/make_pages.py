@@ -840,10 +840,11 @@ function reset(){stop();S={};q=[];cur=null;var w=$('qtDay')?+$('qtDay').value:0;
 sts.forEach(function(s){S[s[0]]={};G.forEach(function(r){S[s[0]][r[1]]=new Array(r[2]).fill('')})});
 ORD.forEach(function(g){for(var i=0;i<cnt(g);i++)sts.forEach(function(s){q.push([s[0],g,i])})});$('qtLo').innerHTML='';draw()}
 function step(){if(cur){S[cur[0]][cur[1]][cur[2]]=rd(len(cur[1]))}cur=q.shift()||null;if(!cur){stop();draw();lot();return}draw();
-var sp=$('qtSp').value,per=sp==='that'?(C.reg==='mb'?44000:66000/Math.max(1,sts.length)):sp==='vua'?2500:500;t=setTimeout(step,per)}
+var per=spd();t=setTimeout(step,per)}
+function spd(){var sp=$('qtSp').value;return sp==='that'?(C.reg==='mb'?44000:66000/Math.max(1,sts.length)):sp==='vua'?2500:500}
 function stop(){clearTimeout(t);t=null;clearInterval(roll);roll=null;$('qtGo').textContent='Quay thử'}
 $('qtGo').onclick=function(){if(t){stop();draw();return}if(!q.length&&!cur)reset();$('qtGo').textContent='Tạm dừng';t=1;roll=setInterval(function(){var e=document.querySelector('#qtBoard .qroll');if(e)e.textContent=rd(+e.getAttribute('data-l'))},70);step()};
-$('qtRe').onclick=function(){reset()};if($('qtDay'))$('qtDay').onchange=reset;
+$('qtRe').onclick=function(){reset()};$('qtSp').onchange=function(){if(t){clearTimeout(t);t=setTimeout(step,Math.min(spd(),400))}};if($('qtDay'))$('qtDay').onchange=reset;
 if($('qtDay')){var d=new Date(Date.now()+7*3600e3).getUTCDay();$('qtDay').value=String((d+6)%7)}reset()})();"""
 QT_CSS_NOTE = '<p class="note"><b>Lưu ý:</b> Quay thử chỉ là mô phỏng: mọi con số được trình duyệt chọn ngẫu nhiên, không lấy từ dữ liệu, không liên quan và không gợi ý gì cho kết quả quay thật. XS Lab không đưa ra dự đoán.</p>'
 for reg, (lab, name, tm) in REG.items():
