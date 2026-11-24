@@ -81,7 +81,7 @@ def footer_html(up, year="2026"):
     def L(items):
         return '<ul>' + ''.join(f'<li><a href="{up}{u}">{t}</a></li>' for t, u in items) + '</ul>'
     return f"""<footer class="foot" id="siteFoot"><div class="fgrid">
-<div class="fsrc"><h2>Thông tin nguồn</h2><p>{NOTICE}</p><p>XS Lab chỉ trình bày kết quả và thống kê dữ liệu đã quay, không đưa ra dự đoán kết quả.</p><p><a href="{up}lien-he/">Liên hệ XS Lab</a> · <a href="{CONTACT_URL}" rel="noopener">Báo lỗi dữ liệu</a></p></div>
+<div class="fsrc"><h2>Thông tin nguồn</h2><p>{NOTICE}</p><p>XS Lab chỉ trình bày kết quả và thống kê dữ liệu đã quay, không đưa ra dự đoán kết quả.</p><p><a href="{up}lien-he/">Liên hệ XS Lab</a> · xslab.live</p></div>
 <nav aria-label="Kết quả và thống kê"><h2>Kết quả &amp; thống kê</h2>{L([("Kết quả XSMB","xsmb/"),("Kết quả XSMN","xsmn/"),("Kết quả XSMT","xsmt/"),("Trực tiếp XSMB","truc-tiep-xsmb/"),("Trực tiếp XSMN","truc-tiep-xsmn/"),("Trực tiếp XSMT","truc-tiep-xsmt/"),("XSMB 30 ngày","xsmb-30-ngay/"),("Sổ kết quả XSMB","xsmb/so-ket-qua/"),("Sổ kết quả XSMN","xsmn/so-ket-qua/"),("Sổ kết quả XSMT","xsmt/so-ket-qua/"),("Dò vé số","do-ve/"),("Thống kê lô tô","thong-ke/"),("Thống kê dàn","thong-ke-dan/"),("Bảng thống kê","thong-ke/bang-thong-ke/")])}</nav>
 <nav aria-label="Vietlott"><h2>Vietlott</h2>{L([("Keno","keno/"),("Mega 6/45","mega-645/"),("Power 6/55","power-655/"),("Max 3D","max-3d/"),("Max 3D Pro","max-3d-pro/"),("Tất cả Vietlott","vietlott/")])}</nav>
 <nav aria-label="Về XS Lab"><h2>Về XS Lab</h2>{L([("Giới thiệu","gioi-thieu/"),("Liên hệ","lien-he/"),("Điều khoản sử dụng","dieu-khoan-su-dung/"),("Hỏi đáp (FAQ)","hoi-dap/"),("Miễn trừ trách nhiệm","mien-tru-trach-nhiem/"),("Chính sách bảo mật","chinh-sach-bao-mat/"),("Chính sách cookie","cookies/"),("Về dữ liệu","ve-du-lieu/"),("RSS","rss/")])}</nav>
@@ -91,8 +91,7 @@ def footer_html(up, year="2026"):
 def org_ld(base):
     return json.dumps({"@context": "https://schema.org", "@type": "Organization", "@id": base + "#org", "name": "XS Lab", "url": base,
                        "logo": base + "icon-512.png", "description": "Trang kết quả xổ số và thống kê dữ liệu XSMB, XSMN, XSMT, Vietlott, không quảng cáo.",
-                       "contactPoint": {"@type": "ContactPoint", "contactType": "customer support", "url": base + "lien-he/", "availableLanguage": "vi"},
-                       "sameAs": ["https://github.com/egannguyen6666-cmyk/xsmb-lab"]}, ensure_ascii=False)
+                       "contactPoint": {"@type": "ContactPoint", "contactType": "customer support", "url": base + "lien-he/", "availableLanguage": "vi"}}, ensure_ascii=False)
 
 
 THEME_HEAD = "<script>try{var t=JSON.parse(localStorage.getItem('xs-theme'));if(t&&t!=='auto')document.documentElement.dataset.theme=t}catch(e){}</script>"

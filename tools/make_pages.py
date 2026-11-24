@@ -339,16 +339,12 @@ INFO_PAGES = [
 <li>Chỉ viết những gì kiểm chứng được từ thể lệ của công ty xổ số kiến thiết và Vietlott, hoặc tính toán trực tiếp từ dữ liệu đã quay; khi thể lệ thay đổi, nội dung được sửa theo.</li>
 <li>Xác suất và tỷ lệ trả thưởng được nêu rõ để người đọc hiểu đúng bản chất: kỳ vọng của mọi cách chơi xổ số đều âm.</li>
 <li>Phát hiện sai sót sẽ được sửa ngay khi xác minh. Bạn có thể báo lỗi tại trang <a href="../lien-he/">Liên hệ</a>.</li></ul>
-<h2>Mã nguồn mở</h2>
-<p>Mã nguồn và dữ liệu của XS Lab được công khai trên <a href="{GH}" rel="noopener">GitHub</a>, kể cả lịch sử cập nhật từng ngày.</p>
 <h2>Chơi có trách nhiệm</h2>
 <p>Xổ số là trò chơi có thưởng dành cho người từ đủ 18 tuổi. Hãy coi đây là hình thức giải trí, chỉ chi số tiền bạn sẵn sàng mất, và đừng tìm cách “gỡ” khi đã thua.</p></div>"""),
  ("lien-he/", "ContactPage", "Liên hệ XS Lab – góp ý, báo lỗi kết quả xổ số", "Liên hệ XS Lab để góp ý, báo lỗi kết quả XSMB, XSMN, XSMT, Vietlott hoặc đề xuất tính năng.", "Liên hệ", "Liên hệ XS Lab", f"""<div class="card doc">
 <p>XS Lab luôn muốn nghe góp ý của người đọc. Nếu bạn thấy kết quả nào chưa khớp với kết quả chính thức, một trang hiển thị lỗi hay muốn đề xuất tính năng mới, hãy liên hệ qua kênh dưới đây.</p>
 <h2>Kênh liên hệ</h2><ul>
-<li><b>Báo lỗi, góp ý:</b> tạo một mục mới tại <a href="{shell.CONTACT_URL}" rel="noopener">trang phản hồi của XS Lab trên GitHub</a> (cần tài khoản GitHub miễn phí). Mọi phản hồi đều công khai để người khác cùng theo dõi.</li>
-<li><b>Mã nguồn:</b> <a href="{GH}" rel="noopener">github.com/egannguyen6666-cmyk/xsmb-lab</a></li>
-<li><b>Website:</b> <a href="{BASE}">{BASE.split('//')[1].rstrip('/')}</a></li></ul>
+<li><b>Website:</b> <a href="{BASE}">xslab.live</a></li></ul>
 <h2>Khi báo lỗi kết quả</h2>
 <p>Để sửa nhanh, vui lòng ghi rõ: miền hoặc đài (ví dụ XSMB, Vĩnh Long), ngày quay, giải bị sai, con số đang hiển thị và con số đúng kèm nguồn (trang của công ty xổ số kiến thiết hoặc Vietlott).</p>
 <h2>Lưu ý</h2><ul>
