@@ -103,3 +103,4 @@ jobs:
           # chờ GitHub Pages đưa bản mới lên rồi mới xoá bản lưu sẵn
           for i in $(seq 1 30); do sleep 10; S=$(curl -s -H "Authorization: Bearer ${{ github.token }}" "https://api.github.com/repos/${{ github.repository }}/pages/builds/latest" | python3 -c "import sys,json;print(json.load(sys.stdin).get('status',''))" 2>/dev/null); echo "Pages: $S"; [ "$S" = "built" ] && break; done
           curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID/purge_cache" -H "Authorization: Bearer $CF_API_TOKEN" -H "Content-Type: application/json" --data '{"purge_everything":true}' | python3 -c "import sys,json;r=json.load(sys.stdin);print('Đã xoá bản lưu sẵn' if r.get('success') else r)"
+
