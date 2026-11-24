@@ -447,6 +447,64 @@ for f, blk in (("truc-tiep-xsmb/index.html", lvblock("mb")), ("truc-tiep-xsmn/in
     h2 = re.sub(r'<!--LVDAY-->.*?<!--/LVDAY-->', lambda m: "<!--LVDAY-->" + blk + "<!--/LVDAY-->", h, count=1, flags=re.S)
     if h2 != h: open(fp, "w").write(h2)
 
+
+# ---------- 100 trang thống kê theo số 00–99 (địa chỉ cố định, nội dung cập nhật mỗi kỳ) ----------
+MBL = ["ĐB"] + ["G1"] + ["G2"] * 2 + ["G3"] * 6 + ["G4"] * 4 + ["G5"] * 6 + ["G6"] * 3 + ["G7"] * 4
+MNL = ["ĐB", "G1", "G2", "G3", "G3"] + ["G4"] * 7 + ["G5"] + ["G6"] * 3 + ["G7", "G8"]
+MNF = {}
+for reg in ("xsmn", "xsmt"):
+    F = [(l.split(",")[0], l.split(",")[1], l.split(",")[2].split()) for l in open(os.path.join(ROOT, reg + "_full.csv")).read().strip().split("\n")[1:]]
+    MNF[reg] = F
+SEARCH_FORM = lambda up: f'<form class="nsearch" action="{up}so/" onsubmit="var v=(this.q.value.match(/\\d/g)||[]).join(\'\').slice(-2);if(v.length<2&&v.length)v=\'0\'+v;if(v){{location.href=\'{up}so/\'+v+\'/\';return false}}"><label for="nq">Tra cứu một số</label><div><input id="nq" name="q" inputmode="numeric" maxlength="3" placeholder="Nhập số, ví dụ 06" autocomplete="off"><button>Xem thống kê</button></div></form>'
+SCSS = '<style>.nsearch{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 16px}.nsearch label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}.nsearch div{display:flex;gap:8px}.nsearch input{flex:1;min-height:44px;border:1px solid var(--line);border-radius:12px;background:var(--band);color:var(--ink);font:inherit;font-size:18px;padding:0 14px}.nsearch button{min-height:44px;border:0;border-radius:12px;background:#d01f3c;color:#fff;font:inherit;font-weight:600;padding:0 16px;cursor:pointer}.ngrid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:4px}.ngrid a{display:block;text-align:center;padding:8px 0;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums;background:var(--panel)}.ngrid a small{display:block;font-weight:400;font-size:11px;color:var(--mute)}.ngrid a:hover{border-color:#d01f3c;color:var(--red)}.ngrid a[aria-current]{background:#d01f3c;color:#fff;border-color:#d01f3c}.ngrid a[aria-current] small{color:#fff}@media(max-width:600px){.ngrid{grid-template-columns:repeat(5,minmax(0,1fr))}}</style>'
+pvall = {}
+for i, ks in enumerate(lo):
+    for k in ks: pvall[k] = i
+def grid_links(cur=None):
+    return '<div class="ngrid">' + ''.join(f'<a href="../{k:02d}/"' + (' aria-current="page"' if k == cur else '') + f'>{k:02d}<small>{N - 1 - pvall.get(k, -1)} kỳ</small></a>' for k in range(100)) + '</div>'
+c365 = Counter(k for ks in lo[-365:] for k in ks)
+dball = Counter(k for _, k in db)
+for k in range(100):
+    kk = f"{k:02d}"; dao = int(kk[::-1])
+    hits = [i for i, ks in enumerate(lo) if k in ks]
+    gap = N - 1 - hits[-1] if hits else N
+    mx = max([b - a - 1 for a, b in zip([-1] + hits, hits)] or [0])
+    dbh = [i for i, (_, x) in enumerate(db) if x == k]
+    rec_rows = []
+    for d, v in fullmb[::-1]:
+        g = [MBL[j] for j, x in enumerate(v) if x[-2:] == kk and j < len(MBL)]
+        if g: rec_rows.append((vn(d), WDL[wdi(d)], len(g), ", ".join(g)))
+        if len(rec_rows) >= 15: break
+    mb_sum = tbl(["Chỉ số", "Số " + kk, "Trung bình theo xác suất"], [
+        ("Số lần về trong 30 kỳ", c30[k], "8,1"), ("Số lần về trong 90 kỳ", c90[k], "24,3"), ("Số lần về trong 365 kỳ", c365[k], "98,6"),
+        ("Số kỳ chưa về (tính đến " + vn(lastd) + ")", gap, "–"), ("Kỷ lục số kỳ liên tiếp chưa về", mx, "–"),
+        ("Làm 2 số cuối giải Đặc biệt", f"{len(dbh)} lần" + (f", gần nhất {vn(db[dbh[-1]][0])}" if dbh else ""), dec(len(db) / 100, 1) + " lần")])
+    mnpart = ""
+    for reg in ("xsmn", "xsmt"):
+        lab = REG[reg][0]; F = MNF[reg]; ds = sorted({d for d, _, _ in F}); d30 = set(ds[-30:]); d90 = set(ds[-90:])
+        n30 = sum(1 for d, st, v in F if d in d30 for x in v if x[-2:] == kk)
+        byst = Counter(st for d, st, v in F if d in d90 for x in v if x[-2:] == kk)
+        rows = []
+        for d, st, v in F[::-1]:
+            g = [MNL[j] for j, x in enumerate(v) if x[-2:] == kk and j < len(MNL)]
+            if g: rows.append((vn(d), ST.get(st, st), ", ".join(g)))
+            if len(rows) >= 10: break
+        last = rows[0] if rows else None
+        ntot = sum(1 for d, st, v in F if d in d30)
+        mnpart += f"<h2>Số {kk} ở {lab}</h2><p>Trong 30 ngày gần nhất số {kk} về <b>{n30}</b> lần trên {fm(ntot * 18)} giải của các đài {lab} (trung bình theo xác suất {dec(ntot * 18 / 100, 1)} lần)." + (f" Lần gần nhất: {last[0]}, đài {last[1]}." if last else "") + (" Đài về nhiều nhất 90 ngày: " + ", ".join(f"{ST.get(a, a)} ({b} lần)" for a, b in byst.most_common(3)) + "." if byst else "") + "</p>"
+        mnpart += card(tbl(["Ngày", "Đài", "Giải"], rows))
+    nb = [(k - 1) % 100, (k + 1) % 100]
+    body = (SCSS + SEARCH_FORM("../../") +
+            f"<p>Thống kê số <b>{kk}</b> (2 số cuối các giải) trong kết quả XSMB, XSMN, XSMT, tính đến kỳ {vn(lastd)}. Trang được cập nhật sau mỗi kỳ quay; đây là thống kê kết quả đã quay, không phải dự đoán.</p>" +
+            f"<h2>Số {kk} ở XSMB</h2>" + card(mb_sum) + f"<h2>15 lần gần nhất số {kk} về ở XSMB</h2>" + card(tbl(["Ngày", "Thứ", "Số nháy", "Giải"], rec_rows)) + mnpart +
+            "<h2>Số liên quan</h2><p>" + (f'Số đảo: <a href="../{dao:02d}/">{dao:02d}</a> · ' if dao != k else f'{kk} là số kép bằng · ') + "Số liền kề: " + ", ".join(f'<a href="../{x:02d}/">{x:02d}</a>' for x in nb) +
+            f' · <a href="../../thong-ke/lo-gan-xsmb/">Lô gan XSMB</a> · <a href="../../thong-ke/so-dao-xsmb/">Thống kê số đảo</a></p>' +
+            "<h2>Tra cứu số khác</h2><p class='note'>Số nhỏ dưới mỗi ô là số kỳ XSMB chưa về.</p>" + grid_links(k))
+    page(f"so/{kk}/", f"Thống kê số {kk} – số {kk} XSMB, XSMN, XSMT về bao nhiêu lần", f"Số {kk}: số lần về trong 30, 90, 365 kỳ XSMB, số kỳ chưa về, kỷ lục gan, lần làm giải đặc biệt và các lần về gần nhất ở XSMB, XSMN, XSMT, cập nhật đến {vn(lastd)}.",
+         [("Tra cứu số", "so/"), (f"Số {kk}", f"so/{kk}/")], f"Thống kê số {kk}", body)
+hubb = SCSS + SEARCH_FORM("../") + f"<p>Chọn một số từ 00 đến 99 để xem thống kê chi tiết ở XSMB, XSMN, XSMT. Số nhỏ dưới mỗi ô là số kỳ XSMB chưa về, tính đến {vn(lastd)}.</p>" + card(grid_links().replace('href="../', 'href="./'))
+page("so/", "Tra cứu thống kê số 00–99 XSMB, XSMN, XSMT", f"Tra cứu thống kê từng số từ 00 đến 99: số lần về, số kỳ chưa về, kỷ lục gan ở XSMB, XSMN, XSMT, cập nhật đến {vn(lastd)}.", [("Tra cứu số", "so/")], "Tra cứu thống kê số 00–99", hubb)
+
 # ---------- sitemap ----------
 
 # ---------- Trang thông tin: giới thiệu, liên hệ, điều khoản ----------
@@ -502,8 +560,8 @@ for path, typ, title, desc, crumb, h1, body in INFO_PAGES:
     page(path, title, desc, [(crumb, path)], h1, body, ld=[ORG, webpage_ld(typ, path, h1)])
 
 spa = [x.strip() for x in open(os.path.join(ROOT, "tools", "spa_pages.txt")).read().split() if x.strip()]
-urls = [(BASE, "1.0")] + [(BASE + s + "/", "0.9" if s in ("xsmb", "xsmn", "xsmt") else "0.7") for s in spa] + [(BASE + x[0], "0.5") for x in INFO_PAGES]
-for reg in list(REG) + ["thong-ke"]:
+urls = [(BASE, "1.0")] + [(BASE + s + "/", "0.9" if s in ("xsmb", "xsmn", "xsmt") else "0.7") for s in spa] + [(BASE + x[0], "0.5") for x in INFO_PAGES] + [(BASE + "so/", "0.7")]
+for reg in list(REG) + ["thong-ke", "so"]:
     for x in sorted(os.listdir(os.path.join(ROOT, reg))):
         if os.path.isfile(os.path.join(ROOT, reg, x, "index.html")):
             urls.append((f"{BASE}{reg}/{x}/", "0.6"))
