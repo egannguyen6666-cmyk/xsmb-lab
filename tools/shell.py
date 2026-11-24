@@ -77,6 +77,15 @@ def tab_html(up, cur="", ic="#"):
     return '<nav class="tab" aria-label="Điều hướng">' + ''.join((f'<a href="{up}{u}"' if u else f'<a href="{home(up)}"') + (' aria-current="page"' if cur and u and cur.startswith(u) else '') + f'><svg aria-hidden="true"><use href="{ic}{i}"/></svg><span>{t}</span></a>' for t, u, i in T) + '</nav>'
 
 
+SUBNAV_WD = [("thu-2", "Thứ 2"), ("thu-3", "Thứ 3"), ("thu-4", "Thứ 4"), ("thu-5", "Thứ 5"), ("thu-6", "Thứ 6"), ("thu-7", "Thứ 7"), ("chu-nhat", "Chủ nhật")]
+def subnav_items(sl):
+    S = sl.upper()
+    return [(f"{sl}/", f"{S} hôm nay"), (f"truc-tiep-{sl}/", "Trực tiếp"), (f"{sl}-hom-qua/", "Hôm qua")] + \
+        [(f"{sl}/{a}/", b) for a, b in SUBNAV_WD] + [(f"{sl}-30-ngay/", "30 ngày"), (f"{sl}-90-ngay/", "90 ngày"), (f"{sl}/so-ket-qua/", "Sổ kết quả")]
+def subnav_html(sl, up, cur=""):
+    return f'<nav class="subnav" id="subNav" aria-label="Mục {sl.upper()}">' + "".join(
+        f'<a href="{up}{u}"' + (' aria-current="page"' if u == cur else "") + f'>{t}</a>' for u, t in subnav_items(sl)) + "</nav>"
+
 def footer_html(up, year="2026"):
     def L(items):
         return '<ul>' + ''.join(f'<li><a href="{up}{u}">{t}</a></li>' for t, u in items) + '</ul>'
@@ -96,7 +105,8 @@ def org_ld(base):
 
 THEME_HEAD = "<script>try{var t=JSON.parse(localStorage.getItem('xs-theme'));if(t&&t!=='auto')document.documentElement.dataset.theme=t}catch(e){}</script>"
 
-MENU_CSS = """.mbar{position:relative;display:flex;align-items:center;gap:2px;margin:0 0 18px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px;z-index:30}
+MENU_CSS = """.subnav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:-8px 0 16px;padding:2px 0 4px;-webkit-overflow-scrolling:touch}.subnav::-webkit-scrollbar{display:none}.subnav a{flex:0 0 auto;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);text-decoration:none;font-size:14px;font-weight:600;white-space:nowrap}.subnav a:hover{border-color:#d01f3c;color:#d01f3c}.subnav a[aria-current=page]{background:#d01f3c;border-color:#d01f3c;color:#fff}
+.mbar{position:relative;display:flex;align-items:center;gap:2px;margin:0 0 18px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px;z-index:30}
 .mbar details{position:relative}.mbar summary,.mbar>a{list-style:none;display:flex;align-items:center;gap:7px;min-height:40px;padding:0 14px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;color:var(--ink);text-decoration:none;white-space:nowrap;-webkit-user-select:none;user-select:none}
 .mbar summary::-webkit-details-marker{display:none}.mbar summary::marker{content:""}
 .mbar summary::after{content:"";width:6px;height:6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);opacity:.5;transition:transform .15s}

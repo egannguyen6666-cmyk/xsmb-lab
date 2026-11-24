@@ -74,7 +74,7 @@ def page(path, title, desc, crumbs, h1, body, ld=None):
 <meta property="og:type" content="article"><meta property="og:locale" content="vi_VN"><meta property="og:site_name" content="XS Lab"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{url}"><meta property="og:image" content="{BASE}icon-512.png">
 <link rel="icon" type="image/png" href="{up}icon-192.png"><link rel="apple-touch-icon" href="{up}icon-180.png"><link rel="manifest" href="{up}manifest.webmanifest"><link rel="alternate" type="application/rss+xml" href="{up}rss.xml"><meta name="theme-color" content="#16151b">
 {shell.THEME_HEAD}<link rel="stylesheet" href="{up}assets/s.css?v={AV}"><script type="application/ld+json">{json.dumps(bc, ensure_ascii=False)}</script>{"".join(f'<script type="application/ld+json">{x}</script>' for x in (ld or []))}</head><body class="static">
-<div class="app">{shell.side_html(up, path, ic)}<main class="main">{shell.mhead(up, ic)}{shell.menu_html(up, path)}
+<div class="app">{shell.side_html(up, path, ic)}<main class="main">{shell.mhead(up, ic)}{shell.menu_html(up, path)}{(shell.subnav_html(path.split('/')[0], up, path if path.count('/')==2 and path.split('/')[1] in ('so-ket-qua','thu-2','thu-3','thu-4','thu-5','thu-6','thu-7','chu-nhat') else '') if path.split('/')[0] in ('xsmb','xsmn','xsmt') else '')}
 <nav class="bc" aria-label="Đường dẫn"><a href="{up}./">XS Lab</a>{''.join(f' › <a href="{up}{u}">{esc(n)}</a>' for n, u in crumbs[:-1])} › {esc(crumbs[-1][0])}</nav>
 <h1>{esc(h1)}</h1>{body}
 {shell.footer_html(up)}</main></div>{shell.tab_html(up, path, ic)}<script src="{up}assets/m.js?v={AV}" defer></script></body></html>"""

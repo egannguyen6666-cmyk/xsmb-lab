@@ -7,6 +7,12 @@ truc-tiep-xsmt
 xsmb-30-ngay
 xsmn-30-ngay
 xsmt-30-ngay
+xsmb-hom-qua
+xsmb-90-ngay
+xsmn-hom-qua
+xsmn-90-ngay
+xsmt-hom-qua
+xsmt-90-ngay
 truc-tiep
 do-ve
 thong-ke
