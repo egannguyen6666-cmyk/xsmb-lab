@@ -49,7 +49,7 @@ def esc(s): return html.escape(s, quote=True)
 
 # ---------- tệp giao diện dùng chung cho mọi trang tĩnh (mỗi trang nhẹ hơn, trình duyệt lưu đệm) ----------
 import hashlib
-EXTRA_CSS = """.g30{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}.c30{display:flex;flex-direction:column;align-items:center;min-width:54px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:var(--panel);text-decoration:none;color:var(--ink)}.c30 b{font-size:18px;color:#d01f3c}.c30 small{font-size:11.5px;color:var(--mute)}.dd30{width:100%;text-align:center;font-variant-numeric:tabular-nums}.dd30 td:first-child,.dd30 th:first-child{text-align:left;white-space:nowrap}.t30w{overflow-x:auto}.t30{width:100%;font-variant-numeric:tabular-nums}.t30 td{vertical-align:top}.t30 td small{display:block;color:var(--mute);font-size:11.5px}.t30 .db{color:#d01f3c;font-weight:700;white-space:nowrap}.t30 .lo{font-size:13.5px;line-height:1.7;word-spacing:2px}.t30 .st{white-space:nowrap}.ltg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:8px 0 14px}.ltg>div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px}.ltg h3{font-size:15px;margin:0 0 6px}.lead{background:var(--panel);border:1px solid var(--line);border-left:4px solid #d01f3c;border-radius:12px;padding:12px 14px;line-height:1.6}.vb{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8a9b,#d01f3c 55%,#8f1027);color:#fff;font-weight:700;font-size:18px;margin:3px;font-variant-numeric:tabular-nums}.vb.y{background:radial-gradient(circle at 32% 28%,#fff6c2,#f2c200 55%,#a07800);color:#1b1a20}
+EXTRA_CSS = """.qttabs{display:flex;gap:8px;flex-wrap:wrap}.qttabs a{padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--ink);text-decoration:none;font-weight:600;font-size:14px}.qttabs a[aria-current=page]{background:#d01f3c;border-color:#d01f3c;color:#fff}.qtbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}.qtbar label{display:flex;gap:6px;align-items:center;font-size:14px}.qtbar select{min-height:40px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);font:inherit;font-size:14px;padding:0 8px;max-width:100%}.qtgo{min-height:44px;border:0;border-radius:12px;background:#d01f3c;color:#fff;font:inherit;font-weight:800;font-size:17px;padding:0 22px;cursor:pointer}.qtre{min-height:44px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink);font:inherit;font-weight:600;padding:0 14px;cursor:pointer}.qroll{color:#d01f3c;opacity:.75}.qpend{color:var(--mute);letter-spacing:2px}#qtLo mark{background:#d01f3c;color:#fff;border-radius:4px;padding:0 3px}.g30{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}.c30{display:flex;flex-direction:column;align-items:center;min-width:54px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:var(--panel);text-decoration:none;color:var(--ink)}.c30 b{font-size:18px;color:#d01f3c}.c30 small{font-size:11.5px;color:var(--mute)}.dd30{width:100%;text-align:center;font-variant-numeric:tabular-nums}.dd30 td:first-child,.dd30 th:first-child{text-align:left;white-space:nowrap}.t30w{overflow-x:auto}.t30{width:100%;font-variant-numeric:tabular-nums}.t30 td{vertical-align:top}.t30 td small{display:block;color:var(--mute);font-size:11.5px}.t30 .db{color:#d01f3c;font-weight:700;white-space:nowrap}.t30 .lo{font-size:13.5px;line-height:1.7;word-spacing:2px}.t30 .st{white-space:nowrap}.ltg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:8px 0 14px}.ltg>div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px}.ltg h3{font-size:15px;margin:0 0 6px}.lead{background:var(--panel);border:1px solid var(--line);border-left:4px solid #d01f3c;border-radius:12px;padding:12px 14px;line-height:1.6}.vb{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8a9b,#d01f3c 55%,#8f1027);color:#fff;font-weight:700;font-size:18px;margin:3px;font-variant-numeric:tabular-nums}.vb.y{background:radial-gradient(circle at 32% 28%,#fff6c2,#f2c200 55%,#a07800);color:#1b1a20}
 .mgrid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}.mgrid a,.mgrid span{display:block;text-align:center;padding:6px 0;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-size:13px;color:var(--ink);background:var(--panel)}.mgrid span{color:var(--mute);opacity:.5}.mgrid a:hover{border-color:#d01f3c;color:var(--red)}
 .yr{display:grid;grid-template-columns:64px minmax(0,1fr);gap:8px;align-items:center;margin:0 0 6px}.yr b{font-variant-numeric:tabular-nums}
 @media(max-width:600px){.mgrid{grid-template-columns:repeat(6,minmax(0,1fr))}.yr{grid-template-columns:1fr}.vb{width:38px;height:38px;font-size:16px}}
@@ -819,6 +819,51 @@ for reg, (lab, name, tm) in REG.items():
     p = f"thong-ke/30-ky-{reg}/"
     page(p, f"Thống kê {lab} 30 kỳ gần nhất – tính đến {vn(last)}", f"Thống kê {lab} 30 kỳ gần nhất tính đến {vn(last)}: giải Đặc biệt và 2 số cuối các giải, lô về nhiều, lô gan, số chưa về, đầu đuôi. Chỉ là thống kê, không dự đoán.", [("Thống kê", "thong-ke/"), (f"Thống kê {lab} 30 kỳ", p)], f"Thống kê {lab} 30 kỳ gần nhất", body)
 
+
+# ---------- Quay thử (mô phỏng ngẫu nhiên, chạy trên trình duyệt) ----------
+QT_JS = r"""(function(){var C=window.QT,$=function(i){return document.getElementById(i)};
+var MB=[['ĐB','db',1,5],['G1','g1',1,5],['G2','g2',2,5],['G3','g3',6,5],['G4','g4',4,4],['G5','g5',6,4],['G6','g6',3,3],['G7','g7',4,2]],
+MN=[['G8','g8',1,2],['G7','g7',1,3],['G6','g6',3,4],['G5','g5',1,4],['G4','g4',7,5],['G3','g3',2,5],['G2','g2',1,5],['G1','g1',1,5],['ĐB','db',1,6]];
+var G=C.reg==='mb'?MB:MN,ORD=C.reg==='mb'?['g1','g2','g3','g4','g5','g6','g7','db']:['g8','g7','g6','g5','g4','g3','g2','g1','db'];
+var S={},q=[],t=null,roll=null,cur=null,t0=0,sts=[];
+function rd(n){var a=new Uint32Array(n),o='';crypto.getRandomValues(a);for(var i=0;i<n;i++)o+=a[i]%10;return o}
+function len(g){for(var i=0;i<G.length;i++)if(G[i][1]===g)return G[i][3]}
+function cnt(g){for(var i=0;i<G.length;i++)if(G[i][1]===g)return G[i][2]}
+function mine(){try{var v=JSON.parse(localStorage.getItem('xs-dvnum'))||'';return (v.match(/\d+/g)||[]).filter(function(x){return x.length<=2}).map(function(x){return ('0'+x).slice(-2)})}catch(e){return []}}
+function cell(st,g,i){var v=S[st][g][i];if(v)return '<span>'+v.slice(0,-2)+'<b>'+v.slice(-2)+'</b></span>';if(cur&&cur[0]===st&&cur[1]===g&&cur[2]===i)return '<span class="qroll" data-l="'+len(g)+'">'+rd(len(g))+'</span>';return '<span class="qpend">'+'•'.repeat(len(g))+'</span>'}
+function draw(){var h;if(C.reg==='mb'){h='<table>'+G.map(function(r){var a=[];for(var i=0;i<r[2];i++)a.push(cell('mb',r[1],i));return '<tr class="'+r[1]+'"><td class="l">'+r[0]+'</td><td>'+a.join('')+'</td></tr>'}).join('')+'</table>'}
+else{h='<table class="mn"><tr><th>Giải</th>'+sts.map(function(s){return '<th>'+s[1]+'</th>'}).join('')+'</tr>'+G.map(function(r){return '<tr class="'+r[1]+'"><td class="l">'+r[0]+'</td>'+sts.map(function(s){var a=[];for(var i=0;i<r[2];i++)a.push(cell(s[0],r[1],i));return '<td>'+a.join('')+'</td>'}).join('')+'</tr>'}).join('')+'</table>'}
+$('qtBoard').innerHTML=h;var left=q.length+(cur?1:0);$('qtSt').textContent=t?('Đang quay · còn '+left+' giải'):(left?'Sẵn sàng':'Đã quay xong')}
+function lot(){var M=mine(),k=Object.keys(S);$('qtLo').innerHTML='<div class="ltg">'+k.map(function(st){var L=[];G.forEach(function(r){S[st][r[1]].forEach(function(v){if(v)L.push(v.slice(-2))})});L.sort();var H=[[],[],[],[],[],[],[],[],[],[]];L.forEach(function(x){H[+x[0]].push(M.indexOf(x)>=0?'<mark>'+x+'</mark>':x)});
+return '<div><h3>Lô tô '+(st==='mb'?'XSMB':(sts.filter(function(s){return s[0]===st})[0]||[0,st])[1])+' (quay thử)</h3><table class="lt"><tr><th>Đầu</th><th>Lô tô</th></tr>'+H.map(function(a,i){return '<tr><td class="k">'+i+'</td><td>'+(a.join(', ')||'–')+'</td></tr>'}).join('')+'</table></div>'}).join('')+'</div>'+(M.length?'<p class="note">Số trong dàn bạn đã lưu được tô nền.</p>':'')}
+function reset(){stop();S={};q=[];cur=null;var w=$('qtDay')?+$('qtDay').value:0;sts=C.reg==='mb'?[['mb','XSMB']]:(C.sched[w]||[]);
+sts.forEach(function(s){S[s[0]]={};G.forEach(function(r){S[s[0]][r[1]]=new Array(r[2]).fill('')})});
+ORD.forEach(function(g){for(var i=0;i<cnt(g);i++)sts.forEach(function(s){q.push([s[0],g,i])})});$('qtLo').innerHTML='';draw()}
+function step(){if(cur){S[cur[0]][cur[1]][cur[2]]=rd(len(cur[1]))}cur=q.shift()||null;if(!cur){stop();draw();lot();return}draw();
+var sp=$('qtSp').value,per=sp==='that'?(C.reg==='mb'?44000:66000/Math.max(1,sts.length)):sp==='vua'?2500:500;t=setTimeout(step,per)}
+function stop(){clearTimeout(t);t=null;clearInterval(roll);roll=null;$('qtGo').textContent='Quay thử'}
+$('qtGo').onclick=function(){if(t){stop();draw();return}if(!q.length&&!cur)reset();$('qtGo').textContent='Tạm dừng';t=1;roll=setInterval(function(){var e=document.querySelector('#qtBoard .qroll');if(e)e.textContent=rd(+e.getAttribute('data-l'))},70);step()};
+$('qtRe').onclick=function(){reset()};if($('qtDay'))$('qtDay').onchange=reset;
+if($('qtDay')){var d=new Date(Date.now()+7*3600e3).getUTCDay();$('qtDay').value=String((d+6)%7)}reset()})();"""
+QT_CSS_NOTE = '<p class="note"><b>Lưu ý:</b> Quay thử chỉ là mô phỏng: mọi con số được trình duyệt chọn ngẫu nhiên, không lấy từ dữ liệu, không liên quan và không gợi ý gì cho kết quả quay thật. XS Lab không đưa ra dự đoán.</p>'
+for reg, (lab, name, tm) in REG.items():
+    sched = {}
+    if reg != "xsmb":
+        rec = json.load(open(os.path.join(ROOT, "recent_mn.json" if reg == "xsmn" else "recent_mt.json")))
+        for w in range(7):
+            ds = sorted({r["date"] for r in rec if wdi(r["date"]) == w})
+            if ds: sched[w] = sorted([[r["station"], ST.get(r["station"], r["station"])] for r in rec if r["date"] == ds[-1]], key=lambda x: ST.get(x[0], ""))
+    p = f"quay-thu-{reg}/"
+    tabs = '<p class="qttabs">' + ''.join(f'<a href="../quay-thu-{r2}/"' + (' aria-current="page"' if r2 == reg else '') + f'>Quay thử {REG[r2][0]}</a>' for r2 in REG) + '</p>'
+    day = '' if reg == "xsmb" else '<label>Lịch đài <select id="qtDay">' + ''.join(f'<option value="{w}">{WD[w]}: {", ".join(x[1] for x in sched.get(w, []))}</option>' for w in range(7) if w in sched) + '</select></label>'
+    real = "khoảng 44 giây một giải, đúng thứ tự từ giải Nhất đến giải Đặc biệt" if reg == "xsmb" else "khoảng 1 phút một giải mỗi đài, đúng thứ tự từ giải Tám đến giải Đặc biệt, các đài quay song song"
+    body = (tabs + f'<div class="card qtc"><div class="qtbar">{day}<label>Tốc độ <select id="qtSp"><option value="nhanh">Nhanh</option><option value="vua">Vừa</option><option value="that">Như thật</option></select></label><button type="button" id="qtGo" class="qtgo">Quay thử</button><button type="button" id="qtRe" class="qtre">Quay lại</button><span id="qtSt" class="note"></span></div><div id="qtBoard"></div></div><div id="qtLo"></div>'
+        + QT_CSS_NOTE
+        + f'<h2>Quay thử {lab} là gì</h2><p>Trang mô phỏng một buổi quay {lab} ({name}) trên trình duyệt: các giải lần lượt hiện ra theo đúng thứ tự và số chữ số như buổi quay thật, số đang quay nhảy liên tục rồi dừng lại. Chế độ <b>Như thật</b> giữ nhịp gần với buổi quay thật ({real}); chế độ Nhanh và Vừa để xem trọn bảng trong ít phút.</p>'
+        + f'<p>Mỗi lần quay là một lần chọn ngẫu nhiên mới, độc lập với mọi kỳ trước và sau. Kết quả thật của {lab} có tại <a href="../{reg}/">{lab} hôm nay</a>, hoặc theo dõi từng giải trong giờ quay {tm} tại <a href="../truc-tiep-{reg}/">Trực tiếp {lab}</a>.</p>'
+        + f'<script>window.QT={json.dumps({"reg": "mb" if reg == "xsmb" else reg[2:], "sched": sched}, ensure_ascii=False)}</script><script>{QT_JS}</script>')
+    page(p, f"Quay thử {lab} – mô phỏng quay số {name} như thật", f"Quay thử {lab}: mô phỏng buổi quay xổ số {name} trên trình duyệt, số nhảy và ra từng giải như thật, chọn tốc độ Nhanh, Vừa hoặc Như thật. Số ngẫu nhiên, không phải dự đoán.", [(lab, reg + "/"), (f"Quay thử {lab}", p)], f"Quay thử {lab}", body)
+
 # ---------- sitemap ----------
 
 # ---------- Trang thông tin: giới thiệu, liên hệ, điều khoản ----------
@@ -874,7 +919,7 @@ for path, typ, title, desc, crumb, h1, body in INFO_PAGES:
     page(path, title, desc, [(crumb, path)], h1, body, ld=[ORG, webpage_ld(typ, path, h1)])
 
 spa = [x.strip() for x in open(os.path.join(ROOT, "tools", "spa_pages.txt")).read().split() if x.strip()]
-core = [BASE] + [BASE + s + "/" for s in spa] + [BASE + x[0] for x in INFO_PAGES] + [BASE + "so/"]
+core = [BASE] + [BASE + s + "/" for s in spa] + [BASE + x[0] for x in INFO_PAGES] + [BASE + "so/"] + [BASE + f"quay-thu-{r}/" for r in REG]
 for reg in list(REG) + ["thong-ke", "so"]:
     for x in sorted(os.listdir(os.path.join(ROOT, reg))):
         if re.match(r"\d{2}-\d{2}-\d{4}$", x) or x.startswith("thang-"): continue
