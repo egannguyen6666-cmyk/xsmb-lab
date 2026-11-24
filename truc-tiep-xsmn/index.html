@@ -796,7 +796,7 @@ p{margin:0 0 10px;max-width:72ch}
 <nav class="tab" id="tab" aria-label="Điều hướng"></nav>
 <div class="sheet" id="sheet" role="dialog" aria-label="Các mục khác"><div id="sheetIn"></div></div>
 <script>var XS_ROOT='../';var XS_PAGE={"view": "truc-tiep", "live": "mn", "region": "mn"};</script>
-<script src="../core.js?v=202611240215"></script>
+<script src="../core.js?v=202611240241"></script>
 <script>
 {
 const VIEWS=[['ket-qua','Kết quả','i-home'],['truc-tiep','Trực tiếp','i-live'],['do-ve','Dò vé','i-ticket'],['thong-ke','Thống kê','i-stats'],['vietlott','Vietlott','i-vl'],['thong-ke-dan','Thống kê dàn','i-target'],['ban-do','Bản đồ số','i-grid'],['kiem-dinh','Kiểm định','i-chart'],['mo-phong','Mô phỏng','i-wallet'],['ve-du-lieu','Về dữ liệu','i-info']];
@@ -1514,18 +1514,19 @@ function vlDrawK(rows){
  if(VL.ky===null||!byKy.has(VL.ky))VL.ky=rows[N2-1].ky;const r=byKy.get(VL.ky);
  $('vlNavRow').style.display='none';$('vlKeno').hidden=false;$('vlKS').style.display='';$('vlBalls').innerHTML='';
  $('vlT').textContent='Keno · kết quả theo ngày';
- $('vlNote').innerHTML=`Theo dữ liệu kết quả gần đây, Keno quay 119 kỳ mỗi ngày, cách nhau 8 phút, từ 06:08 đến 21:52; mỗi kỳ chọn ngẫu nhiên 20 số từ 01 đến 80. Dòng dưới mỗi kỳ là kết quả cách chơi bổ sung: Lớn/Nhỏ (11 số trở lên từ 41–80 hoặc từ 01–40), Chẵn/Lẻ, Hòa 10–10, kèm giá trị giải cho 10.000 đồng. App lưu ${vn(N2)} kỳ gần nhất; dữ liệu Keno được cập nhật khoảng mỗi giờ nên các kỳ vừa quay có thể chưa có.`;
+ const knNote=`Theo dữ liệu kết quả gần đây, Keno quay 119 kỳ mỗi ngày, cách nhau 8 phút, từ 06:08 đến 21:52; mỗi kỳ chọn ngẫu nhiên 20 số từ 01 đến 80. Dòng dưới mỗi kỳ là kết quả cách chơi bổ sung: Lớn/Nhỏ (11 số trở lên từ 41–80 hoặc từ 01–40), Chẵn/Lẻ, Hòa 10–10, kèm giá trị giải cho 10.000 đồng. App lưu ${vn(N2)} kỳ gần nhất; dữ liệu Keno được cập nhật khoảng 15 phút một lần nên vài kỳ vừa quay có thể chưa có.`;$('vlNote').innerHTML='';
  const now=nowVN(),dates=Object.keys(byDate).sort();if(!dates.includes(now.date))dates.push(now.date);
  if(!KN.day||!dates.includes(KN.day))KN.day=now.date;
  const d=KN.day,first=knFirst(byDate,d)??(knFirst(byDate,XS.addDays(d,-1))!=null?knFirst(byDate,XS.addDays(d,-1))+KN.n:null);
  let upto=KN.n-1;if(d===now.date){const sec=(+now.time.slice(0,2)*3600+(+now.time.slice(3,5))*60+(+now.time.slice(6,8)));upto=Math.min(KN.n-1,Math.floor((sec-KN.first*60)/(KN.step*60)));}
  const slots=[];if(first!=null)for(let i=upto;i>=0;i--)slots.push({i,ky:first+i,x:byKy.get(first+i)});
- const have=slots.filter(s=>s.x).length;
+ const have=slots.filter(s=>s.x).length,shown=slots.filter(s=>s.x),miss=slots.filter(s=>!s.x);
  $('vlKeno').innerHTML=`<div class="kcd" id="knCd"></div>
-  <div class="ktb"><label for="knDay" class="sub" style="margin:0">Ngày</label><select id="knDay">${dates.slice(-60).reverse().map(x=>`<option value="${x}">${wd(x)}, ${vnDate(x)}</option>`).join('')}</select><span class="sub" style="margin:0">${slots.length?`${have}/${slots.length} kỳ đã có dữ liệu`:'Chưa có kỳ nào'}</span></div>
-  <div id="knList">${slots.slice(0,KN.shown).map(s=>`<div class="kr${s.x&&s.ky===VL.ky?' sel':''}"><div class="kh">${s.x?`<button data-ky="${s.ky}">#${String(s.ky).padStart(7,'0')} · ${knHM(s.i)}</button><span>Bấm để dò vé kỳ này</span>`:`<b style="color:var(--mute)">#${String(s.ky).padStart(7,'0')} · ${knHM(s.i)}</b><span>chưa có dữ liệu</span>`}</div>
+  <div class="ktb"><label for="knDay" class="sub" style="margin:0">Ngày</label><select id="knDay">${dates.slice(-60).reverse().map(x=>`<option value="${x}">${wd(x)}, ${vnDate(x)}</option>`).join('')}</select><span class="sub" style="margin:0">${slots.length?`${have}/${slots.length} kỳ đã quay`:'Chưa có kỳ nào'}</span></div>
+  ${miss.length?`<p class="note" style="margin:0 0 10px">${miss.length} kỳ (${knHM(miss[miss.length-1].i)}${miss.length>1?' – '+knHM(miss[0].i):''}) đang chờ dữ liệu; trang tự tải lại vài phút một lần.</p>`:''}
+  <div id="knList">${shown.slice(0,KN.shown).map(s=>`<div class="kr${s.x&&s.ky===VL.ky?' sel':''}"><div class="kh">${s.x?`<button data-ky="${s.ky}">#${String(s.ky).padStart(7,'0')} · ${knHM(s.i)}</button><span>Bấm để dò vé kỳ này</span>`:`<b style="color:var(--mute)">#${String(s.ky).padStart(7,'0')} · ${knHM(s.i)}</b><span>chưa có dữ liệu</span>`}</div>
    ${s.x?`<div class="kn">${s.x.n.map(k=>`<span>${pad(k)}</span>`).join('')}</div>${knFoot(s.x.n)}`:`<div class="kn kpend">${'<span>…</span>'.repeat(20)}</div>`}</div>`).join('')}</div>
-  ${slots.length>KN.shown?`<button class="copy" id="knMore">Xem thêm ${Math.min(12,slots.length-KN.shown)} kỳ</button>`:''}`;
+  ${shown.length>KN.shown?`<button class="copy" id="knMore">Xem thêm ${Math.min(12,shown.length-KN.shown)} kỳ</button>`:''}<p class="note" style="margin-top:12px">${knNote}</p>`;
  $('knDay').value=d;$('knDay').onchange=()=>{KN.day=$('knDay').value;KN.shown=12;vlDrawK(rows);};
  if($('knMore'))$('knMore').onclick=()=>{KN.shown+=12;vlDrawK(rows);};
  $('knList').querySelectorAll('button[data-ky]').forEach(b=>b.onclick=()=>{VL.ky=+b.dataset.ky;vlDrawK(rows);$('vlIn').closest('.card').scrollIntoView({behavior:'smooth',block:'start'});});
@@ -1534,8 +1535,9 @@ function vlDrawK(rows){
  const tick=()=>{const el=$('knCd');if(!el||curView()!=='vietlott'||VL.g!=='keno'){clearInterval(KN.timer);KN.timer=null;return;}const n=nowVN(),sec=+n.time.slice(0,2)*3600+(+n.time.slice(3,5))*60+(+n.time.slice(6,8));
   let i=Math.ceil((sec-KN.first*60)/(KN.step*60)),tom=false;if(i<0)i=0;if(i>KN.n-1){i=0;tom=true;}
   const at=(KN.first+KN.step*i)*60+(tom?86400:0),left=at-sec,ky=todayFirst!=null?todayFirst+i+(tom?KN.n:0):null;
+  if(!document.hidden&&Date.now()-(KN.lf||Date.now())>240000){KN.lf=Date.now();fetch(XS_ROOT+'vietlott_keno.csv?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():null).then(tx=>{if(!tx)return;const nr=vlParse('keno',tx);if(nr.length&&nr[nr.length-1].ky>rows[rows.length-1].ky&&curView()==='vietlott'&&VL.g==='keno'){VL.data.keno=nr;const wasLatest=VL.ky===rows[rows.length-1].ky;if(wasLatest)VL.ky=null;vlDrawK(nr);}}).catch(()=>{});}
   el.innerHTML=`<div><small>Kỳ quay Keno tiếp theo${ky?` · #${String(ky).padStart(7,'0')}`:''}</small><b>${tom?'Ngày mai ':''}${knHM(i)}</b></div><div><small>Đếm ngược</small><b class="t">${left>=3600?Math.floor(left/3600)+':':''}${pad(Math.floor(left%3600/60))}:${pad(left%60)}</b></div>`;};
- clearInterval(KN.timer);tick();KN.timer=setInterval(tick,1000);
+ clearInterval(KN.timer);if(!KN.lf)KN.lf=Date.now();tick();KN.timer=setInterval(tick,1000);
  // dò vé
  $('vlFormS').textContent=`Nhập từ 1 đến 10 số (01–80) trên vé Keno, ngăn cách bằng dấu phẩy hoặc dấu cách. App dò với kỳ #${String(r.ky).padStart(7,'0')} (bấm tên kỳ ở danh sách trên để đổi) và đếm số trùng ở các kỳ đã lưu.`;$('vlIn').placeholder='05, 18, 27, 44, 61';
  $('vlForm').onsubmit=e=>{e.preventDefault();vlCheckK(rows);};if($('vlIn').value.trim())vlCheckK(rows,true);else $('vlOut').innerHTML='';

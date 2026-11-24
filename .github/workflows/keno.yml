@@ -1,9 +1,9 @@
-name: Cập nhật Keno mỗi giờ
+name: Cập nhật Keno (15 phút một lần)
 
 on:
   schedule:
-    # Giờ UTC: phút 25 mỗi giờ từ 23:25 đến 15:25 UTC (06:25 – 22:25 giờ VN)
-    - cron: "25 0-15,23 * * *"
+    # Giờ UTC: 15 phút một lần từ 23:00 đến 15:45 UTC (06:00 – 22:45 giờ VN). GitHub có thể chạy trễ vài phút.
+    - cron: "*/15 0-15,23 * * *"
   workflow_dispatch:
 
 permissions:
@@ -18,8 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Tải kết quả Keno
-        run: python3 tools/update_vietlott.py keno
+      - name: Lấy kết quả Keno mới nhất
+        run: python3 tools/fetch_keno.py
       - name: Lưu thay đổi
         run: |
           git config user.name "xsmb-lab-bot"

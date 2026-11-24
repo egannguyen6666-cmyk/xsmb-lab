@@ -69,6 +69,9 @@ jobs:
       - name: Nhập tay XSMT (nếu có)
         if: ${{ github.event.inputs.mt_ngay != '' && github.event.inputs.mt_dai != '' && github.event.inputs.mt_ket_qua != '' }}
         run: python3 tools/add_day_mn.py xsmt.csv recent_mt.json "${{ github.event.inputs.mt_ngay }}" "${{ github.event.inputs.mt_dai }}" "${{ github.event.inputs.mt_ket_qua }}"
+      - name: Lấy kết quả Keno mới nhất
+        continue-on-error: true
+        run: python3 tools/fetch_keno.py
       - name: Tạo nguồn RSS
         run: python3 tools/make_rss.py
       - name: Lưu thay đổi
