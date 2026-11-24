@@ -655,39 +655,23 @@ html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7e
     <nav class="card c12 qtools" aria-label="Các mục mô phỏng"><h2>Chọn kiểu mô phỏng</h2><p class="sub">Quay thử để xem một buổi quay diễn ra thế nào, hoặc thử một cách chơi trên dữ liệu đã quay để thấy lãi lỗ qua nhiều kỳ. Mọi con số ở đây đều là mô phỏng, không phải dự đoán.</p><div class="qt qt4">
      <a href="mo-phong/quay-thu-xsmb/"><b>Quay thử XSMB</b><span>27 giải, số nhảy, nhịp như thật</span></a><a href="mo-phong/quay-thu-xsmn/"><b>Quay thử XSMN</b><span>Các đài theo lịch từng thứ</span></a><a href="mo-phong/quay-thu-xsmt/"><b>Quay thử XSMT</b><span>Các đài theo lịch từng thứ</span></a><a href="#simCard"><b>Mô phỏng cách chơi</b><span>Quỹ giả định, lãi lỗ qua nhiều kỳ</span></a></div></nav>
     <div class="card c12" id="simCard">
-     <h2>Mô phỏng cách chơi: quỹ token giả định</h2>
-     <p class="sub" id="simIntro"></p>
+     <h2>Mô phỏng mua vé số kiến thiết</h2>
+     <p class="sub">Mô phỏng một người mua vé số kiến thiết hợp pháp, giá 10.000 đồng một vé, đều đặn trong nhiều năm. Trang dùng đúng cơ cấu giải và cách dò đã công bố để tính xem vé trúng thường xuyên đến đâu. Đây là công cụ để hiểu xác suất, không phải lời khuyên mua vé.</p>
      <div class="form">
-      <div><label for="sv">Vốn ban đầu (token)</label><input id="sv" type="number" min="27" step="1" value="10000" inputmode="numeric"></div>
-      <div><label for="sp">Số điểm mỗi số</label><input id="sp" type="number" min="1" step="1" value="1" inputmode="numeric"></div>
-      <div><label for="si">Theo dữ liệu thống kê</label><select id="si"></select></div>
-      <div><label for="sm">Khoảng thời gian</label><select id="sm"></select></div>
-      <div id="sdw"><label for="sd">Bắt đầu từ ngày</label><input id="sd" type="date"><small id="sdErr" style="color:var(--red);display:block"></small></div>
+      <div><label for="vsT">Loại vé</label><select id="vsT"><option value="mb">XSMB: vé 5 chữ số, 27 giải, quay mỗi ngày</option><option value="mn">XSMN, XSMT: vé 6 chữ số, 18 giải, mỗi đài quay mỗi tuần</option></select></div>
+      <div><label for="vsN">Số vé mỗi kỳ</label><select id="vsN"><option>1</option><option>2</option><option selected>5</option><option>10</option><option>20</option></select></div>
+      <div><label for="vsY">Thời gian</label><select id="vsY"><option value="0.0822">1 tháng</option><option value="1" selected>1 năm</option><option value="5">5 năm</option><option value="10">10 năm</option><option value="30">30 năm</option></select></div>
      </div>
-     <div class="kpis" id="simK"></div>
-     <div class="fig" style="margin-top:16px"><svg id="simC" role="img" aria-label="Số dư quỹ token theo kỳ"></svg><div class="tip" id="simTip"></div></div>
-     <div class="legend"><span><s style="border-top:2px solid var(--ink)"></s>Số dư</span><span><s style="border-top:2px dashed var(--mute)"></s>Vốn gốc</span><span><s style="border-top:2px dotted var(--red)"></s>Kỳ vọng lý thuyết (−1% số token đã đặt)</span></div>
-     <p class="note" id="simNote" style="margin-top:12px"></p>
+     <div class="acts" style="margin:12px 0"><button class="copy" id="vsRun" style="background:#d01f3c;color:#fff;border-color:#d01f3c">Chạy lại mô phỏng</button></div>
+     <div class="kpis" id="vsK"></div>
+     <div class="tbl" style="margin-top:14px"><table id="vsTb"></table></div>
+     <p class="note" id="vsNote" style="margin-top:12px"></p>
     </div>
-    <div class="card c12">
-     <h2>Mô phỏng chiến lược quỹ</h2>
-     <p class="sub" id="msS"></p>
-     <div class="form">
-      <div><label for="msV">Vốn mỗi quỹ (token)</label><input id="msV" type="number" min="100" step="100" value="10000" inputmode="numeric"></div>
-      <div><label for="msK">Số con mỗi kỳ</label><select id="msK"><option>1</option><option>3</option><option selected>10</option></select></div>
-      <div><label for="msD">Số kỳ</label><select id="msD"><option value="30">30</option><option value="90" selected>90</option><option value="365">365</option></select></div>
-      <div><label for="msStr">Chiến lược</label><select id="msStr"><option value="flat">Đều tay (1 điểm mỗi số)</option><option value="mart">Gấp thếp (lỗ thì gấp đôi, lãi thì về 1)</option><option value="stop">Chốt lời +20% / cắt lỗ −30%</option></select></div>
-     </div>
-     <div class="acts" style="margin:0 0 12px"><button class="copy" id="msRun" style="background:#d01f3c;color:#fff;border-color:#d01f3c">Chạy 1.000 quỹ</button></div>
-     <div class="kpis" id="msK2"></div>
-     <div class="fig" style="margin-top:14px;min-height:280px"><svg id="msC" role="img" aria-label="Phân bố số dư các quỹ theo kỳ"></svg></div>
-     <div class="legend"><span><s style="height:10px;background:var(--red);opacity:.18"></s>90% quỹ nằm trong dải này</span><span><s style="height:10px;background:var(--red);opacity:.35"></s>50% quỹ ở giữa</span><span><s style="border-top:2px solid var(--ink)"></s>Trung vị</span><span><s style="border-top:2px dashed var(--mute)"></s>Vốn gốc</span></div>
-     <p class="note" id="msNote" style="margin-top:10px"></p>
-    </div>
-    <div class="card c12"><h2>Chi tiết từng kỳ</h2><p class="sub">Số tô đỏ là số đã về, ×2 là về 2 nháy.</p><div class="tbl" id="simT"></div><div class="pager" id="simPager"></div></div>
     <article class="card c12 doc seo" id="art-mo-phong">
-     <h2>Vì sao mô phỏng luôn cho kỳ vọng âm?</h2>
-     <p>Trong môi trường giả định, mỗi điểm cho một lô tốn 27 token (XSMB) và mỗi nháy về được 99 token. Vì xác suất một nháy là 1/100 và có 27 giải, trung bình mỗi token chỉ thu về 0,99 token. Mô phỏng 1.000 quỹ cho thấy các cách đặt khác nhau (đều tay, gấp thếp, chốt lời – cắt lỗ) chỉ thay đổi hình dạng kết quả, không thay đổi kỳ vọng âm.</p>
+     <h2>Mô phỏng này cho thấy điều gì</h2>
+     <p>Mỗi giải là một lần quay độc lập, mọi dãy số đều có cùng khả năng xuất hiện. Vì vậy một vé XSMB chỉ có khoảng 1 phần 100.000 khả năng trùng cả 5 số giải Đặc biệt, còn một vé XSMN, XSMT có khoảng 1 phần 1.000.000 khả năng trùng cả 6 số. Phần lớn lượt trúng rơi vào các giải nhỏ nhất. Mua nhiều vé hơn chỉ làm số lần trúng tăng theo đúng tỷ lệ số tiền bỏ ra, không làm xác suất của từng vé cao hơn.</p>
+     <p>Không có cách chọn số nào, kể cả chọn theo số liệu thống kê, làm thay đổi các xác suất trên. Trang <a href="../kiem-dinh/">Kiểm định</a> đối chiếu điều này với dữ liệu thật: những số về nhiều ở các kỳ trước không về nhiều hơn ở kỳ sau.</p>
+     <p>Theo quy định, tổng tiền trả thưởng của xổ số kiến thiết luôn thấp hơn tổng tiền bán vé, nên về lâu dài người mua luôn nhận về ít hơn số tiền đã bỏ ra. Xổ số chỉ dành cho người từ đủ 18 tuổi; hãy coi đó là hình thức giải trí, chỉ chi số tiền bạn sẵn sàng mất.</p>
     </article>
    </div>
   </section>
@@ -751,11 +735,11 @@ html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7e
      <div class="seg" id="dnM" role="group" aria-label="Cách lập dàn"><span class="lab">Cách lập</span></div>
      <div class="seg" id="dnN" role="group" aria-label="Số lượng"><span class="lab">Dàn</span></div>
      <div class="seg" id="dnPer" role="group" aria-label="Giai đoạn"><span class="lab">Giai đoạn</span></div>
-     <div class="rng"><div><label for="dnFrom">Từ ngày</label><input type="date" id="dnFrom"></div><div><label for="dnTo">Đến ngày</label><input type="date" id="dnTo"></div><div><label for="dnPts">Điểm mỗi số</label><input type="number" id="dnPts" min="1" step="1" value="1" inputmode="numeric" style="width:90px"></div><button id="dnApply">Xem khoảng này</button></div>
+     <div class="rng"><div><label for="dnFrom">Từ ngày</label><input type="date" id="dnFrom"></div><div><label for="dnTo">Đến ngày</label><input type="date" id="dnTo"></div><input type="hidden" id="dnPts" value="1"><button id="dnApply">Xem khoảng này</button></div>
      <p class="note" id="dnRange" style="margin:-4px 0 0"></p>
     </div>
-    <div class="card c6 hero" id="dnNext"></div>
-    <div class="card c6" id="dnLast"></div>
+    <div id="dnNext" style="display:none"></div>
+    <div class="card c12" id="dnLast"></div>
     <div class="c12"><div class="kpis" id="dnK"></div></div>
     <div class="card c12">
      <h2>Timeline trong quá khứ: kỳ vọng và thực tế</h2>
@@ -964,7 +948,7 @@ html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7e
 const VIEWS=[['ket-qua','Kết quả','i-home'],['truc-tiep','Trực tiếp','i-live'],['do-ve','Dò vé','i-ticket'],['thong-ke','Thống kê','i-stats'],['vietlott','Vietlott','i-vl'],['thong-ke-dan','Thống kê dàn','i-target'],['ban-do','Bản đồ số','i-grid'],['kiem-dinh','Kiểm định','i-chart'],['mo-phong','Mô phỏng','i-wallet'],['ve-du-lieu','Về dữ liệu','i-info']];
 const EXTRA=[['hoi-dap','Hỏi đáp'],['mien-tru-trach-nhiem','Tuyên bố miễn trừ trách nhiệm'],['chinh-sach-bao-mat','Chính sách bảo mật'],['cookies','Chính sách cookie'],['rss','RSS']];
 const ALIAS={'tong-quan':'ket-qua','du-doan':'thong-ke-dan','nhat-ky':'ket-qua','kiem-chung':'kiem-dinh','quy-token':'mo-phong'};
-const META={'ket-qua':['{R} hôm nay – Kết quả xổ số không quảng cáo','Kết quả xổ số {R} mới nhất, đủ các giải, sổ kết quả các kỳ gần đây và thống kê nhanh kỳ vừa quay.'],'truc-tiep':['Trực tiếp xổ số {R}','Xem trực tiếp kết quả xổ số {R} trong giờ quay, từng giải cập nhật khoảng 3 giây một lần.'],'do-ve':['Dò vé số {R}','Dò vé số {R} theo đài và ngày quay, đối chiếu với đủ các giải trong 60 ngày gần nhất.'],'thong-ke':['Thống kê lô tô {R}','Thống kê lô tô {R}: tra cứu số, đầu đuôi, giải đặc biệt, lô gan, phân bố tổng và chẵn lẻ từ dữ liệu quá khứ.'],'thong-ke-dan':['Thống kê dàn số {R}','Thống kê dàn 4, 6, 10 số {R}: mỗi dàn đã xuất hiện bao nhiêu lần trong quá khứ, cả dàn cùng về bao nhiêu kỳ.'],'ban-do':['Bản đồ tần suất 00–99 {R}','Bản đồ nhiệt tần suất 100 số {R} theo các khung thời gian.'],'kiem-dinh':['Kiểm định thống kê {R}','Kiểm định độ ngẫu nhiên và mức lặp lại của các dữ liệu thống kê trên dữ liệu {R}.'],'mo-phong':['Mô phỏng xác suất {R}','Mô phỏng quỹ token giả định để thấy kỳ vọng âm của mọi cách đặt trên dữ liệu {R}.'],'vietlott':['Kết quả Vietlott Mega 6/45, Power 6/55','Kết quả xổ số Vietlott Mega 6/45 và Power 6/55 các kỳ, dò vé và thống kê tần suất từ dữ liệu quá khứ.'],'hoi-dap':['Hỏi đáp về xổ số','Giải đáp các câu hỏi thường gặp về giờ quay, dò vé, lĩnh thưởng và dữ liệu.'],'mien-tru-trach-nhiem':['Tuyên bố miễn trừ trách nhiệm','Tuyên bố miễn trừ trách nhiệm của XS Lab.'],'chinh-sach-bao-mat':['Chính sách bảo mật','Chính sách bảo mật của XS Lab.'],'cookies':['Chính sách cookie','Chính sách cookie và bộ nhớ cục bộ của XS Lab.'],'rss':['RSS kết quả xổ số','Theo dõi kết quả xổ số qua nguồn RSS của XS Lab.'],'ve-du-lieu':['Về dữ liệu XS Lab','Nguồn dữ liệu, cách cập nhật, kiểm tra chất lượng và cách tính của XS Lab.'],'dan':['Lịch sử thống kê dàn số {R}','Timeline áp dụng một cách thống kê lập dàn trên dữ liệu quá khứ {R}.']};
+const META={'ket-qua':['{R} hôm nay – Kết quả xổ số không quảng cáo','Kết quả xổ số {R} mới nhất, đủ các giải, sổ kết quả các kỳ gần đây và thống kê nhanh kỳ vừa quay.'],'truc-tiep':['Trực tiếp xổ số {R}','Xem trực tiếp kết quả xổ số {R} trong giờ quay, từng giải cập nhật khoảng 3 giây một lần.'],'do-ve':['Dò vé số {R}','Dò vé số {R} theo đài và ngày quay, đối chiếu với đủ các giải trong 60 ngày gần nhất.'],'thong-ke':['Thống kê lô tô {R}','Thống kê lô tô {R}: tra cứu số, đầu đuôi, giải đặc biệt, lô gan, phân bố tổng và chẵn lẻ từ dữ liệu quá khứ.'],'thong-ke-dan':['Thống kê dàn số {R}','Thống kê dàn 4, 6, 10 số {R}: mỗi dàn đã xuất hiện bao nhiêu lần trong quá khứ, cả dàn cùng về bao nhiêu kỳ.'],'ban-do':['Bản đồ tần suất 00–99 {R}','Bản đồ nhiệt tần suất 100 số {R} theo các khung thời gian.'],'kiem-dinh':['Kiểm định thống kê {R}','Kiểm định độ ngẫu nhiên và mức lặp lại của các dữ liệu thống kê trên dữ liệu {R}.'],'mo-phong':['Mô phỏng xổ số – quay thử và mô phỏng mua vé','Quay thử XSMB, XSMN, XSMT và mô phỏng xác suất trúng khi mua vé số kiến thiết.'],'vietlott':['Kết quả Vietlott Mega 6/45, Power 6/55','Kết quả xổ số Vietlott Mega 6/45 và Power 6/55 các kỳ, dò vé và thống kê tần suất từ dữ liệu quá khứ.'],'hoi-dap':['Hỏi đáp về xổ số','Giải đáp các câu hỏi thường gặp về giờ quay, dò vé, lĩnh thưởng và dữ liệu.'],'mien-tru-trach-nhiem':['Tuyên bố miễn trừ trách nhiệm','Tuyên bố miễn trừ trách nhiệm của XS Lab.'],'chinh-sach-bao-mat':['Chính sách bảo mật','Chính sách bảo mật của XS Lab.'],'cookies':['Chính sách cookie','Chính sách cookie và bộ nhớ cục bộ của XS Lab.'],'rss':['RSS kết quả xổ số','Theo dõi kết quả xổ số qua nguồn RSS của XS Lab.'],'ve-du-lieu':['Về dữ liệu XS Lab','Nguồn dữ liệu, cách cập nhật, kiểm tra chất lượng và cách tính của XS Lab.'],'dan':['Lịch sử thống kê dàn số {R}','Timeline áp dụng một cách thống kê lập dàn trên dữ liệu quá khứ {R}.']};
 const H1_0=document.getElementById('vtitle').textContent,PG=window.XS_PAGE||null;
 function onPageView(v){return PG&&v===PG.view&&(!location.hash||location.hash==='#'+v||(typeof anchorHash==='function'&&!!anchorHash()));}
 function setMeta(v){if(onPageView(v)||(!PG&&v==='ket-qua'&&!location.hash))return;const m=META[v]||META['ket-qua'],lab=!N?'XSMB, XSMN, XSMT':R.region==='mb'?'XSMB':RLAB[R.region]+' '+ST[R.st],f=s=>s.replace('{R}',lab);document.title=f(m[0])+' | XS Lab';const md=document.querySelector('meta[name=description]');if(md)md.setAttribute('content',f(m[1])+' Thông tin chỉ mang tính tham khảo.');}
@@ -1045,7 +1029,6 @@ function cumChart(svgId,tipId,pts){
   tip.textContent=`${vnDate(p.d)}: ${p.h}/${p.K} · cộng dồn ${p.c} (kỳ vọng ${dec(p.e)})`;};
  svg.querySelector('#'+svgId+'h').onpointerleave=()=>{tip.style.opacity=0;lc.setAttribute('opacity',0);};}
 function scoreList(i,p,pts){const nh=p.map(k=>cnt[i*100+k]),hits=nh.filter(x=>x).length,ns=nh.reduce((a,b)=>a+b,0),cost=M*pts*p.length,win=99*pts*ns;return {p,nh,hits,cost,win,pl:win-cost,K:p.length};}
-const tokenNote=()=>`Một điểm cho một số tốn ${M} token (${M} giải mỗi kỳ ${R.region==='mb'?'XSMB':'của một đài '+RLAB[R.region]}). Số về bao nhiêu nháy thì nhận 99 token × số nháy × số điểm. Trung bình mỗi token chỉ thu về 0,99.`;
 
 /* ---------- navigation ---------- */
 const NAVG=[['Xổ số kiến thiết',[['ket-qua','Kết quả xổ số','i-home'],['truc-tiep','Trực tiếp xổ số','i-live'],['do-ve','Dò vé số','i-ticket']]],
@@ -1077,9 +1060,9 @@ addEventListener('hashchange',()=>{const a=anchorHash();if(a)setTimeout(()=>docu
 setTimeout(()=>{const a=anchorHash();if(a)document.getElementById(a).scrollIntoView({block:'start'});},600);
 function renderView(v){
  if((v==='truc-tiep'||v==='do-ve')&&window.xsRest)xsRest();
- if(v==='ket-qua')renderHome();if(v==='thong-ke-dan')renderDanStats();if(v==='do-ve')renderDoVe();if(v==='vietlott')renderVL();if(v==='mo-phong')runSim();
+ if(v==='ket-qua')renderHome();if(v==='thong-ke-dan')renderDanStats();if(v==='do-ve')renderDoVe();if(v==='vietlott')renderVL();if(v==='mo-phong')vsRun();
  if(v==='kiem-dinh'){renderBars();drawRoll();renderRandom();}if(v==='ban-do')renderHeat();if(v==='dan')renderDan();if(v==='thong-ke')renderStats();if(v==='truc-tiep')renderLive();else lvStop();if(v==='ve-du-lieu'){if(RAW.mb&&RAW.mn&&RAW.mt)renderAbout();else Promise.all(['mb','mn','mt'].map(needRegion)).then(()=>{if(curView()==='ve-du-lieu')renderAbout();});}
- if(v==='mo-phong'){$('msS').textContent=`Mô phỏng 1.000 quỹ chạy song song trên kết quả ngẫu nhiên đúng luật ${where()} (${M} giải mỗi kỳ, ${M} token mỗi điểm, 99 token mỗi nháy). Mục đích: xem các cách đặt khác nhau thay đổi hình dạng kết quả ra sao, và vì sao không cách nào vượt được kỳ vọng âm.`;$('msRun').onclick=runStrategy;if(!MS||MS.M!==M){runStrategy();MS.M=M;}else drawStrategy();}}
+}
 
 /* ---------- region / station controls ---------- */
 function stationOptions(){
@@ -1107,7 +1090,7 @@ function refreshChrome(){
  setMeta(curView());}
 function resetStates(){
  const P0=PERS();st.per=P0[P0.length-1][1];st.num=null;st.from=st.to=null;
-  dn.per=P0[1][1];dn.page=1;dn.from=dn.to=null;dn.ready=false;rs.date=null;rs.pick=false;hl.st=null;ds.q=null;sim.page=1;simReady=false;kcReady=false;}
+  dn.per=P0[1][1];dn.page=1;dn.from=dn.to=null;dn.ready=false;rs.date=null;rs.pick=false;hl.st=null;ds.q=null;kcReady=false;}
 
 /* ---------- home: results ---------- */
 const rs={date:null,pick:false};
@@ -1309,11 +1292,11 @@ function renderDan(){
  $('dnT').textContent=`${where()} · ${Mx.nm} · ${n} số`;$('dnS').textContent=Mx.d()+' Với mỗi kỳ trong quá khứ, dàn được lập lại chỉ từ dữ liệu đến kỳ trước đó, rồi đối chiếu với kết quả của kỳ ấy. Timeline cho thấy cách thống kê này đã trùng bao nhiêu so với mức xác suất.';
  $('dnRange').textContent=Rr.length?`${Rr.length} kỳ, từ ${vnDate(Rr[0].d)} đến ${vnDate(Rr[Rr.length-1].d)}.`:'Không có kỳ quay nào trong khoảng này.';
  const np=danPicks(dn.m,n,N-1),f1=freq(N-1,S.W[0]);
- $('dnNext').innerHTML=`<h2>Dàn theo dữ liệu đến hết ${vnDate(dates[N-1])}</h2><p class="sub">Số lần chính dàn này đã xuất hiện trong ${vn(N)} kỳ quá khứ.</p><div class="balls" style="gap:12px;margin:10px 0 14px">${np.map(k=>ball(k,'r',f1[k]+' lần/'+S.WL[0])).join('')}</div>${setStatsHTML(S,np,false).replace('<dl>','<dl style="color:#fff">')}<div class="acts">${copyBtn('Chép dàn '+n+' số',numTxt(np))}</div>`;
+ $('dnNext').innerHTML='';$('dnNext').hidden=true;
  const L=Rr[Rr.length-1];
- $('dnLast').innerHTML=L?`<h2>Kỳ gần nhất · ${vnDate(L.d)}</h2><p class="sub">Dàn đã dùng (từ dữ liệu đến hết ${vnDate(dates[L.i-1])}) và kết quả.</p><div class="balls" style="gap:8px;margin:8px 0 12px">${L.p.map((k,j)=>ball(k,L.nh[j]?'r sm':'sm dim',L.nh[j]?(L.nh[j]>1?'về ×'+L.nh[j]:'về'):'trượt')).join('')}</div><p class="note" style="margin:0">Lô tô ${M} giải</p><div class="lo">${lotoChips(L.i,L.p)}</div><p class="note" style="margin-top:10px">Trúng ${L.hits}/${L.K} · <span class="${L.pl>=0?'pos':'neg'}">${sg(L.pl)} token</span></p>`:'<h2>Kỳ gần nhất</h2><p class="note">Chưa có dữ liệu.</p>';
+ $('dnLast').innerHTML=L?`<h2>Kỳ gần nhất · ${vnDate(L.d)}</h2><p class="sub">Dàn đã dùng (từ dữ liệu đến hết ${vnDate(dates[L.i-1])}) và kết quả.</p><div class="balls" style="gap:8px;margin:8px 0 12px">${L.p.map((k,j)=>ball(k,L.nh[j]?'r sm':'sm dim',L.nh[j]?(L.nh[j]>1?'về ×'+L.nh[j]:'về'):'trượt')).join('')}</div><p class="note" style="margin:0">Lô tô ${M} giải</p><div class="lo">${lotoChips(L.i,L.p)}</div><p class="note" style="margin-top:10px">Trúng ${L.hits}/${L.K} số</p>`:'<h2>Kỳ gần nhất</h2><p class="note">Chưa có dữ liệu.</p>';
  const T=Rr.reduce((x,y)=>({h:x.h+y.hits,k:x.k+y.K,c:x.c+y.cost,w:x.w+y.win,any:x.any+(y.hits?1:0)}),{h:0,k:0,c:0,w:0,any:0}),pl=T.w-T.c,eH=T.k*P,sdv=Math.sqrt(T.k*P*(1-P)),eAny=1-Math.pow(1-n/100,M);
- $('dnK').innerHTML=Rr.length?[[`${T.h}/${vn(T.k)}`,`số trúng (${fmt(T.h/T.k,1)}) · kỳ vọng ${dec(eH)}`],[`${T.any}/${Rr.length}`,`kỳ có ít nhất 1 số về (${fmt(T.any/Rr.length,0)}) · kỳ vọng ${fmt(eAny,0)}`],[`<span class="${pl>=0?'pos':'neg'}">${sg(pl)}</span>`,`lãi/lỗ token (chi ${vn(T.c)}, thu ${vn(T.w)})`],[sg(Math.round(-0.01*T.c)),'lãi/lỗ kỳ vọng (−1% số đã đặt)']].map(([v,l])=>`<div class="kpi"><b>${v}</b><span>${l}</span></div>`).join(''):'';
+ $('dnK').innerHTML=Rr.length?[[`${T.h}/${vn(T.k)}`,`số trúng (${fmt(T.h/T.k,1)}) · kỳ vọng ${dec(eH)}`],[`${T.any}/${Rr.length}`,`kỳ có ít nhất 1 số về (${fmt(T.any/Rr.length,0)}) · kỳ vọng ${fmt(eAny,0)}`]].map(([v,l])=>`<div class="kpi"><b>${v}</b><span>${l}</span></div>`).join(''):'';
  $('dnCmp').textContent=Rr.length?`Trúng ${T.h} số so với kỳ vọng ${dec(eH)}. Với ${vn(T.k)} lượt chọn, lệch ±${dec(1.96*sdv)} số là mức may rủi bình thường; ${Math.abs(T.h-eH)<=1.96*sdv?'kết quả nằm trong mức đó':'kết quả vượt mức đó ở giai đoạn này, nên thử thêm giai đoạn khác'}.`:'';
  let c=0;dn.pts_=Rr.map((x,i)=>{c+=x.hits;return {d:x.d,h:x.hits,c,e:(i+1)*x.K*P,K:x.K};});cumChart('dnChart','dnTip',dn.pts_);
  const desc=[...Rr].reverse(),pages=Math.max(1,Math.ceil(desc.length/10));if(dn.page>pages)dn.page=pages;
@@ -1322,57 +1305,6 @@ function renderDan(){
  pager($('dnPager'),dn.page,pages,desc.length,pg=>{dn.page=pg;renderDan();$('dnTable').scrollIntoView({behavior:'smooth',block:'start'});});}
 
 const lg={};
-const sim={page:1};let simReady=false,SIM=null;
-function simulate(c){
- const V=Math.max(M,Math.floor(c.sv)),pts=Math.max(1,Math.floor(c.sp)),id=c.si,days=[];
- {let a=dates.findIndex(d=>d>=c.sd);if(a<0)a=N;if(a<startT+1)a=startT+1;for(let i=a;i<N;i++)days.push({i,picks:picksFor(id,i-1)});}
- let bal=V,stake=0,ret=0,stop=null,hi=V,lo=V,hiD='',loD='';const rows=[];
- for(const d of days){const cost=M*pts*d.picks.length;if(bal<cost){stop=dates[d.i];break;}
-  const nh=d.picks.map(k=>cnt[d.i*100+k]),win=99*pts*nh.reduce((x,y)=>x+y,0);
-  bal+=win-cost;stake+=cost;ret+=win;if(bal>hi){hi=bal;hiD=dates[d.i];}if(bal<lo){lo=bal;loD=dates[d.i];}
-  rows.push({d:dates[d.i],picks:d.picks,nh,cost,win,bal,stake});}
- return {V,pts,id,mode:c.sm,rows,bal,stake,ret,stop,hi,lo,hiD,loD};}
-function runSim(){
- $('simIntro').textContent=tokenNote()+' Với mỗi kỳ trong quá khứ, app lấy 10 số theo dữ liệu thống kê đã chọn (chỉ từ dữ liệu đến kỳ trước), đối chiếu với kết quả thật rồi cộng dồn. Token chỉ là đơn vị giả định để thấy kỳ vọng âm.';
- if(!simReady){
-  $('si').innerHTML=IND.map(x=>`<option value="${x.id}">${x.nm} (10 số/kỳ)</option>`).join('');
-  const sv=store.get('xs-sim',{});$('sv').value=sv.sv||10000;$('sp').value=sv.sp||1;$('si').value=IND.some(x=>x.id===sv.si)?sv.si:'combo';
-  const sdMinI=Math.max(startT+1,N-(R.region==='mb'?1100:160)),sdMin=dates[sdMinI];$('sd').min=sdMin;$('sd').max=dates[N-1];
-  const PRE=R.region==='mb'?[[30,'30 kỳ gần nhất'],[90,'90 kỳ (khoảng 3 tháng)'],[180,'180 kỳ (khoảng 6 tháng)'],[365,'365 kỳ (khoảng 1 năm)'],[730,'730 kỳ (khoảng 2 năm)']]:[[10,'10 kỳ (khoảng 2,5 tháng)'],[26,'26 kỳ (khoảng 6 tháng)'],[52,'52 kỳ (khoảng 1 năm)'],[104,'104 kỳ (khoảng 2 năm)']];
-  const pre=PRE.filter(([k])=>N-k>=sdMinI);$('sm').innerHTML=pre.map(([k,l])=>`<option value="${k}">${l}</option>`).join('')+'<option value="hist">Tự chọn ngày bắt đầu</option>';
-  const setPre=k=>{$('sd').value=dates[Math.max(sdMinI,N-k)];};const k0=pre.some(([k])=>String(k)===String(sv.sm))?sv.sm:(pre[1]||pre[0]||[0])[0];
-  if(sv.sm==='hist'&&sv.sd&&sv.sd>=sdMin&&sv.sd<=dates[N-1]){$('sm').value='hist';$('sd').value=sv.sd;}else if(k0){$('sm').value=String(k0);setPre(+k0);}else{$('sm').value='hist';$('sd').value=dates[Math.max(sdMinI,N-26)];}
-  let simT=null;const go=()=>{clearTimeout(simT);simT=setTimeout(()=>{const v=$('sd').value;if(!/^\d{4}-\d{2}-\d{2}$/.test(v)||v<$('sd').min||v>$('sd').max){$('sdErr').textContent=`Chọn ngày từ ${vnDate($('sd').min)} đến ${vnDate($('sd').max)}.`;return;}$('sdErr').textContent='';store.set('xs-sim',{sv:$('sv').value,sp:$('sp').value,si:$('si').value,sm:$('sm').value,sd:$('sd').value});sim.page=1;runSim();},450);};
-  ['sv','sp','si'].forEach(k=>$(k).onchange=go);$('sm').onchange=()=>{if($('sm').value!=='hist')setPre(+$('sm').value);go();};const sdc=()=>{$('sm').value='hist';go();};$('sd').onchange=sdc;$('sd').oninput=sdc;
-  simReady=true;}
- const c={sv:+$('sv').value||10000,sp:+$('sp').value||1,si:$('si').value,sm:$('sm').value,sd:$('sd').value};
- $('sdw').style.display='';
- const Sx=SIM=simulate(c),pl=Sx.bal-Sx.V,exp=Math.round(-0.01*Sx.stake);
- $('simK').innerHTML=[[vn(Sx.V),'vốn gốc (token)'],[vn(Sx.bal),`số dư sau ${Sx.rows.length} kỳ`],[`<span class="${pl>=0?'pos':'neg'}">${sg(pl)}</span>`,`lãi/lỗ so với vốn gốc (${dec(pl/Sx.V*100)}%)`],[vn(Sx.stake),`tổng đã đặt · thu về ${vn(Sx.ret)}`]].map(([v,l])=>`<div class="kpi"><b>${v}</b><span>${l}</span></div>`).join('');
- $('simNote').innerHTML=!Sx.rows.length?'Chưa có kỳ nào có kết quả cho lựa chọn này.':
-  `Cao nhất ${vn(Sx.hi)} (${vnDate(Sx.hiD||Sx.rows[0].d)}), thấp nhất ${vn(Sx.lo)} (${vnDate(Sx.loD||Sx.rows[0].d)}). Kỳ vọng lý thuyết với ${vn(Sx.stake)} token đã đặt là ${sg(exp)}. Thực tế đang ${pl>=exp?'cao':'thấp'} hơn kỳ vọng ${vn(Math.abs(pl-exp))} token; phần chênh này là may rủi.`+(Sx.stop?` <b class="neg">Hết vốn ngày ${vnDate(Sx.stop)}</b>: số dư không đủ cho một kỳ nên dừng lại.`:'');
- const desc=[...Sx.rows].reverse(),pages=Math.max(1,Math.ceil(desc.length/10));if(sim.page>pages)sim.page=pages;
- $('simT').innerHTML=desc.length?`<table><thead><tr><th>Kỳ</th><th class="left">Số đã chọn</th><th>Chi</th><th>Thu</th><th>Lãi/lỗ kỳ</th><th>Số dư</th></tr></thead><tbody>${desc.slice((sim.page-1)*10,sim.page*10).map(r=>{const dd=r.win-r.cost;return `<tr><td>${vnDate(r.d)}</td><td class="left">${r.picks.map((k,j)=>r.nh[j]?`<span class="h">${pad(k)}${r.nh[j]>1?'×'+r.nh[j]:''}</span>`:pad(k)).join(' ')}</td><td>${vn(r.cost)}</td><td>${vn(r.win)}</td><td class="${dd>=0?'pos':'neg'}">${sg(dd)}</td><td>${vn(r.bal)}</td></tr>`;}).join('')}</tbody></table>`:'';
- pager($('simPager'),sim.page,pages,desc.length,pg=>{sim.page=pg;runSim();$('simT').scrollIntoView({behavior:'smooth',block:'start'});});
- drawSim();}
-function drawSim(){
- const svg=$('simC'),W=svg.clientWidth,Hh=svg.clientHeight;if(!W||!SIM||!SIM.rows.length){svg.innerHTML='';return;}
- const Rr=SIM.rows,V=SIM.V,ex=Rr.map(r=>V-0.01*r.stake),vals=[V,...Rr.map(r=>r.bal),...ex];
- let y0=Math.min(...vals),y1=Math.max(...vals);const pd=(y1-y0)*0.08||V*0.02;y0-=pd;y1+=pd;
- const m={l:W<520?50:64,r:12,t:12,b:28},X=i=>m.l+(Rr.length<2?0.5:i/(Rr.length-1))*(W-m.l-m.r),Y=v=>m.t+(1-(v-y0)/(y1-y0))*(Hh-m.t-m.b);
- const ticks=axisTicks(y0,y1),lab=[...new Set([0,Math.floor((Rr.length-1)/2),Rr.length-1])];
- const path=a=>a.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1)).join('');
- svg.innerHTML=`${ticks.map(v=>`<line x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${m.l-6}" y="${Y(v)+4}" text-anchor="end" font-size="12" fill="var(--mute)">${vn(v)}</text>`).join('')}
-  ${lab.map(i=>`<text x="${X(i)}" y="${Hh-8}" font-size="12" fill="var(--mute)" text-anchor="${i===0?'start':i===Rr.length-1?'end':'middle'}">${vnDate(Rr[i].d).slice(0,W<520?5:10)}</text>`).join('')}
-  <line x1="${m.l}" x2="${W-m.r}" y1="${Y(V)}" y2="${Y(V)}" stroke="var(--mute)" stroke-dasharray="5 4" stroke-width="1.5"/>
-  <path d="${path(ex)}" fill="none" stroke="var(--red)" stroke-dasharray="2 4" stroke-width="2"/>
-  <path d="${path(Rr.map(r=>r.bal))}" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/>
-  <circle id="sc" r="5" fill="var(--ink)" stroke="var(--panel)" stroke-width="2" opacity="0"/><rect x="${m.l}" y="0" width="${W-m.l-m.r}" height="${Hh}" fill="transparent" id="shit"/>`;
- const tip=$('simTip'),sc=svg.querySelector('#sc'),hit=svg.querySelector('#shit');
- hit.onpointermove=e=>{const rc=svg.getBoundingClientRect();let i=Math.round((e.clientX-rc.left-m.l)/(W-m.l-m.r)*(Rr.length-1));i=Math.max(0,Math.min(Rr.length-1,i));
-  sc.setAttribute('cx',X(i));sc.setAttribute('cy',Y(Rr[i].bal));sc.setAttribute('opacity',1);tip.style.left=X(i)+'px';tip.style.top=Y(Rr[i].bal)+'px';tip.style.opacity=1;tip.textContent=`${vnDate(Rr[i].d)}: ${vn(Rr[i].bal)} (${sg(Rr[i].bal-V)})`;};
- hit.onpointerleave=()=>{tip.style.opacity=0;sc.setAttribute('opacity',0);};}
-
 /* ---------- verification ---------- */
 let kcReady=false;
 function renderBars(){
@@ -1559,35 +1491,6 @@ function renderRandom(){
    +`<line x1="${m.l}" x2="${W-m.r}" y1="${Y(0.05)}" y2="${Y(0.05)}" stroke="var(--red)" stroke-dasharray="5 4" stroke-width="1.5"/>`
    +ys.map((r,i)=>i%Math.ceil(ys.length/(W<520?5:12))===0?`<text x="${m.l+(i+0.5)*bw}" y="${Hh-8}" font-size="12" text-anchor="middle" fill="var(--mute)">${r.y}</text>`:'').join('');}
  $('rnT').innerHTML=`<table><thead><tr><th>Năm</th><th>Số kỳ</th><th>Chi-bình phương</th><th>p-value</th><th class="left">Nhận xét</th></tr></thead><tbody>${[...ys].reverse().map(r=>`<tr><td>${r.y}</td><td>${r.n}</td><td>${dec(r.x,1)}</td><td><span class="pchip ${r.p<0.05?'hi':'ok'}">${dec(r.p,3)}</span></td><td class="left">${r.p<0.05?'Lệch so với đều (thường gặp ở ~5% số năm)':'Phù hợp với ngẫu nhiên'}</td></tr>`).join('')}</tbody></table>`;}
-
-/* ---------- strategy simulation ---------- */
-let MS=null;
-function binom(n,p){let c=0;for(let i=0;i<n;i++)if(Math.random()<p)c++;return c;}
-function runStrategy(){
- const V=Math.max(100,+$('msV').value||10000),K=+$('msK').value,D=+$('msD').value,str=$('msStr').value,F=1000,bal=new Float64Array(F*(D+1));
- let bust=0,stopped=0,stakeSum=0;
- for(let f=0;f<F;f++){let b=V,stake=1,done=false;bal[f*(D+1)]=b;
-  for(let d=1;d<=D;d++){
-   if(!done){const cost=M*stake*K;if(b<cost){done=true;bust++;}
-    else{const nh=binom(M,K/100),win=99*stake*nh;b+=win-cost;stakeSum+=cost;
-     if(str==='mart')stake=win-cost<0?stake*2:1;
-     if(str==='stop'&&(b>=V*1.2||b<=V*0.7)){done=true;stopped++;}}}
-   bal[f*(D+1)+d]=b;}}
- const pct=(d,q)=>{const a=[];for(let f=0;f<F;f++)a.push(bal[f*(D+1)+d]);a.sort((x,y)=>x-y);return a[Math.floor(q*(F-1))];};
- const P5=[],P25=[],P50=[],P75=[],P95=[];for(let d=0;d<=D;d++){P5.push(pct(d,.05));P25.push(pct(d,.25));P50.push(pct(d,.5));P75.push(pct(d,.75));P95.push(pct(d,.95));}
- let win=0,sum=0;for(let f=0;f<F;f++){const e=bal[f*(D+1)+D];if(e>V)win++;sum+=e-V;}
- MS={V,D,P5,P25,P50,P75,P95,win,bust,stopped,avg:sum/F,stake:stakeSum/F,str,K};drawStrategy();}
-function drawStrategy(){
- if(!MS)return;const x=MS,lab={flat:'Đều tay',mart:'Gấp thếp',stop:'Chốt lời / cắt lỗ'}[x.str];
- $('msK2').innerHTML=[[fmt(x.win/1000,0),`số quỹ có lãi sau ${x.D} kỳ`],[vn(x.P50[x.D]),'số dư trung vị cuối kỳ'],[fmt(x.bust/1000,0),'số quỹ cháy (không đủ tiền đặt tiếp)'],[sg(Math.round(x.avg)),`lãi/lỗ trung bình mỗi quỹ · đã đặt TB ${vn(x.stake)}`]].map(([v,l])=>`<div class="kpi"><b>${v}</b><span>${l}</span></div>`).join('');
- $('msNote').textContent=`${lab}: ${x.str==='mart'?'phần lớn quỹ lãi nhỏ đều đặn, nhưng một chuỗi trượt dài làm mức đặt tăng gấp bội và đốt sạch quỹ; cộng cả số quỹ cháy thì trung bình vẫn lỗ.':x.str==='stop'?`${fmt(x.stopped/1000,0)} quỹ dừng vì chạm mốc. Chốt lời chỉ đổi hình dạng kết quả (nhiều quỹ dừng ở +20%, một phần dừng ở −30%); trung bình vẫn âm.`:'mỗi kỳ đặt như nhau; dao động lớn nhưng trung bình dần âm theo đúng −1% số đã đặt.'} Không chiến lược đặt nào biến kỳ vọng âm thành dương.`;
- const svg=$('msC'),W=svg.clientWidth,Hh=svg.clientHeight;if(!W)return;
- const lo=Math.min(...x.P5,x.V*0.9),hi=Math.max(...x.P95,x.V*1.1),m={l:W<520?50:64,r:12,t:12,b:28},X=d=>m.l+d/x.D*(W-m.l-m.r),Y=v=>m.t+(1-(v-lo)/(hi-lo))*(Hh-m.t-m.b);
- const band=(A,B,op)=>`<path d="${A.map((v,d)=>(d?'L':'M')+X(d).toFixed(1)+' '+Y(v).toFixed(1)).join('')}${B.map((v,d)=>'L'+X(x.D-d).toFixed(1)+' '+Y(B[x.D-d]).toFixed(1)).join('')}Z" fill="var(--red)" opacity="${op}"/>`;
- svg.innerHTML=axisTicks(lo,hi).map(v=>`<line x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${m.l-6}" y="${Y(v)+4}" font-size="12" text-anchor="end" fill="var(--mute)">${vn(v)}</text>`).join('')
-  +band(x.P5,x.P95,.18)+band(x.P25,x.P75,.35)
-  +`<line x1="${m.l}" x2="${W-m.r}" y1="${Y(x.V)}" y2="${Y(x.V)}" stroke="var(--mute)" stroke-dasharray="5 4"/><path d="${x.P50.map((v,d)=>(d?'L':'M')+X(d).toFixed(1)+' '+Y(v).toFixed(1)).join('')}" fill="none" stroke="var(--ink)" stroke-width="2"/>`
-  +[0,Math.round(x.D/2),x.D].map(d=>`<text x="${X(d)}" y="${Hh-8}" font-size="12" fill="var(--mute)" text-anchor="${d===0?'start':d===x.D?'end':'middle'}">kỳ ${d}</text>`).join('');}
 
 /* ---------- dò vé ---------- */
 const dv={reg:null,st:null,date:null,num:''};
@@ -1874,7 +1777,7 @@ function renderAbout(){
   <li>Thống kê dàn: đếm số kỳ có ít nhất 1 số của dàn về và số kỳ cả dàn cùng về; mức theo xác suất tính bằng công thức bao hàm – loại trừ.</li>
   <li>Kiểm định: với mỗi kỳ trong quá khứ, dữ liệu thống kê được tính lại chỉ từ dữ liệu trước kỳ đó rồi đối chiếu với kết quả kỳ ấy. Khoảng tin cậy 95% theo phân phối nhị thức.</li>
   <li>Dò vé: so dãy số trên vé với đủ các giải của ngày đã chọn (lưu 60 ngày gần nhất).</li>
-  <li>Quỹ token: 1 điểm cho 1 số tốn 27 token (XSMB) hoặc 18 token (XSMN, XSMT), mỗi nháy về nhận 99 token. Trung bình mỗi token chỉ thu về 0,99.</li></ul>
+</ul>
  <h3>Thuật ngữ</h3><dl>
   <dt>Lô / số</dt><dd>2 chữ số cuối của một giải, từ 00 đến 99.</dd><dt>Nháy</dt><dd>Số lần một số xuất hiện trong cùng một kỳ.</dd><dt>Gan</dt><dd>Số kỳ liên tiếp một số chưa về.</dd><dt>Đầu / đuôi</dt><dd>Chữ số hàng chục / hàng đơn vị của số.</dd><dt>Đầu câm, đuôi câm</dt><dd>Chữ số không làm đầu (đuôi) của số nào trong kỳ.</dd><dt>Kỳ vọng</dt><dd>Giá trị trung bình nếu lặp lại rất nhiều lần.</dd><dt>Khoảng tin cậy 95%</dt><dd>Dải mà tỷ lệ thật nhiều khả năng nằm trong, với cỡ mẫu hiện có.</dd><dt>p-value</dt><dd>Xác suất thấy độ lệch như vậy nếu kết quả hoàn toàn ngẫu nhiên; nhỏ hơn 0,05 thường coi là "lệch".</dd></dl>
  <h3>Lưu ý</h3><p>Mỗi kỳ quay độc lập; không dữ liệu thống kê nào làm thay đổi xác suất về của một số. Phần Kiểm định cho thấy tỷ lệ thực tế của từng dữ liệu thống kê dao động quanh mức xác suất. XS Lab không cung cấp thông tin dự đoán kết quả trước giờ quay. Đánh lô đề là hành vi trái pháp luật tại Việt Nam.</p>`;}
@@ -2077,14 +1980,27 @@ function subNavFor(r){const el=document.getElementById('subNav');if(!el)return;c
  const W=[['thu-2','Thứ 2'],['thu-3','Thứ 3'],['thu-4','Thứ 4'],['thu-5','Thứ 5'],['thu-6','Thứ 6'],['thu-7','Thứ 7'],['chu-nhat','Chủ nhật']];
  const it=[[sl+'/',sl.toUpperCase()+' hôm nay'],['truc-tiep-'+sl+'/','Trực tiếp'],[sl+'-hom-qua/','Hôm qua'],...W.map(([a,b])=>[sl+'/'+a+'/',b]),[sl+'-30-ngay/','30 ngày'],[sl+'-90-ngay/','90 ngày'],[sl+'/so-ket-qua/','Sổ kết quả'],['thong-ke/30-ky-'+sl+'/','Thống kê 30 kỳ']];
  el.setAttribute('aria-label','Mục '+sl.toUpperCase());el.innerHTML=it.map(([u,t])=>`<a href="${XS_ROOT}${u}">${t}</a>`).join('');}
+
+/* ---------- Mô phỏng mua vé số kiến thiết (giáo dục, không phải chọn số) ---------- */
+const VS={mb:{kyNam:365,price:10000,tiers:[['Trùng 5 số giải Đặc biệt','Trùng cả 5 số; đúng ký hiệu vé là giải Đặc biệt, khác ký hiệu là giải phụ',1e-5],['Giải Nhất','Trùng cả 5 số',1e-5],['Giải Nhì','Trùng cả 5 số (2 dãy)',2e-5],['Giải Ba','Trùng cả 5 số (6 dãy)',6e-5],['Giải Tư','Trùng 4 số cuối (4 dãy)',4e-4],['Giải Năm','Trùng 4 số cuối (6 dãy)',6e-4],['Giải Sáu','Trùng 3 số cuối (3 dãy)',3e-3],['Giải Bảy','Trùng 2 số cuối (4 dãy)',4e-2],['Giải Khuyến khích','Trùng 2 số cuối giải Đặc biệt',1e-2]]},
+ mn:{kyNam:52,price:10000,tiers:[['Giải Đặc biệt','Trùng cả 6 số',1e-6],['Giải phụ Đặc biệt','Trùng 5 số cuối, sai chữ số đầu',9e-6],['Giải Khuyến khích','Sai 1 chữ số (trừ chữ số đầu)',4.5e-5],['Giải Nhất','Trùng 5 số cuối',1e-5],['Giải Nhì','Trùng 5 số cuối',1e-5],['Giải Ba','Trùng 5 số cuối (2 dãy)',2e-5],['Giải Tư','Trùng 5 số cuối (7 dãy)',7e-5],['Giải Năm','Trùng 4 số cuối',1e-4],['Giải Sáu','Trùng 4 số cuối (3 dãy)',3e-4],['Giải Bảy','Trùng 3 số cuối',1e-3],['Giải Tám','Trùng 2 số cuối',1e-2]]}};
+function vsPois(l){if(l<=0)return 0;if(l<40){let L=Math.exp(-l),k=0,p=1;do{k++;p*=Math.random();}while(p>L);return k-1;}let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.max(0,Math.round(l+Math.sqrt(l)*Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)));}
+function vsRun(){const f=$('vsT');if(!f)return;if(!f.dataset.ok){f.dataset.ok=1;try{const sv=store.get('xs-vs',{});if(sv.t)$('vsT').value=sv.t;if(sv.n)$('vsN').value=sv.n;if(sv.y)$('vsY').value=sv.y;}catch(e){}
+  ['vsT','vsN','vsY'].forEach(k=>$(k).onchange=()=>{store.set('xs-vs',{t:$('vsT').value,n:$('vsN').value,y:$('vsY').value});vsRun();});$('vsRun').onclick=vsRun;}
+ const C=VS[$('vsT').value],n=+$('vsN').value,y=+$('vsY').value,ky=Math.max(1,Math.round(C.kyNam*y)),T=n*ky,fm=x=>Math.round(x).toLocaleString('vi-VN'),pc=x=>(x*100<0.01&&x>0?'dưới 0,01':(x*100).toLocaleString('vi-VN',{maximumFractionDigits:x*100<1?2:1}))+'%';
+ const rows=C.tiers.map(([nm,how,p])=>({nm,how,p,e:T*p,got:vsPois(T*p)}));const pDB=C.tiers[0][2],any=rows.reduce((a,r)=>a+r.got,0),anyE=rows.reduce((a,r)=>a+r.e,0);
+ const atLeast=1-Math.pow(1-pDB,T),yrs=1/(pDB*n*C.kyNam);
+ $('vsK').innerHTML=[[fm(T),`vé đã mua (${fm(ky)} kỳ × ${n} vé) · ${fm(T*C.price)} đồng tiền vé`],[fm(any),`lượt trúng giải trong lần chạy này (trung bình theo xác suất ${fm(anyE)})`],[pc(atLeast),`khả năng trùng giải Đặc biệt ít nhất một lần`],[fm(yrs)+' năm',`trung bình mua ${n} vé mỗi kỳ thì sau chừng ấy năm mới trùng giải Đặc biệt một lần`]].map(([v,l])=>`<div class="kpi"><b>${v}</b><span>${l}</span></div>`).join('');
+ $('vsTb').innerHTML=`<thead><tr><th class="left">Giải</th><th class="left">Cách trúng</th><th>Mỗi vé</th><th>Trung bình theo xác suất</th><th>Lần chạy này</th></tr></thead><tbody>${rows.map(r=>`<tr><td class="left"><b>${r.nm}</b></td><td class="left">${r.how}</td><td>1 phần ${fm(1/r.p)}</td><td>${r.e<10?r.e.toLocaleString('vi-VN',{maximumFractionDigits:r.e<0.1?3:1}):fm(r.e)}</td><td>${fm(r.got)}</td></tr>`).join('')}</tbody>`;
+ $('vsNote').innerHTML=`Mỗi lần bấm "Chạy lại" là một lần mô phỏng ngẫu nhiên mới; cột "Trung bình theo xác suất" là con số trung bình nếu lặp lại rất nhiều lần. Một vé có thể trúng nhiều giải cùng lúc. Giá trị từng giải theo cơ cấu giải công bố của công ty xổ số phát hành vé; tổng tiền trả thưởng luôn thấp hơn tổng tiền bán vé. ${$('vsT').value==='mn'?'Mỗi kỳ ở đây là một kỳ quay của một đài (mỗi tuần một lần).':''}`;}
 async function loadAll(){
  const get=(f,j)=>fetch(XS_ROOT+f,{cache:'no-cache'}).then(r=>{if(!r.ok)throw new Error(f);return j?r.json():r.text();});
  const first=['mb','mn','mt'].includes(R.region)?R.region:'mb';
  const [txt,rmb,rmn,rmt]=await Promise.all([get(RFILE[first]),get('recent.json',1).catch(()=>[]),get('recent_mn.json',1).catch(()=>[]),get('recent_mt.json',1).catch(()=>[])]);
  RECS.mn=Array.isArray(rmn)?rmn:[];RECS.mt=Array.isArray(rmt)?rmt:[];REC_MB=Array.isArray(rmb)?rmb:[];
  return {first,txt};}
-const ro=new ResizeObserver(()=>{if(!N)return;const v=curView();if(v==='kiem-dinh')renderRandom();if(v==='mo-phong')drawStrategy();if(v==='mo-phong')drawSim();if(v==='kiem-dinh')drawRoll();if(v==='dan'&&dn.pts_)cumChart('dnChart','dnTip',dn.pts_);});
-['simC','roll','dnChart','rnC','msC'].forEach(id=>ro.observe($(id)));
+const ro=new ResizeObserver(()=>{if(!N)return;const v=curView();if(v==='kiem-dinh')renderRandom();if(v==='kiem-dinh')drawRoll();if(v==='dan'&&dn.pts_)cumChart('dnChart','dnTip',dn.pts_);});
+['roll','dnChart','rnC'].forEach(id=>{const el=$(id);if(el)ro.observe(el);});
 loadAll().then(d=>{
  parseRegion(d.first,d.txt);
  R.region=d.first;setRegion(d.first);
