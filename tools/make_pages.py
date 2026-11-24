@@ -281,6 +281,36 @@ for reg in ("xsmn", "xsmt"):
 hub = "<p>Các bảng thống kê kết quả XSMB, XSMN, XSMT được tạo lại mỗi ngày từ dữ liệu đã quay.</p>" + "".join(f"<h2>{REG[r][0]}</h2><ul class='ls'>" + "".join(f'<li><a href="../{s}/">{h}</a></li>' for s, h in STATP if s.endswith(r)) + "</ul>" for r in REG)
 page("thong-ke/bang-thong-ke/", "Bảng thống kê xổ số XSMB, XSMN, XSMT – lô gan, 3 càng, giải đặc biệt", "Tổng hợp các bảng thống kê XSMB, XSMN, XSMT: lô gan, tần suất lô tô, đầu đuôi, giải đặc biệt, giải nhất, giải tám, 3 càng, 4 càng. Không quảng cáo.", [("Thống kê", "thong-ke/"), ("Bảng thống kê", "thong-ke/bang-thong-ke/")], "Bảng thống kê xổ số", hub)
 
+
+# ---------- hiện sẵn bảng kết quả mới nhất trong trang ứng dụng (tải nhanh, không nhảy bố cục) ----------
+WDV = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'CN']
+def heads(lo):
+    h = [[] for _ in range(10)]
+    for k in sorted(lo): h[k // 10].append(str(k % 10))
+    return h
+def pre_mb():
+    r = mb[-1]; d = r["date"]
+    b = '<div class="ticket">' + ''.join(f'<div class="row {"db" if g == "db" else ""}"><div class="lb">{lb}</div><div class="nums">' + ''.join(f'<span>{n[:-2]}<b>{n[-2:]}</b></span>' for n in r[g]) + '</div></div>' for lb, g in MB_G) + '</div>'
+    b += '<div class="loto">' + ''.join(f'<div><b>{j}</b><span>{", ".join(a) or "–"}</span></div>' for j, a in enumerate(heads(lotos(r, MB_G)))) + '</div>'
+    return f"XSMB {WDV[wdi(d)]}, {vn(d)}", b
+def pre_mn(fn, lab, sel):
+    rec = json.load(open(os.path.join(ROOT, fn))); d = max(r["date"] for r in rec)
+    rs = sorted([r for r in rec if r["date"] == d], key=lambda r: (r["station"] != "tp-hcm", ST.get(r["station"], "")))
+    b = '<div class="mnb"><table><thead><tr><th>Giải</th>' + ''.join(f'<th class="{"sel" if r["station"] == sel else ""}">{ST.get(r["station"], r["station"])}</th>' for r in rs) + '</tr></thead><tbody>'
+    b += ''.join(f'<tr class="{g}"><td>{lb}</td>' + ''.join('<td>' + ''.join(f'<span>{n[:-2]}<b>{n[-2:]}</b></span>' for n in r[g]) + '</td>' for r in rs) + '</tr>' for lb, g in MN_G) + '</tbody></table></div>'
+    b += '<div class="lt">' + ''.join(f'<div><h4>{ST.get(r["station"], r["station"])}</h4>' + ''.join(f'<p><b>{j}</b><span>{", ".join(a) or "–"}</span></p>' for j, a in enumerate(heads(lotos(r, MN_G)))) + '</div>' for r in rs) + '</div>'
+    return f"{lab} {WDV[wdi(d)]}, {vn(d)}", b
+PRE = {"mb": pre_mb(), "mn": pre_mn("recent_mn.json", "XSMN", "tp-hcm"), "mt": pre_mn("recent_mt.json", "XSMT", "da-nang")}
+for f, reg in (("index.html", "mb"), ("xsmb/index.html", "mb"), ("xsmb-30-ngay/index.html", "mb"), ("xsmn/index.html", "mn"), ("xsmn-30-ngay/index.html", "mn"), ("xsmt/index.html", "mt"), ("xsmt-30-ngay/index.html", "mt")):
+    fp = os.path.join(ROOT, f)
+    if not os.path.exists(fp): continue
+    h = open(fp).read(); title, board = PRE[reg]
+    h2 = re.sub(r'<div id="rsBoard">.*?</div><!--/rsb-->', lambda m: f'<div id="rsBoard">{board}</div><!--/rsb-->', h, count=1, flags=re.S)
+    h2 = re.sub(r'<h2 id="rsT">[^<]*</h2>', f'<h2 id="rsT">{title}</h2>', h2, count=1)
+    dlast = {'mb': mb[-1]['date']}.get(reg) or max(r['date'] for r in json.load(open(os.path.join(ROOT, 'recent_mn.json' if reg == 'mn' else 'recent_mt.json'))))
+    h2 = re.sub(r'<input type="date" id="rsDate"[^>]*>', f'<input type="date" id="rsDate" aria-label="Chọn ngày" value="{dlast}">', h2, count=1)
+    if h2 != h: open(fp, "w").write(h2)
+
 # ---------- sitemap ----------
 spa = [x.strip() for x in open(os.path.join(ROOT, "tools", "spa_pages.txt")).read().split() if x.strip()]
 urls = [(BASE, "1.0")] + [(BASE + s + "/", "0.9" if s in ("xsmb", "xsmn", "xsmt") else "0.7") for s in spa]
