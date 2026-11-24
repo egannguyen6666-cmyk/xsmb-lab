@@ -8,7 +8,7 @@ NOTICE = "Thông tin và kết quả xổ số trên XS Lab được chúng tôi
 
 def _reg(c, n):
     return [("", f"{n} hôm nay", f"{c}/"), ("", f"Trực tiếp {n}", f"truc-tiep-{c}/"), ("", f"{n} hôm qua", f"{c}-hom-qua/"), ("", f"{n} 30 ngày", f"{c}-30-ngay/"), ("", f"{n} 90 ngày", f"{c}-90-ngay/"),
-            ("", f"Sổ kết quả {n}", f"{c}/so-ket-qua/"), ("", f"Quay thử {n}", f"quay-thu-{c}/"), ("h", "Thống kê", ""), ("", f"Thống kê {n} 30 kỳ", f"thong-ke/30-ky-{c}/"),
+            ("", f"Sổ kết quả {n}", f"{c}/so-ket-qua/"), ("", f"Quay thử {n}", f"mo-phong/quay-thu-{c}/"), ("h", "Thống kê", ""), ("", f"Thống kê {n} 30 kỳ", f"thong-ke/30-ky-{c}/"),
             ("", f"Giải đặc biệt {n}", f"thong-ke/giai-dac-biet-{c}/"), ("", f"3 càng {n}", f"thong-ke/3-cang-{c}/")]
 
 
@@ -54,7 +54,7 @@ def mhead(up, ic="#"):
 
 SIDE = [("Xổ số kiến thiết", [("Kết quả xổ số", "", "i-home"), ("Trực tiếp xổ số", "truc-tiep/", "i-live"), ("Dò vé số", "do-ve/", "i-ticket")]),
         ("Vietlott", [("Keno", "keno/", "i-vl"), ("Mega 6/45", "mega-645/", "i-vl"), ("Power 6/55", "power-655/", "i-vl"), ("Max 3D", "max-3d/", "i-vl"), ("Max 3D Pro", "max-3d-pro/", "i-vl")]),
-        ("Thống kê", [("Thống kê lô tô", "thong-ke/", "i-stats"), ("Bảng thống kê", "thong-ke/bang-thong-ke/", "i-book"), ("Thống kê dàn", "thong-ke-dan/", "i-target"), ("Bản đồ số", "ban-do-so/", "i-grid"), ("Kiểm định", "kiem-dinh/", "i-chart"), ("Mô phỏng", "mo-phong/", "i-wallet"), ("Quay thử", "quay-thu-xsmb/", "i-live")]),
+        ("Thống kê", [("Thống kê lô tô", "thong-ke/", "i-stats"), ("Bảng thống kê", "thong-ke/bang-thong-ke/", "i-book"), ("Thống kê dàn", "thong-ke-dan/", "i-target"), ("Bản đồ số", "ban-do-so/", "i-grid"), ("Kiểm định", "kiem-dinh/", "i-chart"), ("Mô phỏng", "mo-phong/", "i-wallet")]),
         ("Thông tin", [("Giới thiệu", "gioi-thieu/", "i-info"), ("Liên hệ", "lien-he/", "i-info")])]
 
 

@@ -853,16 +853,16 @@ for reg, (lab, name, tm) in REG.items():
         for w in range(7):
             ds = sorted({r["date"] for r in rec if wdi(r["date"]) == w})
             if ds: sched[w] = sorted([[r["station"], ST.get(r["station"], r["station"])] for r in rec if r["date"] == ds[-1]], key=lambda x: ST.get(x[0], ""))
-    p = f"quay-thu-{reg}/"
-    tabs = '<p class="qttabs">' + ''.join(f'<a href="../quay-thu-{r2}/"' + (' aria-current="page"' if r2 == reg else '') + f'>Quay thử {REG[r2][0]}</a>' for r2 in REG) + '</p>'
+    p = f"mo-phong/quay-thu-{reg}/"
+    tabs = '<p class="qttabs">' + ''.join(f'<a href="../quay-thu-{r2}/"' + (' aria-current="page"' if r2 == reg else '') + f'>Quay thử {REG[r2][0]}</a>' for r2 in REG) + '<a href="../#simCard">Mô phỏng cách chơi</a></p>'
     day = '' if reg == "xsmb" else '<label>Lịch đài <select id="qtDay">' + ''.join(f'<option value="{w}">{WD[w]}: {", ".join(x[1] for x in sched.get(w, []))}</option>' for w in range(7) if w in sched) + '</select></label>'
     real = "khoảng 44 giây một giải, đúng thứ tự từ giải Nhất đến giải Đặc biệt" if reg == "xsmb" else "khoảng 1 phút một giải mỗi đài, đúng thứ tự từ giải Tám đến giải Đặc biệt, các đài quay song song"
     body = (tabs + f'<div class="card qtc"><div class="qtbar">{day}<label>Tốc độ <select id="qtSp"><option value="nhanh">Nhanh</option><option value="vua">Vừa</option><option value="that">Như thật</option></select></label><button type="button" id="qtGo" class="qtgo">Quay thử</button><button type="button" id="qtRe" class="qtre">Quay lại</button><span id="qtSt" class="note"></span></div><div id="qtBoard"></div></div><div id="qtLo"></div>'
         + QT_CSS_NOTE
         + f'<h2>Quay thử {lab} là gì</h2><p>Trang mô phỏng một buổi quay {lab} ({name}) trên trình duyệt: các giải lần lượt hiện ra theo đúng thứ tự và số chữ số như buổi quay thật, số đang quay nhảy liên tục rồi dừng lại. Chế độ <b>Như thật</b> giữ nhịp gần với buổi quay thật ({real}); chế độ Nhanh và Vừa để xem trọn bảng trong ít phút.</p>'
-        + f'<p>Mỗi lần quay là một lần chọn ngẫu nhiên mới, độc lập với mọi kỳ trước và sau. Kết quả thật của {lab} có tại <a href="../{reg}/">{lab} hôm nay</a>, hoặc theo dõi từng giải trong giờ quay {tm} tại <a href="../truc-tiep-{reg}/">Trực tiếp {lab}</a>. Muốn xem một cách chơi lãi hay lỗ qua hàng trăm kỳ đã quay, hãy dùng <a href="../mo-phong/">Mô phỏng</a>.</p>'
+        + f'<p>Mỗi lần quay là một lần chọn ngẫu nhiên mới, độc lập với mọi kỳ trước và sau. Kết quả thật của {lab} có tại <a href="../../{reg}/">{lab} hôm nay</a>, hoặc theo dõi từng giải trong giờ quay {tm} tại <a href="../../truc-tiep-{reg}/">Trực tiếp {lab}</a>. Muốn xem một cách chơi lãi hay lỗ qua hàng trăm kỳ đã quay, hãy dùng <a href="../#simCard">Mô phỏng cách chơi</a>.</p>'
         + f'<script>window.QT={json.dumps({"reg": "mb" if reg == "xsmb" else reg[2:], "sched": sched}, ensure_ascii=False)}</script><script>{QT_JS}</script>')
-    page(p, f"Quay thử {lab} – mô phỏng quay số {name} như thật", f"Quay thử {lab}: mô phỏng buổi quay xổ số {name} trên trình duyệt, số nhảy và ra từng giải như thật, chọn tốc độ Nhanh, Vừa hoặc Như thật. Số ngẫu nhiên, không phải dự đoán.", [(lab, reg + "/"), (f"Quay thử {lab}", p)], f"Quay thử {lab}", body)
+    page(p, f"Quay thử {lab} – mô phỏng quay số {name} như thật", f"Quay thử {lab}: mô phỏng buổi quay xổ số {name} trên trình duyệt, số nhảy và ra từng giải như thật, chọn tốc độ Nhanh, Vừa hoặc Như thật. Số ngẫu nhiên, không phải dự đoán.", [("Mô phỏng", "mo-phong/"), (f"Quay thử {lab}", p)], f"Quay thử {lab}", body)
 
 # ---------- sitemap ----------
 
@@ -919,7 +919,7 @@ for path, typ, title, desc, crumb, h1, body in INFO_PAGES:
     page(path, title, desc, [(crumb, path)], h1, body, ld=[ORG, webpage_ld(typ, path, h1)])
 
 spa = [x.strip() for x in open(os.path.join(ROOT, "tools", "spa_pages.txt")).read().split() if x.strip()]
-core = [BASE] + [BASE + s + "/" for s in spa] + [BASE + x[0] for x in INFO_PAGES] + [BASE + "so/"] + [BASE + f"quay-thu-{r}/" for r in REG]
+core = [BASE] + [BASE + s + "/" for s in spa] + [BASE + x[0] for x in INFO_PAGES] + [BASE + "so/"] + [BASE + f"mo-phong/quay-thu-{r}/" for r in REG]
 for reg in list(REG) + ["thong-ke", "so"]:
     for x in sorted(os.listdir(os.path.join(ROOT, reg))):
         if re.match(r"\d{2}-\d{2}-\d{4}$", x) or x.startswith("thang-"): continue
