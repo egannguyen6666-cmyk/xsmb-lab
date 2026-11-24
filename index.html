@@ -203,6 +203,9 @@ p{margin:0 0 10px;max-width:72ch}
 .mnb tr.g8 td:not(:first-child){font-size:22px;font-weight:700;color:var(--red)}
 .mnb tr.db td:not(:first-child){font-size:19px;font-weight:700;color:var(--red)}
 .mnb th.sel{background:#d01f3c;color:#fff}
+@media(max-width:600px){.mnb table{min-width:0;table-layout:fixed}.mnb th{font-size:12px;padding:7px 2px;line-height:1.3;word-break:break-word}.mnb td{font-size:14px;padding:6px 1px;letter-spacing:-.2px}
+.mnb th:first-child,.mnb td:first-child{width:30px;font-size:11px}.mnb tr.g8 td:not(:first-child){font-size:18px}.mnb tr.db td:not(:first-child){font-size:15px}
+.lvsched{gap:6px}.lvsched button{padding:8px}.lvsched b{font-size:14px}.lvsched span{font-size:11px}}
 .lt{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:12px}
 .lt>div{border:1px solid var(--line);border-radius:10px;padding:8px 10px}
 .lt h4{margin:0 0 4px;font-size:14px}
@@ -442,7 +445,7 @@ p{margin:0 0 10px;max-width:72ch}
      <div class="form">
       <div><label for="sv">Vốn ban đầu (token)</label><input id="sv" type="number" min="27" step="1" value="10000" inputmode="numeric"></div>
       <div><label for="sp">Số điểm mỗi số</label><input id="sp" type="number" min="1" step="1" value="1" inputmode="numeric"></div>
-      <div><label for="si">Danh sách số theo</label><select id="si"></select></div>
+      <div><label for="si">Theo dữ liệu thống kê</label><select id="si"></select></div>
       <div><label for="sm">Nguồn kỳ</label><select id="sm"><option value="hist">Lịch sử từ một ngày</option></select></div>
       <div id="sdw"><label for="sd">Bắt đầu từ ngày</label><input id="sd" type="date"></div>
      </div>
@@ -473,7 +476,7 @@ p{margin:0 0 10px;max-width:72ch}
   <section class="view" id="v-kiem-dinh">
    <div class="grid">
     <div class="card c12">
-     <h2>Tiêu chí thống kê có lặp lại ở kỳ sau không</h2>
+     <h2>Dữ liệu thống kê có lặp lại ở kỳ sau không</h2>
      <p class="sub" id="kcIntro"></p>
      <div class="seg" id="kcPer" role="group" aria-label="Giai đoạn"><span class="lab">Giai đoạn</span></div>
      <div class="rng"><div><label for="kcFrom">Từ ngày</label><input type="date" id="kcFrom"></div><div><label for="kcTo">Đến ngày</label><input type="date" id="kcTo"></div><button id="kcApply">Xem khoảng này</button></div>
@@ -549,12 +552,12 @@ p{margin:0 0 10px;max-width:72ch}
 </div>
 <nav class="tab" id="tab" aria-label="Điều hướng"></nav>
 <div class="sheet" id="sheet" role="dialog" aria-label="Các mục khác"><div id="sheetIn"></div></div>
-<script src="core.js?v=202611240116"></script>
+<script src="core.js?v=202611240122"></script>
 <script>
 {
 const VIEWS=[['ket-qua','Kết quả','i-home'],['truc-tiep','Trực tiếp','i-live'],['do-ve','Dò vé','i-ticket'],['thong-ke','Thống kê','i-stats'],['thong-ke-dan','Thống kê dàn','i-target'],['ban-do','Bản đồ số','i-grid'],['kiem-dinh','Kiểm định','i-chart'],['mo-phong','Mô phỏng','i-wallet'],['ve-du-lieu','Về dữ liệu','i-info']];
 const ALIAS={'tong-quan':'ket-qua','du-doan':'thong-ke-dan','nhat-ky':'ket-qua','kiem-chung':'kiem-dinh','quy-token':'mo-phong'};
-const META={'ket-qua':['Kết quả xổ số {R} hôm nay','Kết quả xổ số {R} mới nhất, đủ các giải, sổ kết quả các kỳ gần đây và thống kê nhanh kỳ vừa quay.'],'truc-tiep':['Trực tiếp xổ số {R}','Xem trực tiếp kết quả xổ số {R} trong giờ quay, từng giải cập nhật khoảng 5 giây một lần.'],'do-ve':['Dò vé số {R}','Dò vé số {R} theo đài và ngày quay, đối chiếu với đủ các giải trong 60 ngày gần nhất.'],'thong-ke':['Thống kê lô tô {R}','Thống kê lô tô {R}: tra cứu số, đầu đuôi, giải đặc biệt, lô gan, phân bố tổng và chẵn lẻ từ dữ liệu quá khứ.'],'thong-ke-dan':['Thống kê dàn số {R}','Thống kê dàn 4, 6, 10 số {R}: mỗi dàn đã xuất hiện bao nhiêu lần trong quá khứ, cả dàn cùng về bao nhiêu kỳ.'],'ban-do':['Bản đồ tần suất 00–99 {R}','Bản đồ nhiệt tần suất 100 số {R} theo các khung thời gian.'],'kiem-dinh':['Kiểm định thống kê {R}','Kiểm định độ ngẫu nhiên và mức lặp lại của các tiêu chí thống kê trên dữ liệu {R}.'],'mo-phong':['Mô phỏng xác suất {R}','Mô phỏng quỹ token giả định để thấy kỳ vọng âm của mọi cách đặt trên dữ liệu {R}.'],'ve-du-lieu':['Về dữ liệu XS Lab','Nguồn dữ liệu, cách cập nhật, kiểm tra chất lượng và cách tính của XS Lab.'],'dan':['Lịch sử tiêu chí dàn số {R}','Timeline áp dụng một tiêu chí lập dàn trên dữ liệu quá khứ {R}.']};
+const META={'ket-qua':['Kết quả xổ số {R} hôm nay','Kết quả xổ số {R} mới nhất, đủ các giải, sổ kết quả các kỳ gần đây và thống kê nhanh kỳ vừa quay.'],'truc-tiep':['Trực tiếp xổ số {R}','Xem trực tiếp kết quả xổ số {R} trong giờ quay, từng giải cập nhật khoảng 5 giây một lần.'],'do-ve':['Dò vé số {R}','Dò vé số {R} theo đài và ngày quay, đối chiếu với đủ các giải trong 60 ngày gần nhất.'],'thong-ke':['Thống kê lô tô {R}','Thống kê lô tô {R}: tra cứu số, đầu đuôi, giải đặc biệt, lô gan, phân bố tổng và chẵn lẻ từ dữ liệu quá khứ.'],'thong-ke-dan':['Thống kê dàn số {R}','Thống kê dàn 4, 6, 10 số {R}: mỗi dàn đã xuất hiện bao nhiêu lần trong quá khứ, cả dàn cùng về bao nhiêu kỳ.'],'ban-do':['Bản đồ tần suất 00–99 {R}','Bản đồ nhiệt tần suất 100 số {R} theo các khung thời gian.'],'kiem-dinh':['Kiểm định thống kê {R}','Kiểm định độ ngẫu nhiên và mức lặp lại của các dữ liệu thống kê trên dữ liệu {R}.'],'mo-phong':['Mô phỏng xác suất {R}','Mô phỏng quỹ token giả định để thấy kỳ vọng âm của mọi cách đặt trên dữ liệu {R}.'],'ve-du-lieu':['Về dữ liệu XS Lab','Nguồn dữ liệu, cách cập nhật, kiểm tra chất lượng và cách tính của XS Lab.'],'dan':['Lịch sử thống kê dàn số {R}','Timeline áp dụng một cách thống kê lập dàn trên dữ liệu quá khứ {R}.']};
 function setMeta(v){const m=META[v]||META['ket-qua'],lab=!N?'XSMB, XSMN, XSMT':R.region==='mb'?'XSMB':RLAB[R.region]+' '+ST[R.st],f=s=>s.replace('{R}',lab);document.title=f(m[0])+' – XS Lab';const md=document.querySelector('meta[name=description]');if(md)md.setAttribute('content',f(m[1])+' Thông tin chỉ mang tính tham khảo.');}
 const $=id=>document.getElementById(id);
 const pad=k=>String(k).padStart(2,'0');
@@ -582,10 +585,10 @@ function useSeries(){
  if(R.region==='mb'){LOG=LOG_MB;REC=REC_MB;nextDate=XS.nextDrawMB(dates[N-1]);}
  else{LOG=RG().log.filter(e=>e.station===R.st);REC=RG().rec.filter(e=>e.station===R.st);nextDate=XS.nextDrawStation(RG().sch,R.st,dates[N-1])||XS.addDays(dates[N-1],7);}
  const W=S.WL;
- IND=[{id:'combo',nm:'Tổng hợp nóng',d:`Trung bình độ lệch chuẩn (z) của tần suất ${W.join(', ')}. Số về nhiều hơn kỳ vọng ở cả ba khung xếp trên cùng.`},
-  {id:'hot30',nm:'Nóng '+W[0],d:`Những số về nhiều nháy nhất trong ${W[0]} gần nhất.`},{id:'hot90',nm:'Nóng '+W[1],d:`Những số về nhiều nháy nhất trong ${W[1]} gần nhất.`},{id:'hot180',nm:'Nóng '+W[2],d:`Những số về nhiều nháy nhất trong ${W[2]} gần nhất.`},
-  {id:'cold30',nm:'Lạnh '+W[0],d:`Những số về ít nhất trong ${W[0]}, theo lối nghĩ "đến lúc phải bù".`},{id:'gan',nm:'Lô gan',d:'Những số lâu nhất chưa xuất hiện.'},
-  {id:'roi',nm:'Lô rơi',d:'Những số vừa về ở kỳ trước, về nhiều nháy thì xếp trên.'},{id:'rand',nm:'Chọn ngẫu nhiên',d:'Mốc so sánh: chọn bừa, không dùng thống kê.'}];
+ IND=[{id:'combo',nm:'Tần suất tổng hợp',d:`Trung bình độ lệch chuẩn (z) của tần suất ${W.join(', ')}. Số về nhiều hơn mức trung bình ở cả ba khung xếp trên cùng.`},
+  {id:'hot30',nm:'Về nhiều nhất '+W[0],d:`Những số về nhiều nháy nhất trong ${W[0]} gần nhất.`},{id:'hot90',nm:'Về nhiều nhất '+W[1],d:`Những số về nhiều nháy nhất trong ${W[1]} gần nhất.`},{id:'hot180',nm:'Về nhiều nhất '+W[2],d:`Những số về nhiều nháy nhất trong ${W[2]} gần nhất.`},
+  {id:'cold30',nm:'Về ít nhất '+W[0],d:`Những số về ít nhất trong ${W[0]} gần nhất.`},{id:'gan',nm:'Lô gan',d:'Những số lâu nhất chưa xuất hiện.'},
+  {id:'roi',nm:'Lô rơi (về kỳ trước)',d:'Những số vừa về ở kỳ trước, về nhiều nháy thì xếp trên.'},{id:'rand',nm:'Ngẫu nhiên (mốc so sánh)',d:'Mốc so sánh: chọn bừa, không dùng thống kê.'}];
  LOGCOLS=IND;
 }
 const where=()=>R.region==='mb'?'XSMB':ST[R.st];
@@ -652,7 +655,7 @@ function route(){
  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+cur));
  const navv=cur==='dan'?'thong-ke-dan':cur;
  document.querySelectorAll('.nav a,.tab a').forEach(a=>{const on=a.dataset.v===navv||(a.dataset.v==='more'&&VIEWS.slice(4).some(x=>x[0]===navv));if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
- $('vtitle').textContent=cur==='dan'?'Lịch sử tiêu chí dàn':VIEWS.find(x=>x[0]===cur)[1];setMeta(cur);
+ $('vtitle').textContent=cur==='dan'?'Lịch sử thống kê dàn':VIEWS.find(x=>x[0]===cur)[1];setMeta(cur);
  if(N)renderView(cur);window.scrollTo(0,0);}
 addEventListener('hashchange',route);
 function renderView(v){
@@ -786,7 +789,7 @@ const ds={q:null};
 function renderDanStats(){
  const f=$('dsForm');if(!f.dataset.ok){f.dataset.ok=1;f.onsubmit=e=>{e.preventDefault();runDanQuery();};}
  $('dsSetT').textContent=`Dàn thống kê ${where()} · dữ liệu đến hết ${vnDate(dates[N-1])}`;
- $('dsSetS').textContent=`Mỗi dàn gồm những số đứng đầu theo một tiêu chí, tính trên dữ liệu đã quay đến hết ${vnDate(dates[N-1])}. Số liệu bên dưới là số lần chính dàn đó đã xuất hiện trong toàn bộ ${vn(N)} kỳ quá khứ. Đây là mô tả dữ liệu đã có, không phải dự đoán kỳ quay nào.`;
+ $('dsSetS').textContent=`Mỗi dàn gồm những số đứng đầu theo một dữ liệu thống kê, tính trên dữ liệu đã quay đến hết ${vnDate(dates[N-1])}. Số liệu bên dưới là số lần chính dàn đó đã xuất hiện trong toàn bộ ${vn(N)} kỳ quá khứ. Đây là mô tả dữ liệu đã có, không phải dự đoán kỳ quay nào.`;
  renderOvDan();
  if(!ds.q)ds.q=danPicks('tan-suat',4,N-1);$('dsIn').value=ds.q.map(pad).join(', ');runDanQuery(true);}
 function runDanQuery(silent){
@@ -806,7 +809,7 @@ function renderOvDan(){
  $('ovDan').innerHTML=DANM.map(m=>`<div style="border-top:1px solid var(--line);padding:14px 0">
    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;align-items:baseline"><b style="font-size:16px">${m.nm}</b><span class="note">${m.d()}</span></div>
    <div class="dset">${[4,6,10].map(n=>{const p=danPicks(m.id,n,t);return `<div>
-    <div style="display:flex;justify-content:space-between;align-items:center"><b>Dàn ${n} số</b><a class="tag" href="#dan-${m.id}-${n}" style="text-decoration:none">Lịch sử tiêu chí ›</a></div>
+    <div style="display:flex;justify-content:space-between;align-items:center"><b>Dàn ${n} số</b><a class="tag" href="#dan-${m.id}-${n}" style="text-decoration:none">Lịch sử thống kê ›</a></div>
     <div class="balls" style="gap:6px">${p.map(k=>`<div class="ball sm" style="width:34px;height:34px;font-size:14px">${pad(k)}</div>`).join('')}</div>
     ${setStatsHTML(S,p,false)}
     <div class="acts" style="margin-top:4px"><button class="copy" data-dq="${p.join(',')}">Xem chi tiết dàn</button>${copyBtn('Chép',numTxt(p))}</div></div>`;}).join('')}</div></div>`).join('')
@@ -822,7 +825,7 @@ function renderDan(){
  seg($('dnN'),[4,6,10].map(n=>[n+' số',n]),dn.n,v=>{dn.page=1;go(dn.m,v);});
  seg($('dnPer'),PERS(),dn.per,v=>{dn.per=v;dn.page=1;renderDan();});
  const Mx=DANM.find(x=>x.id===dn.m),n=dn.n,pts=dn.pts,[a,b]=rangeIdx(dn.per,dn.from,dn.to),Rr=danSeries(dn.m,n,a,b,pts);
- $('dnT').textContent=`${where()} · ${Mx.nm} · ${n} số`;$('dnS').textContent=Mx.d()+' Với mỗi kỳ trong quá khứ, dàn được lập lại chỉ từ dữ liệu đến kỳ trước đó, rồi đối chiếu với kết quả của kỳ ấy. Timeline cho thấy tiêu chí này đã trùng bao nhiêu so với mức xác suất.';
+ $('dnT').textContent=`${where()} · ${Mx.nm} · ${n} số`;$('dnS').textContent=Mx.d()+' Với mỗi kỳ trong quá khứ, dàn được lập lại chỉ từ dữ liệu đến kỳ trước đó, rồi đối chiếu với kết quả của kỳ ấy. Timeline cho thấy cách thống kê này đã trùng bao nhiêu so với mức xác suất.';
  $('dnRange').textContent=Rr.length?`${Rr.length} kỳ, từ ${vnDate(Rr[0].d)} đến ${vnDate(Rr[Rr.length-1].d)}.`:'Không có kỳ quay nào trong khoảng này.';
  const np=danPicks(dn.m,n,N-1),f1=freq(N-1,S.W[0]);
  $('dnNext').innerHTML=`<h2>Dàn theo dữ liệu đến hết ${vnDate(dates[N-1])}</h2><p class="sub">Số lần chính dàn này đã xuất hiện trong ${vn(N)} kỳ quá khứ.</p><div class="balls" style="gap:12px;margin:10px 0 14px">${np.map(k=>ball(k,'r',f1[k]+' lần/'+S.WL[0])).join('')}</div>${setStatsHTML(S,np,false).replace('<dl>','<dl style="color:#fff">')}<div class="acts">${copyBtn('Chép dàn '+n+' số',numTxt(np))}</div>`;
@@ -850,7 +853,7 @@ function simulate(c){
   rows.push({d:dates[d.i],picks:d.picks,nh,cost,win,bal,stake});}
  return {V,pts,id,mode:c.sm,rows,bal,stake,ret,stop,hi,lo,hiD,loD};}
 function runSim(){
- $('simIntro').textContent=tokenNote()+' Với mỗi kỳ trong quá khứ, app lấy 10 số theo tiêu chí đã chọn (chỉ từ dữ liệu đến kỳ trước), đối chiếu với kết quả thật rồi cộng dồn. Token chỉ là đơn vị giả định để thấy kỳ vọng âm.';
+ $('simIntro').textContent=tokenNote()+' Với mỗi kỳ trong quá khứ, app lấy 10 số theo dữ liệu thống kê đã chọn (chỉ từ dữ liệu đến kỳ trước), đối chiếu với kết quả thật rồi cộng dồn. Token chỉ là đơn vị giả định để thấy kỳ vọng âm.';
  if(!simReady){
   $('si').innerHTML=IND.map(x=>`<option value="${x.id}">${x.nm} (10 số/kỳ)</option>`).join('');
   const sv=store.get('xs-sim',{});$('sv').value=sv.sv||10000;$('sp').value=sv.sp||1;$('si').value=IND.some(x=>x.id===sv.si)?sv.si:'combo';$('sm').value='hist';
@@ -889,7 +892,7 @@ function drawSim(){
 let kcReady=false;
 function renderBars(){
  const PP=[...PERS(),...(R.region==='mb'?[['3 năm',1095]]:[]),['Toàn bộ',1e9]];
- $('kcIntro').textContent=`Kiểm định trên dữ liệu quá khứ: ở mỗi kỳ, lấy các số đứng đầu theo từng tiêu chí (chỉ dùng dữ liệu đến kỳ đó) rồi xem kỳ kế tiếp ${where()} các số ấy có xuất hiện không. Nếu kết quả là ngẫu nhiên, mọi tiêu chí đều quanh mức ${fmt(P)} (vạch đỏ đứt); thanh xám là khoảng tin cậy 95%. Bấm một dòng để chọn tiêu chí.`;
+ $('kcIntro').textContent=`Kiểm định trên dữ liệu quá khứ: ở mỗi kỳ, lấy các số đứng đầu theo từng dữ liệu thống kê (chỉ dùng dữ liệu đến kỳ đó) rồi xem kỳ kế tiếp ${where()} các số ấy có xuất hiện không. Nếu kết quả là ngẫu nhiên, mọi dữ liệu thống kê đều quanh mức ${fmt(P)} (vạch đỏ đứt); thanh xám là khoảng tin cậy 95%. Bấm một dòng để chọn dữ liệu thống kê.`;
  seg($('kcPer'),PP,st.per,v=>{st.per=v;renderBars();drawRoll();});
  seg($('kcK'),[5,10,20].map(k=>[k+' số',k]),st.k,v=>{st.k=v;renderBars();drawRoll();});
  if(!kcReady){$('kcFrom').min=$('kcTo').min=dates[startT+1];$('kcFrom').max=$('kcTo').max=dates[N-1];$('kcFrom').value=dates[Math.max(startT+1,N-30)];$('kcTo').value=dates[N-1];
@@ -1055,7 +1058,7 @@ function renderCompare(){
  $('cmpCard').querySelector('h2').textContent='So sánh các đài '+RNAME[R.region].toLowerCase();
  const rows=Object.keys(RG().by).sort((a,b)=>ST[a].localeCompare(ST[b],'vi')).map(s=>{const Sx=seriesFor(R.region,s),c=chi2Of(Sx,0,Sx.N);let h=0,n=0;for(let t=Math.max(Sx.start,Sx.N-53);t<Sx.N-1;t++){for(const k of XS.topK(XS.scores(Sx,'combo',t),t,10))if(Sx.cnt[(t+1)*100+k])h++;n+=10;}
   return {s,N:Sx.N,from:Sx.dates[0],last:Sx.dates[Sx.N-1],p:c.p,rate:n?h/n:0,db:RG().by[s][Sx.N-1].two.slice(0,2),sch:RG().sch[s]};});
- $('cmpT').innerHTML=`<table><thead><tr><th>Đài</th><th>Lịch</th><th>Số kỳ</th><th>Từ</th><th>Kỳ gần nhất</th><th>ĐB (2 số)</th><th>p-value cả lịch sử</th><th>Tổng hợp nóng, 52 kỳ</th></tr></thead><tbody>${rows.map(r=>`<tr class="r${r.s===R.st?' on':''}" data-st="${r.s}"><td><b>${ST[r.s]}</b></td><td>${r.sch.sort().map(x=>x===0?'CN':'T'+(x+1)).join(', ')}</td><td>${vn(r.N)}</td><td>${r.from.slice(0,4)}</td><td>${vnDate(r.last)}</td><td><b class="h">${r.db}</b></td><td><span class="pchip ${r.p<0.05?'hi':'ok'}">${dec(r.p,3)}</span></td><td>${fmt(r.rate,1)}</td></tr>`).join('')}</tbody></table><p class="note" style="margin-top:8px">Lý thuyết cho mỗi đài: ${fmt(1-Math.pow(0.99,18))} mỗi số mỗi kỳ.</p>`;
+ $('cmpT').innerHTML=`<table><thead><tr><th>Đài</th><th>Lịch</th><th>Số kỳ</th><th>Từ</th><th>Kỳ gần nhất</th><th>ĐB (2 số)</th><th>p-value cả lịch sử</th><th>Tần suất tổng hợp, 52 kỳ</th></tr></thead><tbody>${rows.map(r=>`<tr class="r${r.s===R.st?' on':''}" data-st="${r.s}"><td><b>${ST[r.s]}</b></td><td>${r.sch.sort().map(x=>x===0?'CN':'T'+(x+1)).join(', ')}</td><td>${vn(r.N)}</td><td>${r.from.slice(0,4)}</td><td>${vnDate(r.last)}</td><td><b class="h">${r.db}</b></td><td><span class="pchip ${r.p<0.05?'hi':'ok'}">${dec(r.p,3)}</span></td><td>${fmt(r.rate,1)}</td></tr>`).join('')}</tbody></table><p class="note" style="margin-top:8px">Lý thuyết cho mỗi đài: ${fmt(1-Math.pow(0.99,18))} mỗi số mỗi kỳ.</p>`;
  $('cmpT').querySelectorAll('tr.r').forEach(tr=>tr.onclick=()=>setRegion(R.region,tr.dataset.st));}
 
 /* ---------- randomness by year ---------- */
@@ -1063,7 +1066,7 @@ function renderRandom(){
  const years={};for(let i=0;i<N;i++){const y=dates[i].slice(0,4);years[y]=years[y]||[i,i];years[y][1]=i;}
  const ys=Object.keys(years).sort().map(y=>{const [a,b]=years[y],c=chi2Of(S,a,b+1);return {y,...c};}).filter(r=>r.n>=(R.region==='mb'?60:20));
  const bad=ys.filter(r=>r.p<0.05);
- $('rnS').textContent=`${where()} · mỗi năm kiểm định xem 100 số có về đều nhau không (chi-bình phương, 99 bậc tự do). p < 0,05 nghĩa là năm đó "lệch". Nếu xổ số hoàn toàn ngẫu nhiên, vẫn có khoảng 5% số năm bị lệch do may rủi. Kết quả: ${bad.length}/${ys.length} năm lệch (${fmt(bad.length/Math.max(1,ys.length),0)}), kỳ vọng khoảng ${dec(ys.length*0.05)} năm.${bad.length>Math.max(2,ys.length*0.12)?' Số năm lệch nhiều hơn mức may rủi, cho thấy có những năm 100 số về không thật đều (nguyên nhân có thể từ thiết bị quay, bộ bi…). Tuy vậy độ lệch nhỏ và không lặp lại sang năm sau, nên các mô hình tần suất vẫn chỉ trúng xấp xỉ mức lý thuyết (xem bảng kiểm chứng ở trên).':' Con số này phù hợp với một quá trình ngẫu nhiên.'}`;
+ $('rnS').textContent=`${where()} · mỗi năm kiểm định xem 100 số có về đều nhau không (chi-bình phương, 99 bậc tự do). p < 0,05 nghĩa là năm đó "lệch". Nếu xổ số hoàn toàn ngẫu nhiên, vẫn có khoảng 5% số năm bị lệch do may rủi. Kết quả: ${bad.length}/${ys.length} năm lệch (${fmt(bad.length/Math.max(1,ys.length),0)}), kỳ vọng khoảng ${dec(ys.length*0.05)} năm.${bad.length>Math.max(2,ys.length*0.12)?' Số năm lệch nhiều hơn mức may rủi, cho thấy có những năm 100 số về không thật đều (nguyên nhân có thể từ thiết bị quay, bộ bi…). Tuy vậy độ lệch nhỏ và không lặp lại sang năm sau, nên các thống kê tần suất vẫn chỉ trúng xấp xỉ mức lý thuyết (xem bảng kiểm chứng ở trên).':' Con số này phù hợp với một quá trình ngẫu nhiên.'}`;
  const svg=$('rnC'),W=svg.clientWidth,Hh=svg.clientHeight;
  if(W){const m={l:40,r:10,t:10,b:28},bw=(W-m.l-m.r)/ys.length,Y=v=>m.t+(1-v)*(Hh-m.t-m.b);
   svg.innerHTML=[0,0.25,0.5,0.75,1].map(v=>`<line x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${m.l-6}" y="${Y(v)+4}" font-size="12" text-anchor="end" fill="var(--mute)">${dec(v,2)}</text>`).join('')
@@ -1164,14 +1167,14 @@ function renderAbout(){
  <h3>Lịch cập nhật</h3><ul><li>Bản GitHub tự chạy lúc 16:50 (sau XSMN), 17:50 (sau XSMT), 18:40, 19:40 và 22:40 (sau XSMB) mỗi ngày.</li><li>Mỗi lần chạy: đọc kết quả vừa quay → tải các bộ dữ liệu mở → kiểm tra → ghi thêm vào tệp CSV.</li></ul>
  <h3>Cách tính</h3><ul>
   <li>Mỗi kỳ XSMB có 27 giải, mỗi đài XSMN, XSMT có 18 giải. "Về" nghĩa là 2 số cuối của ít nhất một giải trùng với số đó. Xác suất lý thuyết: 1 − 0,99<sup>27</sup> ≈ 23,77% (XSMB) và 1 − 0,99<sup>18</sup> ≈ 16,55% (một đài XSMN hoặc XSMT), như nhau cho mọi số.</li>
-  <li>Các tiêu chí thống kê (tần suất, nóng, lạnh, lô gan, lô rơi, cầu chạy, cặp lộn) chỉ xếp hạng 100 số theo dữ liệu đã quay. XSMB dùng khung 30/90/180 ngày; XSMN, XSMT dùng 10/26/52 kỳ của từng đài.</li>
+  <li>Các dữ liệu thống kê (tần suất tổng hợp, số về nhiều nhất, về ít nhất, lô gan, lô rơi, cầu chạy, cặp lộn) chỉ xếp hạng 100 số theo dữ liệu đã quay. XSMB dùng khung 30/90/180 ngày; XSMN, XSMT dùng 10/26/52 kỳ của từng đài.</li>
   <li>Thống kê dàn: đếm số kỳ có ít nhất 1 số của dàn về và số kỳ cả dàn cùng về; mức theo xác suất tính bằng công thức bao hàm – loại trừ.</li>
-  <li>Kiểm định: với mỗi kỳ trong quá khứ, tiêu chí được tính lại chỉ từ dữ liệu trước kỳ đó rồi đối chiếu với kết quả kỳ ấy. Khoảng tin cậy 95% theo phân phối nhị thức.</li>
+  <li>Kiểm định: với mỗi kỳ trong quá khứ, dữ liệu thống kê được tính lại chỉ từ dữ liệu trước kỳ đó rồi đối chiếu với kết quả kỳ ấy. Khoảng tin cậy 95% theo phân phối nhị thức.</li>
   <li>Dò vé: so dãy số trên vé với đủ các giải của ngày đã chọn (lưu 60 ngày gần nhất).</li>
   <li>Quỹ token: 1 điểm cho 1 số tốn 27 token (XSMB) hoặc 18 token (XSMN, XSMT), mỗi nháy về nhận 99 token. Trung bình mỗi token chỉ thu về 0,99.</li></ul>
  <h3>Thuật ngữ</h3><dl>
   <dt>Lô / số</dt><dd>2 chữ số cuối của một giải, từ 00 đến 99.</dd><dt>Nháy</dt><dd>Số lần một số xuất hiện trong cùng một kỳ.</dd><dt>Gan</dt><dd>Số kỳ liên tiếp một số chưa về.</dd><dt>Đầu / đuôi</dt><dd>Chữ số hàng chục / hàng đơn vị của số.</dd><dt>Đầu câm, đuôi câm</dt><dd>Chữ số không làm đầu (đuôi) của số nào trong kỳ.</dd><dt>Kỳ vọng</dt><dd>Giá trị trung bình nếu lặp lại rất nhiều lần.</dd><dt>Khoảng tin cậy 95%</dt><dd>Dải mà tỷ lệ thật nhiều khả năng nằm trong, với cỡ mẫu hiện có.</dd><dt>p-value</dt><dd>Xác suất thấy độ lệch như vậy nếu kết quả hoàn toàn ngẫu nhiên; nhỏ hơn 0,05 thường coi là "lệch".</dd></dl>
- <h3>Lưu ý</h3><p>Mỗi kỳ quay độc lập; không tiêu chí nào làm thay đổi xác suất về của một số. Phần Kiểm định cho thấy tỷ lệ thực tế của từng tiêu chí dao động quanh mức xác suất. XS Lab không cung cấp thông tin dự đoán kết quả trước giờ quay. Đánh lô đề là hành vi trái pháp luật tại Việt Nam.</p>`;}
+ <h3>Lưu ý</h3><p>Mỗi kỳ quay độc lập; không dữ liệu thống kê nào làm thay đổi xác suất về của một số. Phần Kiểm định cho thấy tỷ lệ thực tế của từng dữ liệu thống kê dao động quanh mức xác suất. XS Lab không cung cấp thông tin dự đoán kết quả trước giờ quay. Đánh lô đề là hành vi trái pháp luật tại Việt Nam.</p>`;}
 
 /* ---------- theme ---------- */
 const THEMES=[['auto','Tự động'],['light','Sáng'],['dark','Tối']];let theme=store.get('xs-theme','auto');
