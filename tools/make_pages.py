@@ -47,7 +47,7 @@ def esc(s): return html.escape(s, quote=True)
 
 # ---------- tệp giao diện dùng chung cho mọi trang tĩnh (mỗi trang nhẹ hơn, trình duyệt lưu đệm) ----------
 import hashlib
-EXTRA_CSS = """.lead{background:var(--panel);border:1px solid var(--line);border-left:4px solid #d01f3c;border-radius:12px;padding:12px 14px;line-height:1.6}.vb{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8a9b,#d01f3c 55%,#8f1027);color:#fff;font-weight:700;font-size:18px;margin:3px;font-variant-numeric:tabular-nums}.vb.y{background:radial-gradient(circle at 32% 28%,#fff6c2,#f2c200 55%,#a07800);color:#1b1a20}
+EXTRA_CSS = """.ltg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:8px 0 14px}.ltg>div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px}.ltg h3{font-size:15px;margin:0 0 6px}.lead{background:var(--panel);border:1px solid var(--line);border-left:4px solid #d01f3c;border-radius:12px;padding:12px 14px;line-height:1.6}.vb{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8a9b,#d01f3c 55%,#8f1027);color:#fff;font-weight:700;font-size:18px;margin:3px;font-variant-numeric:tabular-nums}.vb.y{background:radial-gradient(circle at 32% 28%,#fff6c2,#f2c200 55%,#a07800);color:#1b1a20}
 .mgrid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}.mgrid a,.mgrid span{display:block;text-align:center;padding:6px 0;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-size:13px;color:var(--ink);background:var(--panel)}.mgrid span{color:var(--mute);opacity:.5}.mgrid a:hover{border-color:#d01f3c;color:var(--red)}
 .yr{display:grid;grid-template-columns:64px minmax(0,1fr);gap:8px;align-items:center;margin:0 0 6px}.yr b{font-variant-numeric:tabular-nums}
 @media(max-width:600px){.mgrid{grid-template-columns:repeat(6,minmax(0,1fr))}.yr{grid-template-columns:1fr}.vb{width:38px;height:38px;font-size:16px}}
@@ -120,6 +120,19 @@ def loto_table(lo):
     return '<table class="lt"><tr><th>Đầu</th><th>Đuôi</th><th>Đầu</th><th>Đuôi</th></tr>' + ''.join(f'<tr><td>{i}</td><td>{", ".join(H[i]) or "–"}</td><td class="r">{", ".join(T[i]) or "–"}</td><td class="k">{i}</td></tr>' for i in range(10)) + '</table>'
 
 
+def loto_list(lo):
+    H = [[] for _ in range(10)]
+    for k in sorted(lo): H[k // 10].append(f"{k:02d}")
+    return '<table class="lt"><tr><th>Đầu</th><th>Lô tô</th></tr>' + ''.join(f'<tr><td class="k">{i}</td><td>{", ".join(H[i]) or "–"}</td></tr>' for i in range(10)) + '</table>'
+
+
+def sameday(d, cur):
+    out = []
+    for r, lab in (("xsmb", "XSMB"), ("xsmn", "XSMN"), ("xsmt", "XSMT")):
+        if r != cur and os.path.isdir(os.path.join(ROOT, r, slug_d(d))):
+            out.append(f'<a href="../../{r}/{slug_d(d)}/">{lab} {vn(d)}</a>')
+    return f'<p class="note">Cùng ngày ở miền khác: {" · ".join(out)}</p>' if out else ''
+
 def facts(lo):
     from collections import Counter
     c = Counter(lo); multi = [f"{k:02d} ×{n}" for k, n in sorted(c.items()) if n > 1]
@@ -168,14 +181,14 @@ for reg, fn in (("xsmn", "recent_mn.json"), ("xsmt", "recent_mt.json")):
     for w in range(7):
         ds = sorted([d for d in by if wdi(d) == w], reverse=True)
         if not ds: continue
-        body = f'<p>Kết quả {lab} {WDL[w]} các tuần gần nhất. Các đài quay {WDL[w]}: {", ".join(ST.get(s, s) for s in sorted({r["station"] for r in by[ds[0]]}))}.</p>' + ''.join(f'<h2>{lab} {WDL[w]} {vn(d)}</h2><div class="card">{mn_table(sorted(by[d], key=lambda r: (r["station"] != "tp-hcm", ST.get(r["station"], ""))))}</div><p class="note"><a href="../{slug_d(d)}/">Lô tô và thống kê {lab} {vn(d)}</a></p>' for d in ds[:6])
+        body = f'<p>Kết quả {lab} {WDL[w]} các tuần gần nhất. Các đài quay {WDL[w]}: {", ".join(ST.get(s, s) for s in sorted({r["station"] for r in by[ds[0]]}))}.</p>' + ''.join(f'<h2>{lab} {WDL[w]} {vn(d)}</h2><div class="card">{mn_table(sorted(by[d], key=lambda r: (r["station"] != "tp-hcm", ST.get(r["station"], ""))))}</div><p class="note"><a href="../{slug_d(d)}/">Lô tô và thống kê {lab} {vn(d)}</a></p>' + (('<div class="ltg">' + ''.join(f'<div><h3>Lô tô {ST.get(r["station"], "")} {WD[w]}, {vn(d)}</h3>{loto_list(lotos(r, MN_G))}</div>' for r in sorted(by[d], key=lambda r: (r["station"] != "tp-hcm", ST.get(r["station"], "")))) + '</div>') if d == ds[0] else '') + sameday(d, reg) for d in ds[:6])
         p = f"{reg}/{WDS[w]}/"
         page(p, f"{lab} {WD[w]} – Kết quả xổ số {name} {WDL[w]} hằng tuần", f"{lab} {WD[w]}: kết quả xổ số {name} {WDL[w]} các tuần gần nhất, các đài quay {WDL[w]}, đủ 18 giải. Không quảng cáo.", [(lab, reg + "/"), (f"{lab} {WD[w]}", p)], f"{lab} {WD[w]} – kết quả xổ số {name} {WDL[w]}", body)
 
 for w in range(7):
     rs = sorted([r for r in mb if wdi(r["date"]) == w], key=lambda r: r["date"], reverse=True)
     if not rs: continue
-    body = f'<p>Kết quả XSMB {WDL[w]} các tuần gần nhất, quay lúc 18:15.</p>' + ''.join(f'<h2>XSMB {WDL[w]} {vn(r["date"])}</h2><div class="card">{mb_table(r)}</div><p class="note"><a href="../{slug_d(r["date"])}/">Lô tô và thống kê XSMB {vn(r["date"])}</a></p>' for r in rs[:6])
+    body = f'<p>Kết quả XSMB {WDL[w]} các tuần gần nhất, quay lúc 18:15.</p>' + ''.join(f'<h2>XSMB {WDL[w]} {vn(r["date"])}</h2><div class="card">{mb_table(r)}</div><p class="note"><a href="../{slug_d(r["date"])}/">Lô tô và thống kê XSMB {vn(r["date"])}</a></p>' + (f'<h3>Lô tô XSMB {WD[w]}, {vn(r["date"])}</h3><div class="card">{loto_list(lotos(r, MB_G))}</div>' if r is rs[0] else '') + sameday(r["date"], "xsmb") for r in rs[:6])
     p = f"xsmb/{WDS[w]}/"
     page(p, f"XSMB {WD[w]} – Kết quả xổ số miền Bắc {WDL[w]} hằng tuần", f"XSMB {WD[w]}: kết quả xổ số miền Bắc {WDL[w]} các tuần gần nhất, đủ 27 giải. Không quảng cáo.", [("XSMB", "xsmb/"), (f"XSMB {WD[w]}", p)], f"XSMB {WD[w]} – kết quả xổ số miền Bắc {WDL[w]}", body)
 
