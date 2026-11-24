@@ -2,10 +2,15 @@ name: Cập nhật xổ số hằng ngày (XSMB, XSMN, XSMT)
 
 on:
   schedule:
-    # Giờ UTC (VN = UTC+7). 16:40/16:55 sau XSMN, 17:40/17:55 sau XSMT, 18:40/19:40/22:40 sau XSMB
-    - cron: "40 9,10 * * *"
+    # Giờ UTC (VN = UTC+7). Chạy ngay khi từng miền quay xong, rồi chạy lại vài lần để chắc chắn:
+    # XSMN 16:36, 16:42, 16:55 · XSMT 17:36, 17:42, 17:55 · XSMB 18:34, 18:38, 18:45, 19:40, 22:40
+    - cron: "36 9,10 * * *"
+    - cron: "42 9,10 * * *"
     - cron: "55 9,10 * * *"
-    - cron: "40 11,12,15 * * *"
+    - cron: "34 11 * * *"
+    - cron: "38 11 * * *"
+    - cron: "45 11 * * *"
+    - cron: "40 12,15 * * *"
   workflow_dispatch:
     inputs:
       ngay:

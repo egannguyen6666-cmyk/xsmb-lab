@@ -1091,7 +1091,7 @@ function setRegion(r,st){
  R.region=r;if(st)R.st=st;store.set('xs-region2',{region:R.region,sts:R.sts});
  document.querySelectorAll('.regsw button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.r===R.region));
  $('stSel').hidden=R.region==='mb';if(R.region!=='mb')$('stSel').innerHTML=stationOptions();if(R.region!=='mb')$('stSel').value=R.st;
- useSeries();resetStates();refreshChrome();renderView(curView());}
+ useSeries();resetStates();refreshChrome();renderView(curView());setTimeout(()=>liveFill(r),300);}
 document.querySelectorAll('.regsw button').forEach(b=>b.onclick=()=>setRegion(b.dataset.r));
 $('stSel').onchange=()=>setRegion(R.region,$('stSel').value);
 function refreshChrome(){
@@ -1941,6 +1941,17 @@ function lvInsights(reg,items,n){
   const S2=seriesFor(reg,st),rows=rowsOf(reg,st),t=prevIdx(S2,n.date),c=new Uint8Array(100),ORD=reg==='mb'?ORD_MB:ORD_MN;
   for(const g of ORD)for(const v of x.d.pr[g])if(v)c[+v.slice(-2)]++;
   return `<div class="insst"><h3>${reg==='mb'?'XSMB':ST[x.s]} · ${x.d.done}/${x.d.tot} giải · so với dữ liệu đến ${t>=0?vnDate(S2.dates[t]):'—'}</h3>${drawStats(S2,rows,t,c,x.d.pr.db[0]||'',x.d.done,x.d.tot)}</div>`;}).join('');}
+/* Kết quả vừa quay xong: lấy ngay từ bảng trực tiếp để trang Kết quả, Dò vé có số trước khi bot cập nhật dữ liệu */
+const LF={};
+async function liveFill(reg){
+ const v=curView();if(v!=='ket-qua'&&v!=='do-ve'||document.hidden)return;
+ const n=nowVN(),[a]=LVWIN[reg];if(n.min<a||n.min>a+180)return;
+ const last=reg==='mb'?(RAW.mb&&RAW.mb.length?RAW.mb[RAW.mb.length-1].date:''):(RAW[reg]&&RAW[reg].last)||'';if(!last||last>=n.date)return;
+ if(LF[reg]&&Date.now()-LF[reg]<45000)return;LF[reg]=Date.now();
+ const sts=lvStations(reg,n.date);let pending=false;
+ for(const s of sts){try{const d=await lvLoad(reg,s);if(d.date===n.date&&d.done===d.tot)lvMerge(reg,s,d);else pending=true;}catch(e){pending=true;}}
+ if(R.region===reg&&curView()==='ket-qua')renderView('ket-qua');
+ if(pending&&n.min<=LVWIN[reg][1]+30)setTimeout(()=>liveFill(reg),60000);}
 function lvMerge(reg,slug,d){
  const key=reg+':'+slug+':'+d.date;if(LV.merged[key])return;LV.merged[key]=1;
  const ORD=reg==='mb'?ORD_MB:ORD_MN,vals=ORD.flatMap(g=>d.pr[g]);if(vals.some(v=>!v))return;
