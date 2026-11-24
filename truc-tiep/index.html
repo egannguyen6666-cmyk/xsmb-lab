@@ -1867,13 +1867,28 @@ function lvParse(reg,slug){
 function lvLoad(reg,slug){return lvJQ().then(()=>new Promise((ok,no)=>{const old=document.getElementById('lvScript');if(old)old.remove();
  const s=document.createElement('script');s.id='lvScript';s.src=`https://www.minhngoc.net.vn/getkqxs/${slug}.js?t=${Date.now()}`;let tm=setTimeout(()=>no(new Error('timeout')),9000);
  s.onload=()=>setTimeout(()=>{clearTimeout(tm);try{ok(lvParse(reg,slug));}catch(e){no(e);}},150);s.onerror=()=>{clearTimeout(tm);no(new Error('load'));};document.body.appendChild(s);}));}
+const TID={1:'tp-hcm',2:'dong-thap',3:'ca-mau',7:'ben-tre',8:'vung-tau',9:'bac-lieu',10:'dong-nai',11:'can-tho',12:'soc-trang',13:'tay-ninh',14:'an-giang',15:'binh-thuan',16:'vinh-long',17:'binh-duong',18:'tra-vinh',19:'long-an',20:'hau-giang',21:'binh-phuoc',22:'tien-giang',23:'kien-giang',24:'da-lat',26:'thua-thien-hue',27:'phu-yen',28:'quang-nam',29:'dak-lak',30:'da-nang',31:'khanh-hoa',32:'binh-dinh',33:'quang-tri',34:'quang-binh',35:'gia-lai',36:'ninh-thuan',37:'quang-ngai',38:'dak-nong',39:'kon-tum'},XSTT={mn:1,mb:2,mt:3};
+function lvFeedParse(reg,o){if(!o||!o.kq||!o.ntime)return null;
+ const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Ho_Chi_Minh',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(o.ntime*1000));
+ const G=reg==='mb'?LV_MB:LV_MN,out={};let any=0;
+ for(const tid of Object.keys(o.kq)){const slug=reg==='mb'?'mien-bac':TID[tid];if(!slug)continue;const q=o.kq[tid]||{},pr={};let done=0,tot=0,rolling=null;
+  for(const [,g,cnt] of G){const v=q[g==='db'?0:+g.slice(1)],a=Array.isArray(v)?v:[v],arr=[];for(let i=0;i<cnt;i++){const x=String(a[i]==null?'':a[i]);if(/^\d{2,6}$/.test(x)){arr.push(x);done++;}else{arr.push('');if(x.indexOf('+')>=0&&!rolling)rolling=g+'|'+i;}}pr[g]=arr;tot+=cnt;}
+  out[slug]={slug,date:p,thu:'',ve:'',pr,done,tot,rolling,feed:true,at:nowVN().time};any++;}
+ return any?out:null;}
+function lvFeed(reg){return new Promise(ok=>{window.kqxs=window.kqxs||{};try{delete window.kqxs[reg];}catch(e){}
+ const id='lvF'+reg,old=document.getElementById(id);if(old)old.remove();const s=document.createElement('script');s.id=id;
+ s.src=`https://server-live20.minhngoc.net.vn/xstt/js_m${XSTT[reg]}.js?t=${Date.now()}`;const tm=setTimeout(()=>ok(null),6000);
+ s.onload=()=>{clearTimeout(tm);let r=null;try{r=lvFeedParse(reg,window.kqxs[reg]);}catch(e){}ok(r);};s.onerror=()=>{clearTimeout(tm);ok(null);};document.body.appendChild(s);});}
 function lvStop(){if(LV.timer){clearTimeout(LV.timer);LV.timer=null;}}
 async function lvTick(){
  lvStop();if(curView()!=='truc-tiep'||document.hidden)return;
  const n=nowVN(),reg=LV.reg,sts=lvStations(reg,n.date),phase=lvPhase(reg,n);
  if(!sts.length){lvRender();return;}
+ let fed=false;
+ if(phase==='live'&&n.min>=LVWIN[reg][0]-2){const f=await lvFeed(reg);if(f){for(const k in f)if(f[k].date===n.date){const cur=LV.data[reg+':'+k];if(!(cur&&cur.date===n.date&&cur.done>f[k].done))LV.data[reg+':'+k]=f[k];fed=true;}if(fed){LV.failed=false;lvRender();
+  const c=sts.every(x=>{const d=LV.data[reg+':'+x];return d&&d.date===n.date&&d.done===d.tot;});LV.fc=(LV.fc||0)+1;if(!c&&LV.fc%5){LV.timer=setTimeout(lvTick,3000);return;}}}}
  const slug=sts[LV.rr%sts.length];LV.rr++;
- try{LV.busy=true;const d=await lvLoad(reg,slug);LV.data[reg+':'+slug]=d;LV.failed=false;}catch(e){LV.failed=true;}
+ if(!fed||!LV.data[reg+':'+slug]||LV.fc%5===0)try{LV.busy=true;const d=await lvLoad(reg,slug);const cur=LV.data[reg+':'+slug];if(!(cur&&cur.date===n.date&&(d.date!==n.date||cur.done>d.done)))LV.data[reg+':'+slug]=d;LV.failed=false;}catch(e){LV.failed=true;}
  LV.busy=false;lvRender();
  const all=sts.map(s=>LV.data[reg+':'+s]);const complete=all.every(d=>d&&d.date===n.date&&d.done===d.tot);
  const needInit=all.some(d=>!d);
@@ -1913,7 +1928,7 @@ function lvRender(){
  if(LV.failed&&!items.some(x=>x.d)){$('lvBoard').innerHTML=`<p class="note">Mở trang trực tiếp: <a href="https://www.xoso.net/xo-so-truc-tiep.html" style="color:var(--red)">xoso.net/xo-so-truc-tiep.html</a></p>`;$('lvLoto').innerHTML='';return;}
  const DRAW=reg==='mb'?['g1','g2','g3','g4','g5','g6','g7','db']:['g8','g7','g6','g5','g4','g3','g2','g1','db'],LEN=reg==='mb'?{db:5,g1:5,g2:5,g3:5,g4:4,g5:4,g6:3,g7:2}:{db:6,g1:5,g2:5,g3:5,g4:5,g5:4,g6:4,g7:3,g8:2};
  const nextOf={},lastOf={};for(const x of items){const d=x.d,key=reg==='mb'?'mien-bac':x.s;if(!d||d.date!==n.date||phase!=='live'||d.done===d.tot)continue;let prev=null;
-  outer:for(const g of DRAW){for(let i=0;i<d.pr[g].length;i++){if(!d.pr[g][i]){nextOf[key]=g+'|'+i;break outer;}prev=g+'|'+i;}}lastOf[key]=prev;}
+  outer:for(const g of DRAW){for(let i=0;i<d.pr[g].length;i++){if(!d.pr[g][i]){nextOf[key]=g+'|'+i;break outer;}prev=g+'|'+i;}}lastOf[key]=prev;if(d.rolling)nextOf[key]=d.rolling;}
  const cellHTML=(key,g,i,v)=>{if(!v){if(nextOf[key]===g+'|'+i)return `<span class="roll" data-len="${LEN[g]}">${'0'.repeat(LEN[g])}</span>`;return phase==='live'&&nextOf[key]?'<span class="spin" aria-label="Đang chờ quay"></span>':'<span class="pend">• • •</span>';}
   const id=`${key}|${g}|${i}`,isNew=LV.seen[id]!==v;LV.seen[id]=v;return nsp(v,[isNew&&LV.seen.__init?'flash':'',lastOf[key]===g+'|'+i?'lastv':''].filter(Boolean).join(' '));};
  if(Object.keys(nextOf).length&&!LV.roll)LV.roll=setInterval(()=>{const r=document.querySelectorAll('#lvBoard .roll');if(!r.length){clearInterval(LV.roll);LV.roll=null;return;}r.forEach(e=>{let s='';for(let k=+e.dataset.len;k>0;k--)s+=Math.floor(Math.random()*10);e.textContent=s;});},70);
@@ -1945,7 +1960,8 @@ async function liveFill(reg){
  const last=reg==='mb'?(RAW.mb&&RAW.mb.length?RAW.mb[RAW.mb.length-1].date:''):(RAW[reg]&&RAW[reg].last)||'';if(!last||last>=n.date)return;
  if(LF[reg]&&Date.now()-LF[reg]<45000)return;LF[reg]=Date.now();
  const sts=lvStations(reg,n.date);let pending=false;
- for(const s of sts){try{const d=await lvLoad(reg,s);if(d.date===n.date&&d.done===d.tot)lvMerge(reg,s,d);else pending=true;}catch(e){pending=true;}}
+ const F=await lvFeed(reg);
+ for(const s of sts){try{const d=(F&&F[s]&&F[s].date===n.date&&F[s].done===F[s].tot)?F[s]:await lvLoad(reg,s);if(d.date===n.date&&d.done===d.tot)lvMerge(reg,s,d);else pending=true;}catch(e){pending=true;}}
  if(R.region===reg&&curView()==='ket-qua')renderView('ket-qua');
  if(pending&&n.min<=LVWIN[reg][1]+30)setTimeout(()=>liveFill(reg),60000);}
 function lvMerge(reg,slug,d){
