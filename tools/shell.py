@@ -7,13 +7,13 @@ NOTICE = "Thông tin và kết quả xổ số trên XS Lab được chúng tôi
 
 
 def _reg(c, n):
-    return [("", f"{n} hôm nay", f"{c}/"), ("", f"Trực tiếp {n}", f"truc-tiep-{c}/"), ("", f"{n} 30 ngày", f"{c}-30-ngay/"),
+    return [("", f"{n} hôm nay", f"{c}/"), ("", f"Trực tiếp {n}", f"truc-tiep-{c}/"), ("", f"{n} hôm qua", f"{c}-hom-qua/"), ("", f"{n} 30 ngày", f"{c}-30-ngay/"), ("", f"{n} 90 ngày", f"{c}-90-ngay/"),
             ("", f"Sổ kết quả {n}", f"{c}/so-ket-qua/"), ("h", "Thống kê", ""),
             ("", f"Giải đặc biệt {n}", f"thong-ke/giai-dac-biet-{c}/"), ("", f"3 càng {n}", f"thong-ke/3-cang-{c}/")]
 
 
 MENU = [
-    ("XSMB", _reg("xsmb", "XSMB")[:5] + [("", "Lô gan XSMB", "thong-ke/lo-gan-xsmb/"), ("", "Giải đặc biệt XSMB", "thong-ke/giai-dac-biet-xsmb/"), ("", "3 càng XSMB", "thong-ke/3-cang-xsmb/"), ("", "Thống kê dàn XSMB", "thong-ke-dan-xsmb/")]),
+    ("XSMB", _reg("xsmb", "XSMB")[:7] + [("", "Lô gan XSMB", "thong-ke/lo-gan-xsmb/"), ("", "Giải đặc biệt XSMB", "thong-ke/giai-dac-biet-xsmb/"), ("", "3 càng XSMB", "thong-ke/3-cang-xsmb/"), ("", "Thống kê dàn XSMB", "thong-ke-dan-xsmb/")]),
     ("XSMN", _reg("xsmn", "XSMN") + [("", "Giải 8 XSMN", "thong-ke/giai-8-xsmn/"), ("", "Thống kê dàn XSMN", "thong-ke-dan-xsmn/")]),
     ("XSMT", _reg("xsmt", "XSMT") + [("", "Giải 8 XSMT", "thong-ke/giai-8-xsmt/"), ("", "Thống kê dàn XSMT", "thong-ke-dan-xsmt/")]),
     ("Vietlott", [("", "Keno", "keno/"), ("", "Mega 6/45", "mega-645/"), ("", "Power 6/55", "power-655/"), ("", "Max 3D, Max 3D+", "max-3d/"), ("", "Max 3D Pro", "max-3d-pro/"), ("", "Tất cả Vietlott", "vietlott/")]),
@@ -25,7 +25,8 @@ def menu_html(up, cur=""):
     o = ['<nav class="mbar" aria-label="Menu chính">']
     for lab, items in MENU:
         here = any(u and u == cur for _, _, u in items)
-        o.append('<details' + (' class="is-cur"' if here else '') + f'><summary>{lab}</summary><div class="mdd">')
+        hub = {"XSMB": "xsmb/", "XSMN": "xsmn/", "XSMT": "xsmt/", "Vietlott": "vietlott/", "Thống kê": "thong-ke/"}.get(lab, "")
+        o.append('<details' + (' class="is-cur"' if here else '') + (f' data-href="{up}{hub}"' if hub else '') + f'><summary>{lab}</summary><div class="mdd">')
         for k, t, u in items:
             if k == "h":
                 o.append(f'<span class="h">{t}</span>')
@@ -105,7 +106,8 @@ def org_ld(base):
 
 THEME_HEAD = "<script>try{var t=JSON.parse(localStorage.getItem('xs-theme'));if(t&&t!=='auto')document.documentElement.dataset.theme=t}catch(e){}</script>"
 
-MENU_CSS = """html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7ee);--sidemute:light-dark(#6c6975,#8e8a99);--sidehov:light-dark(#0000000a,#ffffff12);--sideln:light-dark(#e7e4df,#ffffff22)}html .side{border-right:1px solid var(--line)}html .side .nav a:hover{background:var(--sidehov)}html .side .nav a[aria-current=page]:hover{background:#d01f3c}html .side .themebtn{background:var(--sidehov);border-color:var(--sideln);color:var(--sideink)}html .brand:hover b{color:#d01f3c}html .tab{border-top:1px solid var(--line)}
+MENU_CSS = """.mbar details .mdd:before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
+html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7ee);--sidemute:light-dark(#6c6975,#8e8a99);--sidehov:light-dark(#0000000a,#ffffff12);--sideln:light-dark(#e7e4df,#ffffff22)}html .side{border-right:1px solid var(--line)}html .side .nav a:hover{background:var(--sidehov)}html .side .nav a[aria-current=page]:hover{background:#d01f3c}html .side .themebtn{background:var(--sidehov);border-color:var(--sideln);color:var(--sideink)}html .brand:hover b{color:#d01f3c}html .tab{border-top:1px solid var(--line)}
 @media(min-width:1500px){.app{max-width:1488px;margin:0 auto}html[data-theme=dark] body{background:linear-gradient(90deg,var(--side) calc((100vw - 1488px)/2 + 24px),var(--bg) 0) no-repeat,var(--bg)}}@media(min-width:1500px) and (prefers-color-scheme:dark){html:not([data-theme=light]) body{background:linear-gradient(90deg,var(--side) calc((100vw - 1488px)/2 + 24px),var(--bg) 0) no-repeat,var(--bg)}}
 .subnav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:-8px 0 16px;padding:2px 0 4px;-webkit-overflow-scrolling:touch}.subnav::-webkit-scrollbar{display:none}.subnav a{flex:0 0 auto;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);text-decoration:none;font-size:14px;font-weight:600;white-space:nowrap}.subnav a:hover{border-color:#d01f3c;color:#d01f3c}.subnav a[aria-current=page]{background:#d01f3c;border-color:#d01f3c;color:#fff}
 .mbar{position:relative;display:flex;align-items:center;gap:2px;margin:0 0 18px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px;z-index:30}
@@ -135,6 +137,11 @@ MENU_JS = """(function(){var D=document.querySelectorAll('.mbar details');functi
 D.forEach(function(d){d.addEventListener('toggle',function(){if(d.open)closeAll(d)})});
 document.addEventListener('click',function(e){if(!e.target.closest('.mbar'))closeAll()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll()});
+if(window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches)D.forEach(function(d){var t;
+d.addEventListener('mouseenter',function(){clearTimeout(t);closeAll(d);d.open=true});
+d.addEventListener('mouseleave',function(){t=setTimeout(function(){d.open=false},200)});
+d.querySelector('summary').addEventListener('click',function(e){var h=d.getAttribute('data-href');if(h){e.preventDefault();location.href=h}});
+d.addEventListener('focusin',function(){closeAll(d);d.open=true});d.addEventListener('focusout',function(e){if(!d.contains(e.relatedTarget))d.open=false})});
 if(!document.body.classList.contains('static'))return;
 var TH=[['auto','Tự động'],['light','Sáng'],['dark','Tối']];function get(){try{return JSON.parse(localStorage.getItem('xs-theme'))||'auto'}catch(e){return 'auto'}}
 function lab(){var t=get(),n=TH.find(function(x){return x[0]===t})||TH[0];document.querySelectorAll('.themebtn').forEach(function(b){b.textContent='Giao diện: '+n[1]})}
