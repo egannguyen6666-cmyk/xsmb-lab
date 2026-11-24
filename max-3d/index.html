@@ -992,22 +992,21 @@ const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v)
 const R=Object.assign({region:'mb',sts:{mn:'tp-hcm',mt:'da-nang'}},store.get('xs-region2',{}));if(window.XS_PAGE&&XS_PAGE.region)R.region=XS_PAGE.region;
 Object.defineProperty(R,'st',{get(){return R.sts[R.region]||'';},set(v){if(R.region!=='mb')R.sts[R.region]=v;}});
 const RLAB={mb:'XSMB',mn:'XSMN',mt:'XSMT'},RNAME={mb:'Miền Bắc',mn:'Miền Nam',mt:'Miền Trung'};
-let RAW={},SER={},LOG_MB=[],REC_MB=[];
+let RAW={},SER={},REC_MB=[];
 const RG=()=>RAW[R.region];
-let simReadyReg=null,S,N=0,dates=[],cnt,pref,ganA,P,M,startT,nextDate,LOG=[],REC=[],IND=[],LOGCOLS=[],UNIT='ngày';
+let simReadyReg=null,S,N=0,dates=[],cnt,pref,ganA,P,M,startT,nextDate,REC=[],IND=[],UNIT='ngày';
 function seriesFor(region,st){const key=region==='mb'?'mb':region+':'+st;if(!SER[key])SER[key]=region==='mb'?XS.makeSeries(RAW.mb,XS.MB):XS.makeSeries(RAW[region].by[st],Object.assign({station:st},region==='mt'?XS.MT:XS.MN));return SER[key];}
 function useSeries(){
  if(R.region!=='mb'&&!RG().by[R.st])R.st=Object.keys(RG().by).sort()[0];
  S=seriesFor(R.region,R.st);N=S.N;dates=S.dates;cnt=S.cnt;pref=S.pref;ganA=S.gan;P=S.P;M=S.m;startT=S.start;UNIT=S.unit;
- if(R.region==='mb'){LOG=LOG_MB;REC=REC_MB;nextDate=XS.nextDrawMB(dates[N-1]);}
- else{LOG=RG().log.filter(e=>e.station===R.st);REC=RG().rec.filter(e=>e.station===R.st);nextDate=XS.nextDrawStation(RG().sch,R.st,dates[N-1])||XS.addDays(dates[N-1],7);}
+ if(R.region==='mb'){REC=REC_MB;nextDate=XS.nextDrawMB(dates[N-1]);}
+ else{REC=RG().rec.filter(e=>e.station===R.st);nextDate=XS.nextDrawStation(RG().sch,R.st,dates[N-1])||XS.addDays(dates[N-1],7);}
  const W=S.WL;
  IND=[{id:'combo',nm:'Tần suất tổng hợp',d:`Trung bình độ lệch chuẩn (z) của tần suất ${W.join(', ')}. Số về nhiều hơn mức trung bình ở cả ba khung xếp trên cùng.`},
   {id:'hot30',nm:'Về nhiều nhất '+W[0],d:`Những số về nhiều nháy nhất trong ${W[0]} gần nhất.`},{id:'hot90',nm:'Về nhiều nhất '+W[1],d:`Những số về nhiều nháy nhất trong ${W[1]} gần nhất.`},{id:'hot180',nm:'Về nhiều nhất '+W[2],d:`Những số về nhiều nháy nhất trong ${W[2]} gần nhất.`},
   {id:'cold30',nm:'Về ít nhất '+W[0],d:`Những số về ít nhất trong ${W[0]} gần nhất.`},{id:'gan',nm:'Lô gan',d:'Những số lâu nhất chưa xuất hiện.'},
   {id:'roi',nm:'Lô rơi (về kỳ trước)',d:'Những số vừa về ở kỳ trước, về nhiều nháy thì xếp trên.'},{id:'rand',nm:'Ngẫu nhiên (mốc so sánh)',d:'Mốc so sánh: chọn bừa, không dùng thống kê.'}];
- LOGCOLS=IND;
-}
+ }
 const where=()=>R.region==='mb'?'XSMB':ST[R.st];
 const freq=(t,w)=>XS.freq(S,t,w),scores=(id,t)=>XS.scores(S,id,t),topK=XS.topK,allPicks=t=>XS.allPicks(S,t),picksFor=(id,t)=>XS.picksFor(S,id,t),danPicks=(m,n,t)=>XS.danPicks(S,m,n,t);
 function PERS(){return R.region==='mb'?[['7 ngày',7],['30 ngày',30],['90 ngày',90],['180 ngày',180],['1 năm',365]]:[['4 kỳ',4],['13 kỳ (3 tháng)',13],['26 kỳ (6 tháng)',26],['52 kỳ (1 năm)',52],['156 kỳ (3 năm)',156]];}
@@ -1029,7 +1028,6 @@ async function copyText(t,btn){let ok=false;try{await navigator.clipboard.writeT
  if(btn){const old=btn.dataset.lab||btn.textContent;btn.dataset.lab=old;btn.textContent=ok?'Đã chép ✓':'Không chép được';btn.classList.toggle('ok',ok);setTimeout(()=>{btn.textContent=old;btn.classList.remove('ok');},1600);}}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-copy]');if(b){e.preventDefault();copyText(b.dataset.copy,b);}});
 const copyBtn=(lab,txt,cls='')=>`<button class="copy ${cls}" data-copy="${txt.replace(/"/g,'&quot;')}">${lab}</button>`;
-function allText(p,date){return [`${where()} · kỳ ${vnDate(date)}`,...LOGCOLS.filter(x=>p[x.id]).map(x=>`${x.nm}: ${numTxt(p[x.id])}`)].join('\n');}
 function lotoChips(i,hl){const a=[];for(let k=0;k<100;k++)for(let c=0;c<cnt[i*100+k];c++)a.push(k);a.sort((x,y)=>x-y);return a.map(k=>`<span class="n${hl&&hl.includes(k)?' h':''}">${pad(k)}</span>`).join('');}
 function pager(el,page,pages,total,onGo){
  const btn=(lab,pg,dis,cur)=>`<button data-p="${pg}"${dis?' disabled':''}${cur?' aria-current="page"':''}>${lab}</button>`;
@@ -1096,7 +1094,7 @@ function stationOptions(){
  return `<optgroup label="Lịch quay ${wd(nd)}, ${vnDate(nd)}">${tom.map(s=>`<option value="${s}">${lab(s)}</option>`).join('')}</optgroup><optgroup label="Các đài khác">${rest.map(s=>`<option value="${s}">${lab(s)}</option>`).join('')}</optgroup>`;}
 const RFILE={mb:'xsmb.csv',mn:'xsmn.csv',mt:'xsmt.csv'},RPEND={};
 function parseRegion(r,txt){if(r==='mb'){RAW.mb=XS.parseMB(txt);return;}const by=XS.parseMN(txt),sc=XS.mnSchedule(by),idx={},ds=new Set();for(const s in by){idx[s]={};by[s].forEach((x,i)=>{idx[s][x.date]=i;ds.add(x.date);});}
- RAW[r]={by,sch:sc.sch,last:sc.last,idx,dates:[...ds].sort(),log:[],rec:RECS[r]||[]};}
+ RAW[r]={by,sch:sc.sch,last:sc.last,idx,dates:[...ds].sort(),rec:RECS[r]||[]};}
 function needRegion(r){if(RAW[r])return Promise.resolve();if(!RPEND[r])RPEND[r]=fetch(XS_ROOT+RFILE[r],{cache:'no-cache'}).then(x=>{if(!x.ok)throw new Error(RFILE[r]);return x.text();}).then(t=>parseRegion(r,t));return RPEND[r];}
 function setRegion(r,st){
  if(!RAW[r]){$('status').textContent='Đang tải dữ liệu '+RLAB[r]+'…';needRegion(r).then(()=>setRegion(r,st)).catch(e=>{$('status').textContent='Không tải được dữ liệu: '+e.message;});return;}
@@ -1300,8 +1298,7 @@ const lg={};
 const sim={page:1};let simReady=false,SIM=null;
 function simulate(c){
  const V=Math.max(M,Math.floor(c.sv)),pts=Math.max(1,Math.floor(c.sp)),id=c.si,days=[];
- if(c.sm==='log'){const di=Object.fromEntries(dates.map((d,i)=>[d,i]));for(const e of LOG){const i=di[e.target];if(i!==undefined&&e.picks[id])days.push({i,picks:e.picks[id]});}}
- else{let a=dates.findIndex(d=>d>=c.sd);if(a<0)a=N;if(a<startT+1)a=startT+1;for(let i=a;i<N;i++)days.push({i,picks:picksFor(id,i-1)});}
+ {let a=dates.findIndex(d=>d>=c.sd);if(a<0)a=N;if(a<startT+1)a=startT+1;for(let i=a;i<N;i++)days.push({i,picks:picksFor(id,i-1)});}
  let bal=V,stake=0,ret=0,stop=null,hi=V,lo=V,hiD='',loD='';const rows=[];
  for(const d of days){const cost=M*pts*d.picks.length;if(bal<cost){stop=dates[d.i];break;}
   const nh=d.picks.map(k=>cnt[d.i*100+k]),win=99*pts*nh.reduce((x,y)=>x+y,0);
@@ -2016,7 +2013,7 @@ async function loadAll(){
 const ro=new ResizeObserver(()=>{if(!N)return;const v=curView();if(v==='kiem-dinh')renderRandom();if(v==='mo-phong')drawStrategy();if(v==='mo-phong')drawSim();if(v==='kiem-dinh')drawRoll();if(v==='dan'&&dn.pts_)cumChart('dnChart','dnTip',dn.pts_);});
 ['simC','roll','dnChart','rnC','msC'].forEach(id=>ro.observe($(id)));
 loadAll().then(d=>{
- parseRegion(d.first,d.txt);LOG_MB=[];
+ parseRegion(d.first,d.txt);
  R.region=d.first;setRegion(d.first);
  const rest=()=>['mb','mn','mt'].filter(r=>!RAW[r]).reduce((p,r)=>p.then(()=>needRegion(r)).catch(()=>{}),Promise.resolve()).then(()=>{if(curView()==='truc-tiep'||curView()==='do-ve')renderView(curView());});
  let restDone=false;window.xsRest=()=>{if(restDone)return;restDone=true;if(window.requestIdleCallback)requestIdleCallback(rest,{timeout:3000});else setTimeout(rest,800);};
