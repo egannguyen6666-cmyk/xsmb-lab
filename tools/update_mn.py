@@ -59,6 +59,13 @@ if len(lines) < len(old):
     print("Dữ liệu mới ít hơn cũ, không ghi đè."); sys.exit(0)
 keys = sorted(lines)
 open(path, "w").write("date,station,two_digits\n" + "\n".join(lines[k] for k in keys) + "\n")
+fp = path.replace(".csv", "_full.csv"); full = {}
+if os.path.exists(fp):
+    for l in open(fp).read().strip().split("\n")[1:]:
+        if l: full[tuple(l.split(",")[:2])] = l
+for (d, s), f in data.items(): full[(d, s)] = f"{d},{s}," + " ".join(x for g, _, _ in G for x in f[g])
+open(fp, "w").write("date,station,nums\n" + "\n".join(full[k] for k in sorted(full)) + "\n")
+print(os.path.basename(fp) + ":", len(full))
 dates = sorted({d for d, _ in keys})[-60:]
 rec = [{"date": d, "station": s, **data[(d, s)]} for d, s in keys if d in dates and (d, s) in data]
 have = {(r["date"], r["station"]) for r in rec}

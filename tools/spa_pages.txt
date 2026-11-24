@@ -17,6 +17,9 @@ mega-645
 power-655
 max-3d
 max-3d-pro
+ban-do-so
+kiem-dinh
+mo-phong
 hoi-dap
 mien-tru-trach-nhiem
 chinh-sach-bao-mat

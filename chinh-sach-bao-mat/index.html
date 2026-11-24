@@ -207,6 +207,7 @@ p{margin:0 0 10px;max-width:72ch}
 .mnb th.sel{background:#d01f3c;color:#fff}
 .ball.y{--b:#f2b705;--h:#ffe38a;--s:#a77a00;color:#1b1a20}
 .novreg .top .ctrls{display:none}
+@media(min-width:901px){.main{margin:0 auto;max-width:1240px}}
 .kwbar{display:flex;gap:6px;overflow-x:auto;margin:0 0 14px;padding:2px 0 6px;scrollbar-width:thin}
 .kwbar a{flex:none;white-space:nowrap;border:1px solid var(--line);background:var(--panel);color:var(--ink);text-decoration:none;font-size:13px;font-weight:600;padding:7px 12px;border-radius:999px}
 .kwbar a:hover,.kwbar a[aria-current=page]{background:#d01f3c;border-color:#d01f3c;color:#fff}
@@ -225,7 +226,7 @@ p{margin:0 0 10px;max-width:72ch}
 .kf .on{background:#d01f3c;color:#fff;font-weight:600}.kf em{font-style:normal;color:var(--red)}.kf .hoa{grid-column:span 2}
 .kn.kpend span{color:var(--mute)}
 @media(max-width:600px){.kn span{font-size:15px;padding:6px 0}.kf{grid-template-columns:1fr 1fr 2.4fr}.kf>*:nth-child(4){border-left:0}.kf>*:nth-child(n+4){border-top:1px solid var(--line)}.kcd{grid-template-columns:1fr}}
-.seo h2{font-size:20px}.seo h3{font-size:16px;margin:18px 0 6px}.seo table{border-collapse:collapse;width:100%;max-width:720px;font-size:14px;margin:6px 0}.seo th,.seo td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}.seo th{background:var(--band)}
+.seo h2{font-size:20px}.seo h3{font-size:16px;margin:18px 0 6px}.seo table{border-collapse:collapse;width:100%;font-size:14px;margin:6px 0}.seo th,.seo td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}.seo th{background:var(--band)}
 .links{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 0 0;padding:0;list-style:none}.links a{color:var(--mute)}
 #vlKy{flex:1 1 0;min-width:0}#v-vietlott .datenav{flex-wrap:nowrap}
 .vlg{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:6px;margin-top:10px}
@@ -299,10 +300,11 @@ p{margin:0 0 10px;max-width:72ch}
 .ins small{display:block;color:var(--mute);font-size:12px;margin-top:2px}
 .insst{margin-top:14px}.insst>h3{font-size:15px;margin:0 0 8px}
 .notice{border:1px solid var(--line);border-left:4px solid #d01f3c;border-radius:10px;padding:12px 14px;font-size:14px;line-height:1.55;background:var(--panel);margin:18px 0 6px}
-.foot{margin-top:28px;border-top:1px solid var(--line);padding:22px 0 calc(90px + env(safe-area-inset-bottom));color:var(--mute);font-size:14px}
-.fgrid{display:grid;grid-template-columns:minmax(0,2fr) repeat(3,minmax(0,1fr));gap:20px 28px}
+.foot{max-width:none;margin-top:28px;border-top:1px solid var(--line);padding:22px 0 calc(90px + env(safe-area-inset-bottom));color:var(--mute);font-size:14px}
+.fgrid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1.6fr) minmax(0,.9fr) minmax(0,1.1fr);gap:20px 32px;width:100%}
+.foot nav:nth-of-type(1) ul{display:block;columns:2;column-gap:24px}.foot nav:nth-of-type(1) li{margin-bottom:6px;break-inside:avoid}
 @media(max-width:900px){.fgrid{grid-template-columns:1fr 1fr}.fsrc{grid-column:1/-1}}
-.foot h2{font-size:14px;color:var(--ink);margin:0 0 8px}.foot p{margin:0 0 8px;line-height:1.6;max-width:62ch}
+.foot h2{font-size:14px;color:var(--ink);margin:0 0 8px}.foot p{margin:0 0 8px;line-height:1.6}.foot a{text-decoration:none}.foot a:hover{text-decoration:underline}
 .foot ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}.foot a{color:var(--mute)}.foot a:hover{color:var(--red)}
 .fcopy{margin-top:16px!important;font-size:12px}
 @media(min-width:900px){.foot{padding-bottom:24px}}
@@ -349,7 +351,7 @@ p{margin:0 0 10px;max-width:72ch}
   <div class="side-foot"><div id="sideFoot">Đang tải dữ liệu…</div><button class="themebtn" id="themeBtn" style="margin-top:14px">Giao diện: Tự động</button></div>
  </aside>
  <main class="main">
-  <nav class="kwbar" aria-label="Truy cập nhanh"><a href="../xsmb/">XSMB</a><a href="../xsmn/">XSMN</a><a href="../xsmt/">XSMT</a><a href="../truc-tiep-xsmb/">Trực tiếp XSMB</a><a href="../truc-tiep-xsmn/">Trực tiếp XSMN</a><a href="../truc-tiep-xsmt/">Trực tiếp XSMT</a><a href="../xsmb-30-ngay/">XSMB 30 ngày</a><a href="../keno/">Keno</a><a href="../mega-645/">Mega 6/45</a><a href="../power-655/">Power 6/55</a><a href="../max-3d/">Max 3D</a><a href="../do-ve/">Dò vé số</a></nav>
+  <nav class="kwbar" aria-label="Truy cập nhanh"><a href="../xsmb/">XSMB</a><a href="../xsmn/">XSMN</a><a href="../xsmt/">XSMT</a><a href="../truc-tiep-xsmb/">Trực tiếp XSMB</a><a href="../truc-tiep-xsmn/">Trực tiếp XSMN</a><a href="../truc-tiep-xsmt/">Trực tiếp XSMT</a><a href="../xsmb-30-ngay/">XSMB 30 ngày</a><a href="../thong-ke/lo-gan-xsmb/">Lô gan</a><a href="../thong-ke/3-cang-xsmb/">3 càng</a><a href="../keno/">Keno</a><a href="../mega-645/">Mega 6/45</a><a href="../power-655/">Power 6/55</a><a href="../max-3d/">Max 3D</a><a href="../do-ve/">Dò vé số</a></nav>
   <div class="top">
    <h1 id="vtitle">Chính sách bảo mật</h1>
    <div class="ctrls">
@@ -475,6 +477,8 @@ p{margin:0 0 10px;max-width:72ch}
      <dl><dt>Lô tô</dt><dd>2 chữ số cuối của mỗi giải, từ 00 đến 99. XSMB có 27 lô mỗi kỳ, mỗi đài XSMN, XSMT có 18 lô.</dd><dt>Nháy</dt><dd>Số lần một lô xuất hiện trong cùng một kỳ.</dd><dt>Lô gan</dt><dd>Số kỳ liên tiếp một lô chưa xuất hiện.</dd><dt>Đầu, đuôi</dt><dd>Chữ số hàng chục và hàng đơn vị của lô.</dd><dt>Tần suất</dt><dd>Số lần xuất hiện trong một khoảng thời gian.</dd></dl>
      <h3>Xác suất cơ bản</h3>
      <p>Với 27 giải, xác suất một lô bất kỳ về ít nhất một lần trong kỳ XSMB là 1 − 0,99<sup>27</sup> ≈ 23,77%; với 18 giải của một đài XSMN, XSMT là 1 − 0,99<sup>18</sup> ≈ 16,55%. Mức này như nhau cho mọi số và mọi kỳ. Các bảng thống kê trên XS Lab mô tả dữ liệu đã quay, không phải dự đoán kết quả.</p>
+         <h3>Bảng thống kê chi tiết</h3>
+     <ul class="links" style="margin:6px 0 0"><li><a href="../thong-ke/lo-gan-xsmb/">Lô gan XSMB</a></li><li><a href="../thong-ke/tan-suat-lo-to-xsmb/">Tần suất lô tô XSMB</a></li><li><a href="../thong-ke/dau-duoi-xsmb/">Đầu đuôi XSMB</a></li><li><a href="../thong-ke/giai-dac-biet-xsmb/">Giải đặc biệt XSMB</a></li><li><a href="../thong-ke/giai-nhat-xsmb/">Giải nhất XSMB</a></li><li><a href="../thong-ke/3-cang-xsmb/">3 càng XSMB</a></li><li><a href="../thong-ke/4-cang-xsmb/">4 càng XSMB</a></li><li><a href="../thong-ke/giai-8-xsmn/">Giải tám XSMN</a></li><li><a href="../thong-ke/giai-nhat-xsmn/">Giải nhất XSMN</a></li><li><a href="../thong-ke/giai-dac-biet-xsmn/">Giải đặc biệt XSMN</a></li><li><a href="../thong-ke/3-cang-xsmn/">3 càng XSMN</a></li><li><a href="../thong-ke/giai-8-xsmt/">Giải tám XSMT</a></li><li><a href="../thong-ke/giai-nhat-xsmt/">Giải nhất XSMT</a></li><li><a href="../thong-ke/giai-dac-biet-xsmt/">Giải đặc biệt XSMT</a></li><li><a href="../thong-ke/3-cang-xsmt/">3 càng XSMT</a></li><li><a href="../thong-ke/bang-thong-ke/">Tất cả bảng thống kê</a></li></ul>
     </article><!--/A:thong-ke-->
    </div>
   </section>
@@ -553,8 +557,8 @@ p{margin:0 0 10px;max-width:72ch}
   <section class="view" id="v-thong-ke-dan">
    <div class="grid">
     <div class="card c12">
-     <h2>Tra cứu dàn số trong quá khứ</h2>
-     <p class="sub">Nhập 2 đến 10 số, ngăn cách bằng dấu phẩy (ví dụ <b>12, 21, 34, 43</b>). App đếm trong toàn bộ dữ liệu của đài đang chọn: bao nhiêu kỳ có ít nhất 1 số của dàn về, bao nhiêu kỳ cả dàn cùng về, lần gần nhất và theo từng năm.</p>
+     <h2>Tra cứu dàn số, 3 càng, 4 càng trong quá khứ</h2>
+     <p class="sub">Nhập 2 đến 10 lô (ví dụ <b>12, 21, 34, 43</b>), hoặc số <b>3 càng</b>, <b>4 càng</b> (ví dụ <b>495, 123</b>); bấm dấu cách là tự thêm dấu phẩy. App đếm trong toàn bộ dữ liệu của đài đang chọn: bao nhiêu kỳ có ít nhất 1 số của dàn về, bao nhiêu kỳ cả dàn cùng về, lần gần nhất và theo từng năm.</p>
      <form class="qin" id="dsForm"><input id="dsIn" inputmode="numeric" autocomplete="off" placeholder="12, 21, 34, 43" aria-label="Dàn số cần tra cứu"><button>Thống kê dàn</button></form>
      <div class="qerr" id="dsErr"></div>
      <div id="dsOut"></div>
@@ -581,7 +585,7 @@ p{margin:0 0 10px;max-width:72ch}
       <div><label for="sp">Số điểm mỗi số</label><input id="sp" type="number" min="1" step="1" value="1" inputmode="numeric"></div>
       <div><label for="si">Theo dữ liệu thống kê</label><select id="si"></select></div>
       <div><label for="sm">Nguồn kỳ</label><select id="sm"><option value="hist">Lịch sử từ một ngày</option></select></div>
-      <div id="sdw"><label for="sd">Bắt đầu từ ngày</label><input id="sd" type="date"></div>
+      <div id="sdw"><label for="sd">Bắt đầu từ ngày</label><input id="sd" type="date"><small id="sdErr" style="color:var(--red);display:block"></small></div>
      </div>
      <div class="kpis" id="simK"></div>
      <div class="fig" style="margin-top:16px"><svg id="simC" role="img" aria-label="Số dư quỹ token theo kỳ"></svg><div class="tip" id="simTip"></div></div>
@@ -653,6 +657,11 @@ p{margin:0 0 10px;max-width:72ch}
      <div class="legend">Ít hơn kỳ vọng <span class="grad"></span> Nhiều hơn kỳ vọng · số nhỏ là số nháy</div>
     </div>
     <div class="card c4" id="numCard"></div>
+    <article class="card c12 doc seo" id="art-ban-do">
+     <h2>Bản đồ tần suất 100 lô tô 00–99</h2>
+     <p>Bản đồ nhiệt cho thấy mỗi lô từ 00 đến 99 đã về bao nhiêu lần trong khung thời gian đã chọn: ô càng đậm là lô về càng nhiều. Với XSMB (27 lô mỗi kỳ), trung bình mỗi lô về khoảng 8 lần trong 30 kỳ; với một đài XSMN, XSMT (18 lô mỗi kỳ) là khoảng 5 lần trong 30 kỳ. Chênh lệch giữa các ô là dao động ngẫu nhiên của dữ liệu đã quay, không phải dự đoán.</p>
+     <p>Xem dạng bảng tại <a href="../thong-ke/tan-suat-lo-to-xsmb/">Tần suất lô tô XSMB</a> và <a href="../thong-ke/lo-gan-xsmb/">Lô gan XSMB</a>.</p>
+    </article>
    </div>
   </section>
 
@@ -785,7 +794,7 @@ p{margin:0 0 10px;max-width:72ch}
   <footer class="foot" id="siteFoot">
    <div class="fgrid">
     <div class="fsrc"><h2>Thông tin nguồn</h2><p>Thông tin và kết quả xổ số trên XS Lab được chúng tôi cập nhật từ nguồn công khai và chỉ mang tính chất tham khảo. Vui lòng kiểm tra lại kết quả chính thức được công bố bởi các công ty xổ số kiến thiết.</p><p>XS Lab chỉ trình bày kết quả và thống kê dữ liệu đã quay, không đưa ra dự đoán kết quả.</p></div>
-    <nav aria-label="Kết quả và thống kê"><h2>Kết quả &amp; thống kê</h2><ul><li><a href="../xsmb/">Kết quả XSMB</a></li><li><a href="../xsmn/">Kết quả XSMN</a></li><li><a href="../xsmt/">Kết quả XSMT</a></li><li><a href="../truc-tiep-xsmb/">Trực tiếp XSMB</a></li><li><a href="../truc-tiep-xsmn/">Trực tiếp XSMN</a></li><li><a href="../truc-tiep-xsmt/">Trực tiếp XSMT</a></li><li><a href="../xsmb-30-ngay/">XSMB 30 ngày</a></li><li><a href="../xsmb/so-ket-qua/">Sổ kết quả XSMB</a></li><li><a href="../xsmn/so-ket-qua/">Sổ kết quả XSMN</a></li><li><a href="../xsmt/so-ket-qua/">Sổ kết quả XSMT</a></li><li><a href="../do-ve/">Dò vé số</a></li><li><a href="../thong-ke/">Thống kê lô tô</a></li><li><a href="../thong-ke-dan/">Thống kê dàn</a></li></ul></nav>
+    <nav aria-label="Kết quả và thống kê"><h2>Kết quả &amp; thống kê</h2><ul><li><a href="../xsmb/">Kết quả XSMB</a></li><li><a href="../xsmn/">Kết quả XSMN</a></li><li><a href="../xsmt/">Kết quả XSMT</a></li><li><a href="../truc-tiep-xsmb/">Trực tiếp XSMB</a></li><li><a href="../truc-tiep-xsmn/">Trực tiếp XSMN</a></li><li><a href="../truc-tiep-xsmt/">Trực tiếp XSMT</a></li><li><a href="../xsmb-30-ngay/">XSMB 30 ngày</a></li><li><a href="../xsmb/so-ket-qua/">Sổ kết quả XSMB</a></li><li><a href="../xsmn/so-ket-qua/">Sổ kết quả XSMN</a></li><li><a href="../xsmt/so-ket-qua/">Sổ kết quả XSMT</a></li><li><a href="../do-ve/">Dò vé số</a></li><li><a href="../thong-ke/">Thống kê lô tô</a></li><li><a href="../thong-ke-dan/">Thống kê dàn</a></li><li><a href="../thong-ke/bang-thong-ke/">Bảng thống kê</a></li></ul></nav>
     <nav aria-label="Vietlott"><h2>Vietlott</h2><ul><li><a href="../keno/">Keno</a></li><li><a href="../mega-645/">Mega 6/45</a></li><li><a href="../power-655/">Power 6/55</a></li><li><a href="../max-3d/">Max 3D</a></li><li><a href="../max-3d-pro/">Max 3D Pro</a></li></ul></nav>
     <nav aria-label="Thông tin"><h2>Thông tin</h2><ul><li><a href="../hoi-dap/">Hỏi đáp (FAQ)</a></li><li><a href="../mien-tru-trach-nhiem/">Tuyên bố miễn trừ trách nhiệm</a></li><li><a href="../chinh-sach-bao-mat/" aria-current="page">Chính sách bảo mật</a></li><li><a href="../cookies/">Chính sách cookie</a></li><li><a href="../rss/">RSS</a></li><li><a href="../ve-du-lieu/">Về dữ liệu</a></li></ul></nav>
    </div>
@@ -796,7 +805,7 @@ p{margin:0 0 10px;max-width:72ch}
 <nav class="tab" id="tab" aria-label="Điều hướng"></nav>
 <div class="sheet" id="sheet" role="dialog" aria-label="Các mục khác"><div id="sheetIn"></div></div>
 <script>var XS_ROOT='../';var XS_PAGE={"view": "chinh-sach-bao-mat"};</script>
-<script src="../core.js?v=202611240300"></script>
+<script src="../core.js?v=202611240534"></script>
 <script>
 {
 const VIEWS=[['ket-qua','Kết quả','i-home'],['truc-tiep','Trực tiếp','i-live'],['do-ve','Dò vé','i-ticket'],['thong-ke','Thống kê','i-stats'],['vietlott','Vietlott','i-vl'],['thong-ke-dan','Thống kê dàn','i-target'],['ban-do','Bản đồ số','i-grid'],['kiem-dinh','Kiểm định','i-chart'],['mo-phong','Mô phỏng','i-wallet'],['ve-du-lieu','Về dữ liệu','i-info']];
@@ -824,7 +833,7 @@ Object.defineProperty(R,'st',{get(){return R.sts[R.region]||'';},set(v){if(R.reg
 const RLAB={mb:'XSMB',mn:'XSMN',mt:'XSMT'},RNAME={mb:'Miền Bắc',mn:'Miền Nam',mt:'Miền Trung'};
 let RAW={},SER={},LOG_MB=[],REC_MB=[];
 const RG=()=>RAW[R.region];
-let S,N=0,dates=[],cnt,pref,ganA,P,M,startT,nextDate,LOG=[],REC=[],IND=[],LOGCOLS=[],UNIT='ngày';
+let simReadyReg=null,S,N=0,dates=[],cnt,pref,ganA,P,M,startT,nextDate,LOG=[],REC=[],IND=[],LOGCOLS=[],UNIT='ngày';
 function seriesFor(region,st){const key=region==='mb'?'mb':region+':'+st;if(!SER[key])SER[key]=region==='mb'?XS.makeSeries(RAW.mb,XS.MB):XS.makeSeries(RAW[region].by[st],Object.assign({station:st},region==='mt'?XS.MT:XS.MN));return SER[key];}
 function useSeries(){
  if(R.region!=='mb'&&!RG().by[R.st])R.st=Object.keys(RG().by).sort()[0];
@@ -888,7 +897,7 @@ function scoreList(i,p,pts){const nh=p.map(k=>cnt[i*100+k]),hits=nh.filter(x=>x)
 const tokenNote=()=>`Một điểm cho một số tốn ${M} token (${M} giải mỗi kỳ ${R.region==='mb'?'XSMB':'của một đài '+RLAB[R.region]}). Số về bao nhiêu nháy thì nhận 99 token × số nháy × số điểm. Trung bình mỗi token chỉ thu về 0,99.`;
 
 /* ---------- navigation ---------- */
-const NAVG=[['Xổ số kiến thiết',[['ket-qua','Kết quả XSMB, XSMN, XSMT','i-home'],['truc-tiep','Trực tiếp xổ số','i-live'],['do-ve','Dò vé số','i-ticket']]],
+const NAVG=[['Xổ số kiến thiết',[['ket-qua','Kết quả xổ số','i-home'],['truc-tiep','Trực tiếp xổ số','i-live'],['do-ve','Dò vé số','i-ticket']]],
  ['Vietlott',[['vietlott-keno','Keno','i-vl'],['vietlott-645','Mega 6/45','i-vl'],['vietlott-655','Power 6/55','i-vl'],['vietlott-3d','Max 3D','i-vl'],['vietlott-3dpro','Max 3D Pro','i-vl']]],
  ['Thống kê',[['thong-ke','Thống kê lô tô','i-stats'],['thong-ke-dan','Thống kê dàn','i-target'],['ban-do','Bản đồ số','i-grid'],['kiem-dinh','Kiểm định','i-chart'],['mo-phong','Mô phỏng','i-wallet']]],
  ['Thông tin',[['ve-du-lieu','Về dữ liệu','i-info']]]];
@@ -1021,12 +1030,12 @@ function renderBook(){
 /* ---------- predict + dàn ---------- */
 const st={ind:'combo',k:10,per:365,win:0,num:null,from:null,to:null};
 function comb(n,k){let r=1;for(let i=1;i<=k;i++)r=r*(n-k+i)/i;return r;}
-function pAllSet(n,m){let s=0;for(let j=0;j<=n;j++)s+=(j%2?-1:1)*comb(n,j)*Math.pow(1-j/100,m);return Math.max(0,s);}
+function pAllSet(n,m,sp=100){let s=0;for(let j=0;j<=n;j++)s+=(j%2?-1:1)*comb(n,j)*Math.pow(1-j/sp,m);return Math.max(0,s);}
 function setStats(S2,set){
  const n=set.length,Y={};let any=0,all=0,lastAll=-1,lastAny=-1,hits=0,gap=0,maxGap=0;const allD=[];
  for(let i=0;i<S2.N;i++){let c=0;for(const k of set)if(S2.cnt[i*100+k])c++;hits+=c;const y=S2.dates[i].slice(0,4);const o=Y[y]||(Y[y]={n:0,a:0,all:0});o.n++;
   if(c){any++;lastAny=i;o.a++;gap=0;}else{gap++;if(gap>maxGap)maxGap=gap;}if(c===n){all++;lastAll=i;o.all++;allD.push(S2.dates[i]);}}
- return {n,N:S2.N,any,all,lastAll,lastAny,hits,maxGap,gan:S2.N-1-lastAny,Y,allD,pAny:1-Math.pow(1-n/100,S2.m),pAll:pAllSet(n,S2.m)};}
+ return {n,N:S2.N,any,all,lastAll,lastAny,hits,maxGap,gan:S2.N-1-lastAny,Y,allD,pAny:1-Math.pow(1-n/(S2.space||100),S2.m),pAll:pAllSet(n,S2.m,S2.space||100)};}
 function setStatsHTML(S2,set,big){
  const x=setStats(S2,set),dt=i=>i>=0?vnDate(S2.dates[i]):'chưa có';
  const kp=[[`${vn(x.any)}/${vn(x.N)}`,`kỳ có ít nhất 1 số của dàn về (${fmt(x.any/x.N,1)} · theo xác suất ${fmt(x.pAny,1)})`,'Kỳ có ≥1 số về',`${fmt(x.any/x.N,1)} <small style="font-weight:400;color:var(--mute)">(xác suất ${fmt(x.pAny,0)})</small>`],[vn(x.all),`kỳ cả ${x.n} số cùng về (${fmt(x.all/x.N,2)} · theo xác suất ${fmt(x.pAll,2)})`,'Kỳ cả dàn cùng về',`${vn(x.all)} <small style="font-weight:400;color:var(--mute)">(xác suất ≈${vn(x.pAll*x.N)})</small>`],[dt(x.lastAll),'lần gần nhất cả dàn cùng về','Lần gần nhất cả dàn về',dt(x.lastAll)],[`${x.gan} kỳ`,`từ lần gần nhất có số của dàn về (dài nhất ${x.maxGap} kỳ)`,'Gan của dàn (dài nhất)',`${x.gan} (${x.maxGap}) kỳ`]];
@@ -1038,18 +1047,33 @@ function setStatsHTML(S2,set,big){
   <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--mute)"><span>${ys[0]}</span><span>${ys[ys.length-1]}</span></div>
   ${x.allD.length?`<p class="note" style="margin-top:10px">Các kỳ cả dàn cùng về gần nhất: ${x.allD.slice(-12).reverse().map(vnDate).join(', ')}.</p>`:''}`;}
 const ds={q:null};
+function autoSep(el,skip){if(!el||el.dataset.sep)return;el.dataset.sep=1;el.addEventListener('input',e=>{if(skip&&skip())return;if((e.inputType||'').startsWith('delete'))return;const del=false;let v=el.value,t=v.replace(/[^\d\s,.;\-\n]/g,'');t=del?t.replace(/[\s.;\-\n]+(?=\d)/g,', ').replace(/,\s*(?=\d)/g,', '):t.replace(/[\s,.;\-\n]+/g,', ');t=t.replace(/^,\s*/,'');if(t!==v)el.value=t;});}
 function renderDanStats(){
- const f=$('dsForm');if(!f.dataset.ok){f.dataset.ok=1;f.onsubmit=e=>{e.preventDefault();runDanQuery();};}
+ const f=$('dsForm');if(!f.dataset.ok){f.dataset.ok=1;f.onsubmit=e=>{e.preventDefault();runDanQuery();};autoSep($('dsIn'));}
  $('dsSetT').textContent=`Dàn thống kê ${where()} · dữ liệu đến hết ${vnDate(dates[N-1])}`;
  $('dsSetS').textContent=`Mỗi dàn gồm những số đứng đầu theo một dữ liệu thống kê, tính trên dữ liệu đã quay đến hết ${vnDate(dates[N-1])}. Số liệu bên dưới là số lần chính dàn đó đã xuất hiện trong toàn bộ ${vn(N)} kỳ quá khứ. Đây là mô tả dữ liệu đã có, không phải dự đoán kỳ quay nào.`;
  renderOvDan();
  if(!ds.q)ds.q=danPicks('tan-suat',4,N-1);$('dsIn').value=ds.q.map(pad).join(', ');runDanQuery(true);}
+const FULL={};
+function loadFull(reg){if(FULL[reg])return Promise.resolve(FULL[reg]);return fetch(XS_ROOT+reg+'_full.csv',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(reg+'_full.csv');return r.text();}).then(tx=>{const L=tx.trim().split('\n').slice(1);return FULL[reg]=L.map(l=>{const p=l.split(',');return reg==='xsmb'?{d:p[0],n:p[1].split(' ')}:{d:p[0],s:p[1],n:p[2].split(' ')};});});}
 function runDanQuery(silent){
  const raw=$('dsIn').value.trim();$('dsErr').textContent='';
- const parts=raw.split(',').map(s=>s.trim()).filter(Boolean);
- if(parts.length<2||parts.length>10||parts.some(s=>!/^\d{1,2}$/.test(s))){if(!silent)$('dsErr').textContent='Nhập từ 2 đến 10 số (00–99), ngăn cách bằng dấu phẩy.';return;}
- const set=[...new Set(parts.map(Number))];ds.q=set;
- $('dsOut').innerHTML=`<p class="sub" style="margin:12px 0 0">Dàn <b>${set.map(pad).join(' ')}</b> trong ${vn(N)} kỳ ${where()} (${vnDate(dates[0])} – ${vnDate(dates[N-1])})</p>`+setStatsHTML(S,set,true);}
+ const parts=raw.split(/[,\s;]+/).map(s=>s.trim()).filter(Boolean),L=parts.length?parts[0].length:0;
+ if(parts.length<1||parts.length>10||parts.some(s=>!/^\d{2,4}$/.test(s))||parts.some(s=>s.length!==L)||(L===2&&parts.length<2)){if(!silent)$('dsErr').textContent='Nhập 2–10 lô 2 chữ số, hoặc 1–10 số 3 càng / 4 càng (cùng số chữ số), ngăn cách bằng dấu phẩy.';return;}
+ if(L===2){const set=[...new Set(parts.map(Number))];ds.q=set;
+  $('dsOut').innerHTML=`<p class="sub" style="margin:12px 0 0">Dàn <b>${set.map(pad).join(' ')}</b> trong ${vn(N)} kỳ ${where()} (${vnDate(dates[0])} – ${vnDate(dates[N-1])})</p>`+setStatsHTML(S,set,true);return;}
+ const set=[...new Set(parts)],reg=R.region==='mb'?'xsmb':R.region==='mn'?'xsmn':'xsmt';
+ $('dsOut').innerHTML='<p class="note" style="margin-top:12px">Đang tải dữ liệu đủ giải…</p>';
+ loadFull(reg).then(all=>{
+  const rows=reg==='xsmb'?all:all.filter(x=>x.s===R.st);if(!rows.length){$('dsOut').innerHTML='<p class="note">Chưa có dữ liệu đủ giải cho đài này.</p>';return;}
+  const n=rows.length,cnt=new Uint8Array(n*100),dbHit=new Array(set.length).fill(0),dbLast=new Array(set.length).fill(null);let m=0;
+  rows.forEach((x,i)=>{const tails=x.n.filter(v=>v.length>=L).map(v=>v.slice(-L));if(i===n-1)m=tails.length;set.forEach((q,j)=>{if(tails.includes(q))cnt[i*100+j]=1;if(x.n[0].slice(-L)===q){dbHit[j]++;dbLast[j]=x.d;}});});
+  const S2={N:n,dates:rows.map(x=>x.d),cnt,m,space:Math.pow(10,L)};
+  const lab=L===3?'3 càng':'4 càng';
+  $('dsOut').innerHTML=`<p class="sub" style="margin:12px 0 0">${lab} <b>${set.join(' ')}</b> trong ${vn(n)} kỳ đủ giải ${where()} (${vnDate(S2.dates[0])} – ${vnDate(S2.dates[n-1])}). Một số được tính là về khi ${L} chữ số cuối của một giải trùng (${m} giải có từ ${L} chữ số trở lên).</p>`
+   +setStatsHTML(S2,set.map((_,j)=>j),true)
+   +`<h3 style="font-size:15px;margin:16px 0 4px">Trùng ${lab} giải Đặc biệt</h3><div class="tbl"><table><thead><tr><th class="left">Số</th><th>Số kỳ</th><th>Theo xác suất</th><th>Lần gần nhất</th></tr></thead><tbody>${set.map((q,j)=>`<tr><td class="left"><b>${q}</b></td><td>${dbHit[j]}</td><td>${dec(n/Math.pow(10,L),1)}</td><td>${dbLast[j]?vnDate(dbLast[j]):'chưa có'}</td></tr>`).join('')}</tbody></table></div>`;
+ }).catch(e=>{$('dsOut').innerHTML='<p class="note">Không tải được dữ liệu đủ giải: '+e.message+'</p>';});}
 const DANM=[
  {id:'tan-suat',nm:'Dàn tần suất',d:()=>`Các số về nhiều hơn mức trung bình nhất, tính bằng trung bình độ lệch chuẩn (z) của tần suất ${S.WL.join(', ')}.`},
  {id:'cau-chay',nm:'Dàn cầu chạy',d:()=>`Các số về nhiều kỳ nhất trong 3 kỳ gần nhất, rồi đến số nháy trong ${S.WC[0]} kỳ, rồi ${S.WC[1]} kỳ (cầu chạy).`},
@@ -1109,8 +1133,9 @@ function runSim(){
  if(!simReady){
   $('si').innerHTML=IND.map(x=>`<option value="${x.id}">${x.nm} (10 số/kỳ)</option>`).join('');
   const sv=store.get('xs-sim',{});$('sv').value=sv.sv||10000;$('sp').value=sv.sp||1;$('si').value=IND.some(x=>x.id===sv.si)?sv.si:'combo';$('sm').value='hist';
-  $('sd').min=dates[startT+1];$('sd').max=dates[N-1];$('sd').value=dates[Math.max(startT+1,N-(R.region==='mb'?90:26))];
-  ['sv','sp','si','sm','sd'].forEach(k=>$(k).onchange=()=>{store.set('xs-sim',{sv:$('sv').value,sp:$('sp').value,si:$('si').value,sm:$('sm').value});sim.page=1;runSim();});
+  const sdMin=dates[Math.max(startT+1,N-(R.region==='mb'?1100:160))];$('sd').min=sdMin;$('sd').max=dates[N-1];$('sd').value=dates[Math.max(startT+1,N-(R.region==='mb'?90:26))];
+  let simT=null;const go=()=>{clearTimeout(simT);simT=setTimeout(()=>{const v=$('sd').value;if(!/^\d{4}-\d{2}-\d{2}$/.test(v)||v<$('sd').min||v>$('sd').max){$('sdErr').textContent=`Chọn ngày từ ${vnDate($('sd').min)} đến ${vnDate($('sd').max)}.`;return;}$('sdErr').textContent='';store.set('xs-sim',{sv:$('sv').value,sp:$('sp').value,si:$('si').value,sm:$('sm').value});sim.page=1;runSim();},450);};
+  ['sv','sp','si','sm'].forEach(k=>$(k).onchange=go);$('sd').onchange=go;$('sd').oninput=go;
   simReady=true;}
  const c={sv:+$('sv').value||10000,sp:+$('sp').value||1,si:$('si').value,sm:$('sm').value,sd:$('sd').value};
  $('sdw').style.display=c.sm==='hist'?'':'none';
@@ -1224,7 +1249,7 @@ const stt={win:0,pb:0,db:0,q:''};
 function renderStats(){
  $('cmpCard').style.display=R.region!=='mb'?'':'none';
  // --- tra cứu
- $('qForm').onsubmit=e=>{e.preventDefault();stt.q=$('qIn').value;runQuery();};
+ $('qForm').onsubmit=e=>{e.preventDefault();stt.q=$('qIn').value;runQuery();};autoSep($('qIn'));
  if(stt.q){$('qIn').value=stt.q;runQuery();}else{$('qOut').innerHTML='';$('qErr').textContent='';}
  // --- đầu đuôi
  if(!stt.win||!S.W.includes(stt.win))stt.win=S.W[0];
@@ -1367,7 +1392,7 @@ function renderDoVe(){
   $('dvReg').onchange=()=>{dv.reg=$('dvReg').value;dv.st=null;dv.date=null;renderDoVe();};
   $('dvSt').onchange=()=>{dv.st=$('dvSt').value;dv.date=null;renderDoVe();};
   $('dvDate').onchange=()=>{dv.date=$('dvDate').value;};
-  $('dvNum').oninput=()=>{$('dvNum').value=$('dvNum').value.replace(/[^\d,; ]/g,'');};
+  autoSep($('dvNum'));
   f.onsubmit=e=>{e.preventDefault();dv.date=$('dvDate').value;dv.num=$('dvNum').value;checkTicket();};}
  if(!dv.reg)dv.reg=R.region;if(dv.reg!=='mb'&&!RAW[dv.reg])dv.reg='mb';
  $('dvReg').value=dv.reg;const recs=dvRecs(),L=dv.reg==='mb'?5:6;
@@ -1416,6 +1441,7 @@ function vlOdds(g){const mx=VLG[g].mx,T=vlComb(mx,6),o=[[6,'Jackpot'+(g==='655'?
 function vlPrize(g,m,hasDb){if(m===6)return g==='655'?'Jackpot 1':'Jackpot';if(m===5)return g==='655'&&hasDb?'Jackpot 2':'Giải nhất';if(m===4)return 'Giải nhì';if(m===3)return 'Giải ba';return '';}
 function renderVL(){
  if(!VLG[VL.g])VL.g='645';
+ autoSep($('vlIn'),()=>VL.g==='3dpro');
  document.querySelectorAll('#vlGame button').forEach(b=>{b.setAttribute('aria-pressed',b.dataset.g===VL.g);b.onclick=()=>{const h='#vietlott-'+b.dataset.g;if(location.hash!==h)location.hash=h;else renderVL();};});
  $('vlT').textContent='Đang tải dữ liệu '+VLG[VL.g].nm+'…';
  vlLoad(VL.g).then(rows=>{const t=VLG[VL.g].t;if(t==='6x')vlDraw(rows);else if(t==='3d')vlDraw3(rows);else vlDrawK(rows);}).catch(e=>{$('vlT').textContent='Không tải được dữ liệu Vietlott: '+e.message;});}

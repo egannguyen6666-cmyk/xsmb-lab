@@ -28,6 +28,8 @@ tr.db td span{font-size:22px;font-weight:700;color:var(--red)}tr.g8 td span{font
 .cta{display:inline-block;background:#c8102e;color:#fff!important;text-decoration:none;padding:9px 14px;border-radius:999px;font-weight:600;margin:4px 6px 4px 0}
 ul.ls{columns:2;padding-left:18px}@media(min-width:700px){ul.ls{columns:4}}footer{color:var(--mu);font-size:13px;max-width:980px;margin:20px auto;padding:0 16px 30px}
 .note{color:var(--mu);font-size:14px}
+table.wk td i{font-style:normal}table.wk b{color:var(--red)}@media(max-width:600px){table.wk i{display:none}table.wk td,table.wk th{font-size:13px;padding:5px 2px}table.sm td,table.sm th{font-size:12px;padding:5px 1px}}
+.g100 td{padding:5px 2px;font-size:15px;line-height:1.2}.g100 small{color:var(--mu);font-size:12px}
 @media(max-width:600px){table.mn{table-layout:fixed}table.mn td span{display:block;margin:1px 0;font-size:15px;letter-spacing:-.2px}table.mn tr.db td span,table.mn tr.g8 td span{font-size:16px}table.mn th{font-size:12px;padding:6px 2px}table.mn td{padding:5px 1px}table.mn td.l{width:30px;font-size:11px}td span{margin:2px 5px;font-size:16px}h1{font-size:22px}}"""
 
 
@@ -167,10 +169,122 @@ for reg in REG:
     p = f"{reg}/so-ket-qua/"
     page(p, f"Sổ kết quả {lab} – lưu trữ kết quả xổ số {name} theo ngày", f"Lưu trữ kết quả {lab} theo ngày, theo thứ{', theo đài' if sts else ''}. Không quảng cáo.", [(lab, reg + "/"), (f"Sổ kết quả {lab}", p)], f"Sổ kết quả {lab} theo ngày", body)
 
+
+# ---------- trang thống kê (dữ liệu đã quay, không dự đoán) ----------
+from collections import Counter
+def grid100(c, title):
+    mx = max(c.values()) or 1
+    return f'<table class="g100"><caption class="note" style="caption-side:top;text-align:left;padding:4px 0">{title}</caption>' + ''.join('<tr>' + ''.join(f'<td style="background:rgba(200,16,46,{0.08 + 0.5 * c.get(r * 10 + k, 0) / mx:.2f})"><b>{r * 10 + k:02d}</b><br><small>{c.get(r * 10 + k, 0)}</small></td>' for k in range(10)) + '</tr>' for r in range(10)) + '</table>'
+def tbl(head, rows): return '<table><tr>' + ''.join(f'<th>{h}</th>' for h in head) + '</tr>' + ''.join('<tr>' + ''.join(f'<td>{c}</td>' for c in r) + '</tr>' for r in rows) + '</table>'
+def card(x): return f'<div class="card">{x}</div>'
+STATP = []
+def spage(slug, title, desc, h1, intro, body):
+    p = f"thong-ke/{slug}/"; STATP.append((slug, h1))
+    page(p, title, desc, [("Thống kê", "thong-ke/"), (h1, p)], h1, f'<p>{intro}</p>{body}<p class="note">Các bảng trên là thống kê kết quả đã quay, cập nhật mỗi ngày; không phải dự đoán. Mỗi kỳ quay độc lập.</p><p><a class="cta" href="../">Thống kê lô tô</a><a class="cta" href="../bang-thong-ke/">Tất cả bảng thống kê</a><a class="cta" href="../../thong-ke-dan/">Tra cứu dàn, 3 càng</a></p>')
+
+two = [l.split(",") for l in open(os.path.join(ROOT, "xsmb.csv")).read().strip().split("\n")[1:]]
+fullmb = [(l.split(",")[0], l.split(",")[1].split()) for l in open(os.path.join(ROOT, "xsmb_full.csv")).read().strip().split("\n")[1:]]
+lastd = two[-1][0]; N = len(two)
+lo = [[int(r[1][j:j + 2]) for j in range(0, len(r[1]), 2)] for r in two]
+last = {}; rec = Counter(); prev = {}
+for i, ks in enumerate(lo):
+    for k in set(ks):
+        rec[k] = max(rec[k], i - prev.get(k, -1) - 1); prev[k] = i
+gan = sorted(range(100), key=lambda k: -(N - 1 - prev.get(k, -1)))
+spage("lo-gan-xsmb", "Lô gan XSMB – thống kê lô lâu chưa về miền Bắc", f"Lô gan XSMB đến {vn(lastd)}: 30 lô lâu chưa về nhất, kỷ lục gan của từng lô từ 2005. Không quảng cáo.", "Lô gan XSMB",
+      f"Lô gan là lô (2 số cuối của giải) đã nhiều kỳ liên tiếp chưa xuất hiện. Bảng tính đến kỳ {vn(lastd)} trên {N:,} kỳ XSMB từ {vn(two[0][0])}.",
+      card(tbl(["Lô", "Số kỳ chưa về", "Lần về gần nhất", "Kỷ lục gan"], [(f"<b>{k:02d}</b>", N - 1 - prev[k], vn(two[prev[k]][0]), rec[k]) for k in gan[:30]])))
+c30 = Counter(k for ks in lo[-30:] for k in ks); c90 = Counter(k for ks in lo[-90:] for k in ks)
+spage("tan-suat-lo-to-xsmb", "Tần suất lô tô XSMB 30, 90 ngày – bảng 00–99", f"Tần suất lô tô XSMB 00–99 trong 30 và 90 kỳ gần nhất đến {vn(lastd)}. Không quảng cáo.", "Tần suất lô tô XSMB",
+      f"Số lần mỗi lô từ 00 đến 99 xuất hiện. Mỗi kỳ XSMB có 27 lô, nên trong 30 kỳ trung bình mỗi lô về {30 * 27 / 100:.1f} lần.",
+      card(grid100(c30, f"30 kỳ gần nhất ({vn(two[-30][0])} – {vn(lastd)})")) + card(grid100(c90, f"90 kỳ gần nhất ({vn(two[-90][0])} – {vn(lastd)})")))
+dh = Counter(k // 10 for ks in lo[-30:] for k in ks); dt = Counter(k % 10 for ks in lo[-30:] for k in ks)
+db = [(r[0], int(r[1][:2])) for r in two]
+dbh = Counter(k // 10 for _, k in db[-100:]); dbt = Counter(k % 10 for _, k in db[-100:])
+spage("dau-duoi-xsmb", "Thống kê đầu đuôi lô tô XSMB", f"Thống kê đầu đuôi lô tô và giải đặc biệt XSMB đến {vn(lastd)}. Không quảng cáo.", "Đầu đuôi lô tô XSMB",
+      "Đầu là chữ số hàng chục, đuôi là chữ số hàng đơn vị của lô. Trung bình mỗi đầu (hoặc đuôi) chiếm 10% số lô.",
+      card(tbl(["Chữ số", "Đầu lô (30 kỳ)", "Đuôi lô (30 kỳ)", "Đầu ĐB (100 kỳ)", "Đuôi ĐB (100 kỳ)"], [(d, dh[d], dt[d], dbh[d], dbt[d]) for d in range(10)])))
+# đặc biệt theo tuần
+fmap = dict(fullmb)
+end = datetime.date.fromisoformat(lastd); start = end - datetime.timedelta(days=end.weekday() + 7 * 11)
+rows = []
+for w in range(12):
+    row = []
+    for k in range(7):
+        d = (start + datetime.timedelta(days=7 * w + k)).isoformat()
+        v = fmap.get(d); row.append(f'<i>{v[0][:-2]}</i><b>{v[0][-2:]}</b>' if v else ('' if d > lastd else '–'))
+    rows.append([vn((start + datetime.timedelta(days=7 * w)).isoformat())] + row)
+dbg = {}
+for i, (d, k) in enumerate(db): dbg[k] = i
+dgan = sorted(range(100), key=lambda k: -(N - 1 - dbg.get(k, -1)))[:15]
+spage("giai-dac-biet-xsmb", "Thống kê giải đặc biệt XSMB – bảng đặc biệt tuần", f"Bảng giải đặc biệt XSMB theo tuần 12 tuần gần nhất, đầu đuôi và 2 số cuối giải đặc biệt lâu chưa về, đến {vn(lastd)}.", "Thống kê giải đặc biệt XSMB",
+      "Bảng giải Đặc biệt XSMB theo tuần (2 số cuối tô đỏ) và các số chưa làm 2 số cuối giải Đặc biệt lâu nhất.",
+      card(tbl(["Tuần từ"] + WD, rows[::-1]).replace("<table>", "<table class=\"wk\">", 1)) + "<h2>2 số cuối giải Đặc biệt lâu chưa về</h2>" + card(tbl(["Số", "Số kỳ chưa về", "Lần gần nhất"], [(f"<b>{k:02d}</b>", N - 1 - dbg[k], vn(db[dbg[k]][0])) for k in dgan])))
+g1 = [(d, v[1]) for d, v in fullmb]; g1c = Counter(int(v[-2:]) for _, v in g1[-100:])
+spage("giai-nhat-xsmb", "Thống kê giải nhất XSMB", f"Giải nhất XSMB 30 kỳ gần nhất và tần suất 2 số cuối giải nhất 100 kỳ, đến {vn(lastd)}.", "Thống kê giải nhất XSMB",
+      "Giải Nhất XSMB gồm 5 chữ số. Bảng liệt kê 30 kỳ gần nhất và số lần mỗi cặp 2 số cuối xuất hiện ở giải Nhất trong 100 kỳ.",
+      card(tbl(["Ngày", "Giải Nhất", "2 số cuối"], [(vn(d), v, f"<b>{v[-2:]}</b>") for d, v in g1[-30:][::-1]])) + card(grid100(g1c, "2 số cuối giải Nhất, 100 kỳ gần nhất")))
+def cang(L, label, slug, minw):
+    tails = [(d, v[0][-L:]) for d, v in fullmb if len(v[0]) >= L]
+    allc = Counter(t for _, t in tails); M = len(tails)
+    lastseen = {}
+    for i, (_, t) in enumerate(tails): lastseen[t] = i
+    rec30 = Counter(x[-L:] for _, v in fullmb[-30:] for x in v if len(x) >= minw)
+    body = "<h2>" + label + " giải Đặc biệt 30 kỳ gần nhất</h2>" + card(tbl(["Ngày", "Giải Đặc biệt", label], [(vn(d), v[0], f"<b>{v[0][-L:]}</b>") for d, v in fullmb[-30:][::-1]]))
+    top = [(t, n) for t, n in allc.most_common(20)]
+    body += f"<h2>{label} giải Đặc biệt về nhiều lần nhất ({M:,} kỳ)</h2><p class='note'>Theo xác suất, mỗi số {label} trung bình về {M / 10 ** L:.2f} lần ở giải Đặc biệt trong {M:,} kỳ.</p>" + card(tbl([label, "Số lần", "Lần gần nhất"], [(f"<b>{t}</b>", n, vn(tails[lastseen[t]][0])) for t, n in top]))
+    if L == 3:
+        h = Counter(t[0] for _, t in tails[-365:])
+        body += "<h2>Đầu 3 càng giải Đặc biệt (365 kỳ)</h2>" + card('<table class="sm">' + tbl(["Chữ số hàng trăm"] + [str(d) for d in range(10)], [["Số lần"] + [h[str(d)] for d in range(10)]])[7:])
+        never = [f"{x:03d}" for x in range(1000) if f"{x:03d}" not in allc]
+        gl = sorted(lastseen, key=lambda t: lastseen[t])[:15]
+        body += f"<h2>3 càng giải Đặc biệt lâu chưa về</h2>" + card(tbl(["3 càng", "Số kỳ chưa về", "Lần gần nhất"], [(f"<b>{t}</b>", M - 1 - lastseen[t], vn(tails[lastseen[t]][0])) for t in gl])) + (f"<p class='note'>{len(never)} số 3 càng chưa từng làm 3 số cuối giải Đặc biệt.</p>" if never else "")
+    body += f"<h2>{label} ở mọi giải, 30 kỳ gần nhất</h2><p class='note'>Tính {L} chữ số cuối của các giải có từ {minw} chữ số trở lên.</p>" + card(tbl([label, "Số lần"], [(f"<b>{t}</b>", n) for t, n in rec30.most_common(20)]))
+    spage(slug, f"Thống kê {label} XSMB – {label} giải đặc biệt", f"Thống kê {label} XSMB đến {vn(lastd)}: {label} giải đặc biệt 30 kỳ, {label} về nhiều nhất, lâu chưa về và {label} ở mọi giải. Không quảng cáo.", f"Thống kê {label} XSMB",
+          f"{label} là {L} chữ số cuối của giải (thường xét giải Đặc biệt). Dữ liệu đủ giải XSMB từ {vn(fullmb[0][0])} đến {vn(fullmb[-1][0])}.", body)
+cang(3, "3 càng", "3-cang-xsmb", 3); cang(4, "4 càng", "4-cang-xsmb", 4)
+for reg in ("xsmn", "xsmt"):
+    lab, name, _ = REG[reg]
+    F = [(l.split(",")[0], l.split(",")[1], l.split(",")[2].split()) for l in open(os.path.join(ROOT, reg + "_full.csv")).read().strip().split("\n")[1:]]
+    ds = sorted({d for d, _, _ in F}); ld = ds[-1]; byd = {}
+    for d, s, v in F: byd.setdefault(d, []).append((s, v))
+    def recent_tbl(idx, L=None, n=14):
+        rows = []
+        for d in ds[-n:][::-1]:
+            rows.append([vn(d), " · ".join(f"{ST.get(s, s)}: <b>{(v[idx][-L:] if L else v[idx])}</b>" for s, v in sorted(byd[d]))])
+        return card(tbl(["Ngày", "Các đài"], rows))
+    d90 = set(ds[-90:]); d180 = set(ds[-180:])
+    g8c = Counter(int(v[17]) for d, s, v in F if d in d90)
+    g8last = {}
+    for i, d in enumerate(ds):
+        for s, v in byd[d]: g8last[int(v[17])] = i
+    g8g = sorted(range(100), key=lambda k: g8last.get(k, -1))[:15]
+    spage(f"giai-8-{reg}", f"Thống kê giải tám {lab} – giải 8 {name}", f"Giải tám {lab} 14 ngày gần nhất theo đài, tần suất giải 8 trong 90 ngày và số lâu chưa về ở giải 8, đến {vn(ld)}.", f"Thống kê giải tám {lab}",
+          f"Giải Tám {lab} là giải 2 chữ số, quay đầu tiên ở mỗi đài. Bảng tính trên tất cả các đài {name}.",
+          "<h2>Giải tám 14 ngày gần nhất</h2>" + recent_tbl(17) + card(grid100(g8c, f"Tần suất giải tám, 90 ngày gần nhất (tất cả các đài)")) + "<h2>Số lâu chưa về ở giải tám</h2>" + card(tbl(["Số", "Số ngày chưa về", "Lần gần nhất"], [(f"<b>{k:02d}</b>", len(ds) - 1 - g8last[k], vn(ds[g8last[k]])) for k in g8g if k in g8last])))
+    g1c = Counter(int(v[1][-2:]) for d, s, v in F if d in d90)
+    spage(f"giai-nhat-{reg}", f"Thống kê giải nhất {lab}", f"Giải nhất {lab} 14 ngày gần nhất theo đài và tần suất 2 số cuối giải nhất 90 ngày, đến {vn(ld)}.", f"Thống kê giải nhất {lab}",
+          f"Giải Nhất {lab} gồm 5 chữ số. Bảng liệt kê 14 ngày gần nhất và số lần mỗi cặp 2 số cuối xuất hiện ở giải Nhất.",
+          "<h2>Giải nhất 14 ngày gần nhất</h2>" + recent_tbl(1) + card(grid100(g1c, "2 số cuối giải Nhất, 90 ngày gần nhất (tất cả các đài)")))
+    dbc = Counter(int(v[0][-2:]) for d, s, v in F if d in d180)
+    dlast = {}
+    for i, d in enumerate(ds):
+        for s, v in byd[d]: dlast[int(v[0][-2:])] = i
+    dg = sorted(range(100), key=lambda k: dlast.get(k, -1))[:15]
+    spage(f"giai-dac-biet-{reg}", f"Thống kê giải đặc biệt {lab}", f"Giải đặc biệt {lab} 14 ngày gần nhất theo đài, tần suất 2 số cuối giải đặc biệt 180 ngày và số lâu chưa về, đến {vn(ld)}.", f"Thống kê giải đặc biệt {lab}",
+          f"Giải Đặc biệt {lab} gồm 6 chữ số (trước năm 2009 là 5 chữ số). Bảng tính trên tất cả các đài {name}.",
+          "<h2>Giải đặc biệt 14 ngày gần nhất</h2>" + recent_tbl(0) + card(grid100(dbc, "2 số cuối giải Đặc biệt, 180 ngày gần nhất")) + "<h2>2 số cuối giải đặc biệt lâu chưa về</h2>" + card(tbl(["Số", "Số ngày chưa về", "Lần gần nhất"], [(f"<b>{k:02d}</b>", len(ds) - 1 - dlast[k], vn(ds[dlast[k]])) for k in dg if k in dlast])))
+    d365 = set(ds[-365:]); c3 = Counter(v[0][-3:] for d, s, v in F if d in d365); h3 = Counter(v[0][-3] for d, s, v in F if d in d365); M3 = sum(c3.values())
+    spage(f"3-cang-{reg}", f"Thống kê 3 càng {lab} – 3 càng giải đặc biệt", f"3 càng giải đặc biệt {lab} 14 ngày gần nhất theo đài, 3 càng về nhiều nhất và đầu 3 càng trong 365 ngày, đến {vn(ld)}.", f"Thống kê 3 càng {lab}",
+          f"3 càng là 3 chữ số cuối của giải Đặc biệt. Trong 365 ngày gần nhất có {M3:,} giải Đặc biệt {lab}; mỗi số 3 càng trung bình về {M3 / 1000:.2f} lần.",
+          "<h2>3 càng 14 ngày gần nhất</h2>" + recent_tbl(0, 3) + "<h2>3 càng về nhiều nhất (365 ngày)</h2>" + card(tbl(["3 càng", "Số lần"], [(f"<b>{t}</b>", n) for t, n in c3.most_common(20)])) + "<h2>Đầu 3 càng (365 ngày)</h2>" + card('<table class="sm">' + tbl(["Chữ số hàng trăm"] + [str(d) for d in range(10)], [["Số lần"] + [h3[str(d)] for d in range(10)]])[7:]))
+hub = "<p>Các bảng thống kê kết quả XSMB, XSMN, XSMT được tạo lại mỗi ngày từ dữ liệu đã quay.</p>" + "".join(f"<h2>{REG[r][0]}</h2><ul class='ls'>" + "".join(f'<li><a href="../{s}/">{h}</a></li>' for s, h in STATP if s.endswith(r)) + "</ul>" for r in REG)
+page("thong-ke/bang-thong-ke/", "Bảng thống kê xổ số XSMB, XSMN, XSMT – lô gan, 3 càng, giải đặc biệt", "Tổng hợp các bảng thống kê XSMB, XSMN, XSMT: lô gan, tần suất lô tô, đầu đuôi, giải đặc biệt, giải nhất, giải tám, 3 càng, 4 càng. Không quảng cáo.", [("Thống kê", "thong-ke/"), ("Bảng thống kê", "thong-ke/bang-thong-ke/")], "Bảng thống kê xổ số", hub)
+
 # ---------- sitemap ----------
 spa = [x.strip() for x in open(os.path.join(ROOT, "tools", "spa_pages.txt")).read().split() if x.strip()]
 urls = [(BASE, "1.0")] + [(BASE + s + "/", "0.9" if s in ("xsmb", "xsmn", "xsmt") else "0.7") for s in spa]
-for reg in REG:
+for reg in list(REG) + ["thong-ke"]:
     for x in sorted(os.listdir(os.path.join(ROOT, reg))):
         if os.path.isfile(os.path.join(ROOT, reg, x, "index.html")):
             urls.append((f"{BASE}{reg}/{x}/", "0.6"))
