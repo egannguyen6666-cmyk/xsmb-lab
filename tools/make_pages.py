@@ -477,6 +477,7 @@ for f, reg in (("index.html", "mb"), ("xsmb/index.html", "mb"), ("xsmb-30-ngay/i
     h2 = re.sub(r'<h2 id="rsT">[^<]*</h2>', f'<h2 id="rsT">{title}</h2>', h2, count=1)
     dlast = {'mb': mb[-1]['date']}.get(reg) or max(r['date'] for r in json.load(open(os.path.join(ROOT, 'recent_mn.json' if reg == 'mn' else 'recent_mt.json'))))
     h2 = re.sub(r'<input type="date" id="rsDate"[^>]*>', f'<input type="date" id="rsDate" aria-label="Chọn ngày" value="{dlast}">', h2, count=1)
+    h2 = re.sub(r'<span class="dlab" id="rsDateL" aria-hidden="true">[^<]*</span>', f'<span class="dlab" id="rsDateL" aria-hidden="true">{vn(dlast)}</span>', h2, count=1)
     if h2 != h: open(fp, "w").write(h2)
 
 

@@ -110,6 +110,7 @@ MENU_CSS = """.mbar{position:relative;display:flex;align-items:center;gap:2px;ma
 .mbar .mdd .h{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);padding:10px 12px 3px;font-weight:600;grid-column:1/-1}
 @media(max-width:820px){.mbar{gap:1px;padding:3px;margin:0 0 14px}.mbar details{position:static;flex:1 1 auto}.mbar summary{justify-content:center;padding:0 3px;font-size:13px;min-height:40px;gap:4px;letter-spacing:-.1px}.mbar summary::after{width:4px;height:4px;border-width:0 1.5px 1.5px 0}.mbar>a.dv{display:none}
 .mbar .mdd{left:0;right:0;min-width:0;grid-template-columns:1fr 1fr;top:calc(100% + 6px)}.mbar .mdd a{padding:11px 10px}}
+@media(max-width:374px){.mbar summary::after{display:none}.mbar summary{font-size:12.5px;padding:0 2px}}
 .brand{display:flex;gap:12px;align-items:center;padding:4px 8px;color:var(--sideink);text-decoration:none;border-radius:12px}.brand:hover b{color:#fff}.brand:focus-visible{outline:3px solid #ff5872}
 .brand b{display:block;font-size:19px;letter-spacing:.2px}.brand span{font-size:13px;color:var(--sidemute)}
 .nav{scrollbar-width:none}.nav::-webkit-scrollbar{display:none}
