@@ -15,6 +15,7 @@
 <meta property="og:url" content="https://egannguyen6666-cmyk.github.io/xsmb-lab/">
 <meta property="og:image" content="https://egannguyen6666-cmyk.github.io/xsmb-lab/icon-512.png">
 <meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Xổ số ba miền quay lúc mấy giờ?", "acceptedAnswer": {"@type": "Answer", "text": "Xổ số miền Nam quay từ khoảng 16:15, xổ số miền Trung từ khoảng 17:15 và xổ số miền Bắc từ khoảng 18:15 hằng ngày. Xổ số miền Bắc nghỉ từ 30 Tết đến hết mùng 3 Tết."}}, {"@type": "Question", "name": "Vé số trúng thưởng được lĩnh trong bao lâu?", "acceptedAnswer": {"@type": "Answer", "text": "Vé xổ số kiến thiết truyền thống có thời hạn lĩnh thưởng 30 ngày kể từ ngày xác định kết quả; vé xổ số điện toán Vietlott có thời hạn 60 ngày."}}, {"@type": "Question", "name": "Dò vé số miền Nam như thế nào?", "acceptedAnswer": {"@type": "Answer", "text": "Vé miền Nam, miền Trung có 6 chữ số: giải Đặc biệt trùng cả 6 số, giải Nhất đến giải Tư trùng 5 số cuối, giải Năm và Sáu trùng 4 số cuối, giải Bảy trùng 3 số cuối, giải Tám trùng 2 số cuối. Ngoài ra có giải phụ đặc biệt và giải khuyến khích."}}, {"@type": "Question", "name": "Vietlott quay những ngày nào?", "acceptedAnswer": {"@type": "Answer", "text": "Mega 6/45 quay thứ 4, thứ 6, chủ nhật; Power 6/55 quay thứ 3, thứ 5, thứ 7; Max 3D quay thứ 2, thứ 4, thứ 6; Max 3D Pro quay thứ 3, thứ 5, thứ 7, đều khoảng 18:00. Keno quay liên tục trong ngày từ 6:00 đến 22:00."}}, {"@type": "Question", "name": "XS Lab có dự đoán kết quả xổ số không?", "acceptedAnswer": {"@type": "Answer", "text": "Không. XS Lab chỉ trình bày kết quả và thống kê của các kỳ đã quay, cập nhật từ nguồn công khai và chỉ mang tính chất tham khảo."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"XS Lab","url":"https://egannguyen6666-cmyk.github.io/xsmb-lab/","inLanguage":"vi","description":"Kết quả xổ số XSMB, XSMN, XSMT và thống kê dữ liệu quá khứ."},{"@type":"Dataset","name":"Kết quả xổ số kiến thiết Việt Nam (2 số cuối các giải)","description":"Lịch sử kết quả XSMB từ 2005, XSMN và XSMT theo từng đài, cập nhật hằng ngày từ nguồn công khai. Chỉ mang tính chất tham khảo.","inLanguage":"vi","isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://egannguyen6666-cmyk.github.io/xsmb-lab/xsmb.csv"},{"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://egannguyen6666-cmyk.github.io/xsmb-lab/xsmn.csv"},{"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://egannguyen6666-cmyk.github.io/xsmb-lab/xsmt.csv"}]}]}</script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -205,6 +206,8 @@ p{margin:0 0 10px;max-width:72ch}
 .mnb th.sel{background:#d01f3c;color:#fff}
 .ball.y{--b:#f2b705;--h:#ffe38a;--s:#a77a00;color:#1b1a20}
 .novreg .top .ctrls{display:none}
+.seo h2{font-size:20px}.seo h3{font-size:16px;margin:18px 0 6px}.seo table{border-collapse:collapse;width:100%;max-width:720px;font-size:14px;margin:6px 0}.seo th,.seo td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}.seo th{background:var(--band)}
+.links{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 0 0;padding:0;list-style:none}.links a{color:var(--mute)}
 #vlKy{flex:1 1 0;min-width:0}#v-vietlott .datenav{flex-wrap:nowrap}
 .vlg{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:6px;margin-top:10px}
 .vlg div{border:1px solid var(--line);border-radius:10px;padding:6px 4px 5px;text-align:center;position:relative;overflow:hidden;background:var(--bg)}
@@ -325,7 +328,7 @@ p{margin:0 0 10px;max-width:72ch}
   <div class="top">
    <h1 id="vtitle">Kết quả</h1>
    <div class="ctrls">
-    <div class="regsw" role="group" aria-label="Chọn miền"><button data-r="mb" aria-pressed="true">Miền Bắc</button><button data-r="mn" aria-pressed="false">Miền Nam</button><button data-r="mt" aria-pressed="false">Miền Trung</button></div>
+    <div class="regsw" role="group" aria-label="Chọn miền"><button data-r="mb" aria-pressed="true" title="Xổ số miền Bắc">XSMB</button><button data-r="mn" aria-pressed="false" title="Xổ số miền Nam">XSMN</button><button data-r="mt" aria-pressed="false" title="Xổ số miền Trung">XSMT</button></div>
     <select id="stSel" class="stsel" aria-label="Chọn đài" hidden></select>
     <span class="pill" id="status"><i></i>Đang tải…</span>
    </div>
@@ -349,6 +352,31 @@ p{margin:0 0 10px;max-width:72ch}
      <div class="book" id="book"></div>
     </div>
     <div class="c12"><div class="kpis" id="ovKpis"></div></div>
+    <article class="card c12 doc seo" id="art-ket-qua">
+     <h2>Lịch quay và cơ cấu giải xổ số kiến thiết ba miền</h2>
+     <p>Mỗi ngày có ba buổi quay xổ số kiến thiết truyền thống: <b>XSMN</b> (miền Nam) từ khoảng 16:15 với 3–4 đài, <b>XSMT</b> (miền Trung) từ khoảng 17:15 với 2–3 đài và <b>XSMB</b> (miền Bắc) từ khoảng 18:15 với một kỳ quay chung. XSMN và XSMT quay cả dịp Tết; XSMB nghỉ từ 30 Tết đến hết mùng 3.</p>
+     <h3>XSMB: 27 lần quay, 8 hạng giải</h3>
+     <p>Vé XSMB mệnh giá 10.000 đồng, gồm 5 chữ số và ký hiệu vé. Mỗi kỳ quay 27 lần để chọn ra 27 dãy số.</p>
+     <table><thead><tr><th>Giải</th><th>Số dãy số</th><th>Cách xác định trúng</th></tr></thead><tbody>
+      <tr><td>Đặc biệt</td><td>1</td><td>Trùng cả 5 số và đúng ký hiệu vé. Trùng 5 số nhưng khác ký hiệu là giải phụ Đặc biệt.</td></tr>
+      <tr><td>Nhất, Nhì, Ba</td><td>1, 2, 6</td><td>Trùng cả 5 số</td></tr>
+      <tr><td>Tư, Năm</td><td>4, 6</td><td>Trùng 4 số cuối</td></tr>
+      <tr><td>Sáu</td><td>3</td><td>Trùng 3 số cuối</td></tr>
+      <tr><td>Bảy</td><td>4</td><td>Trùng 2 số cuối</td></tr>
+      <tr><td>Khuyến khích</td><td>—</td><td>Trùng 2 số cuối của giải Đặc biệt</td></tr></tbody></table>
+     <p>Giá trị từng giải được in trên vé theo cơ cấu của công ty xổ số kiến thiết phát hành.</p>
+     <h3>XSMN, XSMT: 18 lần quay, 9 hạng giải mỗi đài</h3>
+     <p>Mỗi đài phát hành vé riêng, mệnh giá 10.000 đồng, gồm 6 chữ số. Kết quả được quay từ giải Tám lên giải Nhất, cuối cùng là giải Đặc biệt.</p>
+     <table><thead><tr><th>Giải</th><th>Số dãy số</th><th>Cách xác định trúng</th></tr></thead><tbody>
+      <tr><td>Đặc biệt</td><td>1</td><td>Trùng cả 6 số (giải 2 tỷ đồng)</td></tr>
+      <tr><td>Nhất, Nhì, Ba, Tư</td><td>1, 1, 2, 7</td><td>Trùng 5 số cuối</td></tr>
+      <tr><td>Năm, Sáu</td><td>1, 3</td><td>Trùng 4 số cuối</td></tr>
+      <tr><td>Bảy</td><td>1</td><td>Trùng 3 số cuối</td></tr>
+      <tr><td>Tám</td><td>1</td><td>Trùng 2 số cuối (10.000 giải, mỗi giải 100.000 đồng)</td></tr>
+      <tr><td>Phụ Đặc biệt</td><td>—</td><td>Trùng 5 số cuối của giải Đặc biệt, sai chữ số đầu (9 giải, mỗi giải 50 triệu đồng)</td></tr>
+      <tr><td>Khuyến khích</td><td>—</td><td>Đúng chữ số đầu, sai 1 trong 5 chữ số còn lại của giải Đặc biệt (45 giải, mỗi giải 6 triệu đồng)</td></tr></tbody></table>
+     <p class="note">Thông tin và kết quả xổ số trên XS Lab được chúng tôi cập nhật từ nguồn công khai và chỉ mang tính chất tham khảo. Vui lòng kiểm tra lại kết quả chính thức được công bố bởi các công ty xổ số kiến thiết.</p>
+    </article>
    </div>
   </section>
 
@@ -365,6 +393,14 @@ p{margin:0 0 10px;max-width:72ch}
     <div class="card c12"><h2 id="lvInsT">Thống kê nổi bật của kỳ đang quay</h2><p class="sub" id="lvInsS">So các số vừa về với dữ liệu quá khứ đến hết kỳ trước của từng đài. Cập nhật theo từng giải.</p><div id="lvIns"></div></div>
     <div class="card c12"><h2>Lô tô đang về</h2><p class="sub">2 số cuối của các giải đã ra, xếp theo đầu. Cập nhật cùng bảng kết quả.</p><div id="lvLoto"></div></div>
     <div class="card c12"><p class="note" style="margin:0">Nguồn dữ liệu trực tiếp: <a href="https://www.minhngoc.net.vn" style="color:inherit">Xổ Số Minh Ngọc</a> (mã nhúng miễn phí), vẽ lại theo giao diện XS Lab. App chỉ tải lại khoảng 5 giây một lần và chỉ trong khung giờ quay. Khi quay xong, kết quả được đưa ngay vào tab Kết quả (ghi "chờ đối chiếu" đến khi dữ liệu được cập nhật lại).</p></div>
+    <article class="card c12 doc seo" id="art-truc-tiep">
+     <h2>Quay số mở thưởng diễn ra như thế nào?</h2>
+     <p>Các công ty xổ số kiến thiết quay số công khai tại trường quay, dưới sự giám sát của hội đồng giám sát xổ số. Mỗi giải được quay lần lượt cho đến đủ 27 dãy số (XSMB) hoặc 18 dãy số mỗi đài (XSMN, XSMT). Kết quả chính thức là biên bản do hội đồng ký sau buổi quay và kết quả do công ty xổ số kiến thiết công bố.</p>
+     <h3>Giờ quay</h3>
+     <ul><li>XSMN: khoảng 16:15 – 16:35, mỗi đài quay tại trường quay của tỉnh mình.</li><li>XSMT: khoảng 17:15 – 17:35.</li><li>XSMB: khoảng 18:15 – 18:35.</li><li>Vietlott Mega 6/45, Power 6/55, Max 3D, Max 3D Pro: khoảng 18:00 theo lịch từng sản phẩm.</li></ul>
+     <h3>XS Lab cập nhật trực tiếp ra sao?</h3>
+     <p>Trong khung giờ quay, XS Lab đọc bảng kết quả công khai khoảng 5 giây một lần và vẽ lại theo giao diện của trang. Giải mới về sẽ sáng lên; phần "Thống kê nổi bật" so các số vừa về với dữ liệu các kỳ trước. Khi đủ giải, kết quả được đưa sang mục Kết quả với nhãn "chờ đối chiếu" cho đến khi dữ liệu được cập nhật lại từ nguồn.</p>
+    </article>
    </div>
    <div id="box_kqxs_minhngoc" aria-hidden="true"></div>
   </section>
@@ -411,6 +447,12 @@ p{margin:0 0 10px;max-width:72ch}
      <p class="sub">Mỗi đài là một chuỗi kỳ riêng. Cột p-value là kiểm định chi-bình phương toàn bộ lịch sử của đài (p &lt; 0,05 nghĩa là lệch khỏi đều; với 21 đài, có 1 đài lệch là bình thường). Bấm tên đài để chọn đài đó.</p>
      <div class="tbl" id="cmpT"></div>
     </div>
+    <article class="card c12 doc seo" id="art-thong-ke">
+     <h2>Các khái niệm trong thống kê lô tô</h2>
+     <dl><dt>Lô tô</dt><dd>2 chữ số cuối của mỗi giải, từ 00 đến 99. XSMB có 27 lô mỗi kỳ, mỗi đài XSMN, XSMT có 18 lô.</dd><dt>Nháy</dt><dd>Số lần một lô xuất hiện trong cùng một kỳ.</dd><dt>Lô gan</dt><dd>Số kỳ liên tiếp một lô chưa xuất hiện.</dd><dt>Đầu, đuôi</dt><dd>Chữ số hàng chục và hàng đơn vị của lô.</dd><dt>Tần suất</dt><dd>Số lần xuất hiện trong một khoảng thời gian.</dd></dl>
+     <h3>Xác suất cơ bản</h3>
+     <p>Với 27 giải, xác suất một lô bất kỳ về ít nhất một lần trong kỳ XSMB là 1 − 0,99<sup>27</sup> ≈ 23,77%; với 18 giải của một đài XSMN, XSMT là 1 − 0,99<sup>18</sup> ≈ 16,55%. Mức này như nhau cho mọi số và mọi kỳ. Các bảng thống kê trên XS Lab mô tả dữ liệu đã quay, không phải dự đoán kết quả.</p>
+    </article>
    </div>
   </section>
 
@@ -420,7 +462,7 @@ p{margin:0 0 10px;max-width:72ch}
      <h2>Dò vé số</h2>
      <p class="sub" id="dvS">Chọn miền, đài, ngày quay rồi nhập số. Mỗi số từ 2 chữ số trở lên (2 chữ số là dò lô, đủ 5 hoặc 6 chữ số là dò cả vé); dò cùng lúc tối đa 17 số, ngăn cách bằng dấu phẩy. Dữ liệu đủ giải có cho 60 ngày gần nhất.</p>
      <form class="dv" id="dvForm">
-      <div><label for="dvReg">Miền</label><select id="dvReg"><option value="mb">Miền Bắc</option><option value="mn">Miền Nam</option><option value="mt">Miền Trung</option></select></div>
+      <div><label for="dvReg">Miền</label><select id="dvReg"><option value="mb">XSMB</option><option value="mn">XSMN</option><option value="mt">XSMT</option></select></div>
       <div id="dvStW"><label for="dvSt">Đài</label><select id="dvSt"></select></div>
       <div><label for="dvDate">Ngày quay</label><select id="dvDate"></select></div>
       <div style="grid-column:span 2;min-width:0"><label for="dvNum" id="dvNumL">Số trên vé</label><input id="dvNum" inputmode="numeric" autocomplete="off" placeholder="123456, 789, 45"></div>
@@ -429,13 +471,21 @@ p{margin:0 0 10px;max-width:72ch}
      <div id="dvOut" aria-live="polite"></div>
      <p class="note" id="dvRule" style="margin-top:14px"></p>
     </div>
+    <article class="card c12 doc seo" id="art-do-ve">
+     <h2>Hướng dẫn dò vé số và lĩnh thưởng</h2>
+     <h3>Các bước dò vé</h3>
+     <ol><li>Xem đúng ngày quay và tên đài in trên vé (XSMN, XSMT mỗi đài một kết quả riêng).</li><li>Dò từ giải Đặc biệt xuống giải thấp nhất: so cả dãy số với giải cao, so các số cuối với giải thấp.</li><li>Kiểm tra thêm giải phụ Đặc biệt và giải khuyến khích. Một vé trúng nhiều giải được lĩnh tất cả các giải.</li><li>Đối chiếu lại với kết quả chính thức của công ty xổ số kiến thiết trước khi đi lĩnh thưởng.</li></ol>
+     <h3>Thời hạn và hình thức trả thưởng</h3>
+     <ul><li>Vé xổ số kiến thiết truyền thống: thời hạn lĩnh thưởng là 30 ngày kể từ ngày xác định kết quả trúng thưởng.</li><li>Vé xổ số điện toán Vietlott: thời hạn lĩnh thưởng là 60 ngày.</li><li>Công ty xổ số kiến thiết thanh toán chậm nhất 5 ngày làm việc kể từ khi nhận đề nghị lĩnh thưởng hợp lệ.</li><li>Vé phải còn nguyên vẹn, không tẩy xóa, rách rời ngoài các trường hợp được thể lệ cho phép xem xét.</li><li>Giải thưởng có giá trị vượt ngưỡng chịu thuế phải nộp thuế thu nhập cá nhân 10% trên phần vượt, được khấu trừ ngay khi nhận thưởng.</li></ul>
+     <p class="note">Thông tin trên XS Lab chỉ mang tính chất tham khảo. Vui lòng kiểm tra lại kết quả và thể lệ chính thức của công ty xổ số kiến thiết hoặc Vietlott.</p>
+    </article>
    </div>
   </section>
 
   <section class="view" id="v-vietlott">
    <div class="grid">
     <div class="card c12">
-     <div class="regsw" id="vlGame" role="group" aria-label="Chọn sản phẩm" style="margin-bottom:12px"><button data-g="645" aria-pressed="true">Mega 6/45</button><button data-g="655" aria-pressed="false">Power 6/55</button></div>
+     <div class="regsw" id="vlGame" role="group" aria-label="Chọn sản phẩm" style="margin-bottom:12px;flex-wrap:wrap;border-radius:18px"><button data-g="keno">Keno</button><button data-g="645" aria-pressed="true">Mega 6/45</button><button data-g="655">Power 6/55</button><button data-g="3d">Max 3D</button><button data-g="3dpro">Max 3D Pro</button></div>
      <h2 id="vlT">Vietlott</h2>
      <div class="datenav"><button id="vlPrev" aria-label="Kỳ trước">‹</button><select id="vlKy" class="stsel" aria-label="Chọn kỳ quay"></select><button id="vlNext" aria-label="Kỳ sau">›</button><button id="vlLatest" style="padding:0 12px;font-weight:500">Mới nhất</button></div>
      <div class="balls" id="vlBalls"></div>
@@ -457,6 +507,21 @@ p{margin:0 0 10px;max-width:72ch}
     <div class="card c6" id="vlHot"></div>
     <div class="card c6" id="vlGan"></div>
     <div class="card c12"><h2>Sổ kết quả gần đây</h2><p class="sub">Bấm một kỳ để xem ở bảng phía trên.</p><div class="book" id="vlBook"></div></div>
+    <article class="card c12 doc seo" id="art-vietlott">
+     <h2>Cách chơi và cơ cấu giải các sản phẩm Vietlott</h2>
+     <p>Vietlott (Công ty Xổ số Điện toán Việt Nam) phát hành xổ số tự chọn số. Vé có thể mua tại điểm bán hoặc qua kênh điện thoại; thời hạn lĩnh thưởng là 60 ngày.</p>
+     <h3>Mega 6/45</h3>
+     <p>Chọn 6 số từ 01 đến 45, vé 10.000 đồng, quay thứ 4, thứ 6, chủ nhật. Trùng 6 số trúng Jackpot (khởi điểm 12 tỷ đồng, cộng dồn khi chưa có người trúng); trùng 5 số trúng giải Nhất 10 triệu đồng, 4 số giải Nhì 300.000 đồng, 3 số giải Ba 30.000 đồng. Xác suất trúng Jackpot của một vé là 1/8.145.060.</p>
+     <h3>Power 6/55</h3>
+     <p>Chọn 6 số từ 01 đến 55, quay thứ 3, thứ 5, thứ 7. Mỗi kỳ quay 6 số chính và 1 số đặc biệt. Trùng 6 số trúng Jackpot 1 (khởi điểm 30 tỷ đồng); trùng 5 số và số đặc biệt trúng Jackpot 2 (khởi điểm 3 tỷ đồng); trùng 5 số giải Nhất 40 triệu đồng, 4 số giải Nhì 500.000 đồng, 3 số giải Ba 50.000 đồng. Xác suất trúng Jackpot 1 là 1/28.989.675.</p>
+     <h3>Max 3D</h3>
+     <p>Quay thứ 2, thứ 4, thứ 6. Mỗi kỳ quay 20 bộ ba số từ 000 đến 999, chia thành 4 nhóm giải gồm 2, 4, 6 và 8 bộ số. Với vé cơ bản (1 bộ ba số, 10.000 đồng), trùng đúng thứ tự một bộ số của nhóm cao nhất được 1.000.000 đồng, các nhóm tiếp theo được 350.000, 210.000 và 100.000 đồng. Max 3D+ chọn 2 bộ ba số, giải cao nhất 1 tỷ đồng.</p>
+     <h3>Max 3D Pro</h3>
+     <p>Quay thứ 3, thứ 5, thứ 7, cũng 20 bộ ba số mỗi kỳ. Vé gồm 2 bộ ba số: trùng cả 2 bộ số giải Đặc biệt đúng thứ tự trúng 2 tỷ đồng, ngược thứ tự trúng giải phụ Đặc biệt 400 triệu đồng (cho mỗi 10.000 đồng). Có 8 hạng giải từ Đặc biệt đến giải Sáu và các cách chơi Cơ bản, Bao bộ ba số, Bao nhiều bộ ba số.</p>
+     <h3>Keno</h3>
+     <p>Chọn từ 1 đến 10 số (bậc 1 đến bậc 10) trong các số từ 01 đến 80; mỗi kỳ quay ngẫu nhiên 20 số. Keno quay liên tục từ 6:00 đến 22:00, hiện có 119 kỳ mỗi ngày. Với 10.000 đồng, bậc 1 trúng 20.000 đồng, bậc 2 trùng cả 2 số trúng 90.000 đồng; giải cao nhất ở bậc 8, 9, 10 lần lượt là 200 triệu, 800 triệu và 2 tỷ đồng. Ở bậc 8–10, vé không trùng số nào cũng có giải. Ngoài cách chơi theo bậc còn có cách chơi chẵn/lẻ, lớn/nhỏ.</p>
+     <p class="note">Cơ cấu giải trên đây chỉ mang tính chất tham khảo; thể lệ và kết quả chính thức do Vietlott công bố.</p>
+    </article>
    </div>
   </section>
 
@@ -474,6 +539,10 @@ p{margin:0 0 10px;max-width:72ch}
      <p class="sub" id="dsSetS"></p>
      <div id="ovDan"></div>
     </div>
+    <article class="card c12 doc seo" id="art-dan">
+     <h2>Thống kê dàn số là gì?</h2>
+     <p>Dàn số là một nhóm các lô (ví dụ 4, 6 hoặc 10 số). Trang này đếm trong dữ liệu đã quay: bao nhiêu kỳ có ít nhất một số của dàn xuất hiện và bao nhiêu kỳ cả dàn cùng xuất hiện, rồi so với mức theo xác suất. Với XSMB, một dàn 4 số bất kỳ có khoảng 67% số kỳ có ít nhất một số về; dàn 10 số khoảng 94%. Mọi dàn cùng số lượng đều có cùng mức xác suất này.</p>
+    </article>
    </div>
   </section>
 
@@ -510,6 +579,10 @@ p{margin:0 0 10px;max-width:72ch}
      <p class="note" id="msNote" style="margin-top:10px"></p>
     </div>
     <div class="card c12"><h2>Chi tiết từng kỳ</h2><p class="sub">Số tô đỏ là số đã về, ×2 là về 2 nháy.</p><div class="tbl" id="simT"></div><div class="pager" id="simPager"></div></div>
+    <article class="card c12 doc seo" id="art-mo-phong">
+     <h2>Vì sao mô phỏng luôn cho kỳ vọng âm?</h2>
+     <p>Trong môi trường giả định, mỗi điểm cho một lô tốn 27 token (XSMB) và mỗi nháy về được 99 token. Vì xác suất một nháy là 1/100 và có 27 giải, trung bình mỗi token chỉ thu về 0,99 token. Mô phỏng 1.000 quỹ cho thấy các cách đặt khác nhau (đều tay, gấp thếp, chốt lời – cắt lỗ) chỉ thay đổi hình dạng kết quả, không thay đổi kỳ vọng âm.</p>
+    </article>
    </div>
   </section>
 
@@ -538,6 +611,10 @@ p{margin:0 0 10px;max-width:72ch}
      <div class="legend"><span><s style="height:10px;background:var(--red)"></s>Năm có p &lt; 0,05 (lệch)</span><span><s style="height:10px;background:var(--mute);opacity:.5"></s>Năm bình thường</span><span><s style="border-top:2px dashed var(--red)"></s>Ngưỡng 0,05</span></div>
      <div class="tbl" id="rnT" style="margin-top:12px"></div>
     </div>
+    <article class="card c12 doc seo" id="art-kiem-dinh">
+     <h2>Kiểm định độ ngẫu nhiên của kết quả xổ số</h2>
+     <p>Kiểm định chi-bình phương so tần suất của 100 lô với mức đều nhau; p-value nhỏ hơn 0,05 nghĩa là độ lệch hiếm gặp nếu kết quả hoàn toàn ngẫu nhiên. Khi kiểm định nhiều năm, khoảng 5% số năm có p &lt; 0,05 là bình thường. Phần còn lại của trang kiểm tra xem các bảng thống kê (tần suất, lô gan, lô rơi…) có lặp lại ở kỳ sau hay không.</p>
+    </article>
    </div>
   </section>
 
@@ -587,18 +664,22 @@ p{margin:0 0 10px;max-width:72ch}
   <footer class="foot" id="siteFoot">
    <div class="notice" role="note"><b>Thông tin nguồn.</b> Thông tin và kết quả xổ số trên XS Lab được chúng tôi cập nhật từ nguồn công khai và chỉ mang tính chất tham khảo. Vui lòng kiểm tra lại kết quả chính thức được công bố bởi các công ty xổ số kiến thiết.</div>
    <p style="margin:6px 0 0">XS Lab chỉ trình bày kết quả và thống kê dữ liệu đã quay, không đưa ra dự đoán kết quả.</p>
+   <nav aria-label="Các trang"><ul class="links"><li><a href="xsmb/">Kết quả XSMB</a></li><li><a href="xsmn/">Kết quả XSMN</a></li><li><a href="xsmt/">Kết quả XSMT</a></li><li><a href="truc-tiep/">Trực tiếp xổ số</a></li><li><a href="do-ve/">Dò vé số</a></li><li><a href="thong-ke/">Thống kê lô tô</a></li><li><a href="thong-ke-dan/">Thống kê dàn</a></li><li><a href="vietlott/">Vietlott</a></li><li><a href="keno/">Keno</a></li><li><a href="mega-645/">Mega 6/45</a></li><li><a href="power-655/">Power 6/55</a></li><li><a href="max-3d/">Max 3D</a></li><li><a href="max-3d-pro/">Max 3D Pro</a></li><li><a href="ve-du-lieu/">Về dữ liệu</a></li></ul></nav>
   </footer>
  </main>
 </div>
 <nav class="tab" id="tab" aria-label="Điều hướng"></nav>
 <div class="sheet" id="sheet" role="dialog" aria-label="Các mục khác"><div id="sheetIn"></div></div>
-<script src="core.js?v=202611240130"></script>
+<script>var XS_ROOT='';</script>
+<script src="core.js?v=202611240143"></script>
 <script>
 {
 const VIEWS=[['ket-qua','Kết quả','i-home'],['truc-tiep','Trực tiếp','i-live'],['do-ve','Dò vé','i-ticket'],['thong-ke','Thống kê','i-stats'],['vietlott','Vietlott','i-vl'],['thong-ke-dan','Thống kê dàn','i-target'],['ban-do','Bản đồ số','i-grid'],['kiem-dinh','Kiểm định','i-chart'],['mo-phong','Mô phỏng','i-wallet'],['ve-du-lieu','Về dữ liệu','i-info']];
 const ALIAS={'tong-quan':'ket-qua','du-doan':'thong-ke-dan','nhat-ky':'ket-qua','kiem-chung':'kiem-dinh','quy-token':'mo-phong'};
 const META={'ket-qua':['Kết quả xổ số {R} hôm nay','Kết quả xổ số {R} mới nhất, đủ các giải, sổ kết quả các kỳ gần đây và thống kê nhanh kỳ vừa quay.'],'truc-tiep':['Trực tiếp xổ số {R}','Xem trực tiếp kết quả xổ số {R} trong giờ quay, từng giải cập nhật khoảng 5 giây một lần.'],'do-ve':['Dò vé số {R}','Dò vé số {R} theo đài và ngày quay, đối chiếu với đủ các giải trong 60 ngày gần nhất.'],'thong-ke':['Thống kê lô tô {R}','Thống kê lô tô {R}: tra cứu số, đầu đuôi, giải đặc biệt, lô gan, phân bố tổng và chẵn lẻ từ dữ liệu quá khứ.'],'thong-ke-dan':['Thống kê dàn số {R}','Thống kê dàn 4, 6, 10 số {R}: mỗi dàn đã xuất hiện bao nhiêu lần trong quá khứ, cả dàn cùng về bao nhiêu kỳ.'],'ban-do':['Bản đồ tần suất 00–99 {R}','Bản đồ nhiệt tần suất 100 số {R} theo các khung thời gian.'],'kiem-dinh':['Kiểm định thống kê {R}','Kiểm định độ ngẫu nhiên và mức lặp lại của các dữ liệu thống kê trên dữ liệu {R}.'],'mo-phong':['Mô phỏng xác suất {R}','Mô phỏng quỹ token giả định để thấy kỳ vọng âm của mọi cách đặt trên dữ liệu {R}.'],'vietlott':['Kết quả Vietlott Mega 6/45, Power 6/55','Kết quả xổ số Vietlott Mega 6/45 và Power 6/55 các kỳ, dò vé và thống kê tần suất từ dữ liệu quá khứ.'],'ve-du-lieu':['Về dữ liệu XS Lab','Nguồn dữ liệu, cách cập nhật, kiểm tra chất lượng và cách tính của XS Lab.'],'dan':['Lịch sử thống kê dàn số {R}','Timeline áp dụng một cách thống kê lập dàn trên dữ liệu quá khứ {R}.']};
-function setMeta(v){const m=META[v]||META['ket-qua'],lab=!N?'XSMB, XSMN, XSMT':R.region==='mb'?'XSMB':RLAB[R.region]+' '+ST[R.st],f=s=>s.replace('{R}',lab);document.title=f(m[0])+' – XS Lab';const md=document.querySelector('meta[name=description]');if(md)md.setAttribute('content',f(m[1])+' Thông tin chỉ mang tính tham khảo.');}
+const H1_0=document.getElementById('vtitle').textContent,PG=window.XS_PAGE||null;
+function onPageView(v){return PG&&v===PG.view&&(!location.hash||location.hash==='#'+v);}
+function setMeta(v){if(onPageView(v))return;const m=META[v]||META['ket-qua'],lab=!N?'XSMB, XSMN, XSMT':R.region==='mb'?'XSMB':RLAB[R.region]+' '+ST[R.st],f=s=>s.replace('{R}',lab);document.title=f(m[0])+' – XS Lab';const md=document.querySelector('meta[name=description]');if(md)md.setAttribute('content',f(m[1])+' Thông tin chỉ mang tính tham khảo.');}
 const $=id=>document.getElementById(id);
 const pad=k=>String(k).padStart(2,'0');
 const fmt=(x,d=2)=>(x*100).toFixed(d).replace('.',',')+'%';
@@ -612,7 +693,7 @@ const ST=XS.STATIONS;
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
 
 /* ---------- data & current series ---------- */
-const R=Object.assign({region:'mb',sts:{mn:'tp-hcm',mt:'da-nang'}},store.get('xs-region2',{}));
+const R=Object.assign({region:'mb',sts:{mn:'tp-hcm',mt:'da-nang'}},store.get('xs-region2',{}));if(window.XS_PAGE&&XS_PAGE.region)R.region=XS_PAGE.region;
 Object.defineProperty(R,'st',{get(){return R.sts[R.region]||'';},set(v){if(R.region!=='mb')R.sts[R.region]=v;}});
 const RLAB={mb:'XSMB',mn:'XSMN',mt:'XSMT'},RNAME={mb:'Miền Bắc',mn:'Miền Nam',mt:'Miền Trung'};
 let RAW={},SER={},LOG_MB=[],REC_MB=[];
@@ -688,14 +769,14 @@ $('sheetIn').innerHTML=VIEWS.slice(4).map(navA).join('')+`<button class="row" id
 $('moreBtn').onclick=e=>{e.preventDefault();$('sheet').classList.add('on');};
 $('sheet').onclick=e=>{if(e.target===$('sheet')||e.target.closest('a'))$('sheet').classList.remove('on');};
 document.getElementById('sheetTheme').onclick=()=>cycleTheme();
-function curView(){let v=(location.hash||'#ket-qua').slice(1);if(/^dan-/.test(v))return 'dan';v=ALIAS[v]||v;return VIEWS.find(x=>x[0]===v)?v:'ket-qua';}
+function curView(){let v=(location.hash||'#'+(window.XS_PAGE&&XS_PAGE.view||'ket-qua')).slice(1);if(/^dan-/.test(v))return 'dan';v=ALIAS[v]||v;return VIEWS.find(x=>x[0]===v)?v:'ket-qua';}
 function route(){
  const v=(location.hash||'').slice(1),cur=curView();
  if(cur==='dan'){const dm=v.match(/^dan-([a-z-]+)-(\d+)$/);if(dm&&DANM.find(x=>x.id===dm[1]))dn.m=dm[1];if(dm&&[4,6,10].includes(+dm[2]))dn.n=+dm[2];}
  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+cur));
  const navv=cur==='dan'?'thong-ke-dan':cur;
  document.querySelectorAll('.nav a,.tab a').forEach(a=>{const on=a.dataset.v===navv||(a.dataset.v==='more'&&VIEWS.slice(4).some(x=>x[0]===navv));if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
- document.body.classList.toggle('novreg',cur==='vietlott');$('vtitle').textContent=cur==='dan'?'Lịch sử thống kê dàn':VIEWS.find(x=>x[0]===cur)[1];setMeta(cur);
+ document.body.classList.toggle('novreg',cur==='vietlott');$('vtitle').textContent=onPageView(cur)?H1_0:cur==='dan'?'Lịch sử thống kê dàn':VIEWS.find(x=>x[0]===cur)[1];setMeta(cur);
  if(N)renderView(cur);window.scrollTo(0,0);}
 addEventListener('hashchange',route);
 function renderView(v){
@@ -1191,24 +1272,32 @@ function checkTicket(){
   ${nw?'<p class="note" style="margin:10px 0 0">Đối chiếu với vé thật và kết quả chính thức của công ty xổ số kiến thiết trước khi đi lĩnh thưởng.</p>':''}</div>`;}
 
 /* ---------- Vietlott ---------- */
-const VL={g:store.get('xs-vl','645'),data:{},ky:null,win:100,loading:null};
-const VLG={'645':{nm:'Mega 6/45',mx:45,f:'vietlott_645.csv',days:'thứ 4, thứ 6, chủ nhật'},'655':{nm:'Power 6/55',mx:55,f:'vietlott_655.csv',days:'thứ 3, thứ 5, thứ 7'}};
-function vlLoad(g){if(VL.data[g])return Promise.resolve(VL.data[g]);return fetch(VLG[g].f,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(VLG[g].f);return r.text();}).then(tx=>{const rows=tx.trim().split(/\r?\n/).slice(1).map(l=>{const p=l.split(',');return {ky:+p[0],date:p[1],n:p.slice(2,8).map(Number),db:p[8]?+p[8]:null};});return VL.data[g]=rows;});}
+const VL={g:(window.XS_PAGE&&XS_PAGE.game)||store.get('xs-vl','645'),data:{},ky:null,win:100,loading:null};
+const VLG={'keno':{nm:'Keno',t:'keno',mx:80,f:'vietlott_keno.csv',days:'hằng ngày, khoảng 8 phút một kỳ từ 6:00 đến 22:00'},'645':{nm:'Mega 6/45',t:'6x',mx:45,f:'vietlott_645.csv',days:'thứ 4, thứ 6, chủ nhật'},'655':{nm:'Power 6/55',t:'6x',mx:55,f:'vietlott_655.csv',days:'thứ 3, thứ 5, thứ 7'},'3d':{nm:'Max 3D',t:'3d',f:'vietlott_3d.csv',days:'thứ 2, thứ 4, thứ 6'},'3dpro':{nm:'Max 3D Pro',t:'3d',f:'vietlott_3dpro.csv',days:'thứ 3, thứ 5, thứ 7'}};
+const G3=[['db','Giải Đặc biệt',2],['g1','Giải Nhất',4],['g2','Giải Nhì',6],['g3','Giải Ba',8]];
+function vlParse(g,tx){const L=tx.trim().split(/\r?\n/).slice(1);const t=VLG[g].t;
+ if(t==='6x')return L.map(l=>{const p=l.split(',');return {ky:+p[0],date:p[1],n:p.slice(2,8).map(Number),db:p[8]?+p[8]:null};});
+ if(t==='3d')return L.map(l=>{const p=l.split(',');return {ky:+p[0],date:p[1],db:p[2].split(' '),g1:p[3].split(' '),g2:p[4].split(' '),g3:p[5].split(' ')};});
+ return L.map(l=>{const p=l.split(',');return {ky:+p[0],date:p[1],n:p[2].split(' ').map(Number)};});}
+function vlLoad(g){if(VL.data[g])return Promise.resolve(VL.data[g]);return fetch(XS_ROOT+VLG[g].f,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(VLG[g].f);return r.text();}).then(tx=>VL.data[g]=vlParse(g,tx));}
 function vlComb(n,k){let r=1;for(let i=1;i<=k;i++)r=r*(n-k+i)/i;return r;}
 function vlOdds(g){const mx=VLG[g].mx,T=vlComb(mx,6),o=[[6,'Jackpot'+(g==='655'?' 1':''),1]];if(g==='655')o.push([5.5,'Jackpot 2 (5 số + số đặc biệt)',6]);o.push([5,'Giải nhất (5 số)',6*(mx-6-(g==='655'?1:0))],[4,'Giải nhì (4 số)',15*vlComb(mx-6,2)],[3,'Giải ba (3 số)',20*vlComb(mx-6,3)]);return o.map(([k,nm,c])=>({k,nm,p:c/T}));}
 function vlPrize(g,m,hasDb){if(m===6)return g==='655'?'Jackpot 1':'Jackpot';if(m===5)return g==='655'&&hasDb?'Jackpot 2':'Giải nhất';if(m===4)return 'Giải nhì';if(m===3)return 'Giải ba';return '';}
 function renderVL(){
+ if(!VLG[VL.g])VL.g='645';
  document.querySelectorAll('#vlGame button').forEach(b=>{b.setAttribute('aria-pressed',b.dataset.g===VL.g);b.onclick=()=>{VL.g=b.dataset.g;store.set('xs-vl',VL.g);VL.ky=null;renderVL();};});
  $('vlT').textContent='Đang tải dữ liệu '+VLG[VL.g].nm+'…';
- vlLoad(VL.g).then(rows=>vlDraw(rows)).catch(e=>{$('vlT').textContent='Không tải được dữ liệu Vietlott: '+e.message;});}
+ vlLoad(VL.g).then(rows=>{const t=VLG[VL.g].t;if(t==='6x')vlDraw(rows);else if(t==='3d')vlDraw3(rows);else vlDrawK(rows);}).catch(e=>{$('vlT').textContent='Không tải được dữ liệu Vietlott: '+e.message;});}
+function vlNav(rows,redraw){const N2=rows.length;if(VL.ky===null||!rows.some(r=>r.ky===VL.ky))VL.ky=rows[N2-1].ky;const i=rows.findIndex(r=>r.ky===VL.ky),r=rows[i],kp=x=>String(x.ky).padStart(5,'0');
+ $('vlKy').innerHTML=rows.slice(-200).reverse().map(x=>`<option value="${x.ky}">#${kp(x)} · ${vnDate(x.date)}</option>`).join('');if(i<N2-200)$('vlKy').insertAdjacentHTML('beforeend',`<option value="${r.ky}">#${kp(r)} · ${vnDate(r.date)}</option>`);
+ $('vlKy').value=r.ky;$('vlKy').onchange=()=>{VL.ky=+$('vlKy').value;redraw(rows);};
+ $('vlPrev').disabled=i<=0;$('vlNext').disabled=i>=N2-1;$('vlPrev').onclick=()=>{VL.ky=rows[i-1].ky;redraw(rows);};$('vlNext').onclick=()=>{VL.ky=rows[i+1].ky;redraw(rows);};$('vlLatest').onclick=()=>{VL.ky=rows[N2-1].ky;redraw(rows);};return {i,r};}
+function vlBook(rows,redraw,fmt1){$('vlBook').innerHTML=rows.slice(-10).reverse().map(x=>`<a href="#vietlott" data-ky="${x.ky}"><div><b>#${String(x.ky).padStart(5,'0')}</b><br><small>${wd(x.date)}, ${vnDate(x.date)}</small></div><div class="chipline">${fmt1(x)}</div></a>`).join('');
+ $('vlBook').querySelectorAll('a').forEach(a=>a.onclick=ev=>{ev.preventDefault();VL.ky=+a.dataset.ky;redraw(rows);$('vlT').scrollIntoView({behavior:'smooth',block:'start'});});}
 function vlDraw(rows){
  const g=VL.g,G=VLG[g],mx=G.mx,N2=rows.length;if(!N2)return;
- if(VL.ky===null||!rows.some(r=>r.ky===VL.ky))VL.ky=rows[N2-1].ky;
- const i=rows.findIndex(r=>r.ky===VL.ky),r=rows[i];
- $('vlKy').innerHTML=rows.slice(-200).reverse().map(x=>`<option value="${x.ky}">#${String(x.ky).padStart(5,'0')} · ${vnDate(x.date)}</option>`).join('');
- if(i<N2-200)$('vlKy').insertAdjacentHTML('beforeend',`<option value="${r.ky}">Kỳ #${String(r.ky).padStart(5,'0')} · ${vnDate(r.date)}</option>`);
- $('vlKy').value=r.ky;$('vlKy').onchange=()=>{VL.ky=+$('vlKy').value;vlDraw(rows);};
- $('vlPrev').disabled=i<=0;$('vlNext').disabled=i>=N2-1;$('vlPrev').onclick=()=>{VL.ky=rows[i-1].ky;vlDraw(rows);};$('vlNext').onclick=()=>{VL.ky=rows[i+1].ky;vlDraw(rows);};$('vlLatest').onclick=()=>{VL.ky=rows[N2-1].ky;vlDraw(rows);};
+ $('vlFormS').textContent='Nhập 6 số trên vé, ngăn cách bằng dấu phẩy hoặc dấu cách. App dò với kỳ đang chọn ở trên và đếm bộ số này đã trùng bao nhiêu số ở các kỳ trong quá khứ.';$('vlIn').placeholder='05, 12, 23, 34, 40, 44';
+ const {i,r}=vlNav(rows,vlDraw);$('vlFreq').style.gridTemplateColumns='';
  $('vlT').textContent=`${G.nm} · kỳ #${String(r.ky).padStart(5,'0')} · ${wd(r.date)}, ${vnDate(r.date)}`;
  $('vlBalls').innerHTML=r.n.map(k=>ball(k,'r lg')).join('')+(g==='655'&&r.db?`<div class="ballwrap">${ball(r.db,'y lg')}<small>số đặc biệt</small></div>`:'');
  const od=vlOdds(g);
@@ -1227,8 +1316,77 @@ function vlDraw(rows){
  const li=(a)=>`<div class="tbl"><table><tbody>${a}</tbody></table></div>`;
  $('vlHot').innerHTML=`<h2>Về nhiều nhất, ít nhất</h2><p class="sub">Trong ${vn(win.length)} kỳ gần nhất (trung bình ${dec(e,1)} lần).</p>${li(ord.slice(0,5).map(k=>`<tr><td class="left"><b>${pad(k)}</b></td><td>${c[k]} lần</td><td class="left">nhiều</td></tr>`).join('')+ord.slice(-5).reverse().map(k=>`<tr><td class="left"><b>${pad(k)}</b></td><td>${c[k]} lần</td><td class="left">ít</td></tr>`).join(''))}`;
  $('vlGan').innerHTML=`<h2>Số lâu chưa về</h2><p class="sub">Số kỳ liên tiếp chưa xuất hiện tính đến kỳ mới nhất, kèm kỷ lục của chính số đó trong toàn bộ dữ liệu.</p>${li(`<tr><th class="left">Số</th><th>Chưa về</th><th>Kỷ lục</th></tr>`+gan.slice(0,10).map(x=>`<tr><td class="left"><b>${pad(x.k)}</b></td><td>${x.g} kỳ</td><td>${x.m} kỳ</td></tr>`).join(''))}`;
- $('vlBook').innerHTML=rows.slice(-10).reverse().map(x=>`<a href="#vietlott" data-ky="${x.ky}"><div><b>#${String(x.ky).padStart(5,'0')}</b><br><small>${wd(x.date)}, ${vnDate(x.date)}</small></div><div class="chipline">${x.n.map(k=>`<b>${pad(k)}</b>`).join(' ')}${g==='655'&&x.db?` <span>| ĐB <b style="color:#b08000">${pad(x.db)}</b></span>`:''}</div></a>`).join('');
- $('vlBook').querySelectorAll('a').forEach(a=>a.onclick=ev=>{ev.preventDefault();VL.ky=+a.dataset.ky;vlDraw(rows);$('vlT').scrollIntoView({behavior:'smooth',block:'start'});});}
+ vlBook(rows,vlDraw,x=>x.n.map(k=>`<b>${pad(k)}</b>`).join(' ')+(g==='655'&&x.db?` <span>| ĐB <b style="color:#b08000">${pad(x.db)}</b></span>`:''));}
+/* Max 3D, Max 3D Pro */
+function vlDraw3(rows){
+ const g=VL.g,G=VLG[g],N2=rows.length,pro=g==='3dpro';if(!N2)return;const {i,r}=vlNav(rows,vlDraw3);
+ $('vlT').textContent=`${G.nm} · kỳ #${String(r.ky).padStart(5,'0')} · ${wd(r.date)}, ${vnDate(r.date)}`;
+ $('vlBalls').innerHTML=`<div class="tbl" style="width:100%"><table><tbody>${G3.map(([k,nm])=>`<tr><td class="left" style="width:120px"><b>${nm}</b></td><td class="left" style="font-size:20px;letter-spacing:1px">${r[k].map(x=>`<b style="color:var(--red);margin-right:14px;display:inline-block">${x}</b>`).join('')}</td></tr>`).join('')}</tbody></table></div>`;
+ $('vlNote').innerHTML=pro?`Max 3D Pro quay ${G.days}, khoảng 18:00; mỗi kỳ quay 20 bộ ba số (Đặc biệt 2, Nhất 4, Nhì 6, Ba 8). Vé gồm 2 bộ ba số: trùng cả 2 bộ số giải Đặc biệt đúng thứ tự là giải Đặc biệt, ngược thứ tự là giải phụ Đặc biệt; các giải còn lại dựa trên số bộ trùng với từng nhóm giải. Dữ liệu ${vn(N2)} kỳ (${vnDate(rows[0].date)} – ${vnDate(rows[N2-1].date)}).`
+  :`Max 3D quay ${G.days}, khoảng 18:00; mỗi kỳ quay 20 bộ ba số (Đặc biệt 2, Nhất 4, Nhì 6, Ba 8). Vé Max 3D cơ bản chọn 1 bộ ba số 000–999, trùng đúng thứ tự một bộ số của nhóm giải nào thì trúng giải đó. Dữ liệu ${vn(N2)} kỳ (${vnDate(rows[0].date)} – ${vnDate(rows[N2-1].date)}).`;
+ $('vlFormS').textContent=pro?'Mỗi vé Max 3D Pro nhập 2 bộ ba số (ví dụ 123 456); dò nhiều vé thì ngăn cách các vé bằng dấu phẩy, tối đa 17 vé.':'Nhập các bộ ba số trên vé (000–999), ngăn cách bằng dấu phẩy hoặc dấu cách, tối đa 17 bộ số.';
+ $('vlIn').placeholder=pro?'123 456, 789 012':'123, 456, 789';
+ $('vlForm').onsubmit=e=>{e.preventDefault();vlCheck3(rows);};if($('vlIn').value.trim())vlCheck3(rows,true);else $('vlOut').innerHTML='';
+ const W=[['30 kỳ',30],['100 kỳ',100],['1 năm',156],['Toàn bộ',1e9]];seg($('vlWin'),W,VL.win,v=>{VL.win=v;vlDraw3(rows);});
+ const win=rows.slice(Math.max(0,N2-VL.win)),cnt3={},dig=[0,1,2].map(()=>new Array(10).fill(0));let tot=0;
+ for(const x of win)for(const [k] of G3)for(const v of x[k]){cnt3[v]=(cnt3[v]||0)+1;tot++;for(let p=0;p<3;p++)dig[p][+v[p]]++;}
+ $('vlFS').textContent=`Tần suất từng chữ số theo vị trí trong ${vn(tot)} bộ ba số của ${vn(win.length)} kỳ gần nhất (${vnDate(win[0].date)} – ${vnDate(win[win.length-1].date)}). Trung bình mỗi chữ số ${dec(tot/10,0)} lần ở mỗi vị trí.`;
+ $('vlFreq').style.gridTemplateColumns='repeat(11,minmax(0,1fr))';
+ $('vlFreq').innerHTML='<div style="border:0"></div>'+[...Array(10).keys()].map(d=>`<div style="border:0"><b>${d}</b></div>`).join('')+['Trăm','Chục','Đơn vị'].map((nm,p)=>{const mxd=Math.max(...dig[p]);return `<div style="border:0;font-size:11px;color:var(--mute);display:grid;place-items:center">${nm}</div>`+dig[p].map(c=>`<div title="${c} lần"><i style="height:${(c/mxd*100).toFixed(0)}%"></i><span style="color:var(--ink)">${c}</span></div>`).join('');}).join('');
+ const ord=Object.keys(cnt3).sort((a,b)=>cnt3[b]-cnt3[a]||a.localeCompare(b));
+ const last={};rows.forEach((x,ix)=>{for(const [k] of G3)for(const v of x[k])last[v]=ix;});const never=1000-Object.keys(last).length;
+ const gan=Object.keys(last).map(v=>({v,g:N2-1-last[v]})).sort((a,b)=>b.g-a.g||a.v.localeCompare(b.v));
+ const li=a=>`<div class="tbl"><table><tbody>${a}</tbody></table></div>`;
+ $('vlHot').innerHTML=`<h2>Bộ ba số về nhiều nhất</h2><p class="sub">Trong ${vn(win.length)} kỳ gần nhất; mỗi kỳ có 20 bộ số nên trung bình mỗi bộ ba số về ${dec(win.length*20/1000,1)} lần.</p>${li(ord.slice(0,10).map(v=>`<tr><td class="left"><b>${v}</b></td><td>${cnt3[v]} lần</td></tr>`).join(''))}`;
+ $('vlGan').innerHTML=`<h2>Bộ ba số lâu chưa về</h2><p class="sub">Số kỳ liên tiếp chưa xuất hiện ở bất kỳ giải nào, tính đến kỳ mới nhất.${never?` Có ${never} bộ số chưa từng về trong ${vn(N2)} kỳ.`:''}</p>${li(gan.slice(0,10).map(x=>`<tr><td class="left"><b>${x.v}</b></td><td>${x.g} kỳ</td></tr>`).join(''))}`;
+ vlBook(rows,vlDraw3,x=>`<span>ĐB <b>${x.db.join(' ')}</b></span> <span>Nhất <b>${x.g1.join(' ')}</b></span>`);}
+function vlCheck3(rows,silent){
+ const g=VL.g,pro=g==='3dpro',r=rows.find(x=>x.ky===VL.ky),raw=$('vlIn').value.trim();$('vlErr').textContent='';
+ const grp=v=>G3.filter(([k])=>r[k].includes(v)).map(([k,nm])=>nm);
+ let items;
+ if(pro){const tk=raw.split(/[,;\n]+/).map(x=>x.trim()).filter(Boolean);items=tk.map(x=>{const m=x.match(/^(\d{3})\D+(\d{3})$/);return m?[m[1],m[2]]:null;});
+  if(!items.length||items.length>17||items.some(p=>!p)){if(!silent)$('vlErr').textContent='Mỗi vé gồm 2 bộ ba số (ví dụ 123 456), các vé ngăn cách bằng dấu phẩy, tối đa 17 vé.';$('vlOut').innerHTML='';return;}}
+ else{items=(raw.match(/\d+/g)||[]);if(!items.length||items.length>17||items.some(x=>x.length!==3)){if(!silent)$('vlErr').textContent='Nhập các bộ ba số gồm đúng 3 chữ số (000–999), tối đa 17 bộ.';$('vlOut').innerHTML='';return;}}
+ const kp=String(r.ky).padStart(5,'0');
+ const html=items.map(it=>{
+  if(!pro){const gs=grp(it);let hist=0;for(const x of rows)if(G3.some(([k])=>x[k].includes(it)))hist++;
+   return `<div class="dvone${gs.length?' win':''}"><h4>${it} · ${gs.length?'trùng '+gs.join(', '):'không trùng giải'}</h4><p class="note" style="margin:0">Trong ${vn(rows.length)} kỳ, bộ số này đã về ${hist} kỳ (theo xác suất ≈ ${dec(rows.length*(1-Math.pow(0.999,20)),1)}).</p></div>`;}
+  const [a,b]=it,notes=[];
+  if(r.db[0]===a&&r.db[1]===b)notes.push('<b>Trùng 2 bộ số giải Đặc biệt đúng thứ tự</b> — giải Đặc biệt');
+  else if(r.db[0]===b&&r.db[1]===a)notes.push('<b>Trùng 2 bộ số giải Đặc biệt ngược thứ tự</b> — giải phụ Đặc biệt');
+  for(const [k,nm] of G3.slice(1)){const c=[a,b].filter(v=>r[k].includes(v)).length;if(c===2)notes.push(`<b>Trùng cả 2 bộ số trong nhóm ${nm}</b>`);}
+  for(const v of [a,b]){const gs=grp(v);if(gs.length)notes.push(`${v} có trong: ${gs.join(', ')}`);}
+  return `<div class="dvone${notes.length?' win':''}"><h4>${a} ${b}</h4>${notes.length?`<ul>${notes.map(x=>`<li>${x}</li>`).join('')}</ul>`:'<p class="note" style="margin:0">Không bộ số nào trùng kết quả kỳ này.</p>'}</div>`;}).join('');
+ $('vlOut').innerHTML=`<div class="vlres"><p class="note" style="margin:0">Kỳ #${kp} (${vnDate(r.date)}).${pro?' Giá trị từng hạng giải và các trường hợp trúng nhiều giải xem trong thể lệ Max 3D Pro của Vietlott.':' Giá trị giải cho mỗi 10.000 đồng: Đặc biệt 1.000.000 đ, Nhất 350.000 đ, Nhì 210.000 đ, Ba 100.000 đ.'}</p>${html}<p class="note" style="margin:0">Đối chiếu với vé thật và kết quả chính thức do Vietlott công bố trước khi đi lĩnh thưởng.</p></div>`;}
+/* Keno */
+function vlDrawK(rows){
+ const N2=rows.length;if(!N2)return;const {i,r}=vlNav(rows,vlDrawK);
+ const ev=r.n.filter(k=>k%2===0).length,big=r.n.filter(k=>k>40).length;
+ $('vlT').textContent=`Keno · kỳ #${String(r.ky).padStart(7,'0')} · ${wd(r.date)}, ${vnDate(r.date)}`;
+ $('vlBalls').innerHTML=r.n.map(k=>`<div class="ball sm r">${pad(k)}</div>`).join('');
+ $('vlNote').innerHTML=`Kỳ này: <b>${ev}</b> số chẵn, <b>${20-ev}</b> số lẻ · <b>${20-big}</b> số nhỏ (01–40), <b>${big}</b> số lớn (41–80). Keno quay ${VLG.keno.days} (119 kỳ mỗi ngày); mỗi kỳ chọn ngẫu nhiên 20 số từ 01 đến 80. App lưu ${vn(N2)} kỳ gần nhất (từ ${vnDate(rows[0].date)}).`;
+ $('vlFormS').textContent='Nhập từ 1 đến 10 số (01–80) trên vé Keno, ngăn cách bằng dấu phẩy hoặc dấu cách. App đếm số trùng với kỳ đang chọn và với các kỳ đã lưu.';$('vlIn').placeholder='05, 18, 27, 44, 61';
+ $('vlForm').onsubmit=e=>{e.preventDefault();vlCheckK(rows);};if($('vlIn').value.trim())vlCheckK(rows,true);else $('vlOut').innerHTML='';
+ const W=[['100 kỳ',100],['500 kỳ',500],['1.000 kỳ',1000],['Tất cả đã lưu',1e9]];if(![100,500,1000,1e9].includes(VL.win))VL.win=500;seg($('vlWin'),W,VL.win,v=>{VL.win=v;vlDrawK(rows);});
+ const win=rows.slice(Math.max(0,N2-VL.win)),c=new Array(81).fill(0);for(const x of win)for(const k of x.n)c[k]++;const e=win.length/4,cmax=Math.max(...c);
+ $('vlFreq').style.gridTemplateColumns='';
+ $('vlFS').textContent=`Số lần mỗi số xuất hiện trong ${vn(win.length)} kỳ gần nhất. Mỗi kỳ ra 20/80 số nên trung bình mỗi số về ${dec(e,0)} lần; số viền đỏ là số có mặt ở kỳ đang chọn.`;
+ $('vlFreq').innerHTML=[...Array(80).keys()].map(j=>{const k=j+1;return `<div class="${r.n.includes(k)?'hi':''}" title="${pad(k)}: ${c[k]} lần"><i style="height:${(c[k]/cmax*100).toFixed(0)}%"></i><b>${pad(k)}</b><span>${c[k]}</span></div>`;}).join('');
+ const ord=[...Array(80).keys()].map(j=>j+1).sort((a,b)=>c[b]-c[a]||a-b);const last=new Array(81).fill(-1);rows.forEach((x,ix)=>{for(const k of x.n)last[k]=ix;});
+ const gan=[...Array(80).keys()].map(j=>j+1).map(k=>({k,g:N2-1-last[k]})).sort((a,b)=>b.g-a.g||a.k-b.k);
+ let ce=0,cb=0,ch=0;for(const x of win){const e2=x.n.filter(k=>k%2===0).length,b2=x.n.filter(k=>k>40).length;if(e2>10)ce++;if(b2>10)cb++;if(e2===10)ch++;}
+ const li=a=>`<div class="tbl"><table><tbody>${a}</tbody></table></div>`;
+ $('vlHot').innerHTML=`<h2>Về nhiều nhất, ít nhất</h2><p class="sub">Trong ${vn(win.length)} kỳ gần nhất. Kỳ nhiều số chẵn hơn: ${ce}, hòa 10–10: ${ch}; kỳ nhiều số lớn hơn: ${cb}.</p>${li(ord.slice(0,5).map(k=>`<tr><td class="left"><b>${pad(k)}</b></td><td>${c[k]} lần</td><td class="left">nhiều</td></tr>`).join('')+ord.slice(-5).reverse().map(k=>`<tr><td class="left"><b>${pad(k)}</b></td><td>${c[k]} lần</td><td class="left">ít</td></tr>`).join(''))}`;
+ $('vlGan').innerHTML=`<h2>Số lâu chưa về</h2><p class="sub">Số kỳ liên tiếp chưa xuất hiện tính đến kỳ mới nhất. Mỗi kỳ một số có xác suất về 25%, nên chuỗi 15–20 kỳ chưa về vẫn xảy ra thường xuyên.</p>${li(gan.slice(0,10).map(x=>`<tr><td class="left"><b>${pad(x.k)}</b></td><td>${x.g} kỳ</td></tr>`).join(''))}`;
+ vlBook(rows,vlDrawK,x=>x.n.map(pad).join(' '));}
+function vlCheckK(rows,silent){
+ const nums=($('vlIn').value.match(/\d+/g)||[]).map(Number);$('vlErr').textContent='';
+ if(!nums.length||nums.length>10||new Set(nums).size!==nums.length||nums.some(k=>k<1||k>80)){if(!silent)$('vlErr').textContent='Nhập từ 1 đến 10 số khác nhau trong khoảng 01–80.';$('vlOut').innerHTML='';return;}
+ const n=nums.length,set=new Set(nums),r=rows.find(x=>x.ky===VL.ky),m=r.n.filter(k=>set.has(k)).length,H=new Array(n+1).fill(0);
+ for(const x of rows)H[x.n.filter(k=>set.has(k)).length]++;
+ const C=vlComb,pk=k=>C(20,k)*C(60,n-k)/C(80,n);
+ $('vlOut').innerHTML=`<div class="vlres"><div class="dvone${m?' win':''}"><h4>Kỳ #${String(r.ky).padStart(7,'0')}: trùng ${m}/${n} số (bậc ${n})</h4><div class="balls" style="gap:6px;margin-top:6px">${[...nums].sort((a,b)=>a-b).map(k=>ball(k,r.n.includes(k)?'r sm':'sm dim')).join('')}</div><p class="note" style="margin:8px 0 0">Giải thưởng Keno tùy bậc chơi và số trùng (bậc 8–10 trùng 0 số cũng có giải); xem bảng cơ cấu giải trong thể lệ Keno của Vietlott và đối chiếu với kết quả chính thức.</p></div>
+  <div><h4 style="margin:0 0 4px">Bộ ${n} số này trong ${vn(rows.length)} kỳ đã lưu</h4><div class="tbl"><table><thead><tr><th class="left">Số trùng</th><th>Số kỳ</th><th>Theo xác suất</th></tr></thead><tbody>${[...Array(n+1).keys()].reverse().map(k=>`<tr><td class="left">${k}/${n}</td><td>${vn(H[k])}</td><td>${(x=>x<0.1?'dưới 0,1':dec(x,1))(rows.length*pk(k))}</td></tr>`).join('')}</tbody></table></div></div></div>`;}
 function vlCheck(rows,silent){
  const g=VL.g,mx=VLG[g].mx,nums=($('vlIn').value.match(/\d+/g)||[]).map(Number);$('vlErr').textContent='';
  if(nums.length!==6||new Set(nums).size!==6||nums.some(k=>k<1||k>mx)){if(!silent)$('vlErr').textContent=`Nhập đúng 6 số khác nhau từ 01 đến ${mx}.`;$('vlOut').innerHTML='';return;}
@@ -1246,7 +1404,7 @@ function renderAbout(){
  const mbg=gaps(mb.map(r=>r.date)).filter(([,,n])=>n>5),mng=gaps(RAW.mn.dates).filter(([,,n])=>n>5),mtg=RAW.mt?gaps(RAW.mt.dates).filter(([,,n])=>n>5):[];
  const lastMN=RAW.mn.last;
  $('aboutDoc').innerHTML=`<h2>Về dữ liệu</h2><div class="notice" role="note" style="margin-top:6px"><b>Thông tin nguồn.</b> Thông tin và kết quả xổ số trên XS Lab được chúng tôi cập nhật từ nguồn công khai và chỉ mang tính chất tham khảo. Vui lòng kiểm tra lại kết quả chính thức được công bố bởi các công ty xổ số kiến thiết.</div><p class="sub">Toàn bộ dữ liệu, cách cập nhật và cách tính của XS Lab. Mọi con số trên app là thống kê của các kỳ đã quay; XS Lab không đưa ra dự đoán kết quả.</p>
- <div class="kpis" style="margin:10px 0"><div class="kpi"><b>${vn(mbN)}</b><span>kỳ XSMB · ${vnDate(mb[0].date)} – ${vnDate(mb[mbN-1].date)}</span></div><div class="kpi"><b>${vn(mnN)}</b><span>kết quả đài XSMN (${Object.keys(RAW.mn.by).length} đài) · ${vnDate(RAW.mn.dates[0])} – ${vnDate(lastMN)}</span></div><div class="kpi"><b>${vn(mtN)}</b><span>kết quả đài XSMT (${RAW.mt?Object.keys(RAW.mt.by).length:0} đài) · ${RAW.mt?vnDate(RAW.mt.dates[0])+' – '+vnDate(RAW.mt.last):''}</span></div><div class="kpi"><b>3</b><span>tệp dữ liệu mở: <a href="xsmb.csv" style="color:inherit">xsmb.csv</a>, <a href="xsmn.csv" style="color:inherit">xsmn.csv</a>, <a href="xsmt.csv" style="color:inherit">xsmt.csv</a></span></div></div>
+ <div class="kpis" style="margin:10px 0"><div class="kpi"><b>${vn(mbN)}</b><span>kỳ XSMB · ${vnDate(mb[0].date)} – ${vnDate(mb[mbN-1].date)}</span></div><div class="kpi"><b>${vn(mnN)}</b><span>kết quả đài XSMN (${Object.keys(RAW.mn.by).length} đài) · ${vnDate(RAW.mn.dates[0])} – ${vnDate(lastMN)}</span></div><div class="kpi"><b>${vn(mtN)}</b><span>kết quả đài XSMT (${RAW.mt?Object.keys(RAW.mt.by).length:0} đài) · ${RAW.mt?vnDate(RAW.mt.dates[0])+' – '+vnDate(RAW.mt.last):''}</span></div><div class="kpi"><b>3</b><span>tệp dữ liệu mở: <a href="${XS_ROOT}xsmb.csv" style="color:inherit">xsmb.csv</a>, <a href="${XS_ROOT}xsmn.csv" style="color:inherit">xsmn.csv</a>, <a href="${XS_ROOT}xsmt.csv" style="color:inherit">xsmt.csv</a></span></div></div>
  <h3>Nguồn</h3><ul>
   <li><b>XSMB</b>: bộ dữ liệu mở <a href="https://github.com/kina2711/vietnam-lottery-xsmb">kina2711/vietnam-lottery-xsmb</a> (giấy phép MIT, thu thập từ Minh Ngọc), đối chiếu với 3 bộ tương tự (khiemdoan, daiduong-eth, xmanzero); mỗi lần cập nhật lấy bộ mới nhất.</li>
   <li><b>XSMN</b>: gộp 2 bộ độc lập <a href="https://github.com/tuanseo5t-alt/xosomn-xosomt">tuanseo5t-alt/xosomn-xosomt</a> và <a href="https://github.com/Hpbt/xsmn-thong-ke">Hpbt/xsmn-thong-ke</a>.</li>
@@ -1322,7 +1480,7 @@ function lvStart(reg){lvStop();if(LV.reg!==reg)LV.seen={};LV.reg=reg;LV.rr=0;doc
 function renderLive(){
  if(!LV.reg)LV.reg=lvAuto();
  const n=nowVN();
- $('lvSched').innerHTML=LVORD.map(r=>{const [a]=LVWIN[r],p=lvPhase(r,n),sts=lvStations(r,n.date);return `<button data-r="${r}" aria-pressed="${r===LV.reg}"><b>${RNAME[r]}</b><span>${pad(Math.floor(a/60))}:${pad(a%60)} · ${sts.length?sts.length+(r==='mb'?' kỳ':' đài'):'nghỉ'} · ${p==='live'?'đang trong giờ quay':p==='before'?'chưa quay':'đã quay'}</span></button>`;}).join('');
+ $('lvSched').innerHTML=LVORD.map(r=>{const [a]=LVWIN[r],p=lvPhase(r,n),sts=lvStations(r,n.date);return `<button data-r="${r}" aria-pressed="${r===LV.reg}"><b>${RLAB[r]}</b><span>${pad(Math.floor(a/60))}:${pad(a%60)} · ${sts.length?sts.length+(r==='mb'?' kỳ':' đài'):'nghỉ'} · ${p==='live'?'đang trong giờ quay':p==='before'?'chưa quay':'đã quay'}</span></button>`;}).join('');
  $('lvSched').querySelectorAll('button').forEach(b=>b.onclick=()=>lvStart(b.dataset.r));
  $('lvRefresh').onclick=()=>{LV.rr=0;lvTick();};
  lvStart(LV.reg);}
@@ -1381,7 +1539,7 @@ function lvMerge(reg,slug,d){
 
 /* ---------- loading ---------- */
 async function loadAll(){
- const get=(f,j)=>fetch(f,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(f);return j?r.json():r.text();});
+ const get=(f,j)=>fetch(XS_ROOT+f,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(f);return j?r.json():r.text();});
  const [mb,mn,mt,lmb,lmn,lmt,rmb,rmn,rmt]=await Promise.all([get('xsmb.csv'),get('xsmn.csv'),get('xsmt.csv').catch(()=>''),Promise.resolve([]),Promise.resolve([]),Promise.resolve([]),get('recent.json',1).catch(()=>[]),get('recent_mn.json',1).catch(()=>[]),get('recent_mt.json',1).catch(()=>[])]);
  return {mb,mn,mt,lmb,lmn,lmt,rmb,rmn,rmt};}
 const ro=new ResizeObserver(()=>{if(!N)return;const v=curView();if(v==='kiem-dinh')renderRandom();if(v==='mo-phong')drawStrategy();if(v==='mo-phong')drawSim();if(v==='kiem-dinh')drawRoll();if(v==='dan'&&dn.pts_)cumChart('dnChart','dnTip',dn.pts_);});

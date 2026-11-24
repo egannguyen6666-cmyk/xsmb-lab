@@ -8,7 +8,7 @@ Trang kết quả xổ số và thống kê dữ liệu đã quay của XSMB, XS
 
 XS Lab chỉ trình bày kết quả và thống kê của các kỳ đã quay, không đưa ra dự đoán. Từ 24/11/2026 đã bỏ phần danh sách cho kỳ tới và nhật ký khóa trước (các tệp `predictions*.json` cũ vẫn giữ nguyên trong kho, không còn được ghi thêm).
 
-Các mục: Kết quả (kèm thống kê nhanh của kỳ), Trực tiếp, Dò vé (tối đa 17 số, mỗi số 2–6 chữ số), Thống kê, Vietlott (Mega 6/45, Power 6/55), Thống kê dàn, Bản đồ số, Kiểm định, Mô phỏng, Về dữ liệu.
+Các mục: Kết quả (kèm thống kê nhanh của kỳ), Trực tiếp, Dò vé (tối đa 17 số, mỗi số 2–6 chữ số), Thống kê, Vietlott (Keno, Mega 6/45, Power 6/55, Max 3D, Max 3D Pro), Thống kê dàn, Bản đồ số, Kiểm định, Mô phỏng, Về dữ liệu.
 
 ---
 
@@ -94,7 +94,8 @@ Vào tab **Actions** → **Cập nhật XSMB hằng ngày** → **Run workflow**
 | `xsmt.csv`, `recent_mt.json` | Dữ liệu và kết quả đủ giải của XSMT |
 | `tools/update_mn.py`, `tools/add_day_mn.py` | Tải/gộp dữ liệu XSMN hoặc XSMT, nhập tay một đài |
 | `tools/fetch_minhngoc.py` | Lấy kết quả vừa quay từ bảng công khai Minh Ngọc (có kiểm tra) |
-| `vietlott_645.csv`, `vietlott_655.csv`, `tools/update_vietlott.py` | Kết quả Vietlott Mega 6/45, Power 6/55 và script cập nhật (từ vietvudanh/vietlott-data) |
+| `vietlott_*.csv`, `tools/update_vietlott.py` | Kết quả Vietlott Keno (6.000 kỳ gần nhất), Mega 6/45, Power 6/55, Max 3D, Max 3D Pro và script cập nhật (từ vietvudanh/vietlott-data) |
+| `xsmb/`, `xsmn/`, `xsmt/`, `truc-tiep/`, `do-ve/`, `thong-ke/`, `thong-ke-dan/`, `vietlott/`, `keno/`, `mega-645/`, `power-655/`, `max-3d/`, `max-3d-pro/`, `ve-du-lieu/` | Trang con cho công cụ tìm kiếm (tiêu đề, mô tả, đường dẫn riêng), tạo từ cùng mã nguồn |
 | `robots.txt`, `sitemap.xml` | Cho công cụ tìm kiếm |
 | `.github/workflows/update.yml` | Lịch chạy tự động |
 
