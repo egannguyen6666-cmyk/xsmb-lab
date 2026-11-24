@@ -432,7 +432,7 @@ p{margin:0 0 10px;max-width:72ch}
      <p class="sub" id="hlS"></p>
      <div id="hlOut"></div>
     </div>
-    <form class="card c12 nsearch" action="../so/" onsubmit="return window.nsGo?nsGo(this):true"><label for="nq">Tra cứu thống kê một số (00–99)</label><div><input id="nq" name="q" inputmode="numeric" placeholder="Nhập 1 số hoặc cả dàn, ví dụ 06 18 34" autocomplete="off"><button>Xem thống kê</button></div><p class="note" style="margin:8px 0 0">Một số: xem số lần về, số kỳ chưa về, kỷ lục gan ở XSMB, XSMN, XSMT. Nhiều số: dò cả dàn trong kết quả mới nhất của 3 miền. <a href="../so/">Bảng 100 số</a></p><div id="nsOut" aria-live="polite"></div></form>
+    <form class="card c12 nsearch" action="../so/" onsubmit="return window.nsGo?nsGo(this):true"><label for="nq">Bảng nghiên cứu thống kê 1 hoặc nhiều số (00–99)</label><div><input id="nq" name="q" inputmode="numeric" placeholder="Ví dụ: 34 hoặc 06 18 34" autocomplete="off"><button>Xem thống kê</button></div><p class="note" style="margin:8px 0 0">Nhập 1 số để xem số lần về, số kỳ chưa về, kỷ lục gan ở XSMB, XSMN, XSMT. Nhập nhiều số để xem số nào có mặt trong kết quả mới nhất của 3 miền. Đây là bảng thống kê, không phải dò vé. <a href="../so/">Bảng 100 số</a></p><div id="nsOut" aria-live="polite"></div></form>
     <nav class="card c12 qtools" aria-label="Công cụ"><h2>Công cụ thống kê</h2><div class="qt">
      <a href="../do-ve/"><b>Dò vé số</b><span>Dò cả dàn tới 100 số</span></a><a href="../thong-ke/lo-gan-xsmb/"><b>Lô gan</b><span>Số lâu chưa về</span></a>
      <a href="../so/"><b>Tra cứu số 00–99</b><span>Số lần về, kỷ lục gan</span></a><a href="../thong-ke-dan/"><b>Thống kê dàn</b><span>Dàn số, 3 càng, 4 càng</span></a>
@@ -2002,7 +2002,7 @@ window.nsGo=function(f){
   const res=nums.map(n=>{let c=0;const at=[];for(const x of day)for(const [g,nm] of G)for(const v of x[g])if(v.slice(-2)===n){c++;at.push((r==='mb'?'':ST[x.station]+' ')+nm.replace('Giải ',''));}return {n,c,at};});
   const on=res.filter(x=>x.c).length,tot=res.reduce((t,x)=>t+x.c,0);
   html+=`<div class="nsr"><h3>${lab} ${wd(last)}, ${vnDate(last)}: ${on}/${res.length} số có mặt${tot?` · ${tot} nháy`:''}</h3><p class="note" style="margin:0 0 8px">${r==='mb'?'So với 2 số cuối của 27 giải':`${day.length} đài: ${day.map(x=>ST[x.station]).join(', ')}`}</p><div class="lch">${res.map(x=>`<a href="${XS_ROOT}so/${x.n}/" title="${x.c?'Về ở: '+x.at.join(', '):'Không có mặt'}"><span class="${x.c?'on':''}">${x.n}${x.c>1?`<sup>×${x.c}</sup>`:''}</span></a>`).join('')}</div></div>`;}
- out.innerHTML=html?html+`<p class="note" style="margin:0">Bấm vào một số để xem thống kê chi tiết. Muốn dò theo ngày hoặc đài khác, dùng <a href="${XS_ROOT}do-ve/">Dò vé số</a>.</p>`:'<p class="note">Chưa tải xong dữ liệu, thử lại sau giây lát.</p>';
+ out.innerHTML=html?html+`<p class="note" style="margin:0">Bấm vào một số để xem thống kê chi tiết của số đó. Muốn dò vé theo ngày hoặc đài, dùng trang <a href="${XS_ROOT}do-ve/">Dò vé số</a>.</p>`:'<p class="note">Chưa tải xong dữ liệu, thử lại sau giây lát.</p>';
  return false;};
 async function loadAll(){
  const get=(f,j)=>fetch(XS_ROOT+f,{cache:'no-cache'}).then(r=>{if(!r.ok)throw new Error(f);return j?r.json():r.text();});
