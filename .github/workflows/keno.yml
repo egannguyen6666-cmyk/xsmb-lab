@@ -37,3 +37,4 @@ jobs:
           if [ -z "$CF_API_TOKEN" ] || [ -z "$CF_ZONE_ID" ]; then echo "Chưa cấu hình khoá Cloudflare, bỏ qua"; exit 0; fi
           sleep 90
           curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID/purge_cache" -H "Authorization: Bearer $CF_API_TOKEN" -H "Content-Type: application/json" --data '{"files":["https://xslab.live/vietlott_keno.csv","https://xslab.live/keno/"]}' | python3 -c "import sys,json;r=json.load(sys.stdin);print('Đã xoá bản lưu sẵn' if r.get('success') else r)"
+
