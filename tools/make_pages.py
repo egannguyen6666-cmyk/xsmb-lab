@@ -47,7 +47,7 @@ def esc(s): return html.escape(s, quote=True)
 
 # ---------- tệp giao diện dùng chung cho mọi trang tĩnh (mỗi trang nhẹ hơn, trình duyệt lưu đệm) ----------
 import hashlib
-EXTRA_CSS = """.ltg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:8px 0 14px}.ltg>div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px}.ltg h3{font-size:15px;margin:0 0 6px}.lead{background:var(--panel);border:1px solid var(--line);border-left:4px solid #d01f3c;border-radius:12px;padding:12px 14px;line-height:1.6}.vb{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8a9b,#d01f3c 55%,#8f1027);color:#fff;font-weight:700;font-size:18px;margin:3px;font-variant-numeric:tabular-nums}.vb.y{background:radial-gradient(circle at 32% 28%,#fff6c2,#f2c200 55%,#a07800);color:#1b1a20}
+EXTRA_CSS = """.g30{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}.c30{display:flex;flex-direction:column;align-items:center;min-width:54px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:var(--panel);text-decoration:none;color:var(--ink)}.c30 b{font-size:18px;color:#d01f3c}.c30 small{font-size:11.5px;color:var(--mute)}.dd30{width:100%;text-align:center;font-variant-numeric:tabular-nums}.dd30 td:first-child,.dd30 th:first-child{text-align:left;white-space:nowrap}.t30w{overflow-x:auto}.t30{width:100%;font-variant-numeric:tabular-nums}.t30 td{vertical-align:top}.t30 td small{display:block;color:var(--mute);font-size:11.5px}.t30 .db{color:#d01f3c;font-weight:700;white-space:nowrap}.t30 .lo{font-size:13.5px;line-height:1.7;word-spacing:2px}.t30 .st{white-space:nowrap}.ltg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:8px 0 14px}.ltg>div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px}.ltg h3{font-size:15px;margin:0 0 6px}.lead{background:var(--panel);border:1px solid var(--line);border-left:4px solid #d01f3c;border-radius:12px;padding:12px 14px;line-height:1.6}.vb{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8a9b,#d01f3c 55%,#8f1027);color:#fff;font-weight:700;font-size:18px;margin:3px;font-variant-numeric:tabular-nums}.vb.y{background:radial-gradient(circle at 32% 28%,#fff6c2,#f2c200 55%,#a07800);color:#1b1a20}
 .mgrid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}.mgrid a,.mgrid span{display:block;text-align:center;padding:6px 0;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-size:13px;color:var(--ink);background:var(--panel)}.mgrid span{color:var(--mute);opacity:.5}.mgrid a:hover{border-color:#d01f3c;color:var(--red)}
 .yr{display:grid;grid-template-columns:64px minmax(0,1fr);gap:8px;align-items:center;margin:0 0 6px}.yr b{font-variant-numeric:tabular-nums}
 @media(max-width:600px){.mgrid{grid-template-columns:repeat(6,minmax(0,1fr))}.yr{grid-template-columns:1fr}.vb{width:38px;height:38px;font-size:16px}}
@@ -250,7 +250,7 @@ for reg in REG:
             pd = dbprev.get((d, r["station"]))
             return f"2 số cuối giải Đặc biệt <b>{r['db'][0][-2:]}</b> lần trước làm 2 số cuối giải Đặc biệt{' của đài' if r['station'] else ''} ngày {vn(pd)}" if pd else f"2 số cuối giải Đặc biệt <b>{r['db'][0][-2:]}</b> lần đầu xuất hiện ở giải Đặc biệt{' của đài' if r['station'] else ''} trong dữ liệu"
         nav = f'<div class="pn">{f"<a href='../{slug_d(prv)}/'>‹ {lab} {vn(prv)}</a>" if prv else "<span></span>"}{f"<a href='../{slug_d(nxt)}/'>{lab} {vn(nxt)} ›</a>" if nxt else "<span></span>"}</div>'
-        links = f'<p><a class="cta" href="{mlink}">{lab} tháng {d[5:7]}/{d[:4]}</a><a class="cta" href="../{WDS[w]}/">{lab} {WD[w]}</a><a class="cta" href="../so-ket-qua/">Sổ kết quả {lab}</a><a class="cta" href="../">{lab} hôm nay</a></p>'
+        links = f'<p><a class="cta" href="../../thong-ke/30-ky-{reg}/">Thống kê {lab} 30 kỳ</a><a class="cta" href="{mlink}">{lab} tháng {d[5:7]}/{d[:4]}</a><a class="cta" href="../{WDS[w]}/">{lab} {WD[w]}</a><a class="cta" href="../so-ket-qua/">Sổ kết quả {lab}</a><a class="cta" href="../">{lab} hôm nay</a></p>'
         if reg == "xsmb":
             r = rs[0]; lo = lotos(r, MB_G)
             body = (diemtin(lab, d, [r], MB_G, [lo], gapinfo.get((d, "")) or []) + f'<p>Kết quả xổ số miền Bắc (XSMB) {WDL[w]} ngày {vn(d)}, quay lúc 18:15: giải Đặc biệt <b>{r["db"][0]}</b>, giải Nhất {r["g1"][0]}. Bảng đủ 27 giải và lô tô đầu – đuôi bên dưới.</p>'
@@ -737,6 +737,53 @@ for gdir, f, game, nm, mx in VLG2:
          f"<p>XS Lab lưu {fm(len(rows))} kỳ {nm} từ kỳ #{int(rows[0][0]):05d} ({vn(rows[0][1])}) đến kỳ #{int(rows[-1][0]):05d} ({vn(rows[-1][1])}).</p><h2>Theo năm</h2><ul class='ls'>" + "".join(f'<li><a href="../nam-{y}/">{nm} năm {y}</a> ({len(byyear[y])} kỳ)</li>' for y in years[::-1]) + "</ul><h2>20 kỳ gần nhất</h2><ul class='ls'>" + "".join(f'<li><a href="../ky-{int(r[0]):05d}/">Kỳ #{int(r[0]):05d} – {vn(r[1])}</a></li>' for r in rows[::-1][:20]) + "</ul>")
     SITEMAP_VL.append((BASE + p, rows[-1][1]))
     print(nm, "kỳ:", len(rows), "năm:", len(years))
+
+
+# ---------- Thống kê 30 kỳ gần nhất (mỗi miền một trang cố định, tự cập nhật sau mỗi buổi quay) ----------
+from collections import Counter
+for reg, (lab, name, tm) in REG.items():
+    R = fullrecs(reg); G = MB_G if reg == "xsmb" else MN_G
+    byd = {}
+    for (d, st), r in R.items(): byd.setdefault(d, []).append(r)
+    ds = sorted(byd)
+    if len(ds) < 31: continue
+    win = ds[-30:]; last = ds[-1]
+    lo_d = {d: [k for r in byd[d] for k in lotos(r, G)] for d in ds}
+    lastseen = {}
+    for i, d in enumerate(ds):
+        for k in set(lo_d[d]): lastseen[k] = i
+    gan = sorted(range(100), key=lambda k: (-(len(ds) - 1 - lastseen.get(k, -1)), k))[:10]
+    cnt = Counter(k for d in win for k in lo_d[d])
+    hot = sorted(range(100), key=lambda k: (-cnt[k], k))[:10]
+    cold = [k for k in range(100) if cnt[k] == 0]
+    kep = sorted({k for d in win for k in lo_d[d] if k % 11 == 0})
+    dau = Counter(k // 10 for d in win for k in lo_d[d]); duoi = Counter(k % 10 for d in win for k in lo_d[d])
+    tot = sum(cnt.values()); E = tot / 100
+    dbs = [(d, r) for d in win for r in sorted(byd[d], key=lambda r: ST.get(r["station"], ""))]
+    dbd = Counter(r["db"][0][-2] for _, r in dbs); dbu = Counter(r["db"][0][-1] for _, r in dbs)
+    chip = lambda k, sub: f'<a class="c30" href="../../so/{k:02d}/"><b>{k:02d}</b><small>{sub}</small></a>'
+    if reg == "xsmb":
+        rows = ''.join(f'<tr><td><a href="../../xsmb/{slug_d(d)}/">{vn(d)[:5]}</a><small>{WD[wdi(d)]}</small></td><td class="db">{r["db"][0]}</td><td class="lo">{" ".join(f"{k:02d}" for k in sorted(lo_d[d]))}</td></tr>' for d in reversed(win) for r in byd[d])
+        head = '<tr><th>Ngày</th><th>Đặc biệt</th><th>2 số cuối 27 giải</th></tr>'
+    else:
+        rows = ''.join(f'<tr><td><a href="../../{reg}/{slug_d(d)}/">{vn(d)[:5]}</a><small>{WD[wdi(d)]}</small></td><td class="st">{ST.get(r["station"], "")}</td><td class="db">{r["db"][0]}</td><td class="lo">{" ".join(f"{k:02d}" for k in lotos(r, G))}</td></tr>' for d in reversed(win) for r in sorted(byd[d], key=lambda r: ST.get(r["station"], "")))
+        head = '<tr><th>Ngày</th><th>Đài</th><th>Đặc biệt</th><th>2 số cuối 18 giải</th></tr>'
+    unit = "ngày" if reg == "xsmb" else "kỳ"
+    body = f"""<p class="lead"><b>Tính đến kỳ {vn(last)} ({WDL[wdi(last)]}):</b> 30 kỳ {lab} từ {vn(win[0])} đến {vn(last)}, tổng {tot} giải. Lô về nhiều nhất là {', '.join(f'{k:02d}' for k in hot[:3])} ({cnt[hot[0]]} lần); {len(cold)} số chưa về lần nào trong 30 kỳ; lô gan nhất là {gan[0]:02d} ({len(ds) - 1 - lastseen.get(gan[0], -1)} {unit} chưa về).</p>
+<p>Trang tự cập nhật sau mỗi buổi quay {lab} ({tm}). Mọi số liệu là thống kê các kỳ đã quay, không phải dự đoán; mỗi kỳ quay độc lập với các kỳ trước.</p>
+<h2>Lô về nhiều nhất 30 kỳ</h2><div class="g30">{''.join(chip(k, f"{cnt[k]} lần") for k in hot)}</div>
+<p class="note">Theo xác suất, trung bình mỗi số về khoảng {str(round(E, 1)).replace('.', ',')} lần trong 30 kỳ này.</p>
+<h2>Lô gan {lab} tính đến {vn(last)}</h2><div class="g30">{''.join(chip(k, f"{len(ds) - 1 - lastseen.get(k, -1)} {unit}") for k in gan)}</div>
+<h2>Số chưa về trong 30 kỳ</h2><p>{', '.join(f'<a href="../../so/{k:02d}/">{k:02d}</a>' for k in cold) or 'Không có: số nào cũng đã về ít nhất một lần.'}</p>
+<h2>Lô kép đã về trong 30 kỳ</h2><p>{', '.join(f'{k:02d} ({cnt[k]} lần)' for k in kep) or 'Không có'}</p>
+<h2>Đầu, đuôi lô tô 30 kỳ</h2><div class="card"><table class="dd30"><tr><th>Số</th>{''.join(f'<th>{i}</th>' for i in range(10))}</tr><tr><td>Đầu</td>{''.join(f'<td>{dau[i]}</td>' for i in range(10))}</tr><tr><td>Đuôi</td>{''.join(f'<td>{duoi[i]}</td>' for i in range(10))}</tr></table></div>
+<h2>Giải Đặc biệt 30 kỳ: chữ số hàng chục và hàng đơn vị</h2><div class="card"><table class="dd30"><tr><th>Số</th>{''.join(f'<th>{i}</th>' for i in range(10))}</tr><tr><td>Hàng chục</td>{''.join(f'<td>{dbd[str(i)]}</td>' for i in range(10))}</tr><tr><td>Hàng đơn vị</td>{''.join(f'<td>{dbu[str(i)]}</td>' for i in range(10))}</tr></table></div>
+<h2>Bảng kết quả 30 kỳ gần nhất</h2><div class="card t30w"><table class="t30">{head}{rows}</table></div>
+<p><a class="cta" href="../../{reg}/">{lab} hôm nay</a><a class="cta" href="../../{reg}-30-ngay/">{lab} 30 ngày</a><a class="cta" href="../lo-gan-{reg}/">Lô gan {lab}</a><a class="cta" href="../../do-ve/">Dò vé số</a></p>"""
+    if not os.path.isdir(os.path.join(ROOT, "thong-ke", f"lo-gan-{reg}")):
+        body = body.replace(f'<a class="cta" href="../lo-gan-{reg}/">Lô gan {lab}</a>', '')
+    p = f"thong-ke/30-ky-{reg}/"
+    page(p, f"Thống kê {lab} 30 kỳ gần nhất – tính đến {vn(last)}", f"Thống kê {lab} 30 kỳ gần nhất tính đến {vn(last)}: giải Đặc biệt và 2 số cuối các giải, lô về nhiều, lô gan, số chưa về, đầu đuôi. Chỉ là thống kê, không dự đoán.", [("Thống kê", "thong-ke/"), (f"Thống kê {lab} 30 kỳ", p)], f"Thống kê {lab} 30 kỳ gần nhất", body)
 
 # ---------- sitemap ----------
 

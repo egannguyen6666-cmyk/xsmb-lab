@@ -8,12 +8,12 @@ NOTICE = "Thông tin và kết quả xổ số trên XS Lab được chúng tôi
 
 def _reg(c, n):
     return [("", f"{n} hôm nay", f"{c}/"), ("", f"Trực tiếp {n}", f"truc-tiep-{c}/"), ("", f"{n} hôm qua", f"{c}-hom-qua/"), ("", f"{n} 30 ngày", f"{c}-30-ngay/"), ("", f"{n} 90 ngày", f"{c}-90-ngay/"),
-            ("", f"Sổ kết quả {n}", f"{c}/so-ket-qua/"), ("h", "Thống kê", ""),
+            ("", f"Sổ kết quả {n}", f"{c}/so-ket-qua/"), ("h", "Thống kê", ""), ("", f"Thống kê {n} 30 kỳ", f"thong-ke/30-ky-{c}/"),
             ("", f"Giải đặc biệt {n}", f"thong-ke/giai-dac-biet-{c}/"), ("", f"3 càng {n}", f"thong-ke/3-cang-{c}/")]
 
 
 MENU = [
-    ("XSMB", _reg("xsmb", "XSMB")[:7] + [("", "Lô gan XSMB", "thong-ke/lo-gan-xsmb/"), ("", "Giải đặc biệt XSMB", "thong-ke/giai-dac-biet-xsmb/"), ("", "3 càng XSMB", "thong-ke/3-cang-xsmb/"), ("", "Thống kê dàn XSMB", "thong-ke-dan-xsmb/")]),
+    ("XSMB", _reg("xsmb", "XSMB")[:8] + [("", "Lô gan XSMB", "thong-ke/lo-gan-xsmb/"), ("", "Giải đặc biệt XSMB", "thong-ke/giai-dac-biet-xsmb/"), ("", "3 càng XSMB", "thong-ke/3-cang-xsmb/"), ("", "Thống kê dàn XSMB", "thong-ke-dan-xsmb/")]),
     ("XSMN", _reg("xsmn", "XSMN") + [("", "Giải 8 XSMN", "thong-ke/giai-8-xsmn/"), ("", "Thống kê dàn XSMN", "thong-ke-dan-xsmn/")]),
     ("XSMT", _reg("xsmt", "XSMT") + [("", "Giải 8 XSMT", "thong-ke/giai-8-xsmt/"), ("", "Thống kê dàn XSMT", "thong-ke-dan-xsmt/")]),
     ("Vietlott", [("", "Keno", "keno/"), ("", "Mega 6/45", "mega-645/"), ("", "Power 6/55", "power-655/"), ("", "Max 3D, Max 3D+", "max-3d/"), ("", "Max 3D Pro", "max-3d-pro/"), ("", "Tất cả Vietlott", "vietlott/")]),
@@ -82,7 +82,7 @@ SUBNAV_WD = [("thu-2", "Thứ 2"), ("thu-3", "Thứ 3"), ("thu-4", "Thứ 4"), (
 def subnav_items(sl):
     S = sl.upper()
     return [(f"{sl}/", f"{S} hôm nay"), (f"truc-tiep-{sl}/", "Trực tiếp"), (f"{sl}-hom-qua/", "Hôm qua")] + \
-        [(f"{sl}/{a}/", b) for a, b in SUBNAV_WD] + [(f"{sl}-30-ngay/", "30 ngày"), (f"{sl}-90-ngay/", "90 ngày"), (f"{sl}/so-ket-qua/", "Sổ kết quả")]
+        [(f"{sl}/{a}/", b) for a, b in SUBNAV_WD] + [(f"{sl}-30-ngay/", "30 ngày"), (f"{sl}-90-ngay/", "90 ngày"), (f"{sl}/so-ket-qua/", "Sổ kết quả"), (f"thong-ke/30-ky-{sl}/", "Thống kê 30 kỳ")]
 def subnav_html(sl, up, cur=""):
     return f'<nav class="subnav" id="subNav" aria-label="Mục {sl.upper()}">' + "".join(
         f'<a href="{up}{u}"' + (' aria-current="page"' if u == cur else "") + f'>{t}</a>' for u, t in subnav_items(sl)) + "</nav>"
