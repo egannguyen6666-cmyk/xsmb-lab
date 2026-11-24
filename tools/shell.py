@@ -47,8 +47,8 @@ def brand(up):
     return f'<a class="brand" href="{home(up)}" aria-label="XS Lab – về trang chủ">{LOGO}<div><b>XS Lab</b><span>Kết quả &amp; thống kê xổ số</span></div></a>'
 
 
-def mhead(up):
-    return f'<header class="mhead"><a class="mlogo" href="{home(up)}" aria-label="XS Lab – về trang chủ">{LOGO.replace("lg1", "mg1").replace("lg2", "mg2")}<b>XS Lab</b></a><button class="mtheme" type="button" aria-label="Đổi giao diện sáng tối"><svg aria-hidden="true"><use href="#i-moon"/></svg></button></header>'
+def mhead(up, ic="#"):
+    return f'<header class="mhead"><a class="mlogo" href="{home(up)}" aria-label="XS Lab – về trang chủ">{LOGO.replace("lg1", "mg1").replace("lg2", "mg2")}<b>XS Lab</b></a><button class="mtheme" type="button" aria-label="Đổi giao diện sáng tối"><svg aria-hidden="true"><use href="{ic}i-moon"/></svg></button></header>'
 
 
 SIDE = [("Xổ số kiến thiết", [("Kết quả xổ số", "", "i-home"), ("Trực tiếp xổ số", "truc-tiep/", "i-live"), ("Dò vé số", "do-ve/", "i-ticket")]),
@@ -67,14 +67,14 @@ def _side_cur(cur, u):
     return cur.startswith(u)
 
 
-def side_html(up, cur=""):
-    nav = ''.join(f'<h3>{g}</h3>' + ''.join((f'<a href="{up}{u}"' if u else f'<a href="{home(up)}"') + (' aria-current="page"' if _side_cur(cur, u) else '') + f'><svg aria-hidden="true"><use href="#{ic}"/></svg><span>{t}</span></a>' for t, u, ic in it) for g, it in SIDE)
+def side_html(up, cur="", ic="#"):
+    nav = ''.join(f'<h3>{g}</h3>' + ''.join((f'<a href="{up}{u}"' if u else f'<a href="{home(up)}"') + (' aria-current="page"' if _side_cur(cur, u) else '') + f'><svg aria-hidden="true"><use href="{ic}{i}"/></svg><span>{t}</span></a>' for t, u, i in it) for g, it in SIDE)
     return f'<aside class="side">{brand(up)}<nav class="nav" aria-label="Điều hướng chính">{nav}</nav><div class="side-foot"><button class="themebtn" type="button">Giao diện: Tự động</button></div></aside>'
 
 
-def tab_html(up, cur=""):
+def tab_html(up, cur="", ic="#"):
     T = [("Kết quả", "", "i-home"), ("Trực tiếp", "truc-tiep/", "i-live"), ("Vietlott", "vietlott/", "i-vl"), ("Dò vé", "do-ve/", "i-ticket"), ("Thống kê", "thong-ke/", "i-stats")]
-    return '<nav class="tab" aria-label="Điều hướng">' + ''.join((f'<a href="{up}{u}"' if u else f'<a href="{home(up)}"') + (' aria-current="page"' if cur and u and cur.startswith(u) else '') + f'><svg aria-hidden="true"><use href="#{ic}"/></svg><span>{t}</span></a>' for t, u, ic in T) + '</nav>'
+    return '<nav class="tab" aria-label="Điều hướng">' + ''.join((f'<a href="{up}{u}"' if u else f'<a href="{home(up)}"') + (' aria-current="page"' if cur and u and cur.startswith(u) else '') + f'><svg aria-hidden="true"><use href="{ic}{i}"/></svg><span>{t}</span></a>' for t, u, i in T) + '</nav>'
 
 
 def footer_html(up, year="2026"):
