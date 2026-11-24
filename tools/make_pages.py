@@ -505,6 +505,43 @@ for k in range(100):
 hubb = SCSS + SEARCH_FORM("../") + f"<p>Chọn một số từ 00 đến 99 để xem thống kê chi tiết ở XSMB, XSMN, XSMT. Số nhỏ dưới mỗi ô là số kỳ XSMB chưa về, tính đến {vn(lastd)}.</p>" + card(grid_links().replace('href="../', 'href="./'))
 page("so/", "Tra cứu thống kê số 00–99 XSMB, XSMN, XSMT", f"Tra cứu thống kê từng số từ 00 đến 99: số lần về, số kỳ chưa về, kỷ lục gan ở XSMB, XSMN, XSMT, cập nhật đến {vn(lastd)}.", [("Tra cứu số", "so/")], "Tra cứu thống kê số 00–99", hubb)
 
+
+# ---------- hiện sẵn kỳ Vietlott mới nhất (tải nhanh, LCP thấp) ----------
+WDA = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật']
+def vlpre(f, game, nm):
+    L = open(os.path.join(ROOT, f)).read().strip().split("\n")
+    p = L[-1].split(","); ky, d = int(p[0]), p[1]
+    title = f"{nm} · kỳ #{ky:05d} · {WDA[wdi(d)]}, {vn(d)}"
+    if game in ("645", "655"):
+        nums = [int(x) for x in p[2:8]]
+        balls = ''.join(f'<div class="ball r lg">{k:02d}</div>' for k in nums)
+        if game == "655" and len(p) > 8 and p[8]: balls += f'<div class="ballwrap"><div class="ball y lg">{int(p[8]):02d}</div><small>số đặc biệt</small></div>'
+    else:
+        G3 = [("Giải Đặc biệt", p[2]), ("Giải Nhất", p[3]), ("Giải Nhì", p[4]), ("Giải Ba", p[5])]
+        balls = '<div class="tbl" style="width:100%"><table><tbody>' + ''.join(f'<tr><td class="left" style="width:120px"><b>{a}</b></td><td class="left" style="font-size:20px;letter-spacing:1px">' + ''.join(f'<b style="color:var(--red);margin-right:14px;display:inline-block">{x}</b>' for x in b.split()) + '</td></tr>' for a, b in G3) + '</tbody></table></div>'
+    first = L[1].split(",")[1]; n2 = len(L) - 1
+    dr = f"Dữ liệu {fm(n2)} kỳ ({vn(first)} – {vn(d)})."
+    if game in ("645", "655"):
+        from math import comb
+        mx = 45 if game == "645" else 55; T = comb(mx, 6)
+        od = [("Jackpot" + (" 1" if game == "655" else ""), 1)] + ([("Jackpot 2 (5 số + số đặc biệt)", 6)] if game == "655" else []) + [("Giải nhất (5 số)", 6 * (mx - 6 - (1 if game == "655" else 0))), ("Giải nhì (4 số)", 15 * comb(mx - 6, 2)), ("Giải ba (3 số)", 20 * comb(mx - 6, 3))]
+        days = "thứ 4, thứ 6, chủ nhật" if game == "645" else "thứ 3, thứ 5, thứ 7"
+        note = f"{nm} quay {days}, khoảng 18:00. Xác suất mỗi vé: " + " · ".join(f"{a} 1/{fm(round(T / c))}" for a, c in od) + ". " + dr
+    elif game == "3dpro":
+        note = "Max 3D Pro quay thứ 3, thứ 5, thứ 7, khoảng 18:00; mỗi kỳ quay 20 bộ ba số (Đặc biệt 2, Nhất 4, Nhì 6, Ba 8). Vé gồm 2 bộ ba số: trùng cả 2 bộ số giải Đặc biệt đúng thứ tự là giải Đặc biệt, ngược thứ tự là giải phụ Đặc biệt; các giải còn lại dựa trên số bộ trùng với từng nhóm giải. " + dr
+    else:
+        note = "Max 3D quay thứ 2, thứ 4, thứ 6, khoảng 18:00; mỗi kỳ quay 20 bộ ba số (Đặc biệt 2, Nhất 4, Nhì 6, Ba 8). Vé Max 3D cơ bản chọn 1 bộ ba số 000–999, trùng đúng thứ tự một bộ số của nhóm giải nào thì trúng giải đó. " + dr
+    return title, balls, note
+for fdir, f, game, nm in (("mega-645", "vietlott_645.csv", "645", "Mega 6/45"), ("power-655", "vietlott_655.csv", "655", "Power 6/55"), ("max-3d", "vietlott_3d.csv", "3d", "Max 3D"), ("max-3d-pro", "vietlott_3dpro.csv", "3dpro", "Max 3D Pro")):
+    fp = os.path.join(ROOT, fdir, "index.html")
+    if not os.path.exists(fp) or not os.path.exists(os.path.join(ROOT, f)): continue
+    title, balls, note = vlpre(f, game, nm)
+    h = open(fp).read()
+    h2 = re.sub(r'<h2 id="vlT">[^<]*</h2>', f'<h2 id="vlT">{title}</h2>', h, count=1)
+    h2 = re.sub(r'<div class="balls" id="vlBalls">.*?</div><!--/vlb-->', lambda m: f'<div class="balls" id="vlBalls">{balls}</div><!--/vlb-->', h2, count=1, flags=re.S)
+    h2 = re.sub(r'<p class="note" id="vlNote"([^>]*)>.*?</p>', lambda m: f'<p class="note" id="vlNote"{m.group(1)}>{note}</p>', h2, count=1, flags=re.S)
+    if h2 != h: open(fp, "w").write(h2)
+
 # ---------- sitemap ----------
 
 # ---------- Trang thông tin: giới thiệu, liên hệ, điều khoản ----------
