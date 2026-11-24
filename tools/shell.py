@@ -17,7 +17,7 @@ MENU = [
     ("XSMN", _reg("xsmn", "XSMN") + [("", "Giải 8 XSMN", "thong-ke/giai-8-xsmn/")]),
     ("XSMT", _reg("xsmt", "XSMT") + [("", "Giải 8 XSMT", "thong-ke/giai-8-xsmt/")]),
     ("Vietlott", [("", "Keno", "keno/"), ("", "Mega 6/45", "mega-645/"), ("", "Power 6/55", "power-655/"), ("", "Max 3D, Max 3D+", "max-3d/"), ("", "Max 3D Pro", "max-3d-pro/"), ("", "Tất cả Vietlott", "vietlott/")]),
-    ("Thống kê", [("", "Bảng thống kê", "thong-ke/bang-thong-ke/"), ("", "Thống kê lô tô", "thong-ke/"), ("", "Lô gan XSMB", "thong-ke/lo-gan-xsmb/"), ("", "Tần suất lô tô", "thong-ke/tan-suat-lo-to-xsmb/"), ("", "Đầu đuôi", "thong-ke/dau-duoi-xsmb/"), ("", "Giải nhất", "thong-ke/giai-nhat-xsmb/"), ("h", "Công cụ", ""), ("", "Thống kê dàn, 3 càng", "thong-ke-dan/"), ("", "Bản đồ số", "ban-do-so/"), ("", "Kiểm định", "kiem-dinh/"), ("", "Mô phỏng", "mo-phong/")]),
+    ("Thống kê", [("", "Bảng thống kê", "thong-ke/bang-thong-ke/"), ("", "Thống kê lô tô", "thong-ke/"), ("", "Lô gan XSMB", "thong-ke/lo-gan-xsmb/"), ("", "Tần suất lô tô", "thong-ke/tan-suat-lo-to-xsmb/"), ("", "Đầu đuôi", "thong-ke/dau-duoi-xsmb/"), ("", "Giải nhất", "thong-ke/giai-nhat-xsmb/"), ("", "Lô kép", "thong-ke/lo-kep-xsmb/"), ("", "Số đảo", "thong-ke/so-dao-xsmb/"), ("", "Số gánh", "thong-ke/so-ganh-xsmb/"), ("", "Tổng, chẵn lẻ ĐB", "thong-ke/tong-chan-le-dac-biet-xsmb/"), ("h", "Công cụ", ""), ("", "Thống kê dàn, 3 càng", "thong-ke-dan/"), ("", "Bản đồ số", "ban-do-so/"), ("", "Kiểm định", "kiem-dinh/"), ("", "Mô phỏng", "mo-phong/")]),
 ]
 
 
