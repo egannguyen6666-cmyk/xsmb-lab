@@ -340,7 +340,7 @@ def grid100(c, title):
 STATP = []
 def spage(slug, title, desc, h1, intro, body):
     p = f"thong-ke/{slug}/"; STATP.append((slug, h1))
-    page(p, title, desc, [("Thống kê", "thong-ke/"), (h1, p)], h1, f'<p>{intro}</p>{body}<p class="note">Các bảng trên là thống kê kết quả đã quay, cập nhật mỗi ngày; không phải dự đoán. Mỗi kỳ quay độc lập.</p><p><a class="cta" href="../">Thống kê lô tô</a><a class="cta" href="../bang-thong-ke/">Tất cả bảng thống kê</a><a class="cta" href="../../thong-ke-dan/">Tra cứu dàn, 3 càng</a></p>')
+    page(p, title, desc, [("Thống kê", "thong-ke/"), (h1, p)], h1, f'<p>{intro}</p>{body}<p class="note">Các bảng trên là thống kê kết quả đã quay, cập nhật mỗi ngày; không phải dự đoán. Mỗi kỳ quay độc lập.</p><p><a class="cta" href="../">Thống kê lô tô</a><a class="cta" href="../bang-thong-ke/">Tất cả bảng thống kê</a><a class="cta" href="../../thong-ke-dan/">Tra cứu nhóm, 3 càng</a></p>')
 
 two = [l.split(",") for l in open(os.path.join(ROOT, "xsmb.csv")).read().strip().split("\n")[1:]]
 fullmb = [(l.split(",")[0], l.split(",")[1].split()) for l in open(os.path.join(ROOT, "xsmb_full.csv")).read().strip().split("\n")[1:]]
@@ -835,7 +835,7 @@ function draw(){var h;if(C.reg==='mb'){h='<table>'+G.map(function(r){var a=[];fo
 else{h='<table class="mn"><tr><th>Giải</th>'+sts.map(function(s){return '<th>'+s[1]+'</th>'}).join('')+'</tr>'+G.map(function(r){return '<tr class="'+r[1]+'"><td class="l">'+r[0]+'</td>'+sts.map(function(s){var a=[];for(var i=0;i<r[2];i++)a.push(cell(s[0],r[1],i));return '<td>'+a.join('')+'</td>'}).join('')+'</tr>'}).join('')+'</table>'}
 $('qtBoard').innerHTML=h;var left=q.length+(cur?1:0);$('qtSt').textContent=t?('Đang quay · còn '+left+' giải'):(left?'Sẵn sàng':'Đã quay xong')}
 function lot(){var M=mine(),k=Object.keys(S);$('qtLo').innerHTML='<div class="ltg">'+k.map(function(st){var L=[];G.forEach(function(r){S[st][r[1]].forEach(function(v){if(v)L.push(v.slice(-2))})});L.sort();var H=[[],[],[],[],[],[],[],[],[],[]];L.forEach(function(x){H[+x[0]].push(M.indexOf(x)>=0?'<mark>'+x+'</mark>':x)});
-return '<div><h3>Lô tô '+(st==='mb'?'XSMB':(sts.filter(function(s){return s[0]===st})[0]||[0,st])[1])+' (quay thử)</h3><table class="lt"><tr><th>Đầu</th><th>Lô tô</th></tr>'+H.map(function(a,i){return '<tr><td class="k">'+i+'</td><td>'+(a.join(', ')||'–')+'</td></tr>'}).join('')+'</table></div>'}).join('')+'</div>'+(M.length?'<p class="note">Số trong dàn bạn đã lưu được tô nền.</p>':'')}
+return '<div><h3>Lô tô '+(st==='mb'?'XSMB':(sts.filter(function(s){return s[0]===st})[0]||[0,st])[1])+' (quay thử)</h3><table class="lt"><tr><th>Đầu</th><th>Lô tô</th></tr>'+H.map(function(a,i){return '<tr><td class="k">'+i+'</td><td>'+(a.join(', ')||'–')+'</td></tr>'}).join('')+'</table></div>'}).join('')+'</div>'+(M.length?'<p class="note">Số trong nhóm bạn đã lưu được tô nền.</p>':'')}
 function reset(){stop();S={};q=[];cur=null;var w=$('qtDay')?+$('qtDay').value:0;sts=C.reg==='mb'?[['mb','XSMB']]:(C.sched[w]||[]);
 sts.forEach(function(s){S[s[0]]={};G.forEach(function(r){S[s[0]][r[1]]=new Array(r[2]).fill('')})});
 ORD.forEach(function(g){for(var i=0;i<cnt(g);i++)sts.forEach(function(s){q.push([s[0],g,i])})});$('qtLo').innerHTML='';draw()}
@@ -878,7 +878,7 @@ INFO_PAGES = [
 <h2>XS Lab làm gì</h2><ul>
 <li>Cập nhật kết quả XSMB, XSMN, XSMT mỗi ngày ngay sau giờ quay, kèm trang trực tiếp trong giờ quay và sổ kết quả theo ngày, theo đài, theo thứ.</li>
 <li>Cập nhật kết quả Vietlott: Keno, Mega 6/45, Power 6/55, Max 3D, Max 3D Pro.</li>
-<li>Trình bày dữ liệu thống kê từ kết quả đã quay: lô gan, tần suất, đầu đuôi, giải đặc biệt, 3 càng, 4 càng; công cụ dò vé và tra cứu dàn số.</li>
+<li>Trình bày dữ liệu thống kê từ kết quả đã quay: lô gan, tần suất, đầu đuôi, giải đặc biệt, 3 càng, 4 càng; công cụ dò vé và tra cứu nhóm số.</li>
 <li>Giải thích cơ cấu giải, cách dò vé, thời hạn và nơi lĩnh thưởng theo thể lệ đã công bố.</li></ul>
 <h2>XS Lab không làm gì</h2><ul>
 <li>Không đưa ra dự đoán, “soi cầu” hay gợi ý số. Mọi con số trên trang là thống kê kết quả đã quay; mỗi kỳ quay độc lập với các kỳ trước.</li>
