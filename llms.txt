@@ -1,0 +1,33 @@
+# XS Lab
+
+> XS Lab (xslab.live) là trang kết quả xổ số Việt Nam và thống kê dữ liệu quá khứ, không quảng cáo, không dự đoán. Có kết quả XSMB, XSMN, XSMT, Vietlott (Keno, Mega 6/45, Power 6/55, Max 3D, Max 3D Pro), trực tiếp giờ quay, dò vé và các bảng thống kê lô tô.
+
+Mọi số liệu trên trang là thống kê kết quả đã quay. Trang không đưa ra dự đoán hay gợi ý số. Kết quả nên được đối chiếu với kết quả chính thức của công ty xổ số kiến thiết.
+
+## Kết quả
+
+- [Kết quả xổ số hôm nay](https://xslab.live/): XSMB, XSMN, XSMT mới nhất
+- [XSMB](https://xslab.live/xsmb/): kết quả xổ số miền Bắc
+- [XSMN](https://xslab.live/xsmn/): kết quả xổ số miền Nam
+- [XSMT](https://xslab.live/xsmt/): kết quả xổ số miền Trung
+- [Trực tiếp xổ số](https://xslab.live/truc-tiep/): cập nhật trong giờ quay
+- [Sổ kết quả XSMB](https://xslab.live/xsmb/so-ket-qua/), [XSMN](https://xslab.live/xsmn/so-ket-qua/), [XSMT](https://xslab.live/xsmt/so-ket-qua/): kết quả theo ngày và theo tháng
+- [Dò vé số](https://xslab.live/do-ve/)
+
+## Thống kê
+
+- [Thống kê 100 số](https://xslab.live/so/): số lần về, số kỳ chưa về, kỷ lục gan của từng số 00–99
+- [Thống kê lô tô](https://xslab.live/thong-ke/)
+
+## Dữ liệu
+
+- [Lịch sử XSMB (CSV)](https://xslab.live/xsmb.csv)
+- [Lịch sử XSMN (CSV)](https://xslab.live/xsmn.csv)
+- [Lịch sử XSMT (CSV)](https://xslab.live/xsmt.csv)
+- [Sitemap](https://xslab.live/sitemap.xml)
+
+## Thông tin
+
+- [Giới thiệu](https://xslab.live/gioi-thieu/)
+- [Liên hệ](https://xslab.live/lien-he/)
+- [Điều khoản sử dụng](https://xslab.live/dieu-khoan-su-dung/)

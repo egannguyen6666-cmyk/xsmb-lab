@@ -784,3 +784,54 @@ for fn, items in SM.items(): tot += wsm(fn, items)
 idx = '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f' <sitemap><loc>{BASE}{fn}</loc><lastmod>{max(d for _, d in items)}</lastmod></sitemap>\n' for fn, items in SM.items()) + '</sitemapindex>\n'
 open(os.path.join(ROOT, "sitemap.xml"), "w").write(idx)
 print("sitemap:", tot, "URL trong", len(SM), "tệp")
+
+# ---- Trang 404 (GitHub Pages trả về khi không có trang) + llms.txt ----
+import shutil
+_tmp = "khong-tim-thay-tmp/"
+page(_tmp, "Không tìm thấy trang", "Trang bạn tìm không có trên XS Lab.", [("Không tìm thấy trang", _tmp)], "Không tìm thấy trang",
+     '<div class="card doc"><p>Đường dẫn này không có trên XS Lab, có thể trang đã đổi địa chỉ hoặc gõ nhầm.</p>'
+     '<p><a href="/">Kết quả xổ số hôm nay</a> · <a href="/xsmb/">XSMB</a> · <a href="/xsmn/">XSMN</a> · <a href="/xsmt/">XSMT</a> · '
+     '<a href="/xsmb/so-ket-qua/">Sổ kết quả theo ngày</a> · <a href="/so/">Thống kê 100 số</a></p></div>')
+_h = open(os.path.join(ROOT, _tmp, "index.html")).read()
+_h = _h.replace('href="../', 'href="/').replace('src="../', 'src="/')
+_h = re.sub(r'<link rel="canonical"[^>]*>', '<meta name="robots" content="noindex">', _h)
+_fp = os.path.join(ROOT, "404.html")
+if not os.path.exists(_fp) or open(_fp).read() != _h: open(_fp, "w").write(_h)
+shutil.rmtree(os.path.join(ROOT, _tmp), ignore_errors=True)
+
+LLMS = f"""# XS Lab
+
+> XS Lab (xslab.live) là trang kết quả xổ số Việt Nam và thống kê dữ liệu quá khứ, không quảng cáo, không dự đoán. Có kết quả XSMB, XSMN, XSMT, Vietlott (Keno, Mega 6/45, Power 6/55, Max 3D, Max 3D Pro), trực tiếp giờ quay, dò vé và các bảng thống kê lô tô.
+
+Mọi số liệu trên trang là thống kê kết quả đã quay. Trang không đưa ra dự đoán hay gợi ý số. Kết quả nên được đối chiếu với kết quả chính thức của công ty xổ số kiến thiết.
+
+## Kết quả
+
+- [Kết quả xổ số hôm nay]({BASE}): XSMB, XSMN, XSMT mới nhất
+- [XSMB]({BASE}xsmb/): kết quả xổ số miền Bắc
+- [XSMN]({BASE}xsmn/): kết quả xổ số miền Nam
+- [XSMT]({BASE}xsmt/): kết quả xổ số miền Trung
+- [Trực tiếp xổ số]({BASE}truc-tiep/): cập nhật trong giờ quay
+- [Sổ kết quả XSMB]({BASE}xsmb/so-ket-qua/), [XSMN]({BASE}xsmn/so-ket-qua/), [XSMT]({BASE}xsmt/so-ket-qua/): kết quả theo ngày và theo tháng
+- [Dò vé số]({BASE}do-ve/)
+
+## Thống kê
+
+- [Thống kê 100 số]({BASE}so/): số lần về, số kỳ chưa về, kỷ lục gan của từng số 00–99
+- [Thống kê lô tô]({BASE}thong-ke/)
+
+## Dữ liệu
+
+- [Lịch sử XSMB (CSV)]({BASE}xsmb.csv)
+- [Lịch sử XSMN (CSV)]({BASE}xsmn.csv)
+- [Lịch sử XSMT (CSV)]({BASE}xsmt.csv)
+- [Sitemap]({BASE}sitemap.xml)
+
+## Thông tin
+
+- [Giới thiệu]({BASE}gioi-thieu/)
+- [Liên hệ]({BASE}lien-he/)
+- [Điều khoản sử dụng]({BASE}dieu-khoan-su-dung/)
+"""
+_fp = os.path.join(ROOT, "llms.txt")
+if not os.path.exists(_fp) or open(_fp).read() != LLMS: open(_fp, "w").write(LLMS)
