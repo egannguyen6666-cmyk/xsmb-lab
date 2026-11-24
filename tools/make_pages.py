@@ -1,7 +1,9 @@
 # Tạo trang tĩnh cho SEO: kết quả theo ngày, theo đài, theo thứ + sitemap.xml.
 # Usage: python3 tools/make_pages.py   (chạy ở thư mục gốc của kho, sau khi dữ liệu đã cập nhật)
 # Trang theo ngày được giữ lại vĩnh viễn (không xoá), nên kho lưu trữ lớn dần mỗi ngày.
-import csv, datetime, html, json, os, re
+import csv, datetime, html, json, os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import shell
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = ("https://" + open(os.path.join(ROOT, "CNAME")).read().strip() + "/") if os.path.exists(os.path.join(ROOT, "CNAME")) else "https://egannguyen6666-cmyk.github.io/xsmb-lab/"
@@ -39,7 +41,7 @@ def wdi(d): return datetime.date.fromisoformat(d).weekday()
 def esc(s): return html.escape(s, quote=True)
 
 
-def page(path, title, desc, crumbs, h1, body):
+def page(path, title, desc, crumbs, h1, body, ld=None):
     url = BASE + path
     bc = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": BASE + u} for i, (n, u) in enumerate([("XS Lab", "")] + crumbs)]}
     depth = path.count("/")
@@ -47,12 +49,12 @@ def page(path, title, desc, crumbs, h1, body):
     out = f"""<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(title)} | XS Lab</title><meta name="description" content="{esc(desc)}"><link rel="canonical" href="{url}">
 <meta property="og:type" content="article"><meta property="og:locale" content="vi_VN"><meta property="og:site_name" content="XS Lab"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{url}"><meta property="og:image" content="{BASE}icon-512.png">
-<link rel="icon" type="image/png" href="{up}icon-192.png"><link rel="alternate" type="application/rss+xml" href="{up}rss.xml"><meta name="theme-color" content="#16151b">
-<script type="application/ld+json">{json.dumps(bc, ensure_ascii=False)}</script><style>{CSS}</style></head><body>
-<header><nav class="q"><a class="b" href="{up}">XS Lab</a><a href="{up}xsmb/">XSMB</a><a href="{up}xsmn/">XSMN</a><a href="{up}xsmt/">XSMT</a><a href="{up}truc-tiep/">Trực tiếp</a><a href="{up}do-ve/">Dò vé</a><a href="{up}vietlott/">Vietlott</a><a href="{up}thong-ke/">Thống kê</a></nav></header>
-<main><div class="bc"><a href="{up}">XS Lab</a>{''.join(f' › <a href="{up}{u}">{esc(n)}</a>' for n, u in crumbs[:-1])} › {esc(crumbs[-1][0])}</div>
-<h1>{esc(h1)}</h1>{body}</main>
-<footer><p><b>Thông tin nguồn.</b> {NOTICE}</p><p>XS Lab chỉ trình bày kết quả và thống kê dữ liệu đã quay, không đưa ra dự đoán kết quả. <a href="{up}hoi-dap/">Hỏi đáp</a> · <a href="{up}mien-tru-trach-nhiem/">Miễn trừ trách nhiệm</a> · <a href="{up}chinh-sach-bao-mat/">Bảo mật</a></p></footer></body></html>"""
+<link rel="icon" type="image/png" href="{up}icon-192.png"><link rel="apple-touch-icon" href="{up}icon-180.png"><link rel="manifest" href="{up}manifest.webmanifest"><link rel="alternate" type="application/rss+xml" href="{up}rss.xml"><meta name="theme-color" content="#16151b">
+{shell.THEME_HEAD}<script type="application/ld+json">{json.dumps(bc, ensure_ascii=False)}</script>{"".join(f'<script type="application/ld+json">{x}</script>' for x in (ld or []))}<style>{shell.STATIC_CSS}{shell.MENU_CSS}</style></head><body class="static">{shell.SPRITE}
+<div class="app">{shell.side_html(up, path)}<main class="main">{shell.mhead(up)}{shell.menu_html(up, path)}
+<nav class="bc" aria-label="Đường dẫn"><a href="{up}./">XS Lab</a>{''.join(f' › <a href="{up}{u}">{esc(n)}</a>' for n, u in crumbs[:-1])} › {esc(crumbs[-1][0])}</nav>
+<h1>{esc(h1)}</h1>{body}
+{shell.footer_html(up)}</main></div>{shell.tab_html(up, path)}<script>{shell.MENU_JS}</script></body></html>"""
     d = os.path.join(ROOT, path)
     os.makedirs(d, exist_ok=True)
     open(os.path.join(d, "index.html"), "w").write(out)
@@ -312,8 +314,64 @@ for f, reg in (("index.html", "mb"), ("xsmb/index.html", "mb"), ("xsmb-30-ngay/i
     if h2 != h: open(fp, "w").write(h2)
 
 # ---------- sitemap ----------
+
+# ---------- Trang thông tin: giới thiệu, liên hệ, điều khoản ----------
+GH = "https://github.com/egannguyen6666-cmyk/xsmb-lab"
+ORG = shell.org_ld(BASE)
+def webpage_ld(typ, path, name):
+    return json.dumps({"@context": "https://schema.org", "@type": typ, "name": name, "url": BASE + path, "inLanguage": "vi", "isPartOf": {"@type": "WebSite", "name": "XS Lab", "url": BASE}, "publisher": {"@id": BASE + "#org"}}, ensure_ascii=False)
+INFO_PAGES = [
+ ("gioi-thieu/", "AboutPage", "Giới thiệu XS Lab – trang kết quả xổ số và thống kê dữ liệu không quảng cáo", "XS Lab là trang kết quả xổ số XSMB, XSMN, XSMT, Vietlott và thống kê dữ liệu quá khứ, không quảng cáo, không dự đoán. Nguồn dữ liệu, cách cập nhật và nguyên tắc biên tập.", "Giới thiệu", "Giới thiệu XS Lab", f"""<div class="card doc">
+<p><b>XS Lab</b> là trang tra cứu kết quả xổ số và thống kê dữ liệu cho xổ số kiến thiết miền Bắc (XSMB), miền Nam (XSMN), miền Trung (XSMT) và các sản phẩm Vietlott. Trang được xây dựng như một công cụ đọc dữ liệu: gọn, nhanh, không quảng cáo, không cửa sổ bật lên và không theo dõi người dùng.</p>
+<h2>XS Lab làm gì</h2><ul>
+<li>Cập nhật kết quả XSMB, XSMN, XSMT mỗi ngày ngay sau giờ quay, kèm trang trực tiếp trong giờ quay và sổ kết quả theo ngày, theo đài, theo thứ.</li>
+<li>Cập nhật kết quả Vietlott: Keno, Mega 6/45, Power 6/55, Max 3D, Max 3D Pro.</li>
+<li>Trình bày dữ liệu thống kê từ kết quả đã quay: lô gan, tần suất, đầu đuôi, giải đặc biệt, 3 càng, 4 càng; công cụ dò vé và tra cứu dàn số.</li>
+<li>Giải thích cơ cấu giải, cách dò vé, thời hạn và nơi lĩnh thưởng theo thể lệ đã công bố.</li></ul>
+<h2>XS Lab không làm gì</h2><ul>
+<li>Không đưa ra dự đoán, “soi cầu” hay gợi ý số. Mọi con số trên trang là thống kê kết quả đã quay; mỗi kỳ quay độc lập với các kỳ trước.</li>
+<li>Không bán vé, không nhận đặt cược, không thu tiền dưới bất kỳ hình thức nào. Tin nhắn hay tài khoản mạng xã hội mời chào nhân danh XS Lab là giả mạo.</li>
+<li>Không chạy quảng cáo và không thu thập dữ liệu cá nhân (xem <a href="../chinh-sach-bao-mat/">Chính sách bảo mật</a>).</li></ul>
+<h2>Nguồn dữ liệu và cách cập nhật</h2>
+<p>Kết quả được tổng hợp tự động từ các trang công bố kết quả công khai, sau đó đối chiếu chéo giữa các nguồn và với dữ liệu lưu trữ trước khi đăng. Lịch sử XSMB có từ năm 2005; XSMN, XSMT lưu theo từng đài. Toàn bộ dữ liệu được công khai dưới dạng tệp CSV để ai cũng kiểm tra được. Chi tiết tại <a href="../ve-du-lieu/">Về dữ liệu</a>.</p>
+<p class="note">{NOTICE}</p>
+<h2>Nguyên tắc biên tập</h2><ul>
+<li>Chỉ viết những gì kiểm chứng được từ thể lệ của công ty xổ số kiến thiết và Vietlott, hoặc tính toán trực tiếp từ dữ liệu đã quay; khi thể lệ thay đổi, nội dung được sửa theo.</li>
+<li>Xác suất và tỷ lệ trả thưởng được nêu rõ để người đọc hiểu đúng bản chất: kỳ vọng của mọi cách chơi xổ số đều âm.</li>
+<li>Phát hiện sai sót sẽ được sửa ngay khi xác minh. Bạn có thể báo lỗi tại trang <a href="../lien-he/">Liên hệ</a>.</li></ul>
+<h2>Mã nguồn mở</h2>
+<p>Mã nguồn và dữ liệu của XS Lab được công khai trên <a href="{GH}" rel="noopener">GitHub</a>, kể cả lịch sử cập nhật từng ngày.</p>
+<h2>Chơi có trách nhiệm</h2>
+<p>Xổ số là trò chơi có thưởng dành cho người từ đủ 18 tuổi. Hãy coi đây là hình thức giải trí, chỉ chi số tiền bạn sẵn sàng mất, và đừng tìm cách “gỡ” khi đã thua.</p></div>"""),
+ ("lien-he/", "ContactPage", "Liên hệ XS Lab – góp ý, báo lỗi kết quả xổ số", "Liên hệ XS Lab để góp ý, báo lỗi kết quả XSMB, XSMN, XSMT, Vietlott hoặc đề xuất tính năng.", "Liên hệ", "Liên hệ XS Lab", f"""<div class="card doc">
+<p>XS Lab luôn muốn nghe góp ý của người đọc. Nếu bạn thấy kết quả nào chưa khớp với kết quả chính thức, một trang hiển thị lỗi hay muốn đề xuất tính năng mới, hãy liên hệ qua kênh dưới đây.</p>
+<h2>Kênh liên hệ</h2><ul>
+<li><b>Báo lỗi, góp ý:</b> tạo một mục mới tại <a href="{shell.CONTACT_URL}" rel="noopener">trang phản hồi của XS Lab trên GitHub</a> (cần tài khoản GitHub miễn phí). Mọi phản hồi đều công khai để người khác cùng theo dõi.</li>
+<li><b>Mã nguồn:</b> <a href="{GH}" rel="noopener">github.com/egannguyen6666-cmyk/xsmb-lab</a></li>
+<li><b>Website:</b> <a href="{BASE}">{BASE.split('//')[1].rstrip('/')}</a></li></ul>
+<h2>Khi báo lỗi kết quả</h2>
+<p>Để sửa nhanh, vui lòng ghi rõ: miền hoặc đài (ví dụ XSMB, Vĩnh Long), ngày quay, giải bị sai, con số đang hiển thị và con số đúng kèm nguồn (trang của công ty xổ số kiến thiết hoặc Vietlott).</p>
+<h2>Lưu ý</h2><ul>
+<li>XS Lab không bán vé, không nhận đặt cược, không cung cấp số dự đoán và không bao giờ yêu cầu chuyển tiền. Mọi lời mời chào như vậy nhân danh XS Lab đều là giả mạo.</li>
+<li>Về lĩnh thưởng, vé trúng hay tranh chấp liên quan đến vé, vui lòng liên hệ trực tiếp công ty xổ số kiến thiết phát hành vé hoặc Vietlott.</li></ul>
+<p class="note">{NOTICE}</p></div>"""),
+ ("dieu-khoan-su-dung/", "WebPage", "Điều khoản sử dụng XS Lab", "Điều khoản sử dụng trang XS Lab: tính chất thông tin, giới hạn trách nhiệm, sử dụng dữ liệu và độ tuổi.", "Điều khoản sử dụng", "Điều khoản sử dụng", f"""<div class="card doc">
+<p>Khi truy cập và sử dụng XS Lab ({BASE}), bạn đồng ý với các điều khoản dưới đây. Nếu không đồng ý, vui lòng ngừng sử dụng trang.</p>
+<h2>1. Tính chất thông tin</h2><p>{NOTICE} Dữ liệu thống kê trên XS Lab mô tả các kết quả đã quay, không phải dự đoán và không phải lời khuyên tham gia xổ số.</p>
+<h2>2. Giới hạn trách nhiệm</h2><p>XS Lab nỗ lực bảo đảm thông tin chính xác và kịp thời nhưng không bảo đảm tuyệt đối. XS Lab không chịu trách nhiệm cho bất kỳ thiệt hại nào phát sinh từ việc sử dụng thông tin trên trang, kể cả việc dò vé, mua vé hay lĩnh thưởng dựa trên thông tin này. Kết quả chính thức để lĩnh thưởng là kết quả do công ty xổ số kiến thiết và Vietlott công bố.</p>
+<h2>3. Độ tuổi</h2><p>Xổ số là trò chơi có thưởng dành cho người từ đủ 18 tuổi theo quy định của pháp luật Việt Nam.</p>
+<h2>4. Sử dụng hợp pháp</h2><p>Bạn không được dùng nội dung hoặc dữ liệu của XS Lab cho hoạt động cá cược, số đề hay bất kỳ hoạt động nào trái pháp luật; không được dùng công cụ tự động gây quá tải cho trang.</p>
+<h2>5. Dữ liệu và nội dung</h2><p>Các tệp dữ liệu CSV được cung cấp miễn phí cho mục đích tra cứu, học tập và nghiên cứu; khi sử dụng lại, vui lòng ghi nguồn XS Lab. Kết quả xổ số là thông tin công khai của các đơn vị phát hành.</p>
+<h2>6. Liên kết bên ngoài</h2><p>Trang có thể dẫn đến website khác; XS Lab không chịu trách nhiệm về nội dung của các website đó.</p>
+<h2>7. Quyền riêng tư</h2><p>Xem <a href="../chinh-sach-bao-mat/">Chính sách bảo mật</a> và <a href="../cookies/">Chính sách cookie</a>.</p>
+<h2>8. Thay đổi điều khoản</h2><p>XS Lab có thể cập nhật điều khoản khi cần; phiên bản đăng trên trang này là phiên bản có hiệu lực. Mọi thắc mắc xin gửi qua trang <a href="../lien-he/">Liên hệ</a>.</p>
+<p class="note">Cập nhật lần cuối: 24/11/2026.</p></div>"""),
+]
+for path, typ, title, desc, crumb, h1, body in INFO_PAGES:
+    page(path, title, desc, [(crumb, path)], h1, body, ld=[ORG, webpage_ld(typ, path, h1)])
+
 spa = [x.strip() for x in open(os.path.join(ROOT, "tools", "spa_pages.txt")).read().split() if x.strip()]
-urls = [(BASE, "1.0")] + [(BASE + s + "/", "0.9" if s in ("xsmb", "xsmn", "xsmt") else "0.7") for s in spa]
+urls = [(BASE, "1.0")] + [(BASE + s + "/", "0.9" if s in ("xsmb", "xsmn", "xsmt") else "0.7") for s in spa] + [(BASE + x[0], "0.5") for x in INFO_PAGES]
 for reg in list(REG) + ["thong-ke"]:
     for x in sorted(os.listdir(os.path.join(ROOT, reg))):
         if os.path.isfile(os.path.join(ROOT, reg, x, "index.html")):
