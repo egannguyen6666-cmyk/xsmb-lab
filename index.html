@@ -539,7 +539,7 @@ p{margin:0 0 10px;max-width:72ch}
 </div>
 <nav class="tab" id="tab" aria-label="Điều hướng"></nav>
 <div class="sheet" id="sheet" role="dialog" aria-label="Các mục khác"><div id="sheetIn"></div></div>
-<script src="core.js?v=202611240043"></script>
+<script src="core.js?v=202611240044"></script>
 <script>
 {
 const VIEWS=[['ket-qua','Kết quả','i-home'],['truc-tiep','Trực tiếp','i-live'],['thong-ke','Thống kê','i-stats'],['du-doan','Mô hình','i-target'],['nhat-ky','Nhật ký','i-book'],['quy-token','Quỹ token','i-wallet'],['kiem-chung','Kiểm chứng','i-chart'],['ban-do','Bản đồ số','i-grid'],['ve-du-lieu','Về dữ liệu','i-info']];
@@ -1233,7 +1233,7 @@ function lvRender(){
   phase==='live'&&!complete?`Bảng tự cập nhật khoảng 5 giây một lần đến khi đủ ${tot} giải. Giải mới về sẽ sáng lên.`:phase==='before'?`${RNAME[reg]} quay lúc ${hm(a)}. Bảng dưới đây là kỳ gần nhất; khi đến giờ quay, mở trang này để xem từng giải về.`:'Bảng dưới đây là kỳ gần nhất của các đài quay hôm nay.';
  $('lvProg').style.width=tot?Math.round(done/tot*100)+'%':'0';
  const last=items.map(x=>x.d&&x.d.at).filter(Boolean).sort().pop();
- $('lvTime').textContent=(todayAll||phase!=='before'?`Đã ra ${done}/${tot} giải`:'')+(last?` · cập nhật lúc ${last}`:'');
+ $('lvTime').textContent=[todayAll||phase!=='before'?`Đã ra ${done}/${tot} giải`:'',last?`cập nhật lúc ${last}`:''].filter(Boolean).join(' · ');
  if(LV.failed&&!items.some(x=>x.d)){$('lvBoard').innerHTML=`<p class="note">Mở trang trực tiếp: <a href="https://www.xoso.net/xo-so-truc-tiep.html" style="color:var(--red)">xoso.net/xo-so-truc-tiep.html</a></p>`;$('lvLoto').innerHTML='';return;}
  const cellHTML=(key,g,i,v)=>{if(!v)return '<span class="pend">• • •</span>';const id=`${key}|${g}|${i}`,isNew=LV.seen[id]!==v;LV.seen[id]=v;return `<span class="${isNew&&LV.seen.__init?'flash':''}">${v.slice(0,-2)}<b>${v.slice(-2)}</b></span>`;};
  $('lvBT').textContent=`Bảng kết quả ${RLAB[reg]}`;
