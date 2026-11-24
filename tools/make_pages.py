@@ -9,6 +9,7 @@ import shell
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = ("https://" + open(os.path.join(ROOT, "CNAME")).read().strip() + "/") if os.path.exists(os.path.join(ROOT, "CNAME")) else "https://egannguyen6666-cmyk.github.io/xsmb-lab/"
 ST = {'an-giang':'An Giang','bac-lieu':'Bạc Liêu','ben-tre':'Bến Tre','binh-duong':'Bình Dương','binh-phuoc':'Bình Phước','binh-thuan':'Bình Thuận','ca-mau':'Cà Mau','can-tho':'Cần Thơ','da-lat':'Đà Lạt','dong-nai':'Đồng Nai','dong-thap':'Đồng Tháp','hau-giang':'Hậu Giang','kien-giang':'Kiên Giang','long-an':'Long An','soc-trang':'Sóc Trăng','tay-ninh':'Tây Ninh','tien-giang':'Tiền Giang','tra-vinh':'Trà Vinh','vinh-long':'Vĩnh Long','vung-tau':'Vũng Tàu','tp-hcm':'TP.HCM','binh-dinh':'Bình Định','da-nang':'Đà Nẵng','dak-lak':'Đắk Lắk','dak-nong':'Đắk Nông','gia-lai':'Gia Lai','khanh-hoa':'Khánh Hòa','kon-tum':'Kon Tum','ninh-thuan':'Ninh Thuận','phu-yen':'Phú Yên','quang-binh':'Quảng Bình','quang-nam':'Quảng Nam','quang-ngai':'Quảng Ngãi','quang-tri':'Quảng Trị','thua-thien-hue':'Thừa Thiên Huế'}
+AB = {'an-giang':'XSAG','bac-lieu':'XSBL','ben-tre':'XSBT','binh-duong':'XSBD','binh-phuoc':'XSBP','binh-thuan':'XSBTH','ca-mau':'XSCM','can-tho':'XSCT','da-lat':'XSDL','dong-nai':'XSDN','dong-thap':'XSDT','hau-giang':'XSHG','kien-giang':'XSKG','long-an':'XSLA','soc-trang':'XSST','tay-ninh':'XSTN','tien-giang':'XSTG','tra-vinh':'XSTV','vinh-long':'XSVL','vung-tau':'XSVT','tp-hcm':'XSHCM','binh-dinh':'XSBDI','da-nang':'XSDNG','dak-lak':'XSDLK','dak-nong':'XSDNO','gia-lai':'XSGL','khanh-hoa':'XSKH','kon-tum':'XSKT','ninh-thuan':'XSNT','phu-yen':'XSPY','quang-binh':'XSQB','quang-nam':'XSQNM','quang-ngai':'XSQNG','quang-tri':'XSQT','thua-thien-hue':'XSTTH'}
 WD = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật']
 WDS = ['thu-2', 'thu-3', 'thu-4', 'thu-5', 'thu-6', 'thu-7', 'chu-nhat']
 WDL = ['thứ Hai', 'thứ Ba', 'thứ Tư', 'thứ Năm', 'thứ Sáu', 'thứ Bảy', 'Chủ nhật']
@@ -131,7 +132,7 @@ for reg, fn in (("xsmn", "recent_mn.json"), ("xsmt", "recent_mt.json")):
     rows = list(csv.reader(open(os.path.join(ROOT, reg + ".csv"))))[1:]
     sts = sorted({r["station"] for r in rec})
     for st in sts:
-        nm = ST.get(st, st); hist = sorted([r for r in rows if r[1] == st], key=lambda r: r[0])
+        nm = ST.get(st, st); ab = AB.get(st, ''); hist = sorted([r for r in rows if r[1] == st], key=lambda r: r[0])
         mine = sorted([r for r in rec if r["station"] == st], key=lambda r: r["date"], reverse=True)
         days = sorted({wdi(r["date"]) for r in mine})
         last = {}; cnt = {k: 0 for k in range(100)}; N = len(hist); win = hist[-52:]
@@ -141,14 +142,14 @@ for reg, fn in (("xsmn", "recent_mn.json"), ("xsmt", "recent_mt.json")):
             for j in range(0, 36, 2): cnt[int(r[2][j:j + 2])] += 1
         gan = sorted(range(100), key=lambda k: -(N - 1 - last.get(k, -1)))[:10]
         hot = sorted(range(100), key=lambda k: (-cnt[k], k))[:10]
-        res = ''.join(f'<h2>Xổ số {nm} {WDL[wdi(r["date"])]} {vn(r["date"])}</h2><div class="card">{mn_table([r])}</div><p class="note"><a href="../{slug_d(r["date"])}/">Xem cả các đài {lab} ngày {vn(r["date"])}</a></p>' for r in mine[:6])
-        body = f'''<p>Xổ số {nm} thuộc {lab}, quay {", ".join(WDL[x] for x in days)} hằng tuần lúc khoảng {tm}. Mỗi kỳ có 18 giải, vé 6 chữ số. Dữ liệu XS Lab có {fm(N)} kỳ của đài {nm} (từ {vn(hist[0][0])}).</p>{res}
+        res = ''.join(f'<h2>{ab} {vn(r["date"])} – Xổ số {nm} {WDL[wdi(r["date"])]}</h2><div class="card">{mn_table([r])}</div><p class="note"><a href="../{slug_d(r["date"])}/">Xem cả các đài {lab} ngày {vn(r["date"])}</a></p>' for r in mine[:6])
+        body = f'''<p>Xổ số {nm} ({ab}) thuộc {lab}, quay {", ".join(WDL[x] for x in days)} hằng tuần lúc khoảng {tm}. Mỗi kỳ có 18 giải, vé 6 chữ số. Dữ liệu XS Lab có {fm(N)} kỳ của đài {nm} (từ {vn(hist[0][0])}).</p>{res}
 <h2>Lô gan {nm}</h2><p>10 lô lâu chưa về nhất tính đến kỳ {vn(hist[-1][0])}:</p><div class="card"><table><tr><th>Lô</th><th>Số kỳ chưa về</th></tr>{''.join(f'<tr><td><b>{k:02d}</b></td><td>{N - 1 - last.get(k, -1)}</td></tr>' for k in gan)}</table></div>
 <h2>Lô về nhiều nhất 52 kỳ gần nhất</h2><div class="card"><table><tr><th>Lô</th><th>Số lần</th></tr>{''.join(f'<tr><td><b>{k:02d}</b></td><td>{cnt[k]}</td></tr>' for k in hot)}</table></div>
 <p class="note">Theo xác suất, mỗi lô có khoảng 16,55% khả năng xuất hiện trong một kỳ của đài (18 giải). Các bảng trên là thống kê dữ liệu đã quay, không phải dự đoán.</p>
 <p><a class="cta" href="../">{lab} hôm nay</a><a class="cta" href="../../thong-ke/">Thống kê lô tô</a><a class="cta" href="../../do-ve/">Dò vé {nm}</a></p>'''
         p = f"{reg}/{st}/"
-        page(p, f"Xổ số {nm} – Kết quả XS {nm} hôm nay, lô gan {nm}", f"Kết quả xổ số {nm} ({lab}) các kỳ gần nhất, đủ 18 giải, lịch quay {', '.join(WDL[x] for x in days)}, lô gan và lô về nhiều của đài {nm}. Không quảng cáo.", [(lab, reg + "/"), (f"Xổ số {nm}", p)], f"Xổ số {nm} – kết quả {lab} đài {nm}", body)
+        page(p, f"Xổ số {nm} ({ab}) – Kết quả {ab} hôm nay, lô gan {nm}", f"{ab}: kết quả xổ số {nm} ({lab}) các kỳ gần nhất, đủ 18 giải, lịch quay {', '.join(WDL[x] for x in days)}, lô gan và lô về nhiều của đài {nm}. Không quảng cáo.", [(lab, reg + "/"), (f"Xổ số {nm}", p)], f"Xổ số {nm} ({ab}) – kết quả {lab} đài {nm}", body)
 
     # ---------- theo thứ ----------
     for w in range(7):
@@ -234,8 +235,8 @@ for reg in REG:
             names = ", ".join(ST.get(r["station"], r["station"]) for r in rs)
             body = (f'<p>Kết quả xổ số {name} ({lab}) {WDL[w]} ngày {vn(d)}, quay lúc {tm}, gồm {len(rs)} đài: {names}. Giải Đặc biệt: {"; ".join(ST.get(r["station"], r["station"]) + " <b>" + r["db"][0] + "</b>" for r in rs)}.</p>'
                     f'<div class="card">{mn_table(rs)}</div>' +
-                    ''.join(f'<h2>Lô tô {ST.get(r["station"], r["station"])} {vn(d)}</h2><div class="card">{loto_table(lotos(r, MN_G))}</div><ul class="facts"><li>Về lại sau thời gian dài nhất (so với các kỳ trước của đài): {gtxt((d, r["station"]), "kỳ")}.</li><li>{dbtxt(r)}.</li><li>Xem các kỳ khác: <a href="../{r["station"]}/">Xổ số {ST.get(r["station"], r["station"])}</a></li></ul>' for r in rs) + nav + links)
-            desc = f"{lab} {vn(d)}: kết quả xổ số {name} {WDL[w]} ngày {vn(d)} các đài {names}, đủ 18 giải mỗi đài, lô tô đầu đuôi và thống kê kỳ quay."
+                    ''.join(f'<h2>Lô tô {ST.get(r["station"], r["station"])} {vn(d)} ({AB.get(r["station"], "")})</h2><div class="card">{loto_table(lotos(r, MN_G))}</div><ul class="facts"><li>Về lại sau thời gian dài nhất (so với các kỳ trước của đài): {gtxt((d, r["station"]), "kỳ")}.</li><li>{dbtxt(r)}.</li><li>Xem các kỳ khác: <a href="../{r["station"]}/">Xổ số {ST.get(r["station"], r["station"])}</a></li></ul>' for r in rs) + nav + links)
+            desc = f"{lab} {vn(d)}: kết quả xổ số {name} {WDL[w]} ngày {vn(d)} các đài {names} ({', '.join(AB.get(r['station'], '') for r in rs)}), đủ 18 giải mỗi đài, lô tô đầu đuôi và thống kê kỳ quay."
         p = f"{reg}/{slug_d(d)}/"
         page(p, f"{lab} {vn(d)} – Kết quả xổ số {name} {WDL[w]} ngày {vn(d)}", desc, [(lab, reg + "/"), (f"Sổ kết quả", reg + "/so-ket-qua/"), (f"{lab} {vn(d)}", p)], f"{lab} {vn(d)} – Kết quả xổ số {name} {WDL[w]} {vn(d)}", body)
         SITEMAP_ARCH[reg].append((BASE + p, d))
