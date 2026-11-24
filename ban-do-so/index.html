@@ -266,7 +266,7 @@ p{margin:0 0 10px;max-width:72ch}
 .nm i,.nm u{font-style:normal;text-decoration:none}html[data-dg="2"] .nm i,html[data-dg="2"] .nm u,html[data-dg="3"] .nm i{display:none}
 .dgsw{margin:10px 0 12px}.dgsw button{min-height:36px;font-size:13px}
 .lt4{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;margin-top:12px}.lt4 th{background:var(--band);font-size:12px;font-weight:600;padding:6px 4px;border:1px solid var(--line);color:var(--mute)}.lt4 td{border:1px solid var(--line);padding:5px 8px;text-align:left}.lt4 td.k{width:42px;text-align:center;color:var(--red);font-weight:700;background:var(--band)}.lt4 th:nth-child(3),.lt4 td:nth-child(3){text-align:right}.lt4 th:nth-child(2),.lt4 th:nth-child(3){width:calc(50% - 42px)}
-.loto{display:block!important}.lt h4{margin:0 0 2px}.lt .lt4{margin-top:4px;font-size:13px}.lt .lt4 td{padding:4px 5px}.lt .lt4 td.k{width:30px}
+.loto{display:block!important}.lt h3{margin:0 0 2px}.lt .lt4{margin-top:4px;font-size:13px}.lt .lt4 td{padding:4px 5px}.lt .lt4 td.k{width:30px}
 #dvNum{width:100%;min-height:64px;resize:vertical;font:inherit;font-size:17px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--band);color:var(--ink);letter-spacing:.3px}
 .dvbtn{display:flex;gap:8px}.dvbtn button{flex:1}.dvbtn .ghost{background:var(--panel)!important;color:var(--ink)!important;border:1px solid var(--line)!important;flex:0 0 auto;padding:0 18px}
 .lch{display:flex;flex-wrap:wrap;gap:6px}.lch span{min-width:44px;text-align:center;padding:6px 8px;border-radius:10px;border:1px solid var(--line);background:var(--panel);font-weight:600;font-variant-numeric:tabular-nums;color:var(--mute)}.lch span.on{background:#d01f3c;border-color:#d01f3c;color:#fff}.lch sup{font-size:11px;margin-left:2px}
@@ -297,13 +297,13 @@ p{margin:0 0 10px;max-width:72ch}
 .vlg div.hi{border-color:var(--red)}.vlg div.hi b{color:var(--red)}
 .vlres{display:grid;gap:8px;margin-top:12px}.vlres>div{border:1px solid var(--line);border-radius:12px;padding:12px}
 .dvone{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:10px}.dvone.win{border-color:#d01f3c;background:var(--redsoft)}
-.dvone h4{margin:0 0 4px;font-size:16px}.dvone ul{margin:4px 0 0;padding-left:20px;font-size:14px}
+.dvone h3{margin:0 0 4px;font-size:16px}.dvone ul{margin:4px 0 0;padding-left:20px;font-size:14px}
 @media(max-width:600px){.mnb table{min-width:0;table-layout:fixed}.mnb th{font-size:12px;padding:7px 2px;line-height:1.3;word-break:break-word}.mnb td{font-size:14px;padding:6px 1px;letter-spacing:-.2px}
 .mnb th:first-child,.mnb td:first-child{width:30px;font-size:11px}.mnb tr.g8 td:not(:first-child){font-size:18px}.mnb tr.db td:not(:first-child){font-size:15px}
 .lvsched{gap:6px}.lvsched button{padding:8px}.lvsched b{font-size:14px}.lvsched span{font-size:11px}}
 .lt{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px}
 .lt>div{border:1px solid var(--line);border-radius:10px;padding:8px 10px}
-.lt h4{margin:0 0 4px;font-size:14px}
+.lt h3{margin:0 0 4px;font-size:14px}
 .lt p{margin:0;font-size:13px;font-variant-numeric:tabular-nums;display:grid;grid-template-columns:18px minmax(0,1fr);gap:6px;border-bottom:1px dashed var(--line);padding:2px 0}
 .lt p b{color:var(--red)}
 .book{display:grid;gap:0}
@@ -356,7 +356,7 @@ p{margin:0 0 10px;max-width:72ch}
 #box_kqxs_minhngoc{position:absolute;left:-9999px;top:0;width:500px;height:10px;overflow:hidden}
 .ins{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
 .ins>div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}
-.ins h4{margin:0 0 4px;font-size:13px;color:var(--mute);font-weight:600}
+.ins h3{margin:0 0 4px;font-size:13px;color:var(--mute);font-weight:600}
 .ins p{margin:0;font-size:15px;line-height:1.5}.ins p b{color:var(--red);font-variant-numeric:tabular-nums}
 .ins small{display:block;color:var(--mute);font-size:12px;margin-top:2px}
 .insst{margin-top:14px}.insst>h3{font-size:15px;margin:0 0 8px}
@@ -1118,7 +1118,7 @@ function drawStats(S2,rows,t,c,db,done,tot){
  const byF=[...got].sort((a,b)=>f[b]-f[a]||a-b),hiF=byF[0],loF=byF[byF.length-1];
  const hs=new Set(got.map(k=>Math.floor(k/10))),ts=new Set(got.map(k=>k%10)),dh=[...Array(10).keys()].filter(d=>!hs.has(d)),dt=[...Array(10).keys()].filter(d=>!ts.has(d));
  const kep=got.filter(k=>k%11===0),eHot=10*(1-Math.pow(0.99,done)),part=done<tot;
- const item=(h,body,sm)=>`<div><h4>${h}</h4><p>${body}</p>${sm?`<small>${sm}</small>`:''}</div>`;
+ const item=(h,body,sm)=>`<div><h3>${h}</h3><p>${body}</p>${sm?`<small>${sm}</small>`:''}</div>`;
  const out=[];
  out.push(item('Số về sau thời gian gan dài nhất',`<b>${pad(brk[0].k)}</b> về lại sau ${brk[0].g} kỳ chưa về`,brk.slice(1,5).filter(x=>x.g>=5).map(x=>`${pad(x.k)} (${x.g} kỳ)`).join(', ')||'Các số còn lại đều mới về trong vòng 5 kỳ.'));
  out.push(item('Số về nhiều nháy',multi.length?multi.map(k=>`<b>${pad(k)}</b> ×${c[k]}`).join(', '):'Không có số nào về từ 2 nháy',`${got.length} số khác nhau trên ${nz} giải${part?' đã ra':''}`));
@@ -1177,7 +1177,7 @@ function renderBoard(){
   let html;
   if(full.every(Boolean)){html=`<div class="mnb"><table><thead><tr><th>Giải</th>${sts.map(s=>`<th class="${s===R.st?'sel':''}">${ST[s]}</th>`).join('')}</tr></thead><tbody>${MN_G.map(([lb,g])=>`<tr class="${g}"><td>${lb}</td>${full.map(f=>`<td>${f[g].map(n=>nsp(n)).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
   else html=`<p class="note">Bảng đủ giải chỉ lưu 60 ngày gần nhất; ngày này hiện lô tô.</p>`;
-  html+=`<div class="lt">${sts.map(s=>{const two=RG().by[s][RG().idx[s][d]].two,lo=[];for(let j=0;j<36;j+=2)lo.push(+two.substr(j,2));lo.sort((a,b)=>a-b);return `<div><h4>${ST[s]}</h4>${lotoT(lo)}</div>`;}).join('')}</div>`;
+  html+=`<div class="lt">${sts.map(s=>{const two=RG().by[s][RG().idx[s][d]].two,lo=[];for(let j=0;j<36;j+=2)lo.push(+two.substr(j,2));lo.sort((a,b)=>a-b);return `<div><h3>${ST[s]}</h3>${lotoT(lo)}</div>`;}).join('')}</div>`;
   if(full.some(f=>f&&f.live))html='<p class="note" style="margin:0 0 8px"><span class="pchip hi">Có kết quả từ trực tiếp · chờ đối chiếu</span></p>'+html;
   $('rsBoard').innerHTML=html;}}
 function renderBook(){
@@ -1604,7 +1604,7 @@ function checkTicket(){
   const where2=dv.reg==='mb'?'XSMB':`${RLAB[dv.reg]} ${ST[dv.st]}`;
   const res=tix.map(num=>({num,...ticketWins(num,rec)})),nw=res.filter(r=>r.win.length).length;
   html+=`<div class="dvres${nw?' win':''}"><h3>Dò vé: ${res.length} số · ${nw?nw+' số trùng giải':'không số nào trùng giải'}</h3><p class="note" style="margin:0">${where2} · ${day}${live}</p>
-  ${res.map(r=>`<div class="dvone${r.win.length?' win':''}"><h4>${r.num} · ${r.win.length?'trùng '+r.win.length+' giải':'không trùng giải'}</h4>${r.win.length||r.near.length?`<ul>${r.win.map(x=>`<li>${x}</li>`).join('')}${r.near.map(x=>`<li class="note">${x}</li>`).join('')}</ul>`:''}</div>`).join('')}
+  ${res.map(r=>`<div class="dvone${r.win.length?' win':''}"><h3>${r.num} · ${r.win.length?'trùng '+r.win.length+' giải':'không trùng giải'}</h3>${r.win.length||r.near.length?`<ul>${r.win.map(x=>`<li>${x}</li>`).join('')}${r.near.map(x=>`<li class="note">${x}</li>`).join('')}</ul>`:''}</div>`).join('')}
   ${nw?'<p class="note" style="margin:10px 0 0">Đối chiếu với vé thật và kết quả chính thức của công ty xổ số kiến thiết trước khi đi lĩnh thưởng.</p>':''}</div>`;}
  out.innerHTML=html;}
 
@@ -1690,13 +1690,13 @@ function vlCheck3(rows,silent){
  const kp=String(r.ky).padStart(5,'0');
  const html=items.map(it=>{
   if(!pro){const gs=grp(it);let hist=0;for(const x of rows)if(G3.some(([k])=>x[k].includes(it)))hist++;
-   return `<div class="dvone${gs.length?' win':''}"><h4>${it} · ${gs.length?'trùng '+gs.join(', '):'không trùng giải'}</h4><p class="note" style="margin:0">Trong ${vn(rows.length)} kỳ, bộ số này đã về ${hist} kỳ (theo xác suất ≈ ${dec(rows.length*(1-Math.pow(0.999,20)),1)}).</p></div>`;}
+   return `<div class="dvone${gs.length?' win':''}"><h3>${it} · ${gs.length?'trùng '+gs.join(', '):'không trùng giải'}</h3><p class="note" style="margin:0">Trong ${vn(rows.length)} kỳ, bộ số này đã về ${hist} kỳ (theo xác suất ≈ ${dec(rows.length*(1-Math.pow(0.999,20)),1)}).</p></div>`;}
   const [a,b]=it,notes=[];
   if(r.db[0]===a&&r.db[1]===b)notes.push('<b>Trùng 2 bộ số giải Đặc biệt đúng thứ tự</b> — giải Đặc biệt');
   else if(r.db[0]===b&&r.db[1]===a)notes.push('<b>Trùng 2 bộ số giải Đặc biệt ngược thứ tự</b> — giải phụ Đặc biệt');
   for(const [k,nm] of G3.slice(1)){const c=[a,b].filter(v=>r[k].includes(v)).length;if(c===2)notes.push(`<b>Trùng cả 2 bộ số trong nhóm ${nm}</b>`);}
   for(const v of [a,b]){const gs=grp(v);if(gs.length)notes.push(`${v} có trong: ${gs.join(', ')}`);}
-  return `<div class="dvone${notes.length?' win':''}"><h4>${a} ${b}</h4>${notes.length?`<ul>${notes.map(x=>`<li>${x}</li>`).join('')}</ul>`:'<p class="note" style="margin:0">Không bộ số nào trùng kết quả kỳ này.</p>'}</div>`;}).join('');
+  return `<div class="dvone${notes.length?' win':''}"><h3>${a} ${b}</h3>${notes.length?`<ul>${notes.map(x=>`<li>${x}</li>`).join('')}</ul>`:'<p class="note" style="margin:0">Không bộ số nào trùng kết quả kỳ này.</p>'}</div>`;}).join('');
  $('vlOut').innerHTML=`<div class="vlres"><p class="note" style="margin:0">Kỳ #${kp} (${vnDate(r.date)}).${pro?' Giá trị từng hạng giải và các trường hợp trúng nhiều giải xem trong thể lệ Max 3D Pro của Vietlott.':' Giá trị giải cho mỗi 10.000 đồng: Đặc biệt 1.000.000 đ, Nhất 350.000 đ, Nhì 210.000 đ, Ba 100.000 đ.'}</p>${html}<p class="note" style="margin:0">Đối chiếu với vé thật và kết quả chính thức do Vietlott công bố trước khi đi lĩnh thưởng.</p></div>`;}
 /* Keno */
 /* Keno: lịch quay suy ra từ dữ liệu: 119 kỳ/ngày, 8 phút/kỳ, kỳ đầu 06:08 */
@@ -1786,18 +1786,18 @@ function vlCheckK(rows,silent){
  const n=nums.length,set=new Set(nums),r=rows.find(x=>x.ky===VL.ky),m=r.n.filter(k=>set.has(k)).length,H=new Array(n+1).fill(0);
  for(const x of rows)H[x.n.filter(k=>set.has(k)).length]++;
  const C=vlComb,pk=k=>C(20,k)*C(60,n-k)/C(80,n),prize=(KP[n]||{})[m]||0,rtp=Object.entries(KP[n]||{}).reduce((a,[k,v])=>a+pk(+k)*v,0)/1e4;
- $('vlOut').innerHTML=`<div class="vlres"><div class="dvone${prize?' win':''}"><h4>Kỳ #${String(r.ky).padStart(7,'0')}: trùng ${m}/${n} số (bậc ${n}) · ${prize?'trúng '+vn(prize)+' đồng cho mỗi 10.000 đồng':'không trúng giải'}</h4><div class="balls" style="gap:6px;margin-top:6px">${[...nums].sort((a,b)=>a-b).map(k=>ball(k,r.n.includes(k)?'r sm':'sm dim')).join('')}</div><p class="note" style="margin:8px 0 0">Bậc ${n} trúng khi trùng ${Object.keys(KP[n]).join(', ')} số; tỷ lệ trả thưởng kế hoạch ≈ ${fmt(rtp,0)} (trung bình mỗi 10.000 đồng thu về ${vn(rtp*1e4)} đồng).${n===10?' Hạng trùng 10 số tối đa 10 tỷ đồng mỗi kỳ, chia đều nếu có hơn 5 lần trúng.':''} Đối chiếu với vé thật, kết quả và thể lệ chính thức của Vietlott.</p></div>
-  <div><h4 style="margin:0 0 4px">Bộ ${n} số này trong ${vn(rows.length)} kỳ đã lưu</h4><div class="tbl"><table><thead><tr><th class="left">Số trùng</th><th>Giải /10.000 đ</th><th>Số kỳ</th><th>Theo xác suất</th></tr></thead><tbody>${[...Array(n+1).keys()].reverse().map(k=>`<tr><td class="left">${k}/${n}</td><td>${KP[n][k]?vn(KP[n][k]):'—'}</td><td>${vn(H[k])}</td><td>${(x=>x<0.1?'dưới 0,1':dec(x,1))(rows.length*pk(k))}</td></tr>`).join('')}</tbody></table></div></div></div>`;}
+ $('vlOut').innerHTML=`<div class="vlres"><div class="dvone${prize?' win':''}"><h3>Kỳ #${String(r.ky).padStart(7,'0')}: trùng ${m}/${n} số (bậc ${n}) · ${prize?'trúng '+vn(prize)+' đồng cho mỗi 10.000 đồng':'không trúng giải'}</h3><div class="balls" style="gap:6px;margin-top:6px">${[...nums].sort((a,b)=>a-b).map(k=>ball(k,r.n.includes(k)?'r sm':'sm dim')).join('')}</div><p class="note" style="margin:8px 0 0">Bậc ${n} trúng khi trùng ${Object.keys(KP[n]).join(', ')} số; tỷ lệ trả thưởng kế hoạch ≈ ${fmt(rtp,0)} (trung bình mỗi 10.000 đồng thu về ${vn(rtp*1e4)} đồng).${n===10?' Hạng trùng 10 số tối đa 10 tỷ đồng mỗi kỳ, chia đều nếu có hơn 5 lần trúng.':''} Đối chiếu với vé thật, kết quả và thể lệ chính thức của Vietlott.</p></div>
+  <div><h3 style="margin:0 0 4px">Bộ ${n} số này trong ${vn(rows.length)} kỳ đã lưu</h3><div class="tbl"><table><thead><tr><th class="left">Số trùng</th><th>Giải /10.000 đ</th><th>Số kỳ</th><th>Theo xác suất</th></tr></thead><tbody>${[...Array(n+1).keys()].reverse().map(k=>`<tr><td class="left">${k}/${n}</td><td>${KP[n][k]?vn(KP[n][k]):'—'}</td><td>${vn(H[k])}</td><td>${(x=>x<0.1?'dưới 0,1':dec(x,1))(rows.length*pk(k))}</td></tr>`).join('')}</tbody></table></div></div></div>`;}
 function vlCheck(rows,silent){
  const g=VL.g,mx=VLG[g].mx,nums=($('vlIn').value.match(/\d+/g)||[]).map(Number);$('vlErr').textContent='';
  if(nums.length!==6||new Set(nums).size!==6||nums.some(k=>k<1||k>mx)){if(!silent)$('vlErr').textContent=`Nhập đúng 6 số khác nhau từ 01 đến ${mx}.`;$('vlOut').innerHTML='';return;}
  const set=new Set(nums),r=rows.find(x=>x.ky===VL.ky),m=r.n.filter(k=>set.has(k)).length,hasDb=g==='655'&&r.db&&set.has(r.db),pz=vlPrize(g,m,hasDb);
  const H={3:0,4:0,5:0,6:0},HD=[];for(const x of rows){const mm=x.n.filter(k=>set.has(k)).length;if(mm>=3){H[mm]++;if(mm>=4)HD.push(`#${String(x.ky).padStart(5,'0')} (${vnDate(x.date)}): ${mm} số`);}}
  const od=vlOdds(g).filter(o=>o.k!==5.5);
- $('vlOut').innerHTML=`<div class="vlres"><div class="dvone${pz?' win':''}"><h4>Kỳ #${String(r.ky).padStart(5,'0')} (${vnDate(r.date)}): trùng ${m} số${hasDb?' và số đặc biệt':''}${pz?' · '+pz:' · không trúng giải'}</h4>
+ $('vlOut').innerHTML=`<div class="vlres"><div class="dvone${pz?' win':''}"><h3>Kỳ #${String(r.ky).padStart(5,'0')} (${vnDate(r.date)}): trùng ${m} số${hasDb?' và số đặc biệt':''}${pz?' · '+pz:' · không trúng giải'}</h3>
    <div class="balls" style="gap:6px;margin-top:6px">${[...nums].sort((a,b)=>a-b).map(k=>ball(k,r.n.includes(k)?'r sm':(g==='655'&&k===r.db?'y sm':'sm dim'))).join('')}</div>
    ${pz?'<p class="note" style="margin:8px 0 0">Đối chiếu với vé thật và kết quả chính thức do Vietlott công bố trước khi đi lĩnh thưởng.</p>':''}</div>
-  <div><h4 style="margin:0 0 4px">Bộ số này trong ${vn(rows.length)} kỳ quá khứ</h4><p class="note" style="margin:0">${[6,5,4,3].map(k=>`Trùng ${k} số: <b>${H[k]}</b> kỳ (theo xác suất ${(x=>x<0.01?'dưới 0,01':'≈ '+dec(x,x<1?2:1))(rows.length*od.find(o=>o.k===k).p)})`).join(' · ')}</p>${HD.length?`<p class="note" style="margin:6px 0 0">Các kỳ trùng từ 4 số: ${HD.slice(-10).reverse().join(', ')}.</p>`:''}</div></div>`;}
+  <div><h3 style="margin:0 0 4px">Bộ số này trong ${vn(rows.length)} kỳ quá khứ</h3><p class="note" style="margin:0">${[6,5,4,3].map(k=>`Trùng ${k} số: <b>${H[k]}</b> kỳ (theo xác suất ${(x=>x<0.01?'dưới 0,01':'≈ '+dec(x,x<1?2:1))(rows.length*od.find(o=>o.k===k).p)})`).join(' · ')}</p>${HD.length?`<p class="note" style="margin:6px 0 0">Các kỳ trùng từ 4 số: ${HD.slice(-10).reverse().join(', ')}.</p>`:''}</div></div>`;}
 
 function renderAbout(){
  const mb=RAW.mb,mbN=mb.length,cntR=r=>RAW[r]?Object.values(RAW[r].by).reduce((a,x)=>a+x.length,0):0,mnN=cntR('mn'),mtN=cntR('mt');
@@ -1923,7 +1923,7 @@ function lvRender(){
   $('lvBoard').innerHTML=d?`<div class="ticket">${G.map(([lb,g])=>`<div class="row ${g==='db'?'db':''}"><div class="lb">${lb}</div><div class="nums">${d.pr[g].map((v,i)=>cellHTML('mien-bac',g,i,v)).join('')}</div></div>`).join('')}</div>`:'<p class="note">Đang tải…</p>';}
  else{$('lvBoard').innerHTML=items.length?`<div class="mnb"><table><thead><tr><th>Giải</th>${items.map(x=>`<th>${ST[x.s]}${x.d&&x.d.ve?`<br><small style="font-weight:400">${x.d.ve}</small>`:''}</th>`).join('')}</tr></thead><tbody>${G.map(([lb,g,c])=>`<tr class="${g}"><td>${lb}</td>${items.map(x=>`<td>${x.d?x.d.pr[g].map((v,i)=>cellHTML(x.s,g,i,v)).join(''):'<span class="pend">• • •</span>'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:'<p class="note">Hôm nay không có đài nào quay.</p>';}
  const loto=x=>{const a=[];if(x.d)for(const [,g] of G)for(const v of x.d.pr[g])if(v)a.push(+v.slice(-2));return a;};
- $('lvLoto').innerHTML=`<div class="lt">${items.map(x=>`<div><h4>${reg==='mb'?'XSMB':ST[x.s]}</h4>${lotoT(loto(x))}</div>`).join('')}</div>`;
+ $('lvLoto').innerHTML=`<div class="lt">${items.map(x=>`<div><h3>${reg==='mb'?'XSMB':ST[x.s]}</h3>${lotoT(loto(x))}</div>`).join('')}</div>`;
  if(items.some(x=>x.d))LV.seen.__init=true;
  lvInsights(reg,items,n);
  for(const x of items)if(x.d&&x.d.date===n.date&&x.d.done===x.d.tot&&n.min>=LVWIN[reg][0])lvMerge(reg,x.s,x.d);}

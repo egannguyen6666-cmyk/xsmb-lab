@@ -466,7 +466,7 @@ def pre_mn(fn, lab, sel):
     rs = sorted([r for r in rec if r["date"] == d], key=lambda r: (r["station"] != "tp-hcm", ST.get(r["station"], "")))
     b = '<div class="mnb"><table><thead><tr><th>Giải</th>' + ''.join(f'<th class="{"sel" if r["station"] == sel else ""}">{ST.get(r["station"], r["station"])}</th>' for r in rs) + '</tr></thead><tbody>'
     b += ''.join(f'<tr class="{g}"><td>{lb}</td>' + ''.join('<td>' + ''.join(nsp(n) for n in r[g]) + '</td>' for r in rs) + '</tr>' for lb, g in MN_G) + '</tbody></table></div>'
-    b += '<div class="lt">' + ''.join(f'<div><h4>{ST.get(r["station"], r["station"])}</h4>' + lotoT(lotos(r, MN_G)) + '</div>' for r in rs) + '</div>'
+    b += '<div class="lt">' + ''.join(f'<div><h3>{ST.get(r["station"], r["station"])}</h3>' + lotoT(lotos(r, MN_G)) + '</div>' for r in rs) + '</div>'
     return f"{lab} {WDV[wdi(d)]}, {vn(d)}", b
 PRE = {"mb": pre_mb(), "mn": pre_mn("recent_mn.json", "XSMN", "tp-hcm"), "mt": pre_mn("recent_mt.json", "XSMT", "da-nang")}
 for f, reg in (("index.html", "mb"), ("xsmb/index.html", "mb"), ("xsmb-30-ngay/index.html", "mb"), ("xsmn/index.html", "mn"), ("xsmn-30-ngay/index.html", "mn"), ("xsmt/index.html", "mt"), ("xsmt-30-ngay/index.html", "mt")):
