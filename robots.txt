@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://egannguyen6666-cmyk.github.io/xsmb-lab/sitemap.xml
