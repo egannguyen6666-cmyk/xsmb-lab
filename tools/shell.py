@@ -54,7 +54,7 @@ def mhead(up, ic="#"):
 
 SIDE = [("Xổ số kiến thiết", [("Kết quả xổ số", "", "i-home"), ("Trực tiếp xổ số", "truc-tiep/", "i-live"), ("Dò vé số", "do-ve/", "i-ticket")]),
         ("Vietlott", [("Keno", "keno/", "i-vl"), ("Mega 6/45", "mega-645/", "i-vl"), ("Power 6/55", "power-655/", "i-vl"), ("Max 3D", "max-3d/", "i-vl"), ("Max 3D Pro", "max-3d-pro/", "i-vl")]),
-        ("Thống kê", [("Thống kê lô tô", "thong-ke/", "i-stats"), ("Bảng thống kê", "thong-ke/bang-thong-ke/", "i-book"), ("Thống kê dàn", "thong-ke-dan/", "i-target"), ("Bản đồ số", "ban-do-so/", "i-grid"), ("Kiểm định", "kiem-dinh/", "i-chart"), ("Mô phỏng", "mo-phong/", "i-wallet")]),
+        ("Thống kê", [("Thống kê lô tô", "thong-ke/", "i-stats"), ("Bảng thống kê", "thong-ke/bang-thong-ke/", "i-book"), ("Thống kê dàn", "thong-ke-dan/", "i-target"), ("Bản đồ số", "ban-do-so/", "i-grid"), ("Kiểm định", "kiem-dinh/", "i-chart"), ("Mô phỏng", "mo-phong/", "i-wallet"), ("Quay thử", "quay-thu-xsmb/", "i-live")]),
         ("Thông tin", [("Giới thiệu", "gioi-thieu/", "i-info"), ("Liên hệ", "lien-he/", "i-info")])]
 
 
