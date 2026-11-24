@@ -47,6 +47,9 @@ jobs:
           python3 tools/fetch_minhngoc.py mn
           python3 tools/fetch_minhngoc.py mt
           python3 tools/fetch_minhngoc.py mb
+      - name: Tải dữ liệu Vietlott (Mega 6/45, Power 6/55)
+        continue-on-error: true
+        run: python3 tools/update_vietlott.py
       - name: Tải dữ liệu XSMB
         run: python3 tools/update.py xsmb.csv
       - name: Tải dữ liệu XSMN
@@ -66,5 +69,5 @@ jobs:
         run: |
           git config user.name "xsmb-lab-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add xsmb.csv recent.json xsmn.csv recent_mn.json xsmt.csv recent_mt.json
+          git add xsmb.csv recent.json xsmn.csv recent_mn.json xsmt.csv recent_mt.json vietlott_645.csv vietlott_655.csv
           git diff --cached --quiet && echo "Không có gì mới" || (git commit -m "Cập nhật dữ liệu $(TZ=Asia/Ho_Chi_Minh date +'%d/%m/%Y %H:%M')" && git pull --rebase -q && git push)

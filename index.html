@@ -203,6 +203,17 @@ p{margin:0 0 10px;max-width:72ch}
 .mnb tr.g8 td:not(:first-child){font-size:22px;font-weight:700;color:var(--red)}
 .mnb tr.db td:not(:first-child){font-size:19px;font-weight:700;color:var(--red)}
 .mnb th.sel{background:#d01f3c;color:#fff}
+.ball.y{--b:#f2b705;--h:#ffe38a;--s:#a77a00;color:#1b1a20}
+.novreg .top .ctrls{display:none}
+#vlKy{flex:1 1 0;min-width:0}#v-vietlott .datenav{flex-wrap:nowrap}
+.vlg{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:6px;margin-top:10px}
+.vlg div{border:1px solid var(--line);border-radius:10px;padding:6px 4px 5px;text-align:center;position:relative;overflow:hidden;background:var(--bg)}
+.vlg b{display:block;font-size:16px;position:relative}.vlg span{display:block;font-size:12px;color:var(--mute);position:relative;font-variant-numeric:tabular-nums}
+.vlg i{position:absolute;left:0;right:0;bottom:0;background:var(--red);opacity:.16}
+.vlg div.hi{border-color:var(--red)}.vlg div.hi b{color:var(--red)}
+.vlres{display:grid;gap:8px;margin-top:12px}.vlres>div{border:1px solid var(--line);border-radius:12px;padding:12px}
+.dvone{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:10px}.dvone.win{border-color:#d01f3c;background:var(--redsoft)}
+.dvone h4{margin:0 0 4px;font-size:16px}.dvone ul{margin:4px 0 0;padding-left:20px;font-size:14px}
 @media(max-width:600px){.mnb table{min-width:0;table-layout:fixed}.mnb th{font-size:12px;padding:7px 2px;line-height:1.3;word-break:break-word}.mnb td{font-size:14px;padding:6px 1px;letter-spacing:-.2px}
 .mnb th:first-child,.mnb td:first-child{width:30px;font-size:11px}.mnb tr.g8 td:not(:first-child){font-size:18px}.mnb tr.db td:not(:first-child){font-size:15px}
 .lvsched{gap:6px}.lvsched button{padding:8px}.lvsched b{font-size:14px}.lvsched span{font-size:11px}}
@@ -297,6 +308,7 @@ p{margin:0 0 10px;max-width:72ch}
  <symbol id="i-more" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></g></symbol>
  <symbol id="i-live" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="2.2" fill="currentColor"/><path d="M8 8a5.6 5.6 0 0 0 0 8M16 8a5.6 5.6 0 0 1 0 8M5 5a9.9 9.9 0 0 0 0 14M19 5a9.9 9.9 0 0 1 0 14"/></g></symbol>
  <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M4 7.5A1.5 1.5 0 0 1 5.5 6h13A1.5 1.5 0 0 1 20 7.5V10a2 2 0 0 0 0 4v2.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 16.5V14a2 2 0 0 0 0-4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 6.5v11" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 2"/></symbol>
+ <symbol id="i-vl" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="4"/><circle cx="16" cy="8" r="4"/><circle cx="12" cy="16" r="4"/></g></symbol>
  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
 </svg>
 <noscript><div style="padding:20px;font-family:sans-serif"><h1>XS Lab – Kết quả xổ số và thống kê dữ liệu</h1><p>Kết quả xổ số miền Bắc (XSMB), miền Nam (XSMN), miền Trung (XSMT), trực tiếp giờ quay, dò vé số và thống kê lô tô từ dữ liệu quá khứ. Cần bật JavaScript để xem.</p><p>Thông tin và kết quả xổ số trên XS Lab được chúng tôi cập nhật từ nguồn công khai và chỉ mang tính chất tham khảo. Vui lòng kiểm tra lại kết quả chính thức được công bố bởi các công ty xổ số kiến thiết.</p><p>Dữ liệu: <a href="xsmb.csv">xsmb.csv</a>, <a href="xsmn.csv">xsmn.csv</a>, <a href="xsmt.csv">xsmt.csv</a></p></div></noscript>
@@ -406,17 +418,45 @@ p{margin:0 0 10px;max-width:72ch}
    <div class="grid">
     <div class="card c12">
      <h2>Dò vé số</h2>
-     <p class="sub" id="dvS">Chọn miền, đài, ngày quay rồi nhập dãy số trên vé. Dữ liệu đủ giải có cho 60 ngày gần nhất.</p>
+     <p class="sub" id="dvS">Chọn miền, đài, ngày quay rồi nhập số. Mỗi số từ 2 chữ số trở lên (2 chữ số là dò lô, đủ 5 hoặc 6 chữ số là dò cả vé); dò cùng lúc tối đa 17 số, ngăn cách bằng dấu phẩy. Dữ liệu đủ giải có cho 60 ngày gần nhất.</p>
      <form class="dv" id="dvForm">
       <div><label for="dvReg">Miền</label><select id="dvReg"><option value="mb">Miền Bắc</option><option value="mn">Miền Nam</option><option value="mt">Miền Trung</option></select></div>
       <div id="dvStW"><label for="dvSt">Đài</label><select id="dvSt"></select></div>
       <div><label for="dvDate">Ngày quay</label><select id="dvDate"></select></div>
-      <div><label for="dvNum" id="dvNumL">Số trên vé</label><input id="dvNum" inputmode="numeric" autocomplete="off" maxlength="6" placeholder="123456"></div>
+      <div style="grid-column:span 2;min-width:0"><label for="dvNum" id="dvNumL">Số trên vé</label><input id="dvNum" inputmode="numeric" autocomplete="off" placeholder="123456, 789, 45"></div>
       <button>Dò vé</button>
      </form>
      <div id="dvOut" aria-live="polite"></div>
      <p class="note" id="dvRule" style="margin-top:14px"></p>
     </div>
+   </div>
+  </section>
+
+  <section class="view" id="v-vietlott">
+   <div class="grid">
+    <div class="card c12">
+     <div class="regsw" id="vlGame" role="group" aria-label="Chọn sản phẩm" style="margin-bottom:12px"><button data-g="645" aria-pressed="true">Mega 6/45</button><button data-g="655" aria-pressed="false">Power 6/55</button></div>
+     <h2 id="vlT">Vietlott</h2>
+     <div class="datenav"><button id="vlPrev" aria-label="Kỳ trước">‹</button><select id="vlKy" class="stsel" aria-label="Chọn kỳ quay"></select><button id="vlNext" aria-label="Kỳ sau">›</button><button id="vlLatest" style="padding:0 12px;font-weight:500">Mới nhất</button></div>
+     <div class="balls" id="vlBalls"></div>
+     <p class="note" id="vlNote" style="margin-top:12px"></p>
+    </div>
+    <div class="card c12">
+     <h2>Dò vé Vietlott</h2>
+     <p class="sub" id="vlFormS">Nhập 6 số trên vé, ngăn cách bằng dấu phẩy hoặc dấu cách. App dò với kỳ đang chọn ở trên và đếm bộ số này đã trùng bao nhiêu số ở các kỳ trong quá khứ.</p>
+     <form class="qin" id="vlForm"><input id="vlIn" inputmode="numeric" autocomplete="off" placeholder="05, 12, 23, 34, 40, 44" aria-label="6 số trên vé Vietlott"><button>Dò vé</button></form>
+     <div class="qerr" id="vlErr"></div>
+     <div id="vlOut" aria-live="polite"></div>
+    </div>
+    <div class="card c12">
+     <h2>Tần suất các số</h2>
+     <p class="sub" id="vlFS"></p>
+     <div class="seg" id="vlWin" role="group" aria-label="Khung thời gian"><span class="lab">Trong</span></div>
+     <div class="vlg" id="vlFreq"></div>
+    </div>
+    <div class="card c6" id="vlHot"></div>
+    <div class="card c6" id="vlGan"></div>
+    <div class="card c12"><h2>Sổ kết quả gần đây</h2><p class="sub">Bấm một kỳ để xem ở bảng phía trên.</p><div class="book" id="vlBook"></div></div>
    </div>
   </section>
 
@@ -552,12 +592,12 @@ p{margin:0 0 10px;max-width:72ch}
 </div>
 <nav class="tab" id="tab" aria-label="Điều hướng"></nav>
 <div class="sheet" id="sheet" role="dialog" aria-label="Các mục khác"><div id="sheetIn"></div></div>
-<script src="core.js?v=202611240122"></script>
+<script src="core.js?v=202611240130"></script>
 <script>
 {
-const VIEWS=[['ket-qua','Kết quả','i-home'],['truc-tiep','Trực tiếp','i-live'],['do-ve','Dò vé','i-ticket'],['thong-ke','Thống kê','i-stats'],['thong-ke-dan','Thống kê dàn','i-target'],['ban-do','Bản đồ số','i-grid'],['kiem-dinh','Kiểm định','i-chart'],['mo-phong','Mô phỏng','i-wallet'],['ve-du-lieu','Về dữ liệu','i-info']];
+const VIEWS=[['ket-qua','Kết quả','i-home'],['truc-tiep','Trực tiếp','i-live'],['do-ve','Dò vé','i-ticket'],['thong-ke','Thống kê','i-stats'],['vietlott','Vietlott','i-vl'],['thong-ke-dan','Thống kê dàn','i-target'],['ban-do','Bản đồ số','i-grid'],['kiem-dinh','Kiểm định','i-chart'],['mo-phong','Mô phỏng','i-wallet'],['ve-du-lieu','Về dữ liệu','i-info']];
 const ALIAS={'tong-quan':'ket-qua','du-doan':'thong-ke-dan','nhat-ky':'ket-qua','kiem-chung':'kiem-dinh','quy-token':'mo-phong'};
-const META={'ket-qua':['Kết quả xổ số {R} hôm nay','Kết quả xổ số {R} mới nhất, đủ các giải, sổ kết quả các kỳ gần đây và thống kê nhanh kỳ vừa quay.'],'truc-tiep':['Trực tiếp xổ số {R}','Xem trực tiếp kết quả xổ số {R} trong giờ quay, từng giải cập nhật khoảng 5 giây một lần.'],'do-ve':['Dò vé số {R}','Dò vé số {R} theo đài và ngày quay, đối chiếu với đủ các giải trong 60 ngày gần nhất.'],'thong-ke':['Thống kê lô tô {R}','Thống kê lô tô {R}: tra cứu số, đầu đuôi, giải đặc biệt, lô gan, phân bố tổng và chẵn lẻ từ dữ liệu quá khứ.'],'thong-ke-dan':['Thống kê dàn số {R}','Thống kê dàn 4, 6, 10 số {R}: mỗi dàn đã xuất hiện bao nhiêu lần trong quá khứ, cả dàn cùng về bao nhiêu kỳ.'],'ban-do':['Bản đồ tần suất 00–99 {R}','Bản đồ nhiệt tần suất 100 số {R} theo các khung thời gian.'],'kiem-dinh':['Kiểm định thống kê {R}','Kiểm định độ ngẫu nhiên và mức lặp lại của các dữ liệu thống kê trên dữ liệu {R}.'],'mo-phong':['Mô phỏng xác suất {R}','Mô phỏng quỹ token giả định để thấy kỳ vọng âm của mọi cách đặt trên dữ liệu {R}.'],'ve-du-lieu':['Về dữ liệu XS Lab','Nguồn dữ liệu, cách cập nhật, kiểm tra chất lượng và cách tính của XS Lab.'],'dan':['Lịch sử thống kê dàn số {R}','Timeline áp dụng một cách thống kê lập dàn trên dữ liệu quá khứ {R}.']};
+const META={'ket-qua':['Kết quả xổ số {R} hôm nay','Kết quả xổ số {R} mới nhất, đủ các giải, sổ kết quả các kỳ gần đây và thống kê nhanh kỳ vừa quay.'],'truc-tiep':['Trực tiếp xổ số {R}','Xem trực tiếp kết quả xổ số {R} trong giờ quay, từng giải cập nhật khoảng 5 giây một lần.'],'do-ve':['Dò vé số {R}','Dò vé số {R} theo đài và ngày quay, đối chiếu với đủ các giải trong 60 ngày gần nhất.'],'thong-ke':['Thống kê lô tô {R}','Thống kê lô tô {R}: tra cứu số, đầu đuôi, giải đặc biệt, lô gan, phân bố tổng và chẵn lẻ từ dữ liệu quá khứ.'],'thong-ke-dan':['Thống kê dàn số {R}','Thống kê dàn 4, 6, 10 số {R}: mỗi dàn đã xuất hiện bao nhiêu lần trong quá khứ, cả dàn cùng về bao nhiêu kỳ.'],'ban-do':['Bản đồ tần suất 00–99 {R}','Bản đồ nhiệt tần suất 100 số {R} theo các khung thời gian.'],'kiem-dinh':['Kiểm định thống kê {R}','Kiểm định độ ngẫu nhiên và mức lặp lại của các dữ liệu thống kê trên dữ liệu {R}.'],'mo-phong':['Mô phỏng xác suất {R}','Mô phỏng quỹ token giả định để thấy kỳ vọng âm của mọi cách đặt trên dữ liệu {R}.'],'vietlott':['Kết quả Vietlott Mega 6/45, Power 6/55','Kết quả xổ số Vietlott Mega 6/45 và Power 6/55 các kỳ, dò vé và thống kê tần suất từ dữ liệu quá khứ.'],'ve-du-lieu':['Về dữ liệu XS Lab','Nguồn dữ liệu, cách cập nhật, kiểm tra chất lượng và cách tính của XS Lab.'],'dan':['Lịch sử thống kê dàn số {R}','Timeline áp dụng một cách thống kê lập dàn trên dữ liệu quá khứ {R}.']};
 function setMeta(v){const m=META[v]||META['ket-qua'],lab=!N?'XSMB, XSMN, XSMT':R.region==='mb'?'XSMB':RLAB[R.region]+' '+ST[R.st],f=s=>s.replace('{R}',lab);document.title=f(m[0])+' – XS Lab';const md=document.querySelector('meta[name=description]');if(md)md.setAttribute('content',f(m[1])+' Thông tin chỉ mang tính tham khảo.');}
 const $=id=>document.getElementById(id);
 const pad=k=>String(k).padStart(2,'0');
@@ -655,11 +695,11 @@ function route(){
  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+cur));
  const navv=cur==='dan'?'thong-ke-dan':cur;
  document.querySelectorAll('.nav a,.tab a').forEach(a=>{const on=a.dataset.v===navv||(a.dataset.v==='more'&&VIEWS.slice(4).some(x=>x[0]===navv));if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
- $('vtitle').textContent=cur==='dan'?'Lịch sử thống kê dàn':VIEWS.find(x=>x[0]===cur)[1];setMeta(cur);
+ document.body.classList.toggle('novreg',cur==='vietlott');$('vtitle').textContent=cur==='dan'?'Lịch sử thống kê dàn':VIEWS.find(x=>x[0]===cur)[1];setMeta(cur);
  if(N)renderView(cur);window.scrollTo(0,0);}
 addEventListener('hashchange',route);
 function renderView(v){
- if(v==='ket-qua')renderHome();if(v==='thong-ke-dan')renderDanStats();if(v==='do-ve')renderDoVe();if(v==='mo-phong')runSim();
+ if(v==='ket-qua')renderHome();if(v==='thong-ke-dan')renderDanStats();if(v==='do-ve')renderDoVe();if(v==='vietlott')renderVL();if(v==='mo-phong')runSim();
  if(v==='kiem-dinh'){renderBars();drawRoll();renderRandom();}if(v==='ban-do')renderHeat();if(v==='dan')renderDan();if(v==='thong-ke')renderStats();if(v==='truc-tiep')renderLive();else lvStop();if(v==='ve-du-lieu')renderAbout();
  if(v==='mo-phong'){$('msS').textContent=`Mô phỏng 1.000 quỹ chạy song song trên kết quả ngẫu nhiên đúng luật ${where()} (${M} giải mỗi kỳ, ${M} token mỗi điểm, 99 token mỗi nháy). Mục đích: xem các cách đặt khác nhau thay đổi hình dạng kết quả ra sao, và vì sao không cách nào vượt được kỳ vọng âm.`;$('msRun').onclick=runStrategy;if(!MS||MS.M!==M){runStrategy();MS.M=M;}else drawStrategy();}}
 
@@ -1115,7 +1155,7 @@ function renderDoVe(){
   $('dvReg').onchange=()=>{dv.reg=$('dvReg').value;dv.st=null;dv.date=null;renderDoVe();};
   $('dvSt').onchange=()=>{dv.st=$('dvSt').value;dv.date=null;renderDoVe();};
   $('dvDate').onchange=()=>{dv.date=$('dvDate').value;};
-  $('dvNum').oninput=()=>{$('dvNum').value=$('dvNum').value.replace(/\D/g,'');};
+  $('dvNum').oninput=()=>{$('dvNum').value=$('dvNum').value.replace(/[^\d,; ]/g,'');};
   f.onsubmit=e=>{e.preventDefault();dv.date=$('dvDate').value;dv.num=$('dvNum').value;checkTicket();};}
  if(!dv.reg)dv.reg=R.region;if(dv.reg!=='mb'&&!RAW[dv.reg])dv.reg='mb';
  $('dvReg').value=dv.reg;const recs=dvRecs(),L=dv.reg==='mb'?5:6;
@@ -1125,23 +1165,80 @@ function renderDoVe(){
  const ds2=recs.filter(r=>dv.reg==='mb'||r.station===dv.st).map(r=>r.date).sort().reverse();
  if(!dv.date||!ds2.includes(dv.date))dv.date=ds2[0];
  $('dvDate').innerHTML=ds2.map(d=>`<option value="${d}">${wd(d)}, ${vnDate(d)}</option>`).join('');if(dv.date)$('dvDate').value=dv.date;
- $('dvNum').maxLength=L;$('dvNum').placeholder=L===5?'12345':'123456';$('dvNumL').textContent=`Số trên vé (${L} chữ số)`;
+ $('dvNum').placeholder=L===5?'12345, 678, 90':'123456, 789, 45';$('dvNumL').textContent=`Số cần dò (2–${L} chữ số, tối đa 17 số)`;
  $('dvRule').innerHTML=dv.reg==='mb'?'Cách dò XSMB: giải Đặc biệt, Nhất, Nhì, Ba trùng cả 5 số; giải Tư, Năm trùng 4 số cuối; giải Sáu trùng 3 số cuối; giải Bảy trùng 2 số cuối. Trùng 5 số giải Đặc biệt nhưng khác ký hiệu vé là giải phụ; trùng 2 số cuối giải Đặc biệt là giải khuyến khích. Vé trúng nhiều giải được lĩnh tất cả. '+'<b>Vui lòng kiểm tra lại kết quả chính thức được công bố bởi các công ty xổ số kiến thiết.</b>':
   'Cách dò XSMN, XSMT (vé 6 chữ số): giải Đặc biệt trùng cả 6 số; giải Nhất đến giải Tư trùng 5 số cuối; giải Năm, Sáu trùng 4 số cuối; giải Bảy trùng 3 số cuối; giải Tám trùng 2 số cuối. Giải phụ đặc biệt: trùng 5 số cuối giải Đặc biệt, sai chữ số đầu. Giải khuyến khích: đúng chữ số đầu và sai đúng 1 trong 5 chữ số còn lại của giải Đặc biệt. Vé trúng nhiều giải được lĩnh tất cả. '+'<b>Vui lòng kiểm tra lại kết quả chính thức được công bố bởi các công ty xổ số kiến thiết.</b>';
  if(dv.num)checkTicket();else $('dvOut').innerHTML='';}
+function ticketWins(num,rec){
+ const L=dv.reg==='mb'?5:6,G=dv.reg==='mb'?DV_MB:DV_MN,win=[],near=[],n=num.length,db=rec.db[0];
+ for(const [g,nm,w] of G)for(const v of rec[g]){if(n>=w){if(num.slice(-w)===v.slice(-w))win.push(`<b>${nm}</b> — trùng ${w===L?'cả '+w+' số':w+' số cuối'} (${v})`);}
+  else if(v.slice(-n)===num)near.push(`${nm} ${v}: trùng ${n} số cuối, cần ${w} số mới trúng`);}
+ if(n===L){if(dv.reg==='mb'){if(num===db)win[0]=`<b>Trùng 5 số giải Đặc biệt</b> (${db}) — giải Đặc biệt nếu đúng ký hiệu vé, khác ký hiệu là giải phụ Đặc biệt`;else if(num.slice(-2)===db.slice(-2))win.push(`<b>Giải khuyến khích</b> — trùng 2 số cuối giải Đặc biệt (${db})`);}
+  else if(num!==db){if(num.slice(1)===db.slice(1))win.push(`<b>Giải phụ đặc biệt</b> — trùng 5 số cuối giải Đặc biệt (${db}), sai chữ số đầu`);
+   else if(num[0]===db[0]){let df=0;for(let i=1;i<6;i++)if(num[i]!==db[i])df++;if(df===1)win.push(`<b>Giải khuyến khích</b> — sai 1 chữ số so với giải Đặc biệt (${db})`);}}}
+ else if(dv.reg==='mb'&&n>=2&&n<5&&num.slice(-2)===db.slice(-2))win.push(`<b>Giải khuyến khích</b> — trùng 2 số cuối giải Đặc biệt (${db})`);
+ return {win,near};}
 function checkTicket(){
- const recs=dvRecs(),rec=recs.find(r=>r.date===dv.date&&(dv.reg==='mb'||r.station===dv.st)),num=dv.num,L=dv.reg==='mb'?5:6,out=$('dvOut');
+ const recs=dvRecs(),rec=recs.find(r=>r.date===dv.date&&(dv.reg==='mb'||r.station===dv.st)),L=dv.reg==='mb'?5:6,out=$('dvOut');
  if(!rec){out.innerHTML='<div class="dvres"><p class="note" style="margin:0">Chưa có kết quả đủ giải cho ngày này.</p></div>';return;}
- if(!new RegExp('^\\d{'+L+'}$').test(num)){out.innerHTML=`<div class="dvres"><p class="note" style="margin:0;color:var(--red)">Nhập đủ ${L} chữ số trên vé.</p></div>`;return;}
- const win=[],G=dv.reg==='mb'?DV_MB:DV_MN;
- for(const [g,nm,w] of G)for(const v of rec[g])if(num.slice(-w)===v.slice(-w))win.push(`<b>${nm}</b> — trùng ${w===L?'cả '+w:w+' số cuối'} số (${v})`);
- const db=rec.db[0];
- if(dv.reg==='mb'){if(num===db)win[0]=`<b>Trùng 5 số giải Đặc biệt</b> (${db}) — giải Đặc biệt nếu đúng ký hiệu vé, khác ký hiệu là giải phụ Đặc biệt`;else if(num.slice(-2)===db.slice(-2))win.push(`<b>Giải khuyến khích</b> — trùng 2 số cuối giải Đặc biệt (${db})`);}
- else if(num!==db){if(num.slice(1)===db.slice(1))win.push(`<b>Giải phụ đặc biệt</b> — trùng 5 số cuối giải Đặc biệt (${db}), sai chữ số đầu`);
-  else if(num[0]===db[0]){let df=0;for(let i=1;i<6;i++)if(num[i]!==db[i])df++;if(df===1)win.push(`<b>Giải khuyến khích</b> — sai 1 chữ số so với giải Đặc biệt (${db})`);}}
+ const parts=dv.num.split(/[,;\n]+/).map(x=>x.replace(/\s+/g,'')).filter(Boolean);
+ const bad=parts.filter(x=>!new RegExp('^\\d{2,'+L+'}$').test(x));
+ if(!parts.length||bad.length||parts.length>17){out.innerHTML=`<div class="dvres"><p class="note" style="margin:0;color:var(--red)">${parts.length>17?`Tối đa 17 số mỗi lần dò (đang có ${parts.length}).`:bad.length?`Số không hợp lệ: ${bad.slice(0,5).join(', ')}. Mỗi số gồm 2 đến ${L} chữ số.`:'Nhập ít nhất một số.'}</p></div>`;return;}
  const where2=dv.reg==='mb'?'XSMB':`${RLAB[dv.reg]} ${ST[dv.st]}`,live=rec.live?' <span class="pchip hi">kết quả từ trực tiếp, chờ đối chiếu</span>':'';
- out.innerHTML=win.length?`<div class="dvres win"><h3>Vé ${num} trùng ${win.length} giải</h3><p class="note" style="margin:0">${where2} · ${wd(dv.date)}, ${vnDate(dv.date)}${live}</p><ul>${win.map(x=>`<li>${x}</li>`).join('')}</ul><p class="note" style="margin:10px 0 0">Đối chiếu với vé thật và kết quả chính thức của công ty xổ số kiến thiết trước khi đi lĩnh thưởng.</p></div>`
-  :`<div class="dvres"><h3>Vé ${num} không trùng giải nào</h3><p class="note" style="margin:0">${where2} · ${wd(dv.date)}, ${vnDate(dv.date)}${live}</p></div>`;}
+ const res=[...new Set(parts)].map(num=>({num,...ticketWins(num,rec)})),nw=res.filter(r=>r.win.length).length;
+ out.innerHTML=`<div class="dvres${nw?' win':''}"><h3>${res.length} số · ${nw?nw+' số trùng giải':'không số nào trùng giải'}</h3><p class="note" style="margin:0">${where2} · ${wd(dv.date)}, ${vnDate(dv.date)}${live}</p>
+  ${res.map(r=>`<div class="dvone${r.win.length?' win':''}"><h4>${r.num} · ${r.win.length?'trùng '+r.win.length+' giải':'không trùng giải'}</h4>${r.win.length||r.near.length?`<ul>${r.win.map(x=>`<li>${x}</li>`).join('')}${r.near.map(x=>`<li class="note">${x}</li>`).join('')}</ul>`:''}</div>`).join('')}
+  ${nw?'<p class="note" style="margin:10px 0 0">Đối chiếu với vé thật và kết quả chính thức của công ty xổ số kiến thiết trước khi đi lĩnh thưởng.</p>':''}</div>`;}
+
+/* ---------- Vietlott ---------- */
+const VL={g:store.get('xs-vl','645'),data:{},ky:null,win:100,loading:null};
+const VLG={'645':{nm:'Mega 6/45',mx:45,f:'vietlott_645.csv',days:'thứ 4, thứ 6, chủ nhật'},'655':{nm:'Power 6/55',mx:55,f:'vietlott_655.csv',days:'thứ 3, thứ 5, thứ 7'}};
+function vlLoad(g){if(VL.data[g])return Promise.resolve(VL.data[g]);return fetch(VLG[g].f,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(VLG[g].f);return r.text();}).then(tx=>{const rows=tx.trim().split(/\r?\n/).slice(1).map(l=>{const p=l.split(',');return {ky:+p[0],date:p[1],n:p.slice(2,8).map(Number),db:p[8]?+p[8]:null};});return VL.data[g]=rows;});}
+function vlComb(n,k){let r=1;for(let i=1;i<=k;i++)r=r*(n-k+i)/i;return r;}
+function vlOdds(g){const mx=VLG[g].mx,T=vlComb(mx,6),o=[[6,'Jackpot'+(g==='655'?' 1':''),1]];if(g==='655')o.push([5.5,'Jackpot 2 (5 số + số đặc biệt)',6]);o.push([5,'Giải nhất (5 số)',6*(mx-6-(g==='655'?1:0))],[4,'Giải nhì (4 số)',15*vlComb(mx-6,2)],[3,'Giải ba (3 số)',20*vlComb(mx-6,3)]);return o.map(([k,nm,c])=>({k,nm,p:c/T}));}
+function vlPrize(g,m,hasDb){if(m===6)return g==='655'?'Jackpot 1':'Jackpot';if(m===5)return g==='655'&&hasDb?'Jackpot 2':'Giải nhất';if(m===4)return 'Giải nhì';if(m===3)return 'Giải ba';return '';}
+function renderVL(){
+ document.querySelectorAll('#vlGame button').forEach(b=>{b.setAttribute('aria-pressed',b.dataset.g===VL.g);b.onclick=()=>{VL.g=b.dataset.g;store.set('xs-vl',VL.g);VL.ky=null;renderVL();};});
+ $('vlT').textContent='Đang tải dữ liệu '+VLG[VL.g].nm+'…';
+ vlLoad(VL.g).then(rows=>vlDraw(rows)).catch(e=>{$('vlT').textContent='Không tải được dữ liệu Vietlott: '+e.message;});}
+function vlDraw(rows){
+ const g=VL.g,G=VLG[g],mx=G.mx,N2=rows.length;if(!N2)return;
+ if(VL.ky===null||!rows.some(r=>r.ky===VL.ky))VL.ky=rows[N2-1].ky;
+ const i=rows.findIndex(r=>r.ky===VL.ky),r=rows[i];
+ $('vlKy').innerHTML=rows.slice(-200).reverse().map(x=>`<option value="${x.ky}">#${String(x.ky).padStart(5,'0')} · ${vnDate(x.date)}</option>`).join('');
+ if(i<N2-200)$('vlKy').insertAdjacentHTML('beforeend',`<option value="${r.ky}">Kỳ #${String(r.ky).padStart(5,'0')} · ${vnDate(r.date)}</option>`);
+ $('vlKy').value=r.ky;$('vlKy').onchange=()=>{VL.ky=+$('vlKy').value;vlDraw(rows);};
+ $('vlPrev').disabled=i<=0;$('vlNext').disabled=i>=N2-1;$('vlPrev').onclick=()=>{VL.ky=rows[i-1].ky;vlDraw(rows);};$('vlNext').onclick=()=>{VL.ky=rows[i+1].ky;vlDraw(rows);};$('vlLatest').onclick=()=>{VL.ky=rows[N2-1].ky;vlDraw(rows);};
+ $('vlT').textContent=`${G.nm} · kỳ #${String(r.ky).padStart(5,'0')} · ${wd(r.date)}, ${vnDate(r.date)}`;
+ $('vlBalls').innerHTML=r.n.map(k=>ball(k,'r lg')).join('')+(g==='655'&&r.db?`<div class="ballwrap">${ball(r.db,'y lg')}<small>số đặc biệt</small></div>`:'');
+ const od=vlOdds(g);
+ $('vlNote').innerHTML=`${G.nm} quay ${G.days}, khoảng 18:00. Xác suất mỗi vé: ${od.map(o=>`${o.nm} 1/${vn(1/o.p)}`).join(' · ')}. Dữ liệu ${vn(N2)} kỳ (${vnDate(rows[0].date)} – ${vnDate(rows[N2-1].date)}).`;
+ // dò vé
+ const f=$('vlForm');f.onsubmit=e=>{e.preventDefault();vlCheck(rows);};if($('vlIn').value.trim())vlCheck(rows,true);else $('vlOut').innerHTML='';
+ // tần suất
+ const W=[[`30 kỳ`,30],[`100 kỳ`,100],[`1 năm`,156],[`Toàn bộ`,1e9]];seg($('vlWin'),W,VL.win,v=>{VL.win=v;vlDraw(rows);});
+ const from=Math.max(0,N2-VL.win),win=rows.slice(from),c=new Array(mx+1).fill(0);for(const x of win)for(const k of x.n)c[k]++;
+ const e=win.length*6/mx,cmax=Math.max(...c);
+ $('vlFS').textContent=`Số lần mỗi số (6 số chính) xuất hiện trong ${vn(win.length)} kỳ gần nhất, từ ${vnDate(win[0].date)} đến ${vnDate(win[win.length-1].date)}. Trung bình mỗi số ${dec(e,1)} lần; số viền đỏ là số có mặt ở kỳ đang chọn.`;
+ $('vlFreq').innerHTML=[...Array(mx).keys()].map(j=>{const k=j+1;return `<div class="${r.n.includes(k)?'hi':''}" title="${pad(k)}: ${c[k]} lần (trung bình ${dec(e,1)})"><i style="height:${(c[k]/cmax*100).toFixed(0)}%"></i><b>${pad(k)}</b><span>${c[k]}</span></div>`;}).join('');
+ const ord=[...Array(mx).keys()].map(j=>j+1).sort((a,b)=>c[b]-c[a]||a-b);
+ const last=new Array(mx+1).fill(-1),maxg=new Array(mx+1).fill(0);rows.forEach((x,ix)=>{for(const k of x.n){maxg[k]=Math.max(maxg[k],ix-last[k]-1);last[k]=ix;}});
+ const gan=[...Array(mx).keys()].map(j=>j+1).map(k=>({k,g:N2-1-last[k],m:Math.max(maxg[k],N2-1-last[k])})).sort((a,b)=>b.g-a.g||a.k-b.k);
+ const li=(a)=>`<div class="tbl"><table><tbody>${a}</tbody></table></div>`;
+ $('vlHot').innerHTML=`<h2>Về nhiều nhất, ít nhất</h2><p class="sub">Trong ${vn(win.length)} kỳ gần nhất (trung bình ${dec(e,1)} lần).</p>${li(ord.slice(0,5).map(k=>`<tr><td class="left"><b>${pad(k)}</b></td><td>${c[k]} lần</td><td class="left">nhiều</td></tr>`).join('')+ord.slice(-5).reverse().map(k=>`<tr><td class="left"><b>${pad(k)}</b></td><td>${c[k]} lần</td><td class="left">ít</td></tr>`).join(''))}`;
+ $('vlGan').innerHTML=`<h2>Số lâu chưa về</h2><p class="sub">Số kỳ liên tiếp chưa xuất hiện tính đến kỳ mới nhất, kèm kỷ lục của chính số đó trong toàn bộ dữ liệu.</p>${li(`<tr><th class="left">Số</th><th>Chưa về</th><th>Kỷ lục</th></tr>`+gan.slice(0,10).map(x=>`<tr><td class="left"><b>${pad(x.k)}</b></td><td>${x.g} kỳ</td><td>${x.m} kỳ</td></tr>`).join(''))}`;
+ $('vlBook').innerHTML=rows.slice(-10).reverse().map(x=>`<a href="#vietlott" data-ky="${x.ky}"><div><b>#${String(x.ky).padStart(5,'0')}</b><br><small>${wd(x.date)}, ${vnDate(x.date)}</small></div><div class="chipline">${x.n.map(k=>`<b>${pad(k)}</b>`).join(' ')}${g==='655'&&x.db?` <span>| ĐB <b style="color:#b08000">${pad(x.db)}</b></span>`:''}</div></a>`).join('');
+ $('vlBook').querySelectorAll('a').forEach(a=>a.onclick=ev=>{ev.preventDefault();VL.ky=+a.dataset.ky;vlDraw(rows);$('vlT').scrollIntoView({behavior:'smooth',block:'start'});});}
+function vlCheck(rows,silent){
+ const g=VL.g,mx=VLG[g].mx,nums=($('vlIn').value.match(/\d+/g)||[]).map(Number);$('vlErr').textContent='';
+ if(nums.length!==6||new Set(nums).size!==6||nums.some(k=>k<1||k>mx)){if(!silent)$('vlErr').textContent=`Nhập đúng 6 số khác nhau từ 01 đến ${mx}.`;$('vlOut').innerHTML='';return;}
+ const set=new Set(nums),r=rows.find(x=>x.ky===VL.ky),m=r.n.filter(k=>set.has(k)).length,hasDb=g==='655'&&r.db&&set.has(r.db),pz=vlPrize(g,m,hasDb);
+ const H={3:0,4:0,5:0,6:0},HD=[];for(const x of rows){const mm=x.n.filter(k=>set.has(k)).length;if(mm>=3){H[mm]++;if(mm>=4)HD.push(`#${String(x.ky).padStart(5,'0')} (${vnDate(x.date)}): ${mm} số`);}}
+ const od=vlOdds(g).filter(o=>o.k!==5.5);
+ $('vlOut').innerHTML=`<div class="vlres"><div class="dvone${pz?' win':''}"><h4>Kỳ #${String(r.ky).padStart(5,'0')} (${vnDate(r.date)}): trùng ${m} số${hasDb?' và số đặc biệt':''}${pz?' · '+pz:' · không trúng giải'}</h4>
+   <div class="balls" style="gap:6px;margin-top:6px">${[...nums].sort((a,b)=>a-b).map(k=>ball(k,r.n.includes(k)?'r sm':(g==='655'&&k===r.db?'y sm':'sm dim'))).join('')}</div>
+   ${pz?'<p class="note" style="margin:8px 0 0">Đối chiếu với vé thật và kết quả chính thức do Vietlott công bố trước khi đi lĩnh thưởng.</p>':''}</div>
+  <div><h4 style="margin:0 0 4px">Bộ số này trong ${vn(rows.length)} kỳ quá khứ</h4><p class="note" style="margin:0">${[6,5,4,3].map(k=>`Trùng ${k} số: <b>${H[k]}</b> kỳ (theo xác suất ${(x=>x<0.01?'dưới 0,01':'≈ '+dec(x,x<1?2:1))(rows.length*od.find(o=>o.k===k).p)})`).join(' · ')}</p>${HD.length?`<p class="note" style="margin:6px 0 0">Các kỳ trùng từ 4 số: ${HD.slice(-10).reverse().join(', ')}.</p>`:''}</div></div>`;}
 
 function renderAbout(){
  const mb=RAW.mb,mbN=mb.length,cntR=r=>RAW[r]?Object.values(RAW[r].by).reduce((a,x)=>a+x.length,0):0,mnN=cntR('mn'),mtN=cntR('mt');
@@ -1154,6 +1251,7 @@ function renderAbout(){
   <li><b>XSMB</b>: bộ dữ liệu mở <a href="https://github.com/kina2711/vietnam-lottery-xsmb">kina2711/vietnam-lottery-xsmb</a> (giấy phép MIT, thu thập từ Minh Ngọc), đối chiếu với 3 bộ tương tự (khiemdoan, daiduong-eth, xmanzero); mỗi lần cập nhật lấy bộ mới nhất.</li>
   <li><b>XSMN</b>: gộp 2 bộ độc lập <a href="https://github.com/tuanseo5t-alt/xosomn-xosomt">tuanseo5t-alt/xosomn-xosomt</a> và <a href="https://github.com/Hpbt/xsmn-thong-ke">Hpbt/xsmn-thong-ke</a>.</li>
   <li><b>XSMT</b>: bộ dữ liệu mở <a href="https://github.com/tuanseo5t-alt/xosomn-xosomt">tuanseo5t-alt/xosomn-xosomt</a> (từ 2009, 14 đài); đã đối chiếu ngẫu nhiên với bảng kết quả của Minh Ngọc.</li>
+  <li><b>Vietlott</b> (Mega 6/45 từ kỳ 198, Power 6/55 từ kỳ 1): bộ dữ liệu mở <a href="https://github.com/vietvudanh/vietlott-data">vietvudanh/vietlott-data</a>; mỗi kỳ được kiểm tra đủ 6 số khác nhau trong khoảng 1–45 hoặc 1–55.</li>
   <li><b>Ngay sau giờ quay</b>: máy chủ đọc bảng kết quả công khai của <a href="https://www.minhngoc.net.vn">Minh Ngọc</a>, chỉ ghi khi đủ số giải và đúng số chữ số; trên trình duyệt, kết quả quay trực tiếp được đưa ngay vào tab Kết quả với nhãn "chờ đối chiếu".</li>
   <li><b>Khi nguồn mở chậm</b>: kết quả trong ngày được lấy từ trang kết quả (xskt.com.vn, xosodaiphat.com) và chỉ ghi vào khi hai trang khớp hoàn toàn và đủ số giải, đúng số chữ số.</li></ul>
  <h3>Kiểm tra chất lượng</h3><ul>

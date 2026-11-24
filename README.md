@@ -8,7 +8,7 @@ Trang kết quả xổ số và thống kê dữ liệu đã quay của XSMB, XS
 
 XS Lab chỉ trình bày kết quả và thống kê của các kỳ đã quay, không đưa ra dự đoán. Từ 24/11/2026 đã bỏ phần danh sách cho kỳ tới và nhật ký khóa trước (các tệp `predictions*.json` cũ vẫn giữ nguyên trong kho, không còn được ghi thêm).
 
-Các mục: Kết quả (kèm thống kê nhanh của kỳ), Trực tiếp, Dò vé, Thống kê, Thống kê dàn, Bản đồ số, Kiểm định, Mô phỏng, Về dữ liệu.
+Các mục: Kết quả (kèm thống kê nhanh của kỳ), Trực tiếp, Dò vé (tối đa 17 số, mỗi số 2–6 chữ số), Thống kê, Vietlott (Mega 6/45, Power 6/55), Thống kê dàn, Bản đồ số, Kiểm định, Mô phỏng, Về dữ liệu.
 
 ---
 
@@ -94,6 +94,7 @@ Vào tab **Actions** → **Cập nhật XSMB hằng ngày** → **Run workflow**
 | `xsmt.csv`, `recent_mt.json` | Dữ liệu và kết quả đủ giải của XSMT |
 | `tools/update_mn.py`, `tools/add_day_mn.py` | Tải/gộp dữ liệu XSMN hoặc XSMT, nhập tay một đài |
 | `tools/fetch_minhngoc.py` | Lấy kết quả vừa quay từ bảng công khai Minh Ngọc (có kiểm tra) |
+| `vietlott_645.csv`, `vietlott_655.csv`, `tools/update_vietlott.py` | Kết quả Vietlott Mega 6/45, Power 6/55 và script cập nhật (từ vietvudanh/vietlott-data) |
 | `robots.txt`, `sitemap.xml` | Cho công cụ tìm kiếm |
 | `.github/workflows/update.yml` | Lịch chạy tự động |
 
