@@ -13,9 +13,9 @@ def _reg(c, n):
 
 
 MENU = [
-    ("XSMB", _reg("xsmb", "XSMB")[:5] + [("", "Lô gan XSMB", "thong-ke/lo-gan-xsmb/"), ("", "Giải đặc biệt XSMB", "thong-ke/giai-dac-biet-xsmb/"), ("", "3 càng XSMB", "thong-ke/3-cang-xsmb/"), ("", "4 càng XSMB", "thong-ke/4-cang-xsmb/")]),
-    ("XSMN", _reg("xsmn", "XSMN") + [("", "Giải 8 XSMN", "thong-ke/giai-8-xsmn/")]),
-    ("XSMT", _reg("xsmt", "XSMT") + [("", "Giải 8 XSMT", "thong-ke/giai-8-xsmt/")]),
+    ("XSMB", _reg("xsmb", "XSMB")[:5] + [("", "Lô gan XSMB", "thong-ke/lo-gan-xsmb/"), ("", "Giải đặc biệt XSMB", "thong-ke/giai-dac-biet-xsmb/"), ("", "3 càng XSMB", "thong-ke/3-cang-xsmb/"), ("", "Thống kê dàn XSMB", "thong-ke-dan-xsmb/")]),
+    ("XSMN", _reg("xsmn", "XSMN") + [("", "Giải 8 XSMN", "thong-ke/giai-8-xsmn/"), ("", "Thống kê dàn XSMN", "thong-ke-dan-xsmn/")]),
+    ("XSMT", _reg("xsmt", "XSMT") + [("", "Giải 8 XSMT", "thong-ke/giai-8-xsmt/"), ("", "Thống kê dàn XSMT", "thong-ke-dan-xsmt/")]),
     ("Vietlott", [("", "Keno", "keno/"), ("", "Mega 6/45", "mega-645/"), ("", "Power 6/55", "power-655/"), ("", "Max 3D, Max 3D+", "max-3d/"), ("", "Max 3D Pro", "max-3d-pro/"), ("", "Tất cả Vietlott", "vietlott/")]),
     ("Thống kê", [("", "Tra cứu số 00–99", "so/"), ("", "Bảng thống kê", "thong-ke/bang-thong-ke/"), ("", "Thống kê lô tô", "thong-ke/"), ("", "Lô gan XSMB", "thong-ke/lo-gan-xsmb/"), ("", "Tần suất lô tô", "thong-ke/tan-suat-lo-to-xsmb/"), ("", "Đầu đuôi", "thong-ke/dau-duoi-xsmb/"), ("", "Giải nhất", "thong-ke/giai-nhat-xsmb/"), ("", "Lô kép", "thong-ke/lo-kep-xsmb/"), ("", "Số đảo", "thong-ke/so-dao-xsmb/"), ("", "Số gánh", "thong-ke/so-ganh-xsmb/"), ("", "Tổng, chẵn lẻ ĐB", "thong-ke/tong-chan-le-dac-biet-xsmb/"), ("h", "Công cụ", ""), ("", "Thống kê dàn, 3 càng", "thong-ke-dan/"), ("", "Bản đồ số", "ban-do-so/"), ("", "Kiểm định", "kiem-dinh/"), ("", "Mô phỏng", "mo-phong/")]),
 ]
@@ -81,7 +81,7 @@ def footer_html(up, year="2026"):
     def L(items):
         return '<ul>' + ''.join(f'<li><a href="{up}{u}">{t}</a></li>' for t, u in items) + '</ul>'
     return f"""<footer class="foot" id="siteFoot"><div class="fgrid">
-<div class="fsrc"><h2>Thông tin nguồn</h2><p>{NOTICE}</p><p>XS Lab chỉ trình bày kết quả và thống kê dữ liệu đã quay, không đưa ra dự đoán kết quả.</p><p>Liên hệ: <a href="mailto:{EMAIL}">{EMAIL}</a> · <a href="{up}lien-he/">Trang liên hệ</a></p></div>
+<div class="fsrc"><h2>Thông tin nguồn</h2><p>{NOTICE}</p><p>XS Lab chỉ trình bày kết quả và thống kê dữ liệu đã quay, không đưa ra dự đoán kết quả.</p><p>Liên hệ: <!--email_off--><a href="mailto:{EMAIL}">{EMAIL}</a><!--/email_off--> · <a href="{up}lien-he/">Trang liên hệ</a></p></div>
 <nav aria-label="Kết quả và thống kê"><h2>Kết quả &amp; thống kê</h2>{L([("Kết quả XSMB","xsmb/"),("Kết quả XSMN","xsmn/"),("Kết quả XSMT","xsmt/"),("Trực tiếp XSMB","truc-tiep-xsmb/"),("Trực tiếp XSMN","truc-tiep-xsmn/"),("Trực tiếp XSMT","truc-tiep-xsmt/"),("XSMB 30 ngày","xsmb-30-ngay/"),("Sổ kết quả XSMB","xsmb/so-ket-qua/"),("Sổ kết quả XSMN","xsmn/so-ket-qua/"),("Sổ kết quả XSMT","xsmt/so-ket-qua/"),("Dò vé số","do-ve/"),("Thống kê lô tô","thong-ke/"),("Tra cứu số 00–99","so/"),("Thống kê dàn","thong-ke-dan/"),("Bảng thống kê","thong-ke/bang-thong-ke/")])}</nav>
 <nav aria-label="Vietlott"><h2>Vietlott</h2>{L([("Keno","keno/"),("Mega 6/45","mega-645/"),("Power 6/55","power-655/"),("Max 3D","max-3d/"),("Max 3D Pro","max-3d-pro/"),("Tất cả Vietlott","vietlott/")])}</nav>
 <nav aria-label="Về XS Lab"><h2>Về XS Lab</h2>{L([("Giới thiệu","gioi-thieu/"),("Liên hệ","lien-he/"),("Điều khoản sử dụng","dieu-khoan-su-dung/"),("Hỏi đáp (FAQ)","hoi-dap/"),("Miễn trừ trách nhiệm","mien-tru-trach-nhiem/"),("Chính sách bảo mật","chinh-sach-bao-mat/"),("Chính sách cookie","cookies/"),("Về dữ liệu","ve-du-lieu/"),("RSS","rss/")])}</nav>

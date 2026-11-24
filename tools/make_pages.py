@@ -742,7 +742,7 @@ INFO_PAGES = [
  ("lien-he/", "ContactPage", "Liên hệ XS Lab – góp ý, báo lỗi kết quả xổ số", "Liên hệ XS Lab để góp ý, báo lỗi kết quả XSMB, XSMN, XSMT, Vietlott hoặc đề xuất tính năng.", "Liên hệ", "Liên hệ XS Lab", f"""<div class="card doc">
 <p>XS Lab luôn muốn nghe góp ý của người đọc. Nếu bạn thấy kết quả nào chưa khớp với kết quả chính thức, một trang hiển thị lỗi hay muốn đề xuất tính năng mới, hãy liên hệ qua kênh dưới đây.</p>
 <h2>Kênh liên hệ</h2><ul>
-<li><b>Email:</b> <a href="mailto:{shell.EMAIL}">{shell.EMAIL}</a> – góp ý, báo lỗi kết quả, đề xuất tính năng.</li>
+<li><b>Email:</b> <!--email_off--><a href="mailto:{shell.EMAIL}">{shell.EMAIL}</a><!--/email_off--> – góp ý, báo lỗi kết quả, đề xuất tính năng.</li>
 <li><b>Website:</b> <a href="{BASE}">xslab.live</a></li></ul>
 <h2>Khi báo lỗi kết quả</h2>
 <p>Để sửa nhanh, vui lòng ghi rõ: miền hoặc đài (ví dụ XSMB, Vĩnh Long), ngày quay, giải bị sai, con số đang hiển thị và con số đúng kèm nguồn (trang của công ty xổ số kiến thiết hoặc Vietlott).</p>
