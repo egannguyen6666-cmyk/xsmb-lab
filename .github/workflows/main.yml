@@ -65,9 +65,11 @@ jobs:
       - name: Nhập tay XSMT (nếu có)
         if: ${{ github.event.inputs.mt_ngay != '' && github.event.inputs.mt_dai != '' && github.event.inputs.mt_ket_qua != '' }}
         run: python3 tools/add_day_mn.py xsmt.csv recent_mt.json "${{ github.event.inputs.mt_ngay }}" "${{ github.event.inputs.mt_dai }}" "${{ github.event.inputs.mt_ket_qua }}"
+      - name: Tạo nguồn RSS
+        run: python3 tools/make_rss.py
       - name: Lưu thay đổi
         run: |
           git config user.name "xsmb-lab-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add xsmb.csv recent.json xsmn.csv recent_mn.json xsmt.csv recent_mt.json vietlott_645.csv vietlott_655.csv vietlott_3d.csv vietlott_3dpro.csv vietlott_keno.csv
+          git add xsmb.csv recent.json xsmn.csv recent_mn.json xsmt.csv recent_mt.json vietlott_645.csv vietlott_655.csv vietlott_3d.csv vietlott_3dpro.csv vietlott_keno.csv rss.xml
           git diff --cached --quiet && echo "Không có gì mới" || (git commit -m "Cập nhật dữ liệu $(TZ=Asia/Ho_Chi_Minh date +'%d/%m/%Y %H:%M')" && git pull --rebase -q && git push)
