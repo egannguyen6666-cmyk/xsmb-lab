@@ -47,7 +47,7 @@ def esc(s): return html.escape(s, quote=True)
 
 # ---------- tệp giao diện dùng chung cho mọi trang tĩnh (mỗi trang nhẹ hơn, trình duyệt lưu đệm) ----------
 import hashlib
-EXTRA_CSS = """.vb{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8a9b,#d01f3c 55%,#8f1027);color:#fff;font-weight:700;font-size:18px;margin:3px;font-variant-numeric:tabular-nums}.vb.y{background:radial-gradient(circle at 32% 28%,#fff6c2,#f2c200 55%,#a07800);color:#1b1a20}
+EXTRA_CSS = """.lead{background:var(--panel);border:1px solid var(--line);border-left:4px solid #d01f3c;border-radius:12px;padding:12px 14px;line-height:1.6}.vb{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8a9b,#d01f3c 55%,#8f1027);color:#fff;font-weight:700;font-size:18px;margin:3px;font-variant-numeric:tabular-nums}.vb.y{background:radial-gradient(circle at 32% 28%,#fff6c2,#f2c200 55%,#a07800);color:#1b1a20}
 .mgrid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}.mgrid a,.mgrid span{display:block;text-align:center;padding:6px 0;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-size:13px;color:var(--ink);background:var(--panel)}.mgrid span{color:var(--mute);opacity:.5}.mgrid a:hover{border-color:#d01f3c;color:var(--red)}
 .yr{display:grid;grid-template-columns:64px minmax(0,1fr);gap:8px;align-items:center;margin:0 0 6px}.yr b{font-variant-numeric:tabular-nums}
 @media(max-width:600px){.mgrid{grid-template-columns:repeat(6,minmax(0,1fr))}.yr{grid-template-columns:1fr}.vb{width:38px;height:38px;font-size:16px}}
@@ -98,6 +98,19 @@ def mn_table(recs):
     return '<table class="mn">' + head + ''.join(f'<tr class="{g}"><td class="l">{lb}</td>' + ''.join(f'<td>{cells(r[g])}</td>' for r in recs) + '</tr>' for lb, g in MN_G) + '</table>'
 
 
+def diemtin(lab, d, recs, G, lots_list, gaps):
+    from collections import Counter
+    allo = [k for lo in lots_list for k in lo]; c = Counter(allo)
+    mx = max(c.values()) if c else 0
+    top = [f"{k:02d}" for k, n in sorted(c.items()) if n == mx and n > 1][:4]
+    kep = sorted({k for k in allo if k % 11 == 0})
+    dbs = "; ".join((ST.get(r["station"], "") + " " if r.get("station") else "") + r["db"][0] for r in recs)
+    g = sorted(gaps, reverse=True)[:1]
+    parts = [f"giải Đặc biệt {dbs}", f"{len(set(allo))} lô khác nhau trên {len(allo)} giải"]
+    if top: parts.append(f"lô về nhiều nháy nhất là {', '.join(top)} ({mx} nháy)")
+    parts.append(f"{len(kep)} lô kép" + (f" ({', '.join(f'{k:02d}' for k in kep)})" if kep else ""))
+    if g: parts.append(f"số về lại sau thời gian vắng lâu nhất là {g[0][1]:02d} ({g[0][0]} kỳ chưa về)")
+    return f'<p class="lead"><b>Điểm tin {lab} {vn(d)}:</b> ' + "; ".join(parts) + ".</p>"
 def lotos(r, G): return sorted(int(v[-2:]) for _, g in G for v in r[g])
 
 
@@ -227,13 +240,13 @@ for reg in REG:
         links = f'<p><a class="cta" href="{mlink}">{lab} tháng {d[5:7]}/{d[:4]}</a><a class="cta" href="../{WDS[w]}/">{lab} {WD[w]}</a><a class="cta" href="../so-ket-qua/">Sổ kết quả {lab}</a><a class="cta" href="../">{lab} hôm nay</a></p>'
         if reg == "xsmb":
             r = rs[0]; lo = lotos(r, MB_G)
-            body = (f'<p>Kết quả xổ số miền Bắc (XSMB) {WDL[w]} ngày {vn(d)}, quay lúc 18:15: giải Đặc biệt <b>{r["db"][0]}</b>, giải Nhất {r["g1"][0]}. Bảng đủ 27 giải và lô tô đầu – đuôi bên dưới.</p>'
+            body = (diemtin(lab, d, [r], MB_G, [lo], gapinfo.get((d, "")) or []) + f'<p>Kết quả xổ số miền Bắc (XSMB) {WDL[w]} ngày {vn(d)}, quay lúc 18:15: giải Đặc biệt <b>{r["db"][0]}</b>, giải Nhất {r["g1"][0]}. Bảng đủ 27 giải và lô tô đầu – đuôi bên dưới.</p>'
                     f'<div class="card">{mb_table(r)}</div><h2>Lô tô XSMB {vn(d)}</h2><div class="card">{loto_table(lo)}</div>'
                     f'<h2>Thống kê kỳ {vn(d)}</h2>{facts(lo)[:-5]}<li>Về lại sau thời gian dài nhất (so với các kỳ trước): {gtxt((d, ""), "kỳ")}.</li><li>{dbtxt(r)}.</li></ul>{nav}{links}')
             desc = f"XSMB {vn(d)}: kết quả xổ số miền Bắc {WDL[w]} ngày {vn(d)}, giải Đặc biệt {r['db'][0]}, đủ 27 giải, lô tô đầu đuôi và thống kê kỳ quay."
         else:
             names = ", ".join(ST.get(r["station"], r["station"]) for r in rs)
-            body = (f'<p>Kết quả xổ số {name} ({lab}) {WDL[w]} ngày {vn(d)}, quay lúc {tm}, gồm {len(rs)} đài: {names}. Giải Đặc biệt: {"; ".join(ST.get(r["station"], r["station"]) + " <b>" + r["db"][0] + "</b>" for r in rs)}.</p>'
+            body = (diemtin(lab, d, rs, MN_G, [lotos(x, MN_G) for x in rs], [gg for x in rs for gg in (gapinfo.get((d, x["station"])) or [])]) + f'<p>Kết quả xổ số {name} ({lab}) {WDL[w]} ngày {vn(d)}, quay lúc {tm}, gồm {len(rs)} đài: {names}. Giải Đặc biệt: {"; ".join(ST.get(r["station"], r["station"]) + " <b>" + r["db"][0] + "</b>" for r in rs)}.</p>'
                     f'<div class="card">{mn_table(rs)}</div>' +
                     ''.join(f'<h2>Lô tô {ST.get(r["station"], r["station"])} {vn(d)} ({AB.get(r["station"], "")})</h2><div class="card">{loto_table(lotos(r, MN_G))}</div><ul class="facts"><li>Về lại sau thời gian dài nhất (so với các kỳ trước của đài): {gtxt((d, r["station"]), "kỳ")}.</li><li>{dbtxt(r)}.</li><li>Xem các kỳ khác: <a href="../{r["station"]}/">Xổ số {ST.get(r["station"], r["station"])}</a></li></ul>' for r in rs) + nav + links)
             desc = f"{lab} {vn(d)}: kết quả xổ số {name} {WDL[w]} ngày {vn(d)} các đài {names} ({', '.join(AB.get(r['station'], '') for r in rs)}), đủ 18 giải mỗi đài, lô tô đầu đuôi và thống kê kỳ quay."
