@@ -1174,7 +1174,7 @@ function lotoT(arr){const H=[...Array(10)].map(()=>[]),T=[...Array(10)].map(()=>
 function boardText(){const t=$('rsT').textContent,b=$('rsBoard');let o=[t];const tk=b.querySelector('.ticket');
  if(tk){tk.querySelectorAll('.row').forEach(r=>{o.push(r.querySelector('.lb').textContent+': '+[...r.querySelectorAll('.nm')].map(x=>x.textContent).join(' '));});}
  else{const tb=b.querySelector('.mnb table');if(tb){const hs=[...tb.querySelectorAll('thead th')].slice(1).map(x=>x.textContent);hs.forEach((h,j)=>{o.push('');o.push(h+':');tb.querySelectorAll('tbody tr').forEach(tr=>{const c=tr.children;o.push(c[0].textContent+': '+[...c[j+1].querySelectorAll('.nm')].map(x=>x.textContent).join(' '));});});}}
- o.push('');o.push('Nguồn: XS Lab – '+location.href.split('#')[0]);return o.join('\n');}
+ const sl=R.region==='mb'?'xsmb':R.region==='mn'?'xsmn':'xsmt',dd=(rs.date||'').split('-').reverse().join('-'),u=dd?`https://xslab.live/${sl}/${dd}/`:'https://xslab.live/';o.push('');o.push('Xem đủ giải, lô tô, dò vé: '+u);o.push('XS Lab – kết quả xổ số không quảng cáo');return o.join('\n').replace(/★ /g,'');}
 document.addEventListener('click',e=>{const c=e.target.closest('#rsCopy');if(c){e.preventDefault();copyText(boardText(),c);return;}
  const td=e.target.closest('.lt4 td');if(!td)return;const tr=td.parentElement,i=+tr.children[0].textContent,col=[...tr.children].indexOf(td),side=col<2?'h':'t',card=td.closest('.card')||document;
  const key=side+i,on=card.dataset.hl!==key;card.dataset.hl=on?key:'';card.querySelectorAll('.lt4 tr.hl').forEach(x=>x.classList.remove('hl','hlt'));
