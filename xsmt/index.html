@@ -956,17 +956,18 @@ const ST=XS.STATIONS;
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
 
 /* ---------- data & current series ---------- */
-const R=Object.assign({region:'mb',sts:{mn:'tp-hcm',mt:'da-nang'}},store.get('xs-region2',{}));const PREF=store.get('xs-pref',{})||{};if(PREF.region&&!(window.XS_PAGE&&XS_PAGE.region))R.region=PREF.region;if(window.XS_PAGE&&XS_PAGE.region)R.region=XS_PAGE.region;try{const qm=new URLSearchParams(location.search).get('mien');if(['mb','mn','mt'].includes(qm))R.region=qm;}catch(e){}
+const R=Object.assign({region:'mb',sts:{mn:'tp-hcm',mt:'da-nang'}},store.get('xs-region2',{}));const PREF=store.get('xs-pref',{})||{};if(PREF.sts)for(const k in PREF.sts){if(typeof PREF.sts[k]==='string')PREF.sts[k]=[PREF.sts[k]];}const favs=reg=>(PREF.sts&&Array.isArray(PREF.sts[reg]))?PREF.sts[reg]:[];if(PREF.region&&!(window.XS_PAGE&&XS_PAGE.region))R.region=PREF.region;if(window.XS_PAGE&&XS_PAGE.region)R.region=XS_PAGE.region;try{const qm=new URLSearchParams(location.search).get('mien');if(['mb','mn','mt'].includes(qm))R.region=qm;}catch(e){}
 Object.defineProperty(R,'st',{get(){return R.sts[R.region]||'';},set(v){if(R.region!=='mb')R.sts[R.region]=v;}});
 const RLAB={mb:'XSMB',mn:'XSMN',mt:'XSMT'},RNAME={mb:'Miền Bắc',mn:'Miền Nam',mt:'Miền Trung'};
 let RAW={},SER={},REC_MB=[];
 const RG=()=>RAW[R.region];
 let simReadyReg=null,S,N=0,dates=[],cnt,pref,ganA,P,M,startT,nextDate,REC=[],IND=[],UNIT='ngày';
 function seriesFor(region,st){const key=region==='mb'?'mb':region+':'+st;if(!SER[key])SER[key]=region==='mb'?XS.makeSeries(RAW.mb,XS.MB):XS.makeSeries(RAW[region].by[st],Object.assign({station:st},region==='mt'?XS.MT:XS.MN));return SER[key];}
+function favLatest(reg){const G0=RAW[reg],F=favs(reg).filter(x=>G0&&G0.by[x]&&G0.idx[x]);if(!F.length)return null;const D=G0.dates;for(let i=D.length-1;i>=0;i--){const h=F.find(x=>G0.idx[x][D[i]]!==undefined);if(h)return h;}return F[0];}
 function latestSt(reg){const G0=RAW[reg];if(!G0||!G0.dates||!G0.dates.length)return null;const d=G0.dates[G0.dates.length-1];const sts=Object.keys(G0.by).filter(x=>G0.idx[x]&&G0.idx[x][d]!==undefined).sort((a,b)=>a==='tp-hcm'?-1:b==='tp-hcm'?1:ST[a].localeCompare(ST[b],'vi'));return sts[0]||null;}
 const USERST={};
 function useSeries(){
- if(R.region!=='mb'&&!USERST[R.region]){const fv=PREF.sts&&PREF.sts[R.region];const ls=fv&&RG().by[fv]?fv:latestSt(R.region);if(ls)R.sts[R.region]=ls;}
+ if(R.region!=='mb'&&!USERST[R.region]){const ls=favLatest(R.region)||latestSt(R.region);if(ls)R.sts[R.region]=ls;}
  if(R.region!=='mb'&&!RG().by[R.st])R.st=Object.keys(RG().by).sort()[0];
  S=seriesFor(R.region,R.st);N=S.N;dates=S.dates;cnt=S.cnt;pref=S.pref;ganA=S.gan;P=S.P;M=S.m;startT=S.start;UNIT=S.unit;
  if(R.region==='mb'){REC=REC_MB;nextDate=XS.nextDrawMB(dates[N-1]);}
@@ -1082,11 +1083,11 @@ document.querySelectorAll('.regsw button').forEach(b=>b.onclick=()=>setRegion(b.
 $('stSel').onchange=()=>{USERST[R.region]=1;setRegion(R.region,$('stSel').value);};
 function renderPref(){const el=$('prefBar');if(!el)return;const sv=()=>store.set('xs-pref',PREF),has=PREF.region||(PREF.sts&&Object.keys(PREF.sts).length);
  const rg=PREF.region===R.region?`<span class="pfon">★ Miền mặc định: ${RLAB[R.region]}</span>`:`<button type="button" data-pf="reg">☆ Đặt ${RLAB[R.region]} làm mặc định</button>`;
- const st=R.region==='mb'?'':(PREF.sts&&PREF.sts[R.region]===R.st?`<span class="pfon">★ Đài mặc định: ${ST[R.st]}</span>`:`<button type="button" data-pf="st">☆ Đặt đài ${ST[R.st]} làm mặc định</button>`);
+ const F=favs(R.region),inF=F.includes(R.st),st=R.region==='mb'?'':(F.length?`<span class="pfon">★ Đài mặc định: ${F.map(x=>ST[x]).join(', ')}</span>`:'')+(inF?`<button type="button" data-pf="st">Bỏ ${ST[R.st]} khỏi mặc định</button>`:`<button type="button" data-pf="st">☆ Thêm đài ${ST[R.st]} vào mặc định</button>`);
  el.innerHTML=rg+st+(has?`<button type="button" data-pf="reset" class="pfrs">↺ Khôi phục mặc định</button>`:'');
  el.querySelectorAll('button').forEach(b=>b.onclick=()=>{const k=b.dataset.pf;
   if(k==='reg'){PREF.region=R.region;sv();}
-  else if(k==='st'){PREF.sts=PREF.sts||{};PREF.sts[R.region]=R.st;sv();}
+  else if(k==='st'){PREF.sts=PREF.sts||{};const L=favs(R.region).slice(),j=L.indexOf(R.st);if(j>=0)L.splice(j,1);else L.push(R.st);if(L.length)PREF.sts[R.region]=L;else delete PREF.sts[R.region];sv();renderView(curView());}
   else{for(const x in PREF)delete PREF[x];sv();for(const x in USERST)delete USERST[x];setRegion(R.region);return;}
   renderPref();});}
 function refreshChrome(){renderPref();
@@ -1181,13 +1182,13 @@ function renderBoard(){
   const hd=lotoHeads(lo);
   $('rsBoard').innerHTML=(lvr?'<p class="note" style="margin:0 0 8px"><span class="pchip hi">Từ trực tiếp · chờ đối chiếu</span></p>':'')+board+`<div class="loto">${lotoT(lo)}</div>`;
  }else{
-  const sts=Object.keys(RG().by).filter(s=>RG().idx[s][d]!==undefined).sort((a,b)=>(a==='tp-hcm'?-1:b==='tp-hcm'?1:ST[a].localeCompare(ST[b],'vi')));
+  const FV=favs(R.region),fr=x=>{const j=FV.indexOf(x);return j<0?99:j;};const sts=Object.keys(RG().by).filter(s=>RG().idx[s][d]!==undefined).sort((a,b)=>fr(a)-fr(b)||(a==='tp-hcm'?-1:b==='tp-hcm'?1:ST[a].localeCompare(ST[b],'vi')));
   $('rsT').textContent=`${RLAB[R.region]} ${wd(d)}, ${vnDate(d)}`;
   const full=sts.map(s=>RG().rec.find(x=>x.date===d&&x.station===s));
   let html;
-  if(full.every(Boolean)){html=`<div class="mnb"><table><thead><tr><th>Giải</th>${sts.map(s=>`<th class="${s===R.st?'sel':''}">${ST[s]}</th>`).join('')}</tr></thead><tbody>${MN_G.map(([lb,g])=>`<tr class="${g}"><td>${lb}</td>${full.map(f=>`<td>${f[g].map(n=>nsp(n)).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
+  if(full.every(Boolean)){html=`<div class="mnb"><table><thead><tr><th>Giải</th>${sts.map(s=>`<th class="${s===R.st?'sel':''}">${FV.includes(s)?'★ ':''}${ST[s]}</th>`).join('')}</tr></thead><tbody>${MN_G.map(([lb,g])=>`<tr class="${g}"><td>${lb}</td>${full.map(f=>`<td>${f[g].map(n=>nsp(n)).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
   else html=`<p class="note">Bảng đủ giải chỉ lưu 60 ngày gần nhất; ngày này hiện lô tô.</p>`;
-  html+=`<div class="lt">${sts.map(s=>{const two=RG().by[s][RG().idx[s][d]].two,lo=[];for(let j=0;j<36;j+=2)lo.push(+two.substr(j,2));lo.sort((a,b)=>a-b);return `<div><h3>${ST[s]}</h3>${lotoT(lo)}</div>`;}).join('')}</div>`;
+  html+=`<div class="lt">${sts.map(s=>{const two=RG().by[s][RG().idx[s][d]].two,lo=[];for(let j=0;j<36;j+=2)lo.push(+two.substr(j,2));lo.sort((a,b)=>a-b);return `<div><h3>${FV.includes(s)?'★ ':''}${ST[s]}</h3>${lotoT(lo)}</div>`;}).join('')}</div>`;
   if(full.some(f=>f&&f.live))html='<p class="note" style="margin:0 0 8px"><span class="pchip hi">Có kết quả từ trực tiếp · chờ đối chiếu</span></p>'+html;
   $('rsBoard').innerHTML=html;}}
 function renderBook(){
@@ -2079,7 +2080,7 @@ route();
 }
 
 </script>
-<script>(function(){var b=document.querySelector('.favst');if(!b)return;function g(){try{return JSON.parse(localStorage.getItem('xs-pref'))||{}}catch(e){return {}}}function d(){var P=g(),on=P.sts&&P.sts[b.dataset.reg]===b.dataset.st;b.classList.toggle('on',!!on);b.textContent=on?'★ '+b.dataset.nm+' là đài mặc định · bấm để bỏ':'☆ Đặt '+b.dataset.nm+' làm đài mặc định'}b.onclick=function(){var P=g();P.sts=P.sts||{};if(P.sts[b.dataset.reg]===b.dataset.st)delete P.sts[b.dataset.reg];else P.sts[b.dataset.reg]=b.dataset.st;try{localStorage.setItem('xs-pref',JSON.stringify(P))}catch(e){}d()};d()})();
+<script>(function(){var b=document.querySelector('.favst');if(!b)return;var R=b.dataset.reg,S=b.dataset.st;function g(){var P;try{P=JSON.parse(localStorage.getItem('xs-pref'))||{}}catch(e){P={}}P.sts=P.sts||{};if(typeof P.sts[R]==='string')P.sts[R]=[P.sts[R]];if(!Array.isArray(P.sts[R]))P.sts[R]=[];return P}function d(){var on=g().sts[R].indexOf(S)>=0;b.classList.toggle('on',on);b.textContent=on?'★ '+b.dataset.nm+' là đài mặc định · bấm để bỏ':'☆ Thêm '+b.dataset.nm+' vào đài mặc định'}b.onclick=function(){var P=g(),L=P.sts[R],j=L.indexOf(S);if(j>=0)L.splice(j,1);else L.push(S);if(!L.length)delete P.sts[R];try{localStorage.setItem('xs-pref',JSON.stringify(P))}catch(e){}d()};d()})();
 (function(){function oa(){var d=new Date(Date.now()+7*3600e3),m=d.getUTCHours()*60+d.getUTCMinutes(),W=[[975,1010],[1035,1070],[1095,1125]],on=W.some(function(w){return m>=w[0]&&m<=w[1]});document.querySelectorAll('.tab a[href$="truc-tiep/"]').forEach(function(a){a.classList.toggle('onair',on)})}oa();setInterval(oa,30000)})();
 (function(){var D=document.querySelectorAll('.mbar details');function closeAll(x){D.forEach(function(d){if(d!==x)d.open=false})}
 D.forEach(function(d){d.addEventListener('toggle',function(){if(d.open)closeAll(d)})});
