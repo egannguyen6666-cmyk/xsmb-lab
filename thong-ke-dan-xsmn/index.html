@@ -2,6 +2,8 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; manifest-src 'self'; worker-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="msvalidate.01" content="31FBDEBF16D954096E445E5322EEE48D">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Thống kê nhóm số XSMN – nhóm số theo từng đài miền Nam | XS Lab</title>
@@ -368,7 +370,7 @@ html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7e
 .lvsched button[aria-pressed=true]{background:#d01f3c;border-color:#d01f3c}
 .lvsched b{display:block;font-size:15px}.lvsched span{font-size:12px;opacity:.8}
 .lvsched button:focus-visible{outline:3px solid #ff5872}
-#box_kqxs_minhngoc{position:absolute;left:-9999px;top:0;width:500px;height:10px;overflow:hidden}
+
 .ins{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
 .ins>div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}
 .ins h3{margin:0 0 4px;font-size:13px;color:var(--mute);font-weight:600}
@@ -515,7 +517,6 @@ html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7e
      <p>Trong khung giờ quay, XS Lab đọc bảng kết quả công khai khoảng 3 giây một lần và vẽ lại theo giao diện của trang. Giải mới về sẽ sáng lên; phần "Thống kê nổi bật" so các số vừa về với dữ liệu các kỳ trước. Khi đủ giải, kết quả được đưa sang mục Kết quả với nhãn "chờ đối chiếu" cho đến khi dữ liệu được cập nhật lại từ nguồn.</p>
     </article><!--/A:truc-tiep-->
    </div>
-   <div id="box_kqxs_minhngoc" aria-hidden="true"></div>
   </section>
 
   <section class="view" id="v-thong-ke">
@@ -1902,20 +1903,21 @@ function onAirTick(){let live=null;try{live=onAirReg();}catch(e){}
  const lt=$('lvT');if(lt)lt.classList.toggle('onair',!!live&&v==='truc-tiep'&&LV.reg===live);}
 setTimeout(()=>{onAirTick();setInterval(onAirTick,5000);},800);
 function lvAuto(){const n=nowVN();for(const r of LVORD)if(lvPhase(r,n)==='live')return r;for(const r of LVORD)if(lvPhase(r,n)==='before')return r;return 'mb';}
-function lvJQ(){if(window.jQuery)return Promise.resolve();if(LV.jq)return LV.jq;window.bgcolor='#9c0303';window.titlecolor='#ffffff';window.dbcolor='#0000c2';window.fsize='14px';window.kqwidth='500px';
- LV.jq=new Promise((ok,no)=>{const s=document.createElement('script');s.src='https://www.minhngoc.net.vn/jquery/jquery-1.7.2.js';s.onload=()=>ok();s.onerror=()=>no(new Error('jq'));document.head.appendChild(s);});return LV.jq;}
-function lvParse(reg,slug){
- const b=document.getElementById('box_kqxs_minhngoc'),cell=c=>b.querySelector('td.'+c),txt=c=>{const e=cell(c);return e?e.textContent.replace(/\s+/g,' ').trim():'';};
+const LVF={fr:null,ready:null,seq:0,cb:{}};
+function lvFrame(){if(LVF.ready)return LVF.ready;LVF.ready=new Promise((ok,no)=>{const f=document.createElement('iframe');f.src=XS_ROOT+'lv.html?v=1';f.setAttribute('sandbox','allow-scripts');f.setAttribute('aria-hidden','true');f.tabIndex=-1;f.title='Khung tải kết quả trực tiếp';f.style.cssText='position:absolute;left:-9999px;top:0;width:520px;height:10px;border:0';const tm=setTimeout(()=>{LVF.ready=null;f.remove();no(new Error('frame'));},10000);f.onload=()=>{clearTimeout(tm);LVF.fr=f;ok(f);};document.body.appendChild(f);});return LVF.ready;}
+window.addEventListener('message',e=>{if(!LVF.fr||e.source!==LVF.fr.contentWindow)return;const m=e.data;if(!m||m.lvf!==1||typeof m.id!=='number')return;const c=LVF.cb[m.id];if(c){delete LVF.cb[m.id];c(m.ok?m.data:null);}});
+function lvAsk(msg,ms){return lvFrame().then(f=>new Promise(ok=>{const id=++LVF.seq,tm=setTimeout(()=>{delete LVF.cb[id];ok(null);},ms);LVF.cb[id]=d=>{clearTimeout(tm);ok(d);};f.contentWindow.postMessage(Object.assign({id},msg),'*');}),()=>null);}
+const escH=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function lvParse(reg,slug,T){
+ T=T&&typeof T==='object'?T:{};const raw=c=>typeof T[c]==='string'?T[c]:'',txt=c=>raw(c).replace(/\s+/g,' ').trim();
  const thu=txt('thu'),ng=txt('ngay'),m=ng.match(/(\d{2})\/(\d{2})\/(\d{4})/);let date=m?`${m[3]}-${m[2]}-${m[1]}`:null;
  const G=reg==='mb'?LV_MB:LV_MN,pr={};let done=0,tot=0;
- for(const [,g,cnt] of G){const e=cell(g==='db'?'giaidb':'giai'+g.slice(1));const vals=e?e.textContent.split('-').map(x=>x.replace(/\s+/g,'').trim()):[];const arr=[];for(let i=0;i<cnt;i++){const v=vals[i]||'';arr.push(/^\d{2,6}$/.test(v)?v:'');}pr[g]=arr;tot+=cnt;done+=arr.filter(Boolean).length;}
+ for(const [,g,cnt] of G){const e=raw(g==='db'?'giaidb':'giai'+g.slice(1));const vals=e?e.split('-').map(x=>x.replace(/\s+/g,'').trim()):[];const arr=[];for(let i=0;i<cnt;i++){const v=vals[i]||'';arr.push(/^\d{2,6}$/.test(v)?v:'');}pr[g]=arr;tot+=cnt;done+=arr.filter(Boolean).length;}
  if(!date){const n=nowVN(),wmap={'chủ nhật':0,'thứ hai':1,'thứ ba':2,'thứ tư':3,'thứ năm':4,'thứ sáu':5,'thứ bảy':6},w=wmap[thu.toLowerCase()];if(w!==undefined){let d=n.date;for(let i=0;i<7&&XS.weekday(d)!==w;i++)d=XS.addDays(d,-1);
   if(d===n.date){const prev=XS.addDays(d,-7),rec=RAW[reg]&&RAW[reg].rec.find(x=>x.date===prev&&x.station===slug);if(n.min<LVWIN[reg][0]||(rec&&rec.db[0]===pr.db[0]&&rec.g8[0]===pr.g8[0]))d=prev;}
   date=d;}}
  return {slug,date,thu,ve:/Loại vé/.test(ng)?ng.replace('Loại vé:','').trim():'',pr,done,tot,at:nowVN().time};}
-function lvLoad(reg,slug){return lvJQ().then(()=>new Promise((ok,no)=>{const old=document.getElementById('lvScript');if(old)old.remove();
- const s=document.createElement('script');s.id='lvScript';s.src=`https://www.minhngoc.net.vn/getkqxs/${slug}.js?t=${Date.now()}`;let tm=setTimeout(()=>no(new Error('timeout')),9000);
- s.onload=()=>setTimeout(()=>{clearTimeout(tm);try{ok(lvParse(reg,slug));}catch(e){no(e);}},150);s.onerror=()=>{clearTimeout(tm);no(new Error('load'));};document.body.appendChild(s);}));}
+function lvLoad(reg,slug){return lvAsk({kind:'box',slug},11000).then(T=>{if(!T)throw new Error('load');return lvParse(reg,slug,T);});}
 const TID={1:'tp-hcm',2:'dong-thap',3:'ca-mau',7:'ben-tre',8:'vung-tau',9:'bac-lieu',10:'dong-nai',11:'can-tho',12:'soc-trang',13:'tay-ninh',14:'an-giang',15:'binh-thuan',16:'vinh-long',17:'binh-duong',18:'tra-vinh',19:'long-an',20:'hau-giang',21:'binh-phuoc',22:'tien-giang',23:'kien-giang',24:'da-lat',26:'thua-thien-hue',27:'phu-yen',28:'quang-nam',29:'dak-lak',30:'da-nang',31:'khanh-hoa',32:'binh-dinh',33:'quang-tri',34:'quang-binh',35:'gia-lai',36:'ninh-thuan',37:'quang-ngai',38:'dak-nong',39:'kon-tum'},XSTT={mn:1,mb:2,mt:3};
 function lvFeedParse(reg,o){if(!o||!o.kq||!o.ntime)return null;
  const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Ho_Chi_Minh',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(o.ntime*1000));
@@ -1924,10 +1926,7 @@ function lvFeedParse(reg,o){if(!o||!o.kq||!o.ntime)return null;
   for(const [,g,cnt] of G){const v=q[g==='db'?0:+g.slice(1)],a=Array.isArray(v)?v:[v],arr=[];for(let i=0;i<cnt;i++){const x=String(a[i]==null?'':a[i]);if(/^\d{2,6}$/.test(x)){arr.push(x);done++;}else{arr.push('');if(x.indexOf('+')>=0&&!rolling)rolling=g+'|'+i;}}pr[g]=arr;tot+=cnt;}
   out[slug]={slug,date:p,thu:'',ve:'',pr,done,tot,rolling,feed:true,at:nowVN().time};any++;}
  return any?out:null;}
-function lvFeed(reg){return new Promise(ok=>{window.kqxs=window.kqxs||{};try{delete window.kqxs[reg];}catch(e){}
- const id='lvF'+reg,old=document.getElementById(id);if(old)old.remove();const s=document.createElement('script');s.id=id;
- s.src=`https://server-live20.minhngoc.net.vn/xstt/js_m${XSTT[reg]}.js?t=${Date.now()}`;const tm=setTimeout(()=>ok(null),6000);
- s.onload=()=>{clearTimeout(tm);let r=null;try{r=lvFeedParse(reg,window.kqxs[reg]);}catch(e){}ok(r);};s.onerror=()=>{clearTimeout(tm);ok(null);};document.body.appendChild(s);});}
+function lvFeed(reg){return lvAsk({kind:'feed',reg,n:XSTT[reg]},7000).then(o=>{try{return lvFeedParse(reg,o);}catch(e){return null;}});}
 function lvCdStop(){if(LV.cd){clearInterval(LV.cd);LV.cd=null;}}
 function lvCd(a){if(LV.cd&&LV.cdA===a)return;lvCdStop();LV.cdA=a;const tick=()=>{if(curView()!=='truc-tiep'){lvCdStop();return;}const n=nowVN(),[h,m,sx]=n.time.split(':').map(Number),left=a*60-(h*3600+m*60+sx),el=$('lvSt')&&$('lvSt').querySelector('span');
  if(left<=0){lvCdStop();lvTick();return;}const hh=Math.floor(left/3600),mm=Math.floor(left%3600/60),ss=left%60;if(el)el.textContent=`Còn ${hh?hh+':'+pad(mm):mm}:${pad(ss)} tới giờ quay`;
@@ -1997,7 +1996,7 @@ function lvRender(){
  {const el=$('lvRk');if(el){el.innerHTML=!sts.length?'':reg==='mb'?`<p class="note">Bảng xếp hạng thống kê tính đến kỳ đã quay gần nhất: lô 2 số, 3 càng, 4 càng, đầu đuôi.</p><a href="${XS_ROOT}thong-ke/?mien=mb#rkCard">Bảng xếp hạng XSMB ›</a>`:`<p class="note">Hàng BXH cuối bảng: bảng xếp hạng thống kê của từng đài, tính đến kỳ đã quay gần nhất (lô 2 số, 3 càng, 4 càng, đầu đuôi).</p>`;}}
  if(reg==='mb'){const d=items[0]&&items[0].d;
   $('lvBoard').innerHTML=d?`<div class="ticket">${G.map(([lb,g])=>`<div class="row ${g==='db'?'db':''}"><div class="lb">${lb}</div><div class="nums">${d.pr[g].map((v,i)=>cellHTML('mien-bac',g,i,v)).join('')}</div></div>`).join('')}</div>`:'<p class="note">Đang tải…</p>';}
- else{$('lvBoard').innerHTML=items.length?`<div class="mnb"><table><thead><tr><th>Giải</th>${items.map(x=>`<th>${ST[x.s]}${x.d&&x.d.ve?`<br><small style="font-weight:400">${x.d.ve}</small>`:''}</th>`).join('')}</tr></thead><tbody>${G.map(([lb,g,c])=>`<tr class="${g}"><td>${lb}</td>${items.map(x=>`<td>${x.d?x.d.pr[g].map((v,i)=>cellHTML(x.s,g,i,v)).join(''):'<span class="pend">• • •</span>'}</td>`).join('')}</tr>`).join('')}</tbody><tfoot><tr class="rkrow"><td>BXH</td>${items.map(x=>`<td><a href="${XS_ROOT}thong-ke/?mien=${reg}&dai=${x.s}#rkCard"><span class="rkl">Bảng xếp hạng</span><b>${ST[x.s]}</b></a></td>`).join('')}</tr></tfoot></table></div>`:'<p class="note">Hôm nay không có đài nào quay.</p>';}
+ else{$('lvBoard').innerHTML=items.length?`<div class="mnb"><table><thead><tr><th>Giải</th>${items.map(x=>`<th>${ST[x.s]}${x.d&&x.d.ve?`<br><small style="font-weight:400">${escH(x.d.ve)}</small>`:''}</th>`).join('')}</tr></thead><tbody>${G.map(([lb,g,c])=>`<tr class="${g}"><td>${lb}</td>${items.map(x=>`<td>${x.d?x.d.pr[g].map((v,i)=>cellHTML(x.s,g,i,v)).join(''):'<span class="pend">• • •</span>'}</td>`).join('')}</tr>`).join('')}</tbody><tfoot><tr class="rkrow"><td>BXH</td>${items.map(x=>`<td><a href="${XS_ROOT}thong-ke/?mien=${reg}&dai=${x.s}#rkCard"><span class="rkl">Bảng xếp hạng</span><b>${ST[x.s]}</b></a></td>`).join('')}</tr></tfoot></table></div>`:'<p class="note">Hôm nay không có đài nào quay.</p>';}
  const loto=x=>{const a=[];if(x.d)for(const [,g] of G)for(const v of x.d.pr[g])if(v)a.push(+v.slice(-2));return a;};
  $('lvLoto').innerHTML=`<div class="lt">${items.map(x=>`<div><h3>${reg==='mb'?'XSMB':ST[x.s]}</h3>${lotoT(loto(x))}</div>`).join('')}</div>`;
  if(items.some(x=>x.d))LV.seen.__init=true;

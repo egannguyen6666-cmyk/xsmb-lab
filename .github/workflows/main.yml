@@ -68,13 +68,24 @@ jobs:
         run: python3 tools/update_mn.py xsmt.csv
       - name: Nhập tay XSMB (nếu có)
         if: ${{ github.event.inputs.ngay != '' && github.event.inputs.ket_qua != '' }}
-        run: python3 tools/add_day.py xsmb.csv recent.json "${{ github.event.inputs.ngay }}" "${{ github.event.inputs.ket_qua }}"
+        env:
+          IN_NGAY: ${{ github.event.inputs.ngay }}
+          IN_KQ: ${{ github.event.inputs.ket_qua }}
+        run: python3 tools/add_day.py xsmb.csv recent.json "$IN_NGAY" "$IN_KQ"
       - name: Nhập tay XSMN (nếu có)
         if: ${{ github.event.inputs.mn_ngay != '' && github.event.inputs.mn_dai != '' && github.event.inputs.mn_ket_qua != '' }}
-        run: python3 tools/add_day_mn.py xsmn.csv recent_mn.json "${{ github.event.inputs.mn_ngay }}" "${{ github.event.inputs.mn_dai }}" "${{ github.event.inputs.mn_ket_qua }}"
+        env:
+          IN_NGAY: ${{ github.event.inputs.mn_ngay }}
+          IN_DAI: ${{ github.event.inputs.mn_dai }}
+          IN_KQ: ${{ github.event.inputs.mn_ket_qua }}
+        run: python3 tools/add_day_mn.py xsmn.csv recent_mn.json "$IN_NGAY" "$IN_DAI" "$IN_KQ"
       - name: Nhập tay XSMT (nếu có)
         if: ${{ github.event.inputs.mt_ngay != '' && github.event.inputs.mt_dai != '' && github.event.inputs.mt_ket_qua != '' }}
-        run: python3 tools/add_day_mn.py xsmt.csv recent_mt.json "${{ github.event.inputs.mt_ngay }}" "${{ github.event.inputs.mt_dai }}" "${{ github.event.inputs.mt_ket_qua }}"
+        env:
+          IN_NGAY: ${{ github.event.inputs.mt_ngay }}
+          IN_DAI: ${{ github.event.inputs.mt_dai }}
+          IN_KQ: ${{ github.event.inputs.mt_ket_qua }}
+        run: python3 tools/add_day_mn.py xsmt.csv recent_mt.json "$IN_NGAY" "$IN_DAI" "$IN_KQ"
       - name: Lấy kết quả Keno mới nhất
         continue-on-error: true
         run: python3 tools/fetch_keno.py

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://www.minhngoc.net.vn https://server-live20.minhngoc.net.vn; style-src 'unsafe-inline'; img-src https: data:">
+<title>XS Lab – khung tải kết quả trực tiếp</title></head>
+<body>
+<!-- Khung cách ly: chỉ được nhúng với sandbox="allow-scripts" (không cùng nguồn gốc).
+     Mã của minhngoc.net.vn chạy ở đây, không chạm được vào trang XS Lab.
+     Trang mẹ hỏi qua postMessage, khung chỉ trả về chữ và số. -->
+<div id="box_kqxs_minhngoc"></div>
+<script>
+(function(){
+  window.bgcolor='#9c0303';window.titlecolor='#ffffff';window.dbcolor='#0000c2';window.fsize='14px';window.kqwidth='500px';
+  var CL=['thu','ngay','giaidb','giai1','giai2','giai3','giai4','giai5','giai6','giai7','giai8'];
+  function load(src,id,cb){
+    var old=id&&document.getElementById(id);if(old)old.parentNode.removeChild(old);
+    var s=document.createElement('script'),done=false;if(id)s.id=id;s.src=src;
+    var t=setTimeout(function(){if(!done){done=true;cb(false);}},9000);
+    s.onload=function(){if(!done){done=true;clearTimeout(t);cb(true);}};
+    s.onerror=function(){if(!done){done=true;clearTimeout(t);cb(false);}};
+    document.body.appendChild(s);
+  }
+  var jqWait=null;
+  function ensureJQ(cb){
+    if(window.jQuery)return cb(true);
+    if(jqWait){jqWait.push(cb);return;}
+    jqWait=[cb];
+    load('https://www.minhngoc.net.vn/jquery/jquery-1.7.2.js','jq',function(ok){var l=jqWait;jqWait=null;for(var i=0;i<l.length;i++)l[i](ok);});
+  }
+  function clean(o,d){
+    if(d>4)return null;
+    if(o===null||typeof o==='number'||typeof o==='boolean')return o;
+    if(typeof o==='string')return o.slice(0,200);
+    if(Object.prototype.toString.call(o)==='[object Array]'){var a=[];for(var i=0;i<o.length&&i<50;i++)a.push(clean(o[i],d+1));return a;}
+    if(typeof o==='object'){var r={},n=0;for(var k in o){if(Object.prototype.hasOwnProperty.call(o,k)&&n++<80)r[String(k).slice(0,20)]=clean(o[k],d+1);}return r;}
+    return null;
+  }
+  window.addEventListener('message',function(e){
+    if(e.source!==window.parent)return;
+    var m=e.data;if(!m||typeof m!=='object')return;
+    var id=m.id;if(typeof id!=='number')return;
+    function reply(o){window.parent.postMessage({lvf:1,id:id,ok:!!o,data:o||null},'*');}
+    if(m.kind==='feed'&&/^(mb|mn|mt)$/.test(m.reg)&&/^[123]$/.test(String(m.n))){
+      window.kqxs=window.kqxs||{};try{delete window.kqxs[m.reg];}catch(x){}
+      load('https://server-live20.minhngoc.net.vn/xstt/js_m'+m.n+'.js?t='+Date.now(),'f'+m.reg,function(ok){
+        var o=null;try{o=ok&&window.kqxs&&window.kqxs[m.reg]?clean(window.kqxs[m.reg],0):null;}catch(x){}
+        reply(o);
+      });
+    }else if(m.kind==='box'&&/^[a-z-]{2,30}$/.test(m.slug)){
+      ensureJQ(function(ok){
+        if(!ok)return reply(null);
+        var b=document.getElementById('box_kqxs_minhngoc');if(b)b.innerHTML='';
+        load('https://www.minhngoc.net.vn/getkqxs/'+m.slug+'.js?t='+Date.now(),'bx',function(ok2){
+          if(!ok2)return reply(null);
+          setTimeout(function(){
+            var box=document.getElementById('box_kqxs_minhngoc'),out={};
+            if(!box)return reply(null);
+            for(var i=0;i<CL.length;i++){var c=box.querySelector('td.'+CL[i]);out[CL[i]]=c?String(c.textContent).slice(0,400):'';}
+            reply(out);
+          },150);
+        });
+      });
+    }
+  });
+})();
+</script>
+</body></html>
