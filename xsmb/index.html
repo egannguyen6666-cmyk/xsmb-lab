@@ -1177,7 +1177,7 @@ function upTick(){const el=$('rsCd');if(!el||el.hidden)return;const u=upInfo();i
 function rsBcSet(d,has){const el=$('rsBc');if(!el||!d)return;const sl=R.region==='mb'?'xsmb':R.region==='mn'?'xsmn':'xsmt',S=sl.toUpperCase(),w=new Date(d+'T00:00:00Z').getUTCDay(),ws=w?'thu-'+(w+1):'chu-nhat',wl=w?'Thứ '+(w+1):'Chủ nhật',ds=d.split('-').reverse().join('-');
  el.innerHTML=`<a href="${XS_ROOT}${sl}/">${S}</a> » <a href="${XS_ROOT}${sl}/${ws}/">${S} ${wl}</a> » ${has?`<a href="${XS_ROOT}${sl}/${ds}/">${S} ${vnDate(d)}</a>`:`${S} ${vnDate(d)}`}`;}
 function renderBoard(){
- const RD=regionDates();if(!rs.date||!RD.includes(rs.date))rs.date=RD[RD.length-1];
+ const RD=regionDates();if(!rs.date||!RD.includes(rs.date)||!rs.pick)rs.date=RD[RD.length-1];
  if(PG&&PG.yday&&!rs.pick){const td=nowVN().date,c=RD.filter(x=>x<td);if(c.length)rs.date=c[c.length-1];}
  const U=upInfo(),up=false;rsBcSet(rs.date,true);
  const i=RD.indexOf(rs.date);$('rsDate').min=RD[0];$('rsDate').max=up?U.n.date:RD[RD.length-1];$('rsDate').value=up?U.n.date:rs.date;
@@ -2017,7 +2017,7 @@ function lvMerge(reg,slug,d){
  if(reg==='mb'){if(!RAW.mb)return;const L=RAW.mb[RAW.mb.length-1];if(d.date<=L.date||L.two===two)return;RAW.mb.push({date:d.date,two});REC_MB.push(rec);delete SER.mb;}
  else{const R0=RAW[reg];if(!R0||!R0.by[slug]||R0.idx[slug][d.date]!==undefined)return;const arr=R0.by[slug];if(arr.length&&(arr[arr.length-1].date>=d.date||arr[arr.length-1].two===two))return;
   rec.station=slug;arr.push({date:d.date,two});R0.idx[slug][d.date]=arr.length-1;if(!R0.dates.includes(d.date)){R0.dates.push(d.date);R0.dates.sort();}if(d.date>R0.last)R0.last=d.date;R0.rec.push(rec);delete SER[reg+':'+slug];}
- if(R.region===reg&&(reg==='mb'||R.st===slug)){useSeries();resetStates();refreshChrome();}
+ if(R.region===reg&&(reg==='mb'||R.st===slug||(!USERST[reg]&&!favs(reg).length))){useSeries();resetStates();refreshChrome();if(reg!=='mb'&&$('stSel'))$('stSel').value=String(curWd());}
  (LV.notes=LV.notes||[]).push({r:reg,m:`${reg==='mb'?'XSMB':ST[slug]} đã quay xong, kết quả đã có ở tab Kết quả (chờ đối chiếu).`});}
 
 /* ---------- loading ---------- */
