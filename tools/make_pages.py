@@ -49,7 +49,7 @@ def esc(s): return html.escape(s, quote=True)
 
 # ---------- tệp giao diện dùng chung cho mọi trang tĩnh (mỗi trang nhẹ hơn, trình duyệt lưu đệm) ----------
 import hashlib
-EXTRA_CSS = """.qttabs{display:flex;gap:8px;flex-wrap:wrap}.qttabs a{padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--ink);text-decoration:none;font-weight:600;font-size:14px}.qttabs a[aria-current=page]{background:#d01f3c;border-color:#d01f3c;color:#fff}.qtbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}.qtbar label{display:flex;gap:6px;align-items:center;font-size:14px}.qtbar select{min-height:40px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);font:inherit;font-size:14px;padding:0 8px;max-width:100%}.qtgo{min-height:44px;border:0;border-radius:12px;background:#d01f3c;color:#fff;font:inherit;font-weight:800;font-size:17px;padding:0 22px;cursor:pointer}.qtre{min-height:44px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink);font:inherit;font-weight:600;padding:0 14px;cursor:pointer}.qroll{color:#d01f3c;opacity:.75}.qpend{color:var(--mute);letter-spacing:2px}#qtLo mark{background:#d01f3c;color:#fff;border-radius:4px;padding:0 3px}.g30{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}.c30{display:flex;flex-direction:column;align-items:center;min-width:54px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:var(--panel);text-decoration:none;color:var(--ink)}.c30 b{font-size:18px;color:#d01f3c}.c30 small{font-size:11.5px;color:var(--mute)}.dd30{width:100%;text-align:center;font-variant-numeric:tabular-nums}.dd30 td:first-child,.dd30 th:first-child{text-align:left;white-space:nowrap}.t30w{overflow-x:auto}.t30{width:100%;font-variant-numeric:tabular-nums}.t30 td{vertical-align:top}.t30 td small{display:block;color:var(--mute);font-size:11.5px}.t30 .db{color:#d01f3c;font-weight:700;white-space:nowrap}.t30 .lo{font-size:13.5px;line-height:1.7;word-spacing:2px}.t30 .st{white-space:nowrap}.ltg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:8px 0 14px}.ltg>div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px}.ltg h3{font-size:15px;margin:0 0 6px}.lead{background:var(--panel);border:1px solid var(--line);border-left:4px solid #d01f3c;border-radius:12px;padding:12px 14px;line-height:1.6}.vb{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8a9b,#d01f3c 55%,#8f1027);color:#fff;font-weight:700;font-size:18px;margin:3px;font-variant-numeric:tabular-nums}.vb.y{background:radial-gradient(circle at 32% 28%,#fff6c2,#f2c200 55%,#a07800);color:#1b1a20}
+EXTRA_CSS = """a.sl{color:inherit;text-decoration:none}a.sl:hover,a.sl:focus-visible{color:var(--red,#d01f3c);text-decoration:underline}.c30 a.sl,.lt a.sl{color:inherit}.qttabs{display:flex;gap:8px;flex-wrap:wrap}.qttabs a{padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--ink);text-decoration:none;font-weight:600;font-size:14px}.qttabs a[aria-current=page]{background:#d01f3c;border-color:#d01f3c;color:#fff}.qtbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}.qtbar label{display:flex;gap:6px;align-items:center;font-size:14px}.qtbar select{min-height:40px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);font:inherit;font-size:14px;padding:0 8px;max-width:100%}.qtgo{min-height:44px;border:0;border-radius:12px;background:#d01f3c;color:#fff;font:inherit;font-weight:800;font-size:17px;padding:0 22px;cursor:pointer}.qtre{min-height:44px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink);font:inherit;font-weight:600;padding:0 14px;cursor:pointer}.qroll{color:#d01f3c;opacity:.75}.qpend{color:var(--mute);letter-spacing:2px}#qtLo mark{background:#d01f3c;color:#fff;border-radius:4px;padding:0 3px}.g30{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}.c30{display:flex;flex-direction:column;align-items:center;min-width:54px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:var(--panel);text-decoration:none;color:var(--ink)}.c30 b{font-size:18px;color:#d01f3c}.c30 small{font-size:11.5px;color:var(--mute)}.dd30{width:100%;text-align:center;font-variant-numeric:tabular-nums}.dd30 td:first-child,.dd30 th:first-child{text-align:left;white-space:nowrap}.t30w{overflow-x:auto}.t30{width:100%;font-variant-numeric:tabular-nums}.t30 td{vertical-align:top}.t30 td small{display:block;color:var(--mute);font-size:11.5px}.t30 .db{color:#d01f3c;font-weight:700;white-space:nowrap}.t30 .lo{font-size:13.5px;line-height:1.7;word-spacing:2px}.t30 .st{white-space:nowrap}.ltg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:8px 0 14px}.ltg>div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px}.ltg h3{font-size:15px;margin:0 0 6px}.lead{background:var(--panel);border:1px solid var(--line);border-left:4px solid #d01f3c;border-radius:12px;padding:12px 14px;line-height:1.6}.vb{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8a9b,#d01f3c 55%,#8f1027);color:#fff;font-weight:700;font-size:18px;margin:3px;font-variant-numeric:tabular-nums}.vb.y{background:radial-gradient(circle at 32% 28%,#fff6c2,#f2c200 55%,#a07800);color:#1b1a20}
 .mgrid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}.mgrid a,.mgrid span{display:block;text-align:center;padding:6px 0;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-size:13px;color:var(--ink);background:var(--panel)}.mgrid span{color:var(--mute);opacity:.5}.mgrid a:hover{border-color:#d01f3c;color:var(--red)}
 .yr{display:grid;grid-template-columns:64px minmax(0,1fr);gap:8px;align-items:center;margin:0 0 6px}.yr b{font-variant-numeric:tabular-nums}
 @media(max-width:600px){.mgrid{grid-template-columns:repeat(6,minmax(0,1fr))}.yr{grid-template-columns:1fr}.vb{width:38px;height:38px;font-size:16px}}
@@ -114,17 +114,18 @@ def diemtin(lab, d, recs, G, lots_list, gaps):
     if g: parts.append(f"số về lại sau thời gian vắng lâu nhất là {g[0][1]:02d} ({g[0][0]} kỳ chưa về)")
     return f'<p class="lead"><b>Điểm tin {lab} {vn(d)}:</b> ' + "; ".join(parts) + ".</p>"
 def lotos(r, G): return sorted(int(v[-2:]) for _, g in G for v in r[g])
+def SL(k, t=None): return f'<a class="sl" href="/so/{k:02d}/">{t if t is not None else f"{k:02d}"}</a>'
 
 
 def loto_table(lo):
     H = [[] for _ in range(10)]; T = [[] for _ in range(10)]
-    for k in sorted(lo): H[k // 10].append(str(k % 10)); T[k % 10].append(str(k // 10))
+    for k in sorted(lo): H[k // 10].append(SL(k, k % 10)); T[k % 10].append(SL(k, k // 10))
     return '<table class="lt"><tr><th>Đầu</th><th>Đuôi</th><th>Đầu</th><th>Đuôi</th></tr>' + ''.join(f'<tr><td>{i}</td><td>{", ".join(H[i]) or "–"}</td><td class="r">{", ".join(T[i]) or "–"}</td><td class="k">{i}</td></tr>' for i in range(10)) + '</table>'
 
 
 def loto_list(lo):
     H = [[] for _ in range(10)]
-    for k in sorted(lo): H[k // 10].append(f"{k:02d}")
+    for k in sorted(lo): H[k // 10].append(SL(k))
     return '<table class="lt"><tr><th>Đầu</th><th>Lô tô</th></tr>' + ''.join(f'<tr><td class="k">{i}</td><td>{", ".join(H[i]) or "–"}</td></tr>' for i in range(10)) + '</table>'
 
 
@@ -211,7 +212,7 @@ for reg, fn in (("xsmn", "recent_mn.json"), ("xsmt", "recent_mt.json")):
                     + f'<div class="card">{mn_table([fr])}</div>'
                     + f'<h2>Lô tô {nm} {vn(d)}</h2><div class="card">{loto_list(lotos(fr, MN_G))}</div>'
                     + (f'<h2>Giải Đặc biệt {nm} 10 kỳ trước</h2><div class="card"><table><tr><th>Ngày</th><th>Đặc biệt</th></tr>' + ''.join(f'<tr><td><a href="{_sdl(x["date"])}">{vn(x["date"])}</a></td><td><b>{x["db"][0]}</b></td></tr>' for x in prevs) + '</table></div>' if prevs else '')
-                    + f'<h2>Lô gan {nm} tính đến {vn(d)}</h2><div class="g30">' + ''.join(f'<a class="c30" href="../../../so/{k:02d}/"><b>{k:02d}</b><small>{i - after.get(k, -1)} kỳ</small></a>' for k in gan_d) + '</div>'
+                    + f'<h2>Lô gan {nm} tính đến {vn(d)}</h2><div class="g30">' + ''.join(f'<a class="c30" href="../../../so/{k:02d}/"><b>{SL(k)}</b><small>{i - after.get(k, -1)} kỳ</small></a>' for k in gan_d) + '</div>'
                     + '<p class="note">Số liệu là thống kê các kỳ đã quay của đài, không phải dự đoán.</p>'
                     + (f'<p>Cùng ngày: ' + ' · '.join(f'<a href="../../{k2[1]}/{slug_d(d)}/">{AB.get(k2[1], "")} {ST.get(k2[1], "")}</a>' for k2 in others) + f' · <a href="../../{slug_d(d)}/">Cả {lab} {vn(d)}</a></p>' if others else '')
                     + f'<p>{"".join(nav)}<a class="cta" href="../">Xổ số {nm}</a><a class="cta" href="../../../do-ve/">Dò vé số</a></p>')
@@ -220,8 +221,8 @@ for reg, fn in (("xsmn", "recent_mn.json"), ("xsmt", "recent_mt.json")):
             for k in lo2: seen[k] = i
         res = ''.join(f'<h2>{ab} {vn(r["date"])} – Xổ số {nm} {WDL[wdi(r["date"])]}</h2><div class="card">{mn_table([r])}</div><p class="note">' + (f'<a href="{slug_d(r["date"])}/">{ab} {vn(r["date"])}: lô tô, lô gan, Đặc biệt 10 kỳ</a> · ' if r["date"] in made else '') + f'<a href="../{slug_d(r["date"])}/">Xem cả các đài {lab} ngày {vn(r["date"])}</a></p>' for r in mine[:6])
         body = f'''<p class="favrow"><button type="button" class="favst" data-reg="{reg[2:]}" data-st="{st}" data-nm="{nm}">☆ Thêm {nm} vào đài mặc định</button></p><p>Xổ số {nm} ({ab}) thuộc {lab}, quay {", ".join(WDL[x] for x in days)} hằng tuần lúc khoảng {tm}. Mỗi kỳ có 18 giải, vé 6 chữ số. Dữ liệu XS Lab có {fm(N)} kỳ của đài {nm} (từ {vn(hist[0][0])}).</p>{res}
-<h2>Lô gan {nm}</h2><p>10 lô lâu chưa về nhất tính đến kỳ {vn(hist[-1][0])}:</p><div class="card"><table><tr><th>Lô</th><th>Số kỳ chưa về</th></tr>{''.join(f'<tr><td><b>{k:02d}</b></td><td>{N - 1 - last.get(k, -1)}</td></tr>' for k in gan)}</table></div>
-<h2>Lô về nhiều nhất 52 kỳ gần nhất</h2><div class="card"><table><tr><th>Lô</th><th>Số lần</th></tr>{''.join(f'<tr><td><b>{k:02d}</b></td><td>{cnt[k]}</td></tr>' for k in hot)}</table></div>
+<h2>Lô gan {nm}</h2><p>10 lô lâu chưa về nhất tính đến kỳ {vn(hist[-1][0])}:</p><div class="card"><table><tr><th>Lô</th><th>Số kỳ chưa về</th></tr>{''.join(f'<tr><td><b>{SL(k)}</b></td><td>{N - 1 - last.get(k, -1)}</td></tr>' for k in gan)}</table></div>
+<h2>Lô về nhiều nhất 52 kỳ gần nhất</h2><div class="card"><table><tr><th>Lô</th><th>Số lần</th></tr>{''.join(f'<tr><td><b>{SL(k)}</b></td><td>{cnt[k]}</td></tr>' for k in hot)}</table></div>
 <p class="note">Theo xác suất, mỗi lô có khoảng 16,55% khả năng xuất hiện trong một kỳ của đài (18 giải). Các bảng trên là thống kê dữ liệu đã quay, không phải dự đoán.</p>
 <p><a class="cta" href="../">{lab} hôm nay</a><a class="cta" href="../../thong-ke/">Thống kê lô tô</a><a class="cta" href="../../do-ve/">Dò vé {nm}</a></p>'''
         p = f"{reg}/{st}/"
@@ -280,7 +281,7 @@ for reg in REG:
         mlink = f'../thang-{d[5:7]}-{d[:4]}/'
         def gtxt(key, unit):
             g = gapinfo.get(key) or []
-            return ", ".join(f"<b>{k:02d}</b> ({n} {unit})" for n, k in g) if g else "không có số nào"
+            return ", ".join(f"<b>{SL(k)}</b> ({n} {unit})" for n, k in g) if g else "không có số nào"
         def dbtxt(r):
             pd = dbprev.get((d, r["station"]))
             return f"2 số cuối giải Đặc biệt <b>{r['db'][0][-2:]}</b> lần trước làm 2 số cuối giải Đặc biệt{' của đài' if r['station'] else ''} ngày {vn(pd)}" if pd else f"2 số cuối giải Đặc biệt <b>{r['db'][0][-2:]}</b> lần đầu xuất hiện ở giải Đặc biệt{' của đài' if r['station'] else ''} trong dữ liệu"
@@ -354,7 +355,7 @@ for i, ks in enumerate(lo):
 gan = sorted(range(100), key=lambda k: -(N - 1 - prev.get(k, -1)))
 spage("lo-gan-xsmb", "Lô gan XSMB – thống kê lô lâu chưa về miền Bắc", f"Lô gan XSMB đến {vn(lastd)}: 30 lô lâu chưa về nhất, kỷ lục gan của từng lô từ 2005. Không quảng cáo.", "Lô gan XSMB",
       f"Lô gan là lô (2 số cuối của giải) đã nhiều kỳ liên tiếp chưa xuất hiện. Bảng tính đến kỳ {vn(lastd)} trên {fm(N)} kỳ XSMB từ {vn(two[0][0])}.",
-      card(tbl(["Lô", "Số kỳ chưa về", "Lần về gần nhất", "Kỷ lục gan"], [(f"<b>{k:02d}</b>", N - 1 - prev[k], vn(two[prev[k]][0]), rec[k]) for k in gan[:30]])))
+      card(tbl(["Lô", "Số kỳ chưa về", "Lần về gần nhất", "Kỷ lục gan"], [(f"<b>{SL(k)}</b>", N - 1 - prev[k], vn(two[prev[k]][0]), rec[k]) for k in gan[:30]])))
 c30 = Counter(k for ks in lo[-30:] for k in ks); c90 = Counter(k for ks in lo[-90:] for k in ks)
 spage("tan-suat-lo-to-xsmb", "Tần suất lô tô XSMB 30, 90 ngày – bảng 00–99", f"Tần suất lô tô XSMB 00–99 trong 30 và 90 kỳ gần nhất đến {vn(lastd)}. Không quảng cáo.", "Tần suất lô tô XSMB",
       f"Số lần mỗi lô từ 00 đến 99 xuất hiện. Mỗi kỳ XSMB có 27 lô, nên trong 30 kỳ trung bình mỗi lô về {dec(30 * 27 / 100,1)} lần.",
@@ -380,7 +381,7 @@ for i, (d, k) in enumerate(db): dbg[k] = i
 dgan = sorted(range(100), key=lambda k: -(N - 1 - dbg.get(k, -1)))[:15]
 spage("giai-dac-biet-xsmb", "Thống kê giải đặc biệt XSMB – bảng đặc biệt tuần", f"Bảng giải đặc biệt XSMB theo tuần 12 tuần gần nhất, đầu đuôi và 2 số cuối giải đặc biệt lâu chưa về, đến {vn(lastd)}.", "Thống kê giải đặc biệt XSMB",
       "Bảng giải Đặc biệt XSMB theo tuần (2 số cuối tô đỏ) và các số chưa làm 2 số cuối giải Đặc biệt lâu nhất.",
-      card(tbl(["Tuần từ"] + WD, rows[::-1]).replace("<table>", "<table class=\"wk\">", 1)) + "<h2>2 số cuối giải Đặc biệt lâu chưa về</h2>" + card(tbl(["Số", "Số kỳ chưa về", "Lần gần nhất"], [(f"<b>{k:02d}</b>", N - 1 - dbg[k], vn(db[dbg[k]][0])) for k in dgan])))
+      card(tbl(["Tuần từ"] + WD, rows[::-1]).replace("<table>", "<table class=\"wk\">", 1)) + "<h2>2 số cuối giải Đặc biệt lâu chưa về</h2>" + card(tbl(["Số", "Số kỳ chưa về", "Lần gần nhất"], [(f"<b>{SL(k)}</b>", N - 1 - dbg[k], vn(db[dbg[k]][0])) for k in dgan])))
 g1 = [(d, v[1]) for d, v in fullmb]; g1c = Counter(int(v[-2:]) for _, v in g1[-100:])
 spage("giai-nhat-xsmb", "Thống kê giải nhất XSMB", f"Giải nhất XSMB 30 kỳ gần nhất và tần suất 2 số cuối giải nhất 100 kỳ, đến {vn(lastd)}.", "Thống kê giải nhất XSMB",
       "Giải Nhất XSMB gồm 5 chữ số. Bảng liệt kê 30 kỳ gần nhất và số lần mỗi cặp 2 số cuối xuất hiện ở giải Nhất trong 100 kỳ.",
@@ -422,7 +423,7 @@ for reg in ("xsmn", "xsmt"):
     g8g = sorted(range(100), key=lambda k: g8last.get(k, -1))[:15]
     spage(f"giai-8-{reg}", f"Thống kê giải tám {lab} – giải 8 {name}", f"Giải tám {lab} 14 ngày gần nhất theo đài, tần suất giải 8 trong 90 ngày và số lâu chưa về ở giải 8, đến {vn(ld)}.", f"Thống kê giải tám {lab}",
           f"Giải Tám {lab} là giải 2 chữ số, quay đầu tiên ở mỗi đài. Bảng tính trên tất cả các đài {name}.",
-          "<h2>Giải tám 14 ngày gần nhất</h2>" + recent_tbl(17) + card(grid100(g8c, f"Tần suất giải tám, 90 ngày gần nhất (tất cả các đài)")) + "<h2>Số lâu chưa về ở giải tám</h2>" + card(tbl(["Số", "Số ngày chưa về", "Lần gần nhất"], [(f"<b>{k:02d}</b>", len(ds) - 1 - g8last[k], vn(ds[g8last[k]])) for k in g8g if k in g8last])))
+          "<h2>Giải tám 14 ngày gần nhất</h2>" + recent_tbl(17) + card(grid100(g8c, f"Tần suất giải tám, 90 ngày gần nhất (tất cả các đài)")) + "<h2>Số lâu chưa về ở giải tám</h2>" + card(tbl(["Số", "Số ngày chưa về", "Lần gần nhất"], [(f"<b>{SL(k)}</b>", len(ds) - 1 - g8last[k], vn(ds[g8last[k]])) for k in g8g if k in g8last])))
     g1c = Counter(int(v[1][-2:]) for d, s, v in F if d in d90)
     spage(f"giai-nhat-{reg}", f"Thống kê giải nhất {lab}", f"Giải nhất {lab} 14 ngày gần nhất theo đài và tần suất 2 số cuối giải nhất 90 ngày, đến {vn(ld)}.", f"Thống kê giải nhất {lab}",
           f"Giải Nhất {lab} gồm 5 chữ số. Bảng liệt kê 14 ngày gần nhất và số lần mỗi cặp 2 số cuối xuất hiện ở giải Nhất.",
@@ -434,7 +435,7 @@ for reg in ("xsmn", "xsmt"):
     dg = sorted(range(100), key=lambda k: dlast.get(k, -1))[:15]
     spage(f"giai-dac-biet-{reg}", f"Thống kê giải đặc biệt {lab}", f"Giải đặc biệt {lab} 14 ngày gần nhất theo đài, tần suất 2 số cuối giải đặc biệt 180 ngày và số lâu chưa về, đến {vn(ld)}.", f"Thống kê giải đặc biệt {lab}",
           f"Giải Đặc biệt {lab} gồm 6 chữ số (trước năm 2009 là 5 chữ số). Bảng tính trên tất cả các đài {name}.",
-          "<h2>Giải đặc biệt 14 ngày gần nhất</h2>" + recent_tbl(0) + card(grid100(dbc, "2 số cuối giải Đặc biệt, 180 ngày gần nhất")) + "<h2>2 số cuối giải đặc biệt lâu chưa về</h2>" + card(tbl(["Số", "Số ngày chưa về", "Lần gần nhất"], [(f"<b>{k:02d}</b>", len(ds) - 1 - dlast[k], vn(ds[dlast[k]])) for k in dg if k in dlast])))
+          "<h2>Giải đặc biệt 14 ngày gần nhất</h2>" + recent_tbl(0) + card(grid100(dbc, "2 số cuối giải Đặc biệt, 180 ngày gần nhất")) + "<h2>2 số cuối giải đặc biệt lâu chưa về</h2>" + card(tbl(["Số", "Số ngày chưa về", "Lần gần nhất"], [(f"<b>{SL(k)}</b>", len(ds) - 1 - dlast[k], vn(ds[dlast[k]])) for k in dg if k in dlast])))
     d365 = set(ds[-365:]); c3 = Counter(v[0][-3:] for d, s, v in F if d in d365); h3 = Counter(v[0][-3] for d, s, v in F if d in d365); M3 = sum(c3.values())
     spage(f"3-cang-{reg}", f"Thống kê 3 càng {lab} – 3 càng giải đặc biệt", f"3 càng giải đặc biệt {lab} 14 ngày gần nhất theo đài, 3 càng về nhiều nhất và đầu 3 càng trong 365 ngày, đến {vn(ld)}.", f"Thống kê 3 càng {lab}",
           f"3 càng là 3 chữ số cuối của giải Đặc biệt. Trong 365 ngày gần nhất có {fm(M3)} giải Đặc biệt {lab}; mỗi số 3 càng trung bình về {dec(M3 / 1000,2)} lần.",
@@ -456,7 +457,7 @@ def kep_rows(L):
     out = []
     for k in L:
         li = lastidx(lambda ks, k=k: k in ks)
-        out.append((f"<b>{k:02d}</b>", c30[k], c90[k], N - 1 - li, vn(two[li][0]), rec[k]))
+        out.append((f"<b>{SL(k)}</b>", c30[k], c90[k], N - 1 - li, vn(two[li][0]), rec[k]))
     return out
 kday = [i for i in range(N - 30, N) if any(k in KEP for k in lo[i])]
 spage("lo-kep-xsmb", "Thống kê lô kép XSMB – kép bằng, kép lệch", f"Thống kê lô kép XSMB đến {vn(lastd)}: số lần về 30, 90 kỳ, số kỳ chưa về và kỷ lục gan của từng lô kép bằng, kép lệch. Không quảng cáo.", "Thống kê lô kép XSMB",
@@ -551,7 +552,7 @@ def live_mb():
         for k in ks: pv[k] = i
     c30p = Counter(k for ks in H[-30:] for k in ks); c100p = Counter(k for ks in H[-100:] for k in ks)
     cnt = Counter(today); ks = sorted(cnt)
-    rows = [(f"<b>{k:02d}</b>", cnt[k], (n - 1 - pv[k]) if k in pv else "–", c30p[k], c100p[k]) for k in sorted(ks, key=lambda k: -((n - 1 - pv.get(k, -1))))]
+    rows = [(f"<b>{SL(k)}</b>", cnt[k], (n - 1 - pv[k]) if k in pv else "–", c30p[k], c100p[k]) for k in sorted(ks, key=lambda k: -((n - 1 - pv.get(k, -1))))]
     back = sorted(ks, key=lambda k: -(n - 1 - pv.get(k, -1)))[:3]
     hot = [k for k in ks if cnt[k] > 1]
     hd = {k // 10 for k in today}; td = {k % 10 for k in today}
@@ -562,11 +563,11 @@ def live_mb():
     pva = dict(pv); [pva.__setitem__(k, n) for k in ks]
     ganNow = sorted(range(100), key=lambda k: -(n - pva.get(k, -1)))[:5]
     li = [f"Giải Đặc biệt <b>{dbv}</b>" + (f"; 2 số cuối {dbv[-2:]} lần trước làm giải Đặc biệt ngày {vn(dbt2[prevdb[-1]][0])} ({len(dbt2) - 1 - prevdb[-1]} kỳ trước)." if prevdb else "."),
-          f"{len(ks)} lô khác nhau trên 27 giải" + (f"; về nhiều nháy: {', '.join(f'<b>{k:02d}</b> ({cnt[k]} nháy)' for k in hot)}." if hot else "; không có lô nào về nhiều nháy."),
-          "Về lại sau thời gian gan dài nhất: " + ", ".join(f"<b>{k:02d}</b> ({n - 1 - pv[k]} kỳ)" for k in back if k in pv) + ".",
+          f"{len(ks)} lô khác nhau trên 27 giải" + (f"; về nhiều nháy: {', '.join(f'<b>{SL(k)}</b> ({cnt[k]} nháy)' for k in hot)}." if hot else "; không có lô nào về nhiều nháy."),
+          "Về lại sau thời gian gan dài nhất: " + ", ".join(f"<b>{SL(k)}</b> ({n - 1 - pv[k]} kỳ)" for k in back if k in pv) + ".",
           "Đầu câm: " + (", ".join(str(x) for x in range(10) if x not in hd) or "không có") + " · Đuôi câm: " + (", ".join(str(x) for x in range(10) if x not in td) or "không có") + ".",
           "Lô kép: " + (", ".join(f"{k:02d}" for k in keps) or "không có") + " · Cặp số đảo cùng về: " + (", ".join(dao) or "không có") + ".",
-          "Lô gan nhất sau kỳ này: " + ", ".join(f"<b>{k:02d}</b> ({n - pva.get(k, -1)} kỳ)" for k in ganNow) + "."]
+          "Lô gan nhất sau kỳ này: " + ", ".join(f"<b>{SL(k)}</b> ({n - pva.get(k, -1)} kỳ)" for k in ganNow) + "."]
     return d, li, rows
 def live_mn(reg):
     lab = REG[reg][0]
@@ -579,9 +580,9 @@ def live_mn(reg):
         for i, (_, ks) in enumerate(H):
             for k in ks: pv[k] = i
         c20 = Counter(k for _, ks in H[-20:] for k in ks); cnt = Counter(today)
-        rows = [(f"<b>{k:02d}</b>", cnt[k], (n - 1 - pv[k]) if k in pv else "–", c20[k], vn(H[pv[k]][0]) if k in pv else "–") for k in sorted(cnt, key=lambda k: -(n - 1 - pv.get(k, -1)))]
+        rows = [(f"<b>{SL(k)}</b>", cnt[k], (n - 1 - pv[k]) if k in pv else "–", c20[k], vn(H[pv[k]][0]) if k in pv else "–") for k in sorted(cnt, key=lambda k: -(n - 1 - pv.get(k, -1)))]
         back = [k for k in sorted(cnt, key=lambda k: -(n - 1 - pv.get(k, -1))) if k in pv][:2]
-        summ = f"{len(cnt)} lô khác nhau; về lại sau gan dài nhất: " + ", ".join(f"<b>{k:02d}</b> ({n - 1 - pv[k]} kỳ của đài)" for k in back) + (f"; nhiều nháy: {', '.join(f'{k:02d}' for k in cnt if cnt[k] > 1)}" if any(cnt[k] > 1 for k in cnt) else "") + "."
+        summ = f"{len(cnt)} lô khác nhau; về lại sau gan dài nhất: " + ", ".join(f"<b>{SL(k)}</b> ({n - 1 - pv[k]} kỳ của đài)" for k in back) + (f"; nhiều nháy: {', '.join(f'{k:02d}' for k in cnt if cnt[k] > 1)}" if any(cnt[k] > 1 for k in cnt) else "") + "."
         out.append((ST.get(st, st), n + 1, summ, rows))
     return d, out
 LV = {"mb": live_mb(), "mn": live_mn("xsmn"), "mt": live_mn("xsmt")}
@@ -796,12 +797,12 @@ for reg, (lab, name, tm) in REG.items():
     tot = sum(cnt.values()); E = tot / 100
     dbs = [(d, r) for d in win for r in sorted(byd[d], key=lambda r: ST.get(r["station"], ""))]
     dbd = Counter(r["db"][0][-2] for _, r in dbs); dbu = Counter(r["db"][0][-1] for _, r in dbs)
-    chip = lambda k, sub: f'<a class="c30" href="../../so/{k:02d}/"><b>{k:02d}</b><small>{sub}</small></a>'
+    chip = lambda k, sub: f'<a class="c30" href="../../so/{k:02d}/"><b>{SL(k)}</b><small>{sub}</small></a>'
     if reg == "xsmb":
-        rows = ''.join(f'<tr><td><a href="../../xsmb/{slug_d(d)}/">{vn(d)[:5]}</a><small>{WD[wdi(d)]}</small></td><td class="db">{r["db"][0]}</td><td class="lo">{" ".join(f"{k:02d}" for k in sorted(lo_d[d]))}</td></tr>' for d in reversed(win) for r in byd[d])
+        rows = ''.join(f'<tr><td><a href="../../xsmb/{slug_d(d)}/">{vn(d)[:5]}</a><small>{WD[wdi(d)]}</small></td><td class="db">{r["db"][0]}</td><td class="lo">{" ".join(SL(k) for k in sorted(lo_d[d]))}</td></tr>' for d in reversed(win) for r in byd[d])
         head = '<tr><th>Ngày</th><th>Đặc biệt</th><th>2 số cuối 27 giải</th></tr>'
     else:
-        rows = ''.join(f'<tr><td><a href="../../{reg}/{slug_d(d)}/">{vn(d)[:5]}</a><small>{WD[wdi(d)]}</small></td><td class="st">{ST.get(r["station"], "")}</td><td class="db">{r["db"][0]}</td><td class="lo">{" ".join(f"{k:02d}" for k in lotos(r, G))}</td></tr>' for d in reversed(win) for r in sorted(byd[d], key=lambda r: ST.get(r["station"], "")))
+        rows = ''.join(f'<tr><td><a href="../../{reg}/{slug_d(d)}/">{vn(d)[:5]}</a><small>{WD[wdi(d)]}</small></td><td class="st">{ST.get(r["station"], "")}</td><td class="db">{r["db"][0]}</td><td class="lo">{" ".join(SL(k) for k in lotos(r, G))}</td></tr>' for d in reversed(win) for r in sorted(byd[d], key=lambda r: ST.get(r["station"], "")))
         head = '<tr><th>Ngày</th><th>Đài</th><th>Đặc biệt</th><th>2 số cuối 18 giải</th></tr>'
     unit = "ngày" if reg == "xsmb" else "kỳ"
     w365 = ds[-365:]
