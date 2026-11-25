@@ -1068,7 +1068,7 @@ function route(){
  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+cur));
  const navv=cur==='dan'?'thong-ke-dan':cur==='vietlott'?'vietlott-'+VL.g:cur;
  document.querySelectorAll('.nav a,.tab a,.sheet a').forEach(a=>{const dv=a.dataset.v;const on=dv===navv||(dv==='vietlott'&&cur==='vietlott')||(dv==='more'&&!TABV.some(x=>x[0]===cur)&&cur!=='ket-qua');if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
- document.body.classList.toggle('novreg',cur==='vietlott'||EXTRA.some(x=>x[0]===cur));$('vtitle').classList.toggle('h1one',!PG&&cur==='ket-qua');$('vtitle').textContent=onPageView(cur)?H1_0:(!PG&&cur==='ket-qua')?'KQXS hôm nay – XSMB, XSMN, XSMT':cur==='dan'?'Lịch sử thống kê nhóm':(VIEWS.find(x=>x[0]===cur)||EXTRA.find(x=>x[0]===cur))[1];setMeta(cur);
+ document.body.classList.toggle('novreg',cur==='vietlott'||cur==='truc-tiep'||EXTRA.some(x=>x[0]===cur));$('vtitle').classList.toggle('h1one',!PG&&cur==='ket-qua');$('vtitle').textContent=onPageView(cur)?H1_0:(!PG&&cur==='ket-qua')?'KQXS hôm nay – XSMB, XSMN, XSMT':cur==='dan'?'Lịch sử thống kê nhóm':(VIEWS.find(x=>x[0]===cur)||EXTRA.find(x=>x[0]===cur))[1];setMeta(cur);
  if(N)renderView(cur);window.scrollTo(0,0);}
 addEventListener('hashchange',route);
 addEventListener('hashchange',()=>{const a=anchorHash();if(a)setTimeout(()=>document.getElementById(a).scrollIntoView({behavior:'smooth',block:'start'}),50);});
@@ -1913,7 +1913,7 @@ function lvFeed(reg){return new Promise(ok=>{window.kqxs=window.kqxs||{};try{del
  s.onload=()=>{clearTimeout(tm);let r=null;try{r=lvFeedParse(reg,window.kqxs[reg]);}catch(e){}ok(r);};s.onerror=()=>{clearTimeout(tm);ok(null);};document.body.appendChild(s);});}
 function lvCdStop(){if(LV.cd){clearInterval(LV.cd);LV.cd=null;}}
 function lvCd(a){if(LV.cd&&LV.cdA===a)return;lvCdStop();LV.cdA=a;const tick=()=>{if(curView()!=='truc-tiep'){lvCdStop();return;}const n=nowVN(),[h,m,sx]=n.time.split(':').map(Number),left=a*60-(h*3600+m*60+sx),el=$('lvSt')&&$('lvSt').querySelector('span');
- if(left<=0){lvCdStop();lvTick();return;}if(left>6*3600)return;const hh=Math.floor(left/3600),mm=Math.floor(left%3600/60),ss=left%60;if(el)el.textContent=`Còn ${hh?hh+':'+pad(mm):mm}:${pad(ss)} tới giờ quay`;
+ if(left<=0){lvCdStop();lvTick();return;}const hh=Math.floor(left/3600),mm=Math.floor(left%3600/60),ss=left%60;if(el)el.textContent=`Còn ${hh?hh+':'+pad(mm):mm}:${pad(ss)} tới giờ quay`;
  if(left===300)lvTick();};tick();LV.cd=setInterval(tick,1000);}
 function lvStop(){if(LV.timer){clearTimeout(LV.timer);LV.timer=null;}}
 async function lvTick(){
@@ -1943,7 +1943,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&curView()
 function lvRender(){
  const n=nowVN(),reg=LV.reg,sts=lvStations(reg,n.date),phase=lvPhase(reg,n),G=reg==='mb'?LV_MB:LV_MN;
  const [wa]=LVWIN[reg],blank=()=>{const pr={};let t=0;for(const [,g,c] of G){pr[g]=Array(c).fill('');t+=c;}return {date:n.date,pr,done:0,tot:t,at:n.time,blank:true};};
- const items=sts.map(s=>{let d=LV.data[reg+':'+s];if(phase==='live'&&n.min>=wa&&(!d||d.date!==n.date))d=Object.assign(blank(),d?{ve:d.ve}:{});return {s,d};});
+ const wait=(phase==='live')||(phase==='before'&&n.min>=480);const items=sts.map(s=>{let d=LV.data[reg+':'+s];if(wait&&(!d||d.date!==n.date))d=Object.assign(blank(),d?{ve:d.ve}:{});return {s,d};});
  const tot=items.reduce((a,x)=>a+(x.d?x.d.tot:(reg==='mb'?27:18)),0),done=items.reduce((a,x)=>a+(x.d&&x.d.date===n.date?x.d.done:0),0);
  const todayAll=items.length&&items.every(x=>x.d&&x.d.date===n.date),complete=todayAll&&done===tot;
  const [a,b]=LVWIN[reg],hm=v=>`${pad(Math.floor(v/60))}:${pad(v%60)}`;
@@ -1958,7 +1958,7 @@ function lvRender(){
  $('lvSt').className='lvst '+cls;$('lvSt').querySelector('span').textContent=st;
  $('lvT').textContent=`Trực tiếp ${RLAB[reg]} · ${wd(n.date)}, ${vnDate(n.date)}`;
  $('lvS').textContent=LV.failed&&!items.some(x=>x.d)?'Trình duyệt không tải được mã nhúng của Minh Ngọc (bản trên Claude chặn script từ trang khác). Hãy mở bản GitHub của XS Lab, hoặc xem trực tiếp tại xoso.net.':
-  phase==='live'&&!complete?`Bảng tự cập nhật khoảng 3 giây một lần đến khi đủ ${tot} giải. Giải mới về sẽ sáng lên.`:phase==='before'?`${RNAME[reg]} quay lúc ${hm(a)}. Bảng dưới đây là kỳ gần nhất; khi đến giờ quay, mở trang này để xem từng giải về.`:'Bảng dưới đây là kỳ gần nhất của các đài quay hôm nay.';
+  phase==='live'&&!complete?`Bảng tự cập nhật khoảng 3 giây một lần đến khi đủ ${tot} giải. Giải mới về sẽ sáng lên.`:phase==='before'?(n.min>=480?`Bảng chờ kỳ quay ${RNAME[reg]} hôm nay lúc ${hm(a)}. Đến giờ quay, từng giải sẽ hiện ra ngay trên bảng này. Kết quả kỳ trước xem ở mục Kết quả.`:`${RNAME[reg]} quay lúc ${hm(a)}. Bảng dưới đây là kỳ gần nhất; từ 8 giờ sáng trang chuyển sang bảng chờ kỳ hôm nay.`):'Bảng dưới đây là kỳ gần nhất của các đài quay hôm nay.';
  $('lvProg').style.width=tot?Math.round(done/tot*100)+'%':'0';
  const last=items.map(x=>x.d&&x.d.at).filter(Boolean).sort().pop();
  $('lvTime').textContent=[todayAll||phase!=='before'?`Đã ra ${done}/${tot} giải`:'',last?`cập nhật lúc ${last}`:''].filter(Boolean).join(' · ');
