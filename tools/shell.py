@@ -108,7 +108,8 @@ def org_ld(base):
 
 THEME_HEAD = "<script>try{var t=JSON.parse(localStorage.getItem('xs-theme'));if(t&&t!=='auto')document.documentElement.dataset.theme=t}catch(e){}</script>"
 
-MENU_CSS = """@media(hover:hover) and (pointer:fine){.mbar summary::after{display:none}}
+MENU_CSS = """@keyframes lvdot{0%{box-shadow:0 0 0 2px var(--p,#fff),0 0 0 2px rgba(225,29,46,.55)}80%,100%{box-shadow:0 0 0 2px var(--p,#fff),0 0 0 9px rgba(225,29,46,0)}}.tab a.onair{position:relative}.tab a.onair::after{content:"";position:absolute;top:7px;left:calc(50% + 5px);width:9px;height:9px;border-radius:50%;background:#e11d2e;animation:lvdot 1.6s ease-out infinite;pointer-events:none}@media(prefers-reduced-motion:reduce){.tab a.onair::after{animation:none}}
+@media(hover:hover) and (pointer:fine){.mbar summary::after{display:none}}
 .mbar details .mdd:before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
 html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7ee);--sidemute:light-dark(#6c6975,#8e8a99);--sidehov:light-dark(#0000000a,#ffffff12);--sideln:light-dark(#e7e4df,#ffffff22)}html .side{border-right:1px solid var(--line)}html .side .nav a:hover{background:var(--sidehov)}html .side .nav a[aria-current=page]:hover{background:#d01f3c}html .side .themebtn{background:var(--sidehov);border-color:var(--sideln);color:var(--sideink)}html .brand:hover b{color:#d01f3c}html .tab{border-top:1px solid var(--line)}
 @media(min-width:1500px){.app{max-width:1488px;margin:0 auto}html[data-theme=dark] body{background:linear-gradient(90deg,var(--side) calc((100vw - 1488px)/2 + 24px),var(--bg) 0) no-repeat,var(--bg)}}@media(min-width:1500px) and (prefers-color-scheme:dark){html:not([data-theme=light]) body{background:linear-gradient(90deg,var(--side) calc((100vw - 1488px)/2 + 24px),var(--bg) 0) no-repeat,var(--bg)}}
@@ -136,7 +137,8 @@ html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7e
 @media(max-width:820px){.mhead{display:flex;align-items:center;justify-content:space-between;margin:-6px 0 10px}.mlogo{display:flex;align-items:center;gap:8px;color:var(--ink);text-decoration:none;font-size:18px}.mlogo svg{width:32px;height:32px}
 .mtheme{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--panel);display:grid;place-items:center;cursor:pointer;color:var(--ink)}.mtheme svg{width:20px;height:20px}}"""
 
-MENU_JS = """(function(){var D=document.querySelectorAll('.mbar details');function closeAll(x){D.forEach(function(d){if(d!==x)d.open=false})}
+MENU_JS = """(function(){function oa(){var d=new Date(Date.now()+7*3600e3),m=d.getUTCHours()*60+d.getUTCMinutes(),W=[[975,1010],[1035,1070],[1095,1125]],on=W.some(function(w){return m>=w[0]&&m<=w[1]});document.querySelectorAll('.tab a[href$="truc-tiep/"]').forEach(function(a){a.classList.toggle('onair',on)})}oa();setInterval(oa,30000)})();
+(function(){var D=document.querySelectorAll('.mbar details');function closeAll(x){D.forEach(function(d){if(d!==x)d.open=false})}
 D.forEach(function(d){d.addEventListener('toggle',function(){if(d.open)closeAll(d)})});
 document.querySelectorAll('.subnav').forEach(function(n){var f=function(){n.classList.toggle('end',n.scrollLeft+n.clientWidth>=n.scrollWidth-4)};n.addEventListener('scroll',f,{passive:true});f();var c=n.querySelector('[aria-current]');if(c&&c.offsetLeft+c.offsetWidth>n.clientWidth)n.scrollLeft=c.offsetLeft-12});var MR=document.querySelector('.mrow');if(MR){var me=function(){MR.parentNode.classList.toggle('end',MR.scrollLeft+MR.clientWidth>=MR.scrollWidth-4)};MR.addEventListener('scroll',me,{passive:true});addEventListener('resize',me);me();
 var cu=MR.querySelector('.is-cur');if(cu&&cu.offsetLeft+cu.offsetWidth>MR.clientWidth)MR.scrollLeft=cu.offsetLeft-12;}
