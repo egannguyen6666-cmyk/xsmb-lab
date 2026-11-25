@@ -2173,8 +2173,8 @@ function cyc(){var t=get(),i=TH.findIndex(function(x){return x[0]===t});t=TH[(i+
 document.querySelectorAll('.mtheme,.themebtn').forEach(function(b){b.addEventListener('click',cyc)});lab()})();</script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "d84c5ca70d434fb8b09440653ffd5b77"}'></script><script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-(function(){var c=null;try{c=localStorage.getItem('xs-consent');}catch(e){}
-gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:c==='no'?'denied':'granted'});
+(function(){try{localStorage.removeItem('xs-consent');}catch(e){}
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'granted'});
 gtag('js',new Date());gtag('config','G-Z58VHGRYTE',{allow_google_signals:false,allow_ad_personalization_signals:false});
 var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-Z58VHGRYTE';document.head.appendChild(s);})();
 </script></body>

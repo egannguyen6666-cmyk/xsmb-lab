@@ -201,12 +201,11 @@ table.mn{table-layout:fixed}table.mn td span{display:block;margin:1px 0;font-siz
 """
 
 # Google Analytics 4: chỉ đo lượt xem, tắt quảng cáo và Google Signals.
-# Người xem tắt được ở trang Chính sách cookie (lưu localStorage khoá xs-consent = "no").
 GA_ID = "G-Z58VHGRYTE"
 GA_HTML = """<script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-(function(){var c=null;try{c=localStorage.getItem('xs-consent');}catch(e){}
-gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:c==='no'?'denied':'granted'});
+(function(){try{localStorage.removeItem('xs-consent');}catch(e){}
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'granted'});
 gtag('js',new Date());gtag('config','__GA__',{allow_google_signals:false,allow_ad_personalization_signals:false});
 var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=__GA__';document.head.appendChild(s);})();
 </script>""".replace("__GA__", GA_ID)
