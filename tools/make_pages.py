@@ -803,6 +803,10 @@ for reg, (lab, name, tm) in REG.items():
         rows = ''.join(f'<tr><td><a href="../../{reg}/{slug_d(d)}/">{vn(d)[:5]}</a><small>{WD[wdi(d)]}</small></td><td class="st">{ST.get(r["station"], "")}</td><td class="db">{r["db"][0]}</td><td class="lo">{" ".join(f"{k:02d}" for k in lotos(r, G))}</td></tr>' for d in reversed(win) for r in sorted(byd[d], key=lambda r: ST.get(r["station"], "")))
         head = '<tr><th>Ngày</th><th>Đài</th><th>Đặc biệt</th><th>2 số cuối 18 giải</th></tr>'
     unit = "ngày" if reg == "xsmb" else "kỳ"
+    w365 = ds[-365:]
+    c3 = Counter(t for d in w365 for r in byd[d] for t in {v[-3:] for _, g in G for v in r[g] if len(v) >= 3})
+    top3 = sorted(c3, key=lambda t: (-c3[t], t))[:10]
+    c3tbl = '<div class="card"><table class="dd30"><tr><th>Hạng</th><th>3 càng</th><th>Số lần về</th></tr>' + ''.join(f'<tr><td>{i+1}</td><td><b>{t}</b></td><td>{c3[t]}</td></tr>' for i, t in enumerate(top3)) + '</table></div>'
     body = f"""<p class="lead"><b>Tính đến kỳ {vn(last)} ({WDL[wdi(last)]}):</b> 30 kỳ {lab} từ {vn(win[0])} đến {vn(last)}, tổng {tot} giải. Lô về nhiều nhất là {', '.join(f'{k:02d}' for k in hot[:3])} ({cnt[hot[0]]} lần); {len(cold)} số chưa về lần nào trong 30 kỳ; lô gan nhất là {gan[0]:02d} ({len(ds) - 1 - lastseen.get(gan[0], -1)} {unit} chưa về).</p>
 <p>Trang tự cập nhật sau mỗi buổi quay {lab} ({tm}). Mọi số liệu là thống kê các kỳ đã quay, không phải dự đoán; mỗi kỳ quay độc lập với các kỳ trước.</p>
 <h2>Lô về nhiều nhất 30 kỳ</h2><div class="g30">{''.join(chip(k, f"{cnt[k]} lần") for k in hot)}</div>
@@ -812,6 +816,8 @@ for reg, (lab, name, tm) in REG.items():
 <h2>Lô kép đã về trong 30 kỳ</h2><p>{', '.join(f'{k:02d} ({cnt[k]} lần)' for k in kep) or 'Không có'}</p>
 <h2>Đầu, đuôi lô tô 30 kỳ</h2><div class="card"><table class="dd30"><tr><th>Số</th>{''.join(f'<th>{i}</th>' for i in range(10))}</tr><tr><td>Đầu</td>{''.join(f'<td>{dau[i]}</td>' for i in range(10))}</tr><tr><td>Đuôi</td>{''.join(f'<td>{duoi[i]}</td>' for i in range(10))}</tr></table></div>
 <h2>Giải Đặc biệt 30 kỳ: chữ số hàng chục và hàng đơn vị</h2><div class="card"><table class="dd30"><tr><th>Số</th>{''.join(f'<th>{i}</th>' for i in range(10))}</tr><tr><td>Hàng chục</td>{''.join(f'<td>{dbd[str(i)]}</td>' for i in range(10))}</tr><tr><td>Hàng đơn vị</td>{''.join(f'<td>{dbu[str(i)]}</td>' for i in range(10))}</tr></table></div>
+<h2>3 càng về nhiều nhất trong {len(w365)} ngày quay {lab}</h2>{c3tbl}<p class="note">Đếm 3 chữ số cuối của các giải có từ 3 chữ số trở lên{'' if reg == 'xsmb' else ', gộp tất cả các đài ' + lab}, tính đến {vn(last)}.</p>
+<p><a class="cta" href="../?mien={reg.replace('xs', '')}#rkCard">Bảng xếp hạng đầy đủ: lô 2 số, 3 càng, 4 càng, đầu đuôi</a></p>
 <h2>Bảng kết quả 30 kỳ gần nhất</h2><div class="card t30w"><table class="t30">{head}{rows}</table></div>
 <p><a class="cta" href="../../{reg}/">{lab} hôm nay</a><a class="cta" href="../../{reg}-30-ngay/">{lab} 30 ngày</a><a class="cta" href="../lo-gan-{reg}/">Lô gan {lab}</a><a class="cta" href="../../do-ve/">Dò vé số</a></p>"""
     if not os.path.isdir(os.path.join(ROOT, "thong-ke", f"lo-gan-{reg}")):
