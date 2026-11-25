@@ -1454,6 +1454,7 @@ function renderRank(){const el=$('rkCard');if(!el)return;const t=N-1,WS=[30,60,9
   <p class="note">Theo xác suất, trong ${w} ${u} mỗi lô về trung bình ${dec(M*w/100)} lần.</p></details>
  <details class="kgd" data-k="r3"${open.r3?' open':''}><summary><b>3 càng</b><span>về nhiều trong 365 kỳ, lâu chưa về</span></summary><div id="rk3"><p class="note">Mở để tải dữ liệu đủ giải…</p></div></details>
  <details class="kgd" data-k="r4"${open.r4?' open':''}><summary><b>4 càng</b><span>về nhiều trong toàn bộ dữ liệu</span></summary><div id="rk4"><p class="note">Mở để tải dữ liệu đủ giải…</p></div></details>
+${R.region!=='mb'?`<details class="kgd" data-k="r8"${open.r8?' open':''}><summary><b>Giải 8</b><span>về nhiều, lâu chưa về · 00–99</span></summary><div id="rk8"><p class="note">Mở để tải dữ liệu đủ giải…</p></div></details>`:''}
  <details class="kgd" data-k="rd"${open.rd?' open':''}><summary><b>Đầu đuôi</b><span>lô tô và giải Đặc biệt · 0–9</span></summary>
   <h3 style="margin-top:4px">Đầu đuôi lô tô trong ${w} ${u}</h3><div class="grid rkg"><div class="c6"><b>Đầu</b>${rkTable('ddh',['Hạng','Đầu','Số lần về','Số '+u+' chưa về'],ddRows(H,gH),10)}</div><div class="c6"><b>Đuôi</b>${rkTable('ddt',['Hạng','Đuôi','Số lần về','Số '+u+' chưa về'],ddRows(T,gT),10)}</div></div>
   <p class="note">Theo xác suất, mỗi chữ số làm đầu (hoặc đuôi) trung bình ${dec(M*w/10)} lần trong ${w} ${u}.</p><div id="rkdb"></div></details>
@@ -1463,7 +1464,7 @@ function renderRank(){const el=$('rkCard');if(!el)return;const t=N-1,WS=[30,60,9
  rkBind(el);rkFull(w,u);}
 const rkTok={n:0};
 function rkFull(w,u){const reg=R.region==='mb'?'xsmb':R.region==='mn'?'xsmn':'xsmt',st=R.st,tok=++rkTok.n,el=$('rkCard');if(!el)return;
- const need=['r3','r4','rd'].some(k=>el._open&&el._open[k]);if(!need)return;
+ const need=['r3','r4','rd','r8'].some(k=>el._open&&el._open[k]);if(!need)return;
  loadFull(reg).then(all=>{if(tok!==rkTok.n)return;const rows=reg==='xsmb'?all:all.filter(x=>x.s===st),n=rows.length;if(n<20)return;const dt=vnDate(rows[n-1].d);
   const seq=(L,from)=>{const SP=Math.pow(10,L),c=new Uint32Array(SP),last=new Int32Array(SP).fill(-1);for(let i=0;i<n;i++){const tails=new Set(rows[i].n.filter(v=>v.length>=L).map(v=>+v.slice(-L)));tails.forEach(q=>{if(i>=from)c[q]++;last[q]=i;});}return {SP,c,last};};
   const top=(SP,sc,k)=>{const r=[];for(let q=0;q<SP;q++){const v=sc(q);if(r.length<k||v>r[r.length-1][1]){r.push([q,v]);r.sort((x,y)=>y[1]-x[1]||x[0]-y[0]);if(r.length>k)r.pop();}}return r;};
@@ -1472,6 +1473,13 @@ function rkFull(w,u){const reg=R.region==='mb'?'xsmb':R.region==='mn'?'xsmn':'xs
    $('rk3').innerHTML=`<div class="grid rkg"><div class="c6"><h3>Về nhiều nhất trong ${W3} kỳ</h3>${rkTable('c3hot',['Hạng','3 càng','Số kỳ có về'],hot.map(([q,v],j)=>[j+1,`<b>${p3(q)}</b>`,v]),10)}</div><div class="c6"><h3>Lâu chưa về nhất</h3>${rkTable('c3cold',['Hạng','3 càng','Số kỳ chưa về','Lần về gần nhất'],cold.map(([q,v],j)=>[j+1,`<b>${p3(q)}</b>`,A.last[q]<0?'chưa từng về':v,A.last[q]<0?'—':vnDate(rows[A.last[q]].d)]),10)}</div></div><p class="note">Tính đến kỳ ${dt}, trên các giải có từ 3 chữ số trở lên. Theo xác suất, mỗi số 3 càng về trung bình ${dec(W3*rows[n-1].n.filter(v=>v.length>=3).length/1000)} kỳ trong ${W3} kỳ. Bảng đầy đủ hiện 100 hạng đầu.</p>`;rkBind($('rk3'));}
   if($('rk4')){const A=seq(4,0),hot=top(10000,q=>A.c[q],50);
    $('rk4').innerHTML=`<h3>Về nhiều nhất trong ${vn(n)} kỳ (${vnDate(rows[0].d)} – ${dt})</h3>${rkTable('c4hot',['Hạng','4 càng','Số kỳ có về','Lần về gần nhất'],hot.map(([q,v],j)=>[j+1,`<b>${p4(q)}</b>`,v,vnDate(rows[A.last[q]].d)]),10)}<p class="note">Tính trên các giải có từ 4 chữ số trở lên. Theo xác suất, mỗi số 4 càng về trung bình ${dec(n*rows[n-1].n.filter(v=>v.length>=4).length/10000)} kỳ trong toàn bộ dữ liệu. Bảng đầy đủ hiện 50 hạng đầu.</p>`;rkBind($('rk4'));}
+  if($('rk8')&&reg!=='xsmb'){const W=Math.min(w,n),c8=new Array(100).fill(0),g8=new Array(100).fill(-1);
+   for(let i=n-1;i>=0;i--){const v=rows[i].n[rows[i].n.length-1];if(!v||v.length!==2)continue;const k=+v;if(i>=n-W)c8[k]++;if(g8[k]<0)g8[k]=n-1-i;}
+   const ks=[...Array(100).keys()],hot=[...ks].sort((a,b)=>c8[b]-c8[a]||g8[a]-g8[b]||a-b).map((k,j)=>[j+1,`<b>${pad(k)}</b>`,c8[k],g8[k]<0?'—':vnDate(rows[n-1-g8[k]].d)]),cold=[...ks].sort((a,b)=>(g8[b]<0?1e9:g8[b])-(g8[a]<0?1e9:g8[a])||a-b).map((k,j)=>[j+1,`<b>${pad(k)}</b>`,g8[k]<0?'chưa từng về':g8[k],g8[k]<0?'—':vnDate(rows[n-1-g8[k]].d)]);
+   const H8=new Array(10).fill(0),T8=new Array(10).fill(0);for(let k=0;k<100;k++){H8[Math.floor(k/10)]+=c8[k];T8[k%10]+=c8[k];}
+   $('rk8').innerHTML=`<div class="grid rkg"><div class="c6"><h3>Giải 8 về nhiều nhất trong ${W} kỳ</h3>${rkTable('g8hot',['Hạng','Số','Số lần về','Lần về gần nhất'],hot,10)}</div><div class="c6"><h3>Giải 8 lâu chưa về nhất</h3>${rkTable('g8cold',['Hạng','Số','Số kỳ chưa về','Lần về gần nhất'],cold,10)}</div></div>
+   <h3 style="margin-top:6px">Đầu đuôi giải 8 trong ${W} kỳ</h3><div class="grid rkg"><div class="c6"><b>Đầu</b>${rkTable('g8h',['Hạng','Đầu','Số lần về'],[...Array(10).keys()].sort((a,b)=>H8[b]-H8[a]||a-b).map((d,j)=>[j+1,`<b>${d}</b>`,H8[d]]),10)}</div><div class="c6"><b>Đuôi</b>${rkTable('g8t',['Hạng','Đuôi','Số lần về'],[...Array(10).keys()].sort((a,b)=>T8[b]-T8[a]||a-b).map((d,j)=>[j+1,`<b>${d}</b>`,T8[d]]),10)}</div></div>
+   <p class="note">Giải 8 là giải 2 chữ số, mỗi kỳ một số. Tính đến kỳ ${dt}. Theo xác suất, mỗi số về giải 8 trung bình ${dec(W/100,1)} lần trong ${W} kỳ, và trung bình 100 kỳ mới về một lần.</p>`;rkBind($('rk8'));}
   if($('rkdb')){const W=Math.min(w,n),H=new Array(10).fill(0),T=new Array(10).fill(0),gH=new Array(10).fill(-1),gT=new Array(10).fill(-1);
    for(let i=n-1;i>=0;i--){const two=rows[i].n[0].slice(-2),a=+two[0],b=+two[1];if(i>=n-W){H[a]++;T[b]++;}if(gH[a]<0)gH[a]=n-1-i;if(gT[b]<0)gT[b]=n-1-i;}
    const rr=(A,G)=>[...Array(10).keys()].sort((x,y)=>A[y]-A[x]||G[x]-G[y]||x-y).map((d,j)=>[j+1,`<b>${d}</b>`,A[d],G[d]<0?'—':G[d]]);
