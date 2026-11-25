@@ -51,7 +51,7 @@ def brand(up):
 
 
 def mhead(up, ic="#"):
-    return f'<header class="mhead"><a class="mlogo" href="{home(up)}" aria-label="XS Lab – về trang chủ">{LOGO.replace("lg1", "mg1").replace("lg2", "mg2")}<b>XS Lab</b></a><button class="mtheme" type="button" aria-label="Đổi giao diện sáng tối"><svg aria-hidden="true"><use href="{ic}i-moon"/></svg></button></header>'
+    return f'<header class="mhead"><a class="mlogo" href="{home(up)}" aria-label="XS Lab – về trang chủ">{LOGO.replace("lg1", "mg1").replace("lg2", "mg2")}<b>XS Lab</b></a><a class="mapp" id="mApp" href="{up}cai-dat-app/"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>Cài app</a><button class="mtheme" type="button" aria-label="Đổi giao diện sáng tối"><svg aria-hidden="true"><use href="{ic}i-moon"/></svg></button></header>'
 
 
 SIDE = [("Xổ số kiến thiết", [("Kết quả xổ số", "", "i-home"), ("Trực tiếp xổ số", "truc-tiep/", "i-live"), ("Dò vé số", "do-ve/", "i-ticket")]),
@@ -96,7 +96,7 @@ def footer_html(up, year="2026"):
 <div class="fsrc"><h2>Thông tin nguồn</h2><p>{NOTICE}</p><p>XS Lab chỉ trình bày kết quả và thống kê dữ liệu đã quay, không đưa ra dự đoán kết quả.</p><p>Liên hệ: <!--email_off--><a href="mailto:{EMAIL}">{EMAIL}</a><!--/email_off--> · <a href="{up}lien-he/">Trang liên hệ</a></p></div>
 <nav aria-label="Kết quả và thống kê"><h2>Kết quả &amp; thống kê</h2>{L([("Kết quả XSMB","xsmb/"),("Kết quả XSMN","xsmn/"),("Kết quả XSMT","xsmt/"),("Trực tiếp XSMB","truc-tiep-xsmb/"),("Trực tiếp XSMN","truc-tiep-xsmn/"),("Trực tiếp XSMT","truc-tiep-xsmt/"),("XSMB 30 ngày","xsmb-30-ngay/"),("Sổ kết quả XSMB","xsmb/so-ket-qua/"),("Sổ kết quả XSMN","xsmn/so-ket-qua/"),("Sổ kết quả XSMT","xsmt/so-ket-qua/"),("Dò vé số","do-ve/"),("Thống kê lô tô","thong-ke/"),("Tra cứu số 00–99","so/"),("Thống kê nhóm số","thong-ke-dan/"),("Bảng thống kê","thong-ke/bang-thong-ke/")])}</nav>
 <nav aria-label="Vietlott"><h2>Vietlott</h2>{L([("Keno","keno/"),("Mega 6/45","mega-645/"),("Power 6/55","power-655/"),("Max 3D","max-3d/"),("Max 3D Pro","max-3d-pro/"),("Tất cả Vietlott","vietlott/")])}</nav>
-<nav aria-label="Về XS Lab"><h2>Về XS Lab</h2>{L([("Giới thiệu","gioi-thieu/"),("Liên hệ","lien-he/"),("Điều khoản sử dụng","dieu-khoan-su-dung/"),("Hỏi đáp (FAQ)","hoi-dap/"),("Miễn trừ trách nhiệm","mien-tru-trach-nhiem/"),("Chính sách bảo mật","chinh-sach-bao-mat/"),("Chính sách cookie","cookies/"),("Về dữ liệu","ve-du-lieu/"),("RSS","rss/")])}</nav>
+<nav aria-label="Về XS Lab"><h2>Về XS Lab</h2>{L([("Giới thiệu","gioi-thieu/"),("Liên hệ","lien-he/"),("Điều khoản sử dụng","dieu-khoan-su-dung/"),("Cài app XS Lab","cai-dat-app/"),("Hỏi đáp (FAQ)","hoi-dap/"),("Miễn trừ trách nhiệm","mien-tru-trach-nhiem/"),("Chính sách bảo mật","chinh-sach-bao-mat/"),("Chính sách cookie","cookies/"),("Về dữ liệu","ve-du-lieu/"),("RSS","rss/")])}</nav>
 </div><p class="fcopy">© {year} XS Lab · <a href="{up}rss.xml">rss.xml</a> · <a href="{up}sitemap.xml">sitemap.xml</a></p></footer>"""
 
 
@@ -108,7 +108,8 @@ def org_ld(base):
 
 THEME_HEAD = "<script>try{var t=JSON.parse(localStorage.getItem('xs-theme'));if(t&&t!=='auto')document.documentElement.dataset.theme=t}catch(e){}</script>"
 
-MENU_CSS = """.favrow{margin:0 0 10px}.favst{border:1px solid var(--ln);background:var(--p);color:var(--mu);border-radius:999px;padding:6px 14px;font-family:inherit;font-weight:600;font-size:14px;line-height:1.3;cursor:pointer}.favst:hover,.favst.on{border-color:var(--red);color:var(--red)}
+MENU_CSS = """.mapp{margin-left:auto;margin-right:8px;display:inline-flex;align-items:center;gap:5px;height:36px;padding:0 13px;border-radius:999px;background:#d01f3c;color:#fff!important;font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap}.mapp svg{width:16px;height:16px}@media (display-mode: standalone){.mapp{display:none!important}}
+.favrow{margin:0 0 10px}.favst{border:1px solid var(--ln);background:var(--p);color:var(--mu);border-radius:999px;padding:6px 14px;font-family:inherit;font-weight:600;font-size:14px;line-height:1.3;cursor:pointer}.favst:hover,.favst.on{border-color:var(--red);color:var(--red)}
 @keyframes lvdot{0%{box-shadow:0 0 0 2px var(--p,#fff),0 0 0 2px rgba(225,29,46,.55)}80%,100%{box-shadow:0 0 0 2px var(--p,#fff),0 0 0 9px rgba(225,29,46,0)}}.tab a.onair{position:relative}.tab a.onair::after{content:"";position:absolute;top:7px;left:calc(50% + 5px);width:9px;height:9px;border-radius:50%;background:#e11d2e;animation:lvdot 1.6s ease-out infinite;pointer-events:none}@media(prefers-reduced-motion:reduce){.tab a.onair::after{animation:none}}
 @media(hover:hover) and (pointer:fine){.mbar summary::after{display:none}}
 .mbar details .mdd:before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}

@@ -910,6 +910,26 @@ INFO_PAGES = [
 <li>XS Lab không bán vé, không nhận đặt cược, không cung cấp số dự đoán và không bao giờ yêu cầu chuyển tiền. Mọi lời mời chào như vậy nhân danh XS Lab đều là giả mạo.</li>
 <li>Về lĩnh thưởng, vé trúng hay tranh chấp liên quan đến vé, vui lòng liên hệ trực tiếp công ty xổ số kiến thiết phát hành vé hoặc Vietlott.</li></ul>
 <p class="note">{NOTICE}</p></div>"""),
+ ("cai-dat-app/", "WebPage", "Cài app XS Lab – xem kết quả xổ số không quảng cáo trên điện thoại", "Hướng dẫn cài XS Lab lên màn hình chính iPhone và Android: mở nhanh như app, toàn màn hình, không quảng cáo, miễn phí, không cần tải từ kho ứng dụng.", "Cài app XS Lab", "Cài XS Lab lên điện thoại", f"""<div class="card doc">
+<p>XS Lab có thể cài lên màn hình chính điện thoại như một ứng dụng: chạm biểu tượng là mở ngay kết quả xổ số, toàn màn hình, không thanh địa chỉ, không quảng cáo. Không cần tải từ App Store hay Google Play, không tốn dung lượng và luôn là bản mới nhất.</p>
+<p><button type="button" class="cta" id="pwaGo" hidden>Cài XS Lab ngay</button></p>
+<h2>iPhone, iPad (Safari)</h2><ol>
+<li>Mở <b>xslab.live</b> bằng <b>Safari</b>.</li>
+<li>Bấm nút <b>Chia sẻ</b> (hình vuông có mũi tên đi lên) ở thanh dưới cùng hoặc cạnh thanh địa chỉ.</li>
+<li>Kéo xuống, chọn <b>Thêm vào MH chính</b> (Add to Home Screen).</li>
+<li>Bấm <b>Thêm</b>. Biểu tượng XS Lab xuất hiện trên màn hình chính.</li></ol>
+<p class="note">Nếu đang mở XS Lab trong Zalo, Facebook hay Messenger, hãy bấm dấu ba chấm và chọn <b>Mở bằng Safari</b> trước, vì trình duyệt trong các ứng dụng này không có chức năng thêm vào màn hình chính.</p>
+<h2>Android (Chrome)</h2><ol>
+<li>Mở <b>xslab.live</b> bằng <b>Chrome</b>.</li>
+<li>Bấm nút <b>Cài đặt</b> trên XS Lab nếu thấy, hoặc bấm dấu ba chấm ở góc trên bên phải.</li>
+<li>Chọn <b>Cài đặt ứng dụng</b> hoặc <b>Thêm vào màn hình chính</b>, rồi bấm <b>Cài đặt</b>.</li></ol>
+<h2>Câu hỏi thường gặp</h2><ul>
+<li><b>Có mất phí không?</b> Không. XS Lab miễn phí và không quảng cáo.</li>
+<li><b>Có cần cập nhật không?</b> Không. Mỗi lần mở là bản mới nhất, kết quả cập nhật ngay sau giờ quay.</li>
+<li><b>Có truy cập dữ liệu trên điện thoại không?</b> Không. XS Lab không yêu cầu quyền truy cập danh bạ, ảnh hay vị trí; số bạn lưu trong Vé của tôi chỉ nằm trên chính máy của bạn.</li>
+<li><b>Gỡ thế nào?</b> Nhấn giữ biểu tượng XS Lab và chọn Xoá, như mọi ứng dụng khác.</li></ul>
+<p class="note">{NOTICE}</p></div>
+<script>(function(){{var b=document.getElementById('pwaGo'),e=null;window.addEventListener('beforeinstallprompt',function(x){{x.preventDefault();e=x;b.hidden=false}});b.onclick=function(){{if(e){{e.prompt();e=null;b.hidden=true}}}}}})();</script>"""),
  ("dieu-khoan-su-dung/", "WebPage", "Điều khoản sử dụng XS Lab", "Điều khoản sử dụng trang XS Lab: tính chất thông tin, giới hạn trách nhiệm, sử dụng dữ liệu và độ tuổi.", "Điều khoản sử dụng", "Điều khoản sử dụng", f"""<div class="card doc">
 <p>Khi truy cập và sử dụng XS Lab ({BASE}), bạn đồng ý với các điều khoản dưới đây. Nếu không đồng ý, vui lòng ngừng sử dụng trang.</p>
 <h2>1. Tính chất thông tin</h2><p>{NOTICE} Dữ liệu thống kê trên XS Lab mô tả các kết quả đã quay, không phải dự đoán và không phải lời khuyên tham gia xổ số.</p>
