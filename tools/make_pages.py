@@ -191,6 +191,7 @@ for reg, fn in (("xsmn", "recent_mn.json"), ("xsmt", "recent_mt.json")):
         alt = f" (còn gọi {AB2[st]})" if st in AB2 else ""
         cutoff = (datetime.date.fromisoformat(max(rr[0] for rr in rows)) - datetime.timedelta(days=365)).isoformat()
         seen = {}; made = set()
+        def _sdl(dd): return f"../{slug_d(dd)}/" if (dd >= cutoff and FR.get((dd, st))) else f"../../{slug_d(dd)}/"
         for i, hr in enumerate(hist):
             d = hr[0]; lo2 = [int(hr[2][j:j + 2]) for j in range(0, 36, 2)]
             fr = FR.get((d, st))
@@ -203,13 +204,13 @@ for reg, fn in (("xsmn", "recent_mn.json"), ("xsmt", "recent_mt.json")):
                 others = sorted([k2 for k2 in FR if k2[0] == d and k2[1] != st], key=lambda k2: ST.get(k2[1], ""))
                 w = wdi(d); pth = f"{reg}/{st}/{slug_d(d)}/"
                 nav = []
-                if i > 0: nav.append(f'<a class="cta" href="../{slug_d(hist[i - 1][0])}/">‹ {ab} {vn(hist[i - 1][0])}</a>')
-                if i + 1 < len(hist): nav.append(f'<a class="cta" href="../{slug_d(hist[i + 1][0])}/">{ab} {vn(hist[i + 1][0])} ›</a>')
+                if i > 0: nav.append(f'<a class="cta" href="{_sdl(hist[i - 1][0])}">‹ {ab} {vn(hist[i - 1][0])}</a>')
+                if i + 1 < len(hist): nav.append(f'<a class="cta" href="{_sdl(hist[i + 1][0])}">{ab} {vn(hist[i + 1][0])} ›</a>')
                 body = (diemtin(ab, d, [fr], MN_G, [lotos(fr, MN_G)], gaps)
                     + f'<p>Kết quả xổ số {nm} ({ab}){alt} {WDL[w]} ngày {vn(d)}, quay lúc {tm} cùng các đài {lab}: giải Đặc biệt <b>{fr["db"][0]}</b>, giải Nhất {fr["g1"][0]}.</p>'
                     + f'<div class="card">{mn_table([fr])}</div>'
                     + f'<h2>Lô tô {nm} {vn(d)}</h2><div class="card">{loto_list(lotos(fr, MN_G))}</div>'
-                    + (f'<h2>Giải Đặc biệt {nm} 10 kỳ trước</h2><div class="card"><table><tr><th>Ngày</th><th>Đặc biệt</th></tr>' + ''.join(f'<tr><td><a href="../{slug_d(x["date"])}/">{vn(x["date"])}</a></td><td><b>{x["db"][0]}</b></td></tr>' for x in prevs) + '</table></div>' if prevs else '')
+                    + (f'<h2>Giải Đặc biệt {nm} 10 kỳ trước</h2><div class="card"><table><tr><th>Ngày</th><th>Đặc biệt</th></tr>' + ''.join(f'<tr><td><a href="{_sdl(x["date"])}">{vn(x["date"])}</a></td><td><b>{x["db"][0]}</b></td></tr>' for x in prevs) + '</table></div>' if prevs else '')
                     + f'<h2>Lô gan {nm} tính đến {vn(d)}</h2><div class="g30">' + ''.join(f'<a class="c30" href="../../../so/{k:02d}/"><b>{k:02d}</b><small>{i - after.get(k, -1)} kỳ</small></a>' for k in gan_d) + '</div>'
                     + '<p class="note">Số liệu là thống kê các kỳ đã quay của đài, không phải dự đoán.</p>'
                     + (f'<p>Cùng ngày: ' + ' · '.join(f'<a href="../../{k2[1]}/{slug_d(d)}/">{AB.get(k2[1], "")} {ST.get(k2[1], "")}</a>' for k2 in others) + f' · <a href="../../{slug_d(d)}/">Cả {lab} {vn(d)}</a></p>' if others else '')

@@ -1083,7 +1083,7 @@ function route(){
  if(cur==='dan'){const dm=v.match(/^dan-([a-z-]+)-(\d+)$/);if(dm&&DANM.find(x=>x.id===dm[1]))dn.m=dm[1];if(dm&&[4,6,10].includes(+dm[2]))dn.n=+dm[2];}
  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+cur));
  const navv=cur==='dan'?'thong-ke-dan':cur==='vietlott'?'vietlott-'+VL.g:cur;
- document.querySelectorAll('.nav a,.tab a,.sheet a').forEach(a=>{const dv=a.dataset.v;const on=dv===navv||(dv==='vietlott'&&cur==='vietlott')||(dv==='more'&&!TABV.some(x=>x[0]===cur)&&cur!=='ket-qua');if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+ document.querySelectorAll('.nav a,.tab a,.sheet a').forEach(a=>{const dv=a.dataset.v;const STV=['thong-ke-dan','ban-do','kiem-dinh','mo-phong','dan'],inT=a.closest('.tab');const on=dv===navv||(dv==='vietlott'&&cur==='vietlott')||(inT&&dv==='thong-ke'&&STV.includes(cur))||(dv==='more'&&!TABV.some(x=>x[0]===cur)&&!STV.includes(cur)&&cur!=='ket-qua');if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
  document.body.classList.toggle('novreg',cur==='vietlott'||cur==='truc-tiep'||EXTRA.some(x=>x[0]===cur));$('vtitle').classList.toggle('h1one',!PG&&cur==='ket-qua');$('vtitle').textContent=onPageView(cur)?H1_0:(!PG&&cur==='ket-qua')?'KQXS hôm nay – XSMB, XSMN, XSMT':cur==='dan'?'Lịch sử thống kê nhóm':(VIEWS.find(x=>x[0]===cur)||EXTRA.find(x=>x[0]===cur))[1];setMeta(cur);
  if(N)renderView(cur);window.scrollTo(0,0);}
 addEventListener('hashchange',route);
