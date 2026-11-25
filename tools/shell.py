@@ -23,7 +23,7 @@ MENU = [
 
 
 def menu_html(up, cur=""):
-    o = ['<nav class="mbar" aria-label="Menu chính"><div class="mrow">']
+    o = ['<nav class="mbar" id="mbar" aria-label="Menu chính"><div class="mrow">']
     for lab, items in MENU:
         here = any(u and u == cur for _, _, u in items)
         hub = {"XSMB": "xsmb/", "XSMN": "xsmn/", "XSMT": "xsmt/", "Vietlott": "vietlott/", "Thống kê": "thong-ke/", "Mô phỏng": "mo-phong/"}.get(lab, "")
@@ -76,8 +76,8 @@ def side_html(up, cur="", ic="#"):
 
 
 def tab_html(up, cur="", ic="#"):
-    T = [("Kết quả", "", "i-home"), ("Trực tiếp", "truc-tiep/", "i-live"), ("Vietlott", "vietlott/", "i-vl"), ("Dò vé", "do-ve/", "i-ticket"), ("Thống kê", "thong-ke/", "i-stats")]
-    return '<nav class="tab" aria-label="Điều hướng">' + ''.join((f'<a href="{up}{u}"' if u else f'<a href="{home(up)}"') + (' aria-current="page"' if cur and u and cur.startswith(u) else '') + f'><svg aria-hidden="true"><use href="{ic}{i}"/></svg><span>{t}</span></a>' for t, u, i in T) + '</nav>'
+    T = [("Kết quả", "", "i-home"), ("Trực tiếp", "truc-tiep/", "i-live"), ("Thống kê", "thong-ke/", "i-stats"), ("Dò vé", "do-ve/", "i-ticket")]
+    return '<nav class="tab" aria-label="Điều hướng">' + ''.join((f'<a href="{up}{u}"' if u else f'<a href="{home(up)}"') + (' aria-current="page"' if cur and u and cur.startswith(u) else '') + f'><svg aria-hidden="true"><use href="{ic}{i}"/></svg><span>{t}</span></a>' for t, u, i in T) + f'<a href="#mbar"><svg aria-hidden="true"><use href="{ic}i-more"/></svg><span>Menu</span></a></nav>'
 
 
 SUBNAV_WD = [("thu-2", "Thứ 2"), ("thu-3", "Thứ 3"), ("thu-4", "Thứ 4"), ("thu-5", "Thứ 5"), ("thu-6", "Thứ 6"), ("thu-7", "Thứ 7"), ("chu-nhat", "Chủ nhật")]

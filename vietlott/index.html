@@ -1042,9 +1042,13 @@ const NAVURL={'ket-qua':'','truc-tiep':'truc-tiep/','do-ve':'do-ve/','vietlott':
 const navHref=id=>id in NAVURL?(XS_ROOT+NAVURL[id]||'./'):'#'+id;
 const navA=([id,nm,ic])=>`<a href="${navHref(id)}" data-v="${id}"><svg aria-hidden="true"><use href="#${ic}"/></svg><span>${nm}</span></a>`;
 $('nav').innerHTML=NAVG.map(([g,it])=>`<h3>${g}</h3>`+it.map(navA).join('')).join('')+[['gioi-thieu','Giới thiệu'],['lien-he','Liên hệ']].map(([u,n])=>`<a href="${XS_ROOT}${u}/"><svg aria-hidden="true"><use href="#i-info"/></svg><span>${n}</span></a>`).join('');
-const TABV=[['ket-qua','Kết quả','i-home'],['truc-tiep','Trực tiếp','i-live'],['vietlott','Vietlott','i-vl'],['do-ve','Dò vé','i-ticket']];
+const TABV=[['ket-qua','Kết quả','i-home'],['truc-tiep','Trực tiếp','i-live'],['thong-ke','Thống kê','i-stats'],['do-ve','Dò vé','i-ticket']];
 $('tab').innerHTML=TABV.map(navA).join('')+`<a href="#" id="moreBtn" data-v="more"><svg aria-hidden="true"><use href="#i-more"/></svg><span>Menu</span></a>`;$('tab').style.gridTemplateColumns='repeat(5,minmax(0,1fr))';
-$('sheetIn').innerHTML=NAVG.filter(([g])=>g!=='Xổ số kiến thiết').map(([g,it])=>`<h3>${g}</h3>`+it.map(navA).join('')).join('')+`<button class="row" id="sheetTheme"><svg aria-hidden="true"><use href="#i-moon"/></svg><span>Giao diện</span></button>`;
+{const lk=(u,n,ic)=>`<a href="${XS_ROOT}${u}"><svg aria-hidden="true"><use href="#${ic}"/></svg><span>${n}</span></a>`,G=k=>NAVG.find(x=>x[0]===k)[1];
+$('sheetIn').innerHTML=`<h3>Vietlott</h3>`+G('Vietlott').map(navA).join('')
+ +`<h3>Thống kê</h3>`+G('Thống kê').filter(x=>x[0]!=='thong-ke'&&x[0]!=='mo-phong').map(navA).join('')+lk('thong-ke/#rkCard','Bảng xếp hạng','i-stats')
+ +`<h3>Mô phỏng</h3>`+lk('mo-phong/quay-thu-xsmb/','Quay thử XSMB','i-wallet')+lk('mo-phong/quay-thu-xsmn/','Quay thử XSMN','i-wallet')+lk('mo-phong/quay-thu-xsmt/','Quay thử XSMT','i-wallet')+lk('mo-phong/#simCard','Mô phỏng cách chơi','i-wallet')
+ +`<h3>Thông tin</h3>`+navA(['ve-du-lieu','Về dữ liệu','i-info'])+lk('gioi-thieu/','Giới thiệu','i-info')+lk('lien-he/','Liên hệ','i-info')+`<button class="row" id="sheetTheme"><svg aria-hidden="true"><use href="#i-moon"/></svg><span>Giao diện</span></button>`;}
 $('moreBtn').onclick=e=>{e.preventDefault();$('sheet').classList.add('on');};
 $('sheet').onclick=e=>{if(e.target===$('sheet')||e.target.closest('a'))$('sheet').classList.remove('on');};
 document.getElementById('sheetTheme').onclick=()=>cycleTheme();
