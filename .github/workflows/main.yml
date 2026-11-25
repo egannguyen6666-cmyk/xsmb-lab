@@ -92,7 +92,7 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add -A
           if git diff --cached --quiet; then echo "Không có gì mới"; echo "pushed=0" >> "$GITHUB_OUTPUT"; else
-            git commit -q -m "Cập nhật dữ liệu $(TZ=Asia/Ho_Chi_Minh date +'%d/%m/%Y %H:%M')" && git pull --rebase -q && git push -q && echo "pushed=1" >> "$GITHUB_OUTPUT"; fi
+            git commit -q -m "Cập nhật dữ liệu $(TZ=Asia/Ho_Chi_Minh date +'%d/%m/%Y %H:%M')" && bash tools/safe_push.sh "python3 tools/make_pages.py && python3 tools/make_rss.py" && echo "pushed=1" >> "$GITHUB_OUTPUT"; fi
       - name: Xoá bản lưu sẵn trên Cloudflare (để Google và người dùng thấy kết quả mới ngay)
         if: steps.save.outputs.pushed == '1'
         env:
