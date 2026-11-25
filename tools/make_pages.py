@@ -79,7 +79,7 @@ def page(path, title, desc, crumbs, h1, body, ld=None):
 <div class="app">{shell.side_html(up, path, ic)}<main class="main">{shell.mhead(up, ic)}{shell.menu_html(up, path)}{(shell.subnav_html(path.split('/')[0], up, path if path.count('/')==2 and path.split('/')[1] in ('so-ket-qua','thu-2','thu-3','thu-4','thu-5','thu-6','thu-7','chu-nhat') else '') if path.split('/')[0] in ('xsmb','xsmn','xsmt') else '')}
 <nav class="bc" aria-label="Đường dẫn"><a href="{up}./">XS Lab</a>{''.join(f' › <a href="{up}{u}">{esc(n)}</a>' for n, u in crumbs[:-1])} › {esc(crumbs[-1][0])}</nav>
 <h1>{esc(h1)}</h1>{body}
-{shell.footer_html(up)}</main></div>{shell.tab_html(up, path, ic)}<script src="{up}assets/m.js?v={AV}" defer></script></body></html>"""
+{shell.footer_html(up)}</main></div>{shell.tab_html(up, path, ic)}<script src="{up}assets/m.js?v={AV}" defer></script><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{{"token": "d84c5ca70d434fb8b09440653ffd5b77"}}'></script></body></html>"""
     lg = f'<img src="{up}icon-192.png" width="38" height="38" alt="" style="border-radius:10px">'
     out = out.replace(shell.LOGO, lg).replace(shell.LOGO.replace("lg1", "mg1").replace("lg2", "mg2"), lg.replace('width="38" height="38"', 'width="32" height="32"'))
     d = os.path.join(ROOT, path)
@@ -1016,3 +1016,26 @@ Mọi số liệu trên trang là thống kê kết quả đã quay. Trang khôn
 """
 _fp = os.path.join(ROOT, "llms.txt")
 if not os.path.exists(_fp) or open(_fp).read() != LLMS: open(_fp, "w").write(LLMS)
+
+# Trang đài-ngày quá 365 ngày không còn được dựng lại: thay bằng trang chuyển hướng
+# sang trang kết quả cả miền cùng ngày, để không còn bản cũ lệch giao diện, lệch bảo mật.
+_RD_MARK = "<!--xslab-redirect-->"
+for _reg in ("xsmn", "xsmt"):
+    _rb = os.path.join(ROOT, _reg)
+    _iso = lambda x: f"{x[6:10]}-{x[3:5]}-{x[0:2]}"
+    _ds = [_iso(x) for x in os.listdir(_rb) if re.match(r"^\d{2}-\d{2}-\d{4}$", x)]
+    if not _ds: continue
+    _cut = (datetime.date.fromisoformat(max(_ds)) - datetime.timedelta(days=367)).isoformat()
+    for _st in sorted(os.listdir(_rb)):
+        _sd = os.path.join(_rb, _st)
+        if not os.path.isdir(_sd) or re.match(r"^\d{2}-\d{2}-\d{4}$", _st): continue
+        for _dd in os.listdir(_sd):
+            m = re.match(r"^(\d{2})-(\d{2})-(\d{4})$", _dd)
+            _f = os.path.join(_sd, _dd, "index.html")
+            if not m or not os.path.exists(_f): continue
+            if _iso(_dd) >= _cut: continue
+            _txt = open(_f, encoding="utf-8").read()
+            if _RD_MARK in _txt or _iso(_dd) >= _cut: continue
+            _to = f"{BASE}{_reg}/{_dd}/"
+            if not os.path.exists(os.path.join(_rb, _dd, "index.html")): _to = f"{BASE}{_reg}/{_st}/"
+            open(_f, "w", encoding="utf-8").write(f'<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8">{_RD_MARK}<meta name="robots" content="noindex,follow"><link rel="canonical" href="{_to}"><meta http-equiv="refresh" content="0;url={_to}"><title>Chuyển tới kết quả ngày {_dd}</title></head><body><p>Trang này đã chuyển tới <a href="{_to}">{_to}</a>.</p></body></html>')
