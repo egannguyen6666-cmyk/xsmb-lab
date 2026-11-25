@@ -199,3 +199,21 @@ table.wk td i{font-style:normal}table.wk b{color:var(--red)}
 @media(max-width:600px){table.wk i{display:none}table.wk td,table.wk th{font-size:13px;padding:5px 2px}table.sm td,table.sm th{font-size:12px;padding:5px 1px}
 table.mn{table-layout:fixed}table.mn td span{display:block;margin:1px 0;font-size:15px;letter-spacing:-.2px}table.mn tr.db td span,table.mn tr.g8 td span{font-size:16px}table.mn th{font-size:12px;padding:6px 2px}table.mn td{padding:5px 1px}table.mn td.l{width:30px;font-size:11px}td span{margin:2px 5px;font-size:16px}}
 """
+
+# Google Analytics 4 với Consent Mode: mặc định không đặt cookie phân tích,
+# chỉ bật khi người xem bấm "Đồng ý" (lưu lựa chọn ở localStorage khoá xs-consent).
+GA_ID = "G-Z58VHGRYTE"
+GA_HTML = """<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+(function(){var K='xs-consent',c=null;try{c=localStorage.getItem(K);}catch(e){}
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:c==='yes'?'granted':'denied'});
+gtag('js',new Date());gtag('config','__GA__');
+var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=__GA__';document.head.appendChild(s);
+function bar(){if(c==='yes'||c==='no')return;
+ var st=document.createElement('style');st.textContent='#ckBar{position:fixed;z-index:150;left:12px;right:12px;bottom:calc(72px + env(safe-area-inset-bottom));max-width:560px;margin:0 auto;background:var(--panel,#fff);color:var(--ink,#17161c);border:1px solid var(--line,#ddd);border-radius:14px;box-shadow:0 8px 28px rgba(0,0,0,.18);padding:12px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:14px;line-height:1.45}#ckBar p{margin:0;flex:1 1 260px}#ckBar a{color:#d01f3c}#ckBar div{display:flex;gap:8px;margin-left:auto}#ckBar button{min-height:40px;border-radius:999px;padding:0 16px;font:inherit;font-weight:700;cursor:pointer;border:1px solid var(--line,#ddd);background:var(--panel,#fff);color:var(--ink,#17161c)}#ckBar button[data-v=yes]{background:#d01f3c;border-color:#d01f3c;color:#fff}@media(min-width:901px){#ckBar{bottom:16px}}';document.head.appendChild(st);
+ var d=document.createElement('div');d.id='ckBar';d.setAttribute('role','region');d.setAttribute('aria-label','Lựa chọn cookie');
+ d.innerHTML='<p>XS Lab dùng Google Analytics để biết trang nào được xem nhiều. Bạn có đồng ý cho đặt cookie phân tích không? <a href="https://xslab.live/cookies/">Tìm hiểu thêm</a></p><div><button type="button" data-v="no">Từ chối</button><button type="button" data-v="yes">Đồng ý</button></div>';
+ d.addEventListener('click',function(e){var v=e.target&&e.target.getAttribute&&e.target.getAttribute('data-v');if(!v)return;try{localStorage.setItem(K,v);}catch(x){}if(v==='yes')gtag('consent','update',{analytics_storage:'granted'});d.parentNode.removeChild(d);});
+ document.body.appendChild(d);}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bar);else bar();})();
+</script>""".replace("__GA__", GA_ID)
