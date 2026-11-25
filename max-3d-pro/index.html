@@ -987,7 +987,10 @@ let RAW={},SER={},REC_MB=[];
 const RG=()=>RAW[R.region];
 let simReadyReg=null,S,N=0,dates=[],cnt,pref,ganA,P,M,startT,nextDate,REC=[],IND=[],UNIT='ngày';
 function seriesFor(region,st){const key=region==='mb'?'mb':region+':'+st;if(!SER[key])SER[key]=region==='mb'?XS.makeSeries(RAW.mb,XS.MB):XS.makeSeries(RAW[region].by[st],Object.assign({station:st},region==='mt'?XS.MT:XS.MN));return SER[key];}
+function latestSt(reg){const G0=RAW[reg];if(!G0||!G0.dates||!G0.dates.length)return null;const d=G0.dates[G0.dates.length-1];const sts=Object.keys(G0.by).filter(x=>G0.idx[x]&&G0.idx[x][d]!==undefined).sort((a,b)=>a==='tp-hcm'?-1:b==='tp-hcm'?1:ST[a].localeCompare(ST[b],'vi'));return sts[0]||null;}
+const USERST={};
 function useSeries(){
+ if(R.region!=='mb'&&!USERST[R.region]){const ls=latestSt(R.region);if(ls)R.sts[R.region]=ls;}
  if(R.region!=='mb'&&!RG().by[R.st])R.st=Object.keys(RG().by).sort()[0];
  S=seriesFor(R.region,R.st);N=S.N;dates=S.dates;cnt=S.cnt;pref=S.pref;ganA=S.gan;P=S.P;M=S.m;startT=S.start;UNIT=S.unit;
  if(R.region==='mb'){REC=REC_MB;nextDate=XS.nextDrawMB(dates[N-1]);}
@@ -1095,12 +1098,12 @@ function parseRegion(r,txt){if(r==='mb'){RAW.mb=XS.parseMB(txt);return;}const by
 function needRegion(r){if(RAW[r])return Promise.resolve();if(!RPEND[r])RPEND[r]=fetch(XS_ROOT+RFILE[r],{cache:'no-cache'}).then(x=>{if(!x.ok)throw new Error(RFILE[r]);return x.text();}).then(t=>parseRegion(r,t));return RPEND[r];}
 function setRegion(r,st){subNavFor(r);
  if(!RAW[r]){$('status').textContent='Đang tải dữ liệu '+RLAB[r]+'…';needRegion(r).then(()=>setRegion(r,st)).catch(e=>{$('status').textContent='Không tải được dữ liệu: '+e.message;});return;}
- R.region=r;if(st)R.st=st;store.set('xs-region2',{region:R.region,sts:R.sts});
+ R.region=r;if(st){USERST[r]=1;R.st=st;}store.set('xs-region2',{region:R.region,sts:R.sts});
  document.querySelectorAll('.regsw button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.r===R.region));
- $('stSel').hidden=R.region==='mb';if(R.region!=='mb')$('stSel').innerHTML=stationOptions();if(R.region!=='mb')$('stSel').value=R.st;
- useSeries();resetStates();refreshChrome();renderView(curView());setTimeout(()=>liveFill(r),300);}
+ $('stSel').hidden=R.region==='mb';if(R.region!=='mb')$('stSel').innerHTML=stationOptions();
+ useSeries();if(R.region!=='mb')$('stSel').value=R.st;resetStates();refreshChrome();renderView(curView());setTimeout(()=>liveFill(r),300);}
 document.querySelectorAll('.regsw button').forEach(b=>b.onclick=()=>setRegion(b.dataset.r));
-$('stSel').onchange=()=>setRegion(R.region,$('stSel').value);
+$('stSel').onchange=()=>{USERST[R.region]=1;setRegion(R.region,$('stSel').value);};
 function refreshChrome(){
  $('status').innerHTML=`<i></i>${where()} · dữ liệu đến ${vnDate(dates[N-1])}`;
  const t=XS.TET[+dates[N-1].slice(0,4)]&&XS.TET[+dates[N-1].slice(0,4)]>dates[N-1]?XS.TET[+dates[N-1].slice(0,4)]:XS.TET[+dates[N-1].slice(0,4)+1];
@@ -1169,30 +1172,22 @@ document.addEventListener('click',e=>{const c=e.target.closest('#rsCopy');if(c){
  document.querySelectorAll('.nm.hl').forEach(x=>x.classList.remove('hl'));if(!on)return;tr.classList.add('hl');if(side==='t')tr.classList.add('hlt');
  (card.querySelector('.ticket,.mnb')?card:document).querySelectorAll('.ticket .nm,.mnb .nm').forEach(x=>{const b=x.querySelector('b');if(!b)return;const v=b.textContent;if((side==='h'&&v[0]==String(i))||(side==='t'&&v[1]==String(i)))x.classList.add('hl');});});
 function lotoHeads(arr){const h=[...Array(10)].map(()=>[]);for(const k of arr)h[Math.floor(k/10)].push(k%10);return h;}
-function upLink(reg,sts,d){const a=LVWIN[reg][0],nm=reg==='mb'?'XSMB':sts.map(s=>ST[s]).join(', '),RDd=regionDates(),last=RDd[RDd.length-1];
- return `<div class="ps"><p style="margin:0 0 6px">Kỳ quay ${vnDate(d)} lúc <b>${pad(Math.floor(a/60))}:${pad(a%60)}</b> · ${reg==='mb'?'Xổ số miền Bắc':'Các đài: <b>'+nm+'</b>'}. Kết quả hiện ngay khi quay.</p><p class="note psl" style="margin:0"><a href="${XS_ROOT}thong-ke/?mien=${reg}#rkCard">Bảng xếp hạng thống kê tính đến kỳ ${vnDate(last)}</a> · <a href="${XS_ROOT}${reg==='mb'?'truc-tiep-xsmb':reg==='mn'?'truc-tiep-xsmn':'truc-tiep-xsmt'}/">Xem trực tiếp</a></p></div>`;}
 function upInfo(any){if(PG&&PG.yday)return null;const n=nowVN(),RD=regionDates(),last=RD[RD.length-1];if((rs.pick&&!any)||n.min<480||!last||last>=n.date)return null;const sts=lvStations(R.region,n.date);if(!sts.length)return null;return {n,sts,a:LVWIN[R.region][0]};}
 function upTick(){const el=$('rsCd');if(!el||el.hidden)return;const u=upInfo();if(!u||curView()!=='ket-qua'){clearInterval(rs.cd);rs.cd=null;if(!u&&curView()==='ket-qua')renderBoard();return;}
  const [h,m,sx]=u.n.time.split(':').map(Number),left=u.a*60-(h*3600+m*60+sx);
- if(left>0){const hh=Math.floor(left/3600),mm=Math.floor(left%3600/60),ss=left%60;el.textContent=`Quay lúc ${pad(Math.floor(u.a/60))}:${pad(u.a%60)} · còn ${hh?hh+':'+pad(mm):mm}:${pad(ss)}`;}
+ if(left>0){const hh=Math.floor(left/3600),mm=Math.floor(left%3600/60),ss=left%60;el.textContent=`Kỳ tới ${pad(Math.floor(u.a/60))}:${pad(u.a%60)} · còn ${hh?hh+':'+pad(mm):mm}:${pad(ss)}`;}
  else{el.textContent='Đang quay · xem trực tiếp';if(!rs.lf||Date.now()-rs.lf>60000){rs.lf=Date.now();liveFill(R.region);}}}
 function rsBcSet(d,has){const el=$('rsBc');if(!el||!d)return;const sl=R.region==='mb'?'xsmb':R.region==='mn'?'xsmn':'xsmt',S=sl.toUpperCase(),w=new Date(d+'T00:00:00Z').getUTCDay(),ws=w?'thu-'+(w+1):'chu-nhat',wl=w?'Thứ '+(w+1):'Chủ nhật',ds=d.split('-').reverse().join('-');
  el.innerHTML=`<a href="${XS_ROOT}${sl}/">${S}</a> » <a href="${XS_ROOT}${sl}/${ws}/">${S} ${wl}</a> » ${has?`<a href="${XS_ROOT}${sl}/${ds}/">${S} ${vnDate(d)}</a>`:`${S} ${vnDate(d)}`}`;}
 function renderBoard(){
  const RD=regionDates();if(!rs.date||!RD.includes(rs.date))rs.date=RD[RD.length-1];
  if(PG&&PG.yday&&!rs.pick){const td=nowVN().date,c=RD.filter(x=>x<td);if(c.length)rs.date=c[c.length-1];}
- const U=upInfo(),up=!!U;rsBcSet(up?U.n.date:rs.date,!up);
+ const U=upInfo(),up=false;rsBcSet(rs.date,true);
  const i=RD.indexOf(rs.date);$('rsDate').min=RD[0];$('rsDate').max=up?U.n.date:RD[RD.length-1];$('rsDate').value=up?U.n.date:rs.date;
- $('rsPrev').disabled=!up&&i<=0;const canUp=!up&&i>=RD.length-1&&!!upInfo(1);$('rsNext').disabled=up||(i>=RD.length-1&&!canUp);
- const cd=$('rsCd');if(cd){cd.hidden=!up;$('rsCopy').hidden=up;if(up){cd.href=XS_ROOT+(R.region==='mb'?'truc-tiep-xsmb/':R.region==='mn'?'truc-tiep-xsmn/':'truc-tiep-xsmt/');upTick();if(!rs.cd)rs.cd=setInterval(upTick,1000);}}
+ $('rsPrev').disabled=!up&&i<=0;const canUp=false;$('rsNext').disabled=up||(i>=RD.length-1&&!canUp);
+ const cd=$('rsCd');if(cd){cd.hidden=!U;$('rsCopy').hidden=false;if(U){cd.href=XS_ROOT+(R.region==='mb'?'truc-tiep-xsmb/':R.region==='mn'?'truc-tiep-xsmn/':'truc-tiep-xsmt/');upTick();if(!rs.cd)rs.cd=setInterval(upTick,1000);}}
  $('rsPrev').onclick=()=>{rs.pick=true;if(!up)rs.date=RD[i-1];renderBoard();renderHighlights();};$('rsNext').onclick=()=>{if(canUp){rs.pick=false;}else{rs.pick=true;rs.date=RD[i+1];}renderBoard();renderHighlights();};$('rsLatest').onclick=()=>{rs.pick=false;rs.date=RD[RD.length-1];renderBoard();renderHighlights();};
  $('rsDate').onchange=()=>{rs.pick=true;const v=$('rsDate').value;let j=RD.findIndex(d=>d>=v);if(j<0)j=RD.length-1;rs.date=RD[j];renderBoard();renderHighlights();};
- if(up){const d=U.n.date,Q=k=>`<span class="nm upq">${'•'.repeat(k)}</span>`;
-  if(R.region==='mb'){$('rsT').textContent=`XSMB ${wd(d)}, ${vnDate(d)}`;const L={db:5,g1:5,g2:5,g3:5,g4:4,g5:4,g6:3,g7:2};
-   $('rsBoard').innerHTML=`<div class="ticket">${MB_G.map(([lb,g],j)=>`<div class="row ${g==='db'?'db':''}"><div class="lb">${lb}</div><div class="nums">${Array(LV_MB.find(x=>x[1]===g)[2]).fill(Q(L[g])).join('')}</div></div>`).join('')}</div>${upLink('mb',['mb'],d)}`;}
-  else{const sts=U.sts,L={db:6,g1:5,g2:5,g3:5,g4:5,g5:4,g6:4,g7:3,g8:2};$('rsT').textContent=`${RLAB[R.region]} ${wd(d)}, ${vnDate(d)}`;
-   $('rsBoard').innerHTML=`<div class="mnb"><table><thead><tr><th>Giải</th>${sts.map(s=>`<th>${ST[s]}</th>`).join('')}</tr></thead><tbody>${MN_G.map(([lb,g])=>`<tr class="${g}"><td>${lb}</td>${sts.map(()=>`<td>${Array(LV_MN.find(x=>x[1]===g)[2]).fill(Q(L[g])).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${upLink(R.region,sts,d)}`;}
-  return;}
  const d=rs.date;
  if(R.region==='mb'){
   $('rsT').textContent=`XSMB ${wd(d)}, ${vnDate(d)}`;const lvr=REC_MB.find(x=>x.date===d&&x.live);
