@@ -938,8 +938,16 @@ def wsm(fn, items):
     if not os.path.exists(fp) or open(fp).read() != data: open(fp, "w").write(data)
     return len(items)
 _info = {BASE + x[0] for x in INFO_PAGES}
-SM = {"sitemap-chinh.xml": [(u, "2026-11-24" if u in _info else today) for u in core], "sitemap-vietlott.xml": SITEMAP_VL}
-for reg in REG: SM[f"sitemap-{reg}.xml"] = SITEMAP_ARCH[reg] + STATION_SM.get(reg, [])
+# Sitemap gọn cho tên miền mới: trang chính đầy đủ; trang ngày 3 miền 12 tháng gần nhất; trang từng đài theo ngày
+# và Vietlott từng kỳ 6 tháng gần nhất. Trang cũ hơn vẫn để nguyên, vẫn cho lập chỉ mục (không noindex), chỉ không đưa vào sitemap.
+_d0 = datetime.date.today()
+CUT_DAY = (_d0 - datetime.timedelta(days=365)).isoformat()
+CUT_SUB = (_d0 - datetime.timedelta(days=183)).isoformat()
+_isday = re.compile(r"/\d{2}-\d{2}-\d{4}/$")
+def _keep_arch(it): return not _isday.search(it[0]) or it[1][:10] >= CUT_DAY
+SM = {"sitemap-chinh.xml": [(u, "2026-11-24" if u in _info else today) for u in core],
+      "sitemap-vietlott.xml": [it for it in SITEMAP_VL if "/ky-" not in it[0] or it[1][:10] >= CUT_SUB]}
+for reg in REG: SM[f"sitemap-{reg}.xml"] = [it for it in SITEMAP_ARCH[reg] if _keep_arch(it)] + [it for it in STATION_SM.get(reg, []) if it[1][:10] >= CUT_SUB]
 tot = 0
 for fn, items in SM.items(): tot += wsm(fn, items)
 idx = '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f' <sitemap><loc>{BASE}{fn}</loc><lastmod>{max(d for _, d in items)}</lastmod></sitemap>\n' for fn, items in SM.items()) + '</sitemapindex>\n'
