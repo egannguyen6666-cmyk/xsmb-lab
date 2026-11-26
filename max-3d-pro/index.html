@@ -1033,6 +1033,39 @@ function seg(el,items,cur,onPick){el.querySelectorAll('button').forEach(b=>b.rem
 const ball=(k,cls='',cap='')=>cap?`<div class="ballwrap"><div class="ball ${cls}">${pad(k)}</div><small>${cap}</small></div>`:`<div class="ball ${cls}">${pad(k)}</div>`;
 function axisTicks(y0,y1,n=4){const raw=(y1-y0)/n,mag=Math.pow(10,Math.floor(Math.log10(raw||1))),step=[1,2,5,10].map(x=>x*mag).find(x=>x>=raw)||mag;const t=[];for(let v=Math.ceil(y0/step)*step;v<=y1+1e-9;v+=step)t.push(v);return t;}
 const numTxt=a=>a.map(pad).join(' ');
+function copyImgOK(){const RD=regionDates();if(!rs.date||!RD.length)return false;const last=new Date(RD[RD.length-1]+'T00:00:00'),d=new Date(rs.date+'T00:00:00');return (last-d)/864e5<=60;}
+function boardData(){const b=$('rsBoard'),tk=b.querySelector('.ticket'),nm=el=>[...el.querySelectorAll('.nm')].map(x=>x.textContent.replace(/\D/g,'')).filter(Boolean);
+ if(tk)return{mb:true,rows:[...tk.querySelectorAll('.row')].map(r=>[r.querySelector('.lb').textContent.trim(),nm(r)])};
+ const tb=b.querySelector('.mnb table');if(!tb)return null;
+ return{mb:false,cols:[...tb.querySelectorAll('thead th')].slice(1).map(x=>x.textContent.replace(/★\s*/g,'').trim()),rows:[...tb.querySelectorAll('tbody tr')].filter(tr=>tr.children.length>1&&tr.querySelector('.nm')).map(tr=>[tr.children[0].textContent.trim(),[...tr.children].slice(1).map(nm)])};}
+function drawBoard(D){const S=2,W=720,P=24,F='system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif',RED='#d01f3c',INK='#17161c',MUT='#6b6872',LINE='#e3e0da',ZB='#f7f6f2';
+ const reg=R.region==='mb'?'MB':R.region==='mn'?'MN':'MT',dd=(rs.date||'').split('-').reverse().join('/'),title=$('rsT').textContent.replace(/★\s*/g,'').trim();
+ const lay=[];let y=0;const HB=58;y+=HB+18;const yT=y+22;y+=40;const LW=D.mb?78:64,TW=W-2*P,yTab=y;
+ if(D.mb){D.rows.forEach(([lb,ns])=>{const per=ns.length<=4?Math.max(ns.length,1):3,lines=Math.ceil(ns.length/per)||1,big=/^ĐB/i.test(lb)||/đặc biệt/i.test(lb),lh=big?44:36;lay.push({lb,ns,per,h:lines*lh+12,lh,big});y+=lines*lh+12;});}
+ else{y+=38;D.rows.forEach(([lb,cs])=>{const n=Math.max(1,...cs.map(c=>c.length)),big=/^ĐB/i.test(lb),lh=big?36:30;lay.push({lb,cs,h:n*lh+12,lh,big,g8:/^G\.?8$/i.test(lb.replace(/\s/g,''))});y+=n*lh+12;});}
+ const yF=y+14;y=yF+46;const H=y;
+ const cv=document.createElement('canvas');cv.width=W*S;cv.height=H*S;const c=cv.getContext('2d');c.scale(S,S);c.textBaseline='middle';
+ c.fillStyle='#fff';c.fillRect(0,0,W,H);c.fillStyle=RED;c.fillRect(0,0,W,HB);c.fillStyle='#fff';c.textAlign='center';c.font=`800 24px ${F}`;c.fillText('xslab.live – KQXS không quảng cáo',W/2,HB/2+1);
+ c.fillStyle=INK;c.font=`700 21px ${F}`;c.fillText(title,W/2,yT);
+ let yy=yTab;c.strokeStyle=LINE;c.lineWidth=1;
+ if(!D.mb){const cw=(TW-LW)/D.cols.length;c.fillStyle='#efede9';c.fillRect(P,yy,TW,38);c.fillStyle=INK;c.font=`700 16px ${F}`;D.cols.forEach((h,j)=>c.fillText(h,P+LW+cw*j+cw/2,yy+19));c.fillStyle=MUT;c.font=`700 14px ${F}`;c.fillText('Giải',P+LW/2,yy+19);yy+=38;
+  lay.forEach((r,i)=>{if(i%2)(c.fillStyle=ZB,c.fillRect(P,yy,TW,r.h));c.fillStyle=MUT;c.font=`700 15px ${F}`;c.fillText(r.lb,P+LW/2,yy+r.h/2);
+   r.cs.forEach((ns,j)=>{c.fillStyle=r.big||r.g8?RED:INK;c.font=`800 ${r.big?27:r.g8?26:22}px ${F}`;ns.forEach((v,k)=>c.fillText(v,P+LW+cw*j+cw/2,yy+6+r.lh*k+r.lh/2));});
+   c.beginPath();c.moveTo(P,yy+r.h+.5);c.lineTo(P+TW,yy+r.h+.5);c.stroke();yy+=r.h;});
+  for(let j=0;j<=D.cols.length;j++){const x=Math.round(P+LW+cw*j)+.5;c.beginPath();c.moveTo(x,yTab);c.lineTo(x,yy);c.stroke();}}
+ else{lay.forEach((r,i)=>{if(i%2)(c.fillStyle=ZB,c.fillRect(P,yy,TW,r.h));c.fillStyle=MUT;c.font=`700 16px ${F}`;c.fillText(r.lb,P+LW/2,yy+r.h/2);
+   const vw=(TW-LW)/r.per;c.fillStyle=r.big?RED:INK;c.font=`800 ${r.big?34:24}px ${F}`;r.ns.forEach((v,k)=>c.fillText(v,P+LW+vw*(k%r.per)+vw/2,yy+6+r.lh*Math.floor(k/r.per)+r.lh/2));
+   c.beginPath();c.moveTo(P,yy+r.h+.5);c.lineTo(P+TW,yy+r.h+.5);c.stroke();yy+=r.h;});
+  const x=P+LW+.5;c.beginPath();c.moveTo(x,yTab);c.lineTo(x,yy);c.stroke();}
+ c.strokeRect(P+.5,yTab+.5,TW-1,yy-yTab-1);
+ c.fillStyle=MUT;c.font=`700 17px ${F}`;c.fillText(`XS Lab – KQXS ${reg} – ${dd}`,W/2,yF+18);
+ return cv;}
+async function copyImg(btn){const D=boardData();if(!D){copyText(boardText(),btn);return;}
+ const cv=drawBoard(D),blobP=new Promise(r=>cv.toBlob(r,'image/png')),reg=R.region==='mb'?'xsmb':R.region==='mn'?'xsmn':'xsmt',fn=`xslab-${reg}-${(rs.date||'').split('-').reverse().join('-')}.png`;let mode='';
+ try{if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){await navigator.clipboard.write([new ClipboardItem({'image/png':blobP})]);mode='copy';}}catch(e){}
+ if(!mode){try{const bl=await blobP,f=new File([bl],fn,{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});mode='share';}catch(e){mode=e&&e.name==='AbortError'?'none':'';}}}catch(e){}}
+ if(!mode){try{const bl=await blobP,u=URL.createObjectURL(bl),a=document.createElement('a');a.href=u;a.download=fn;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);mode='dl';}catch(e){}}
+ if(btn&&mode!=='none'){const old=btn.dataset.lab||btn.textContent;btn.dataset.lab=old;btn.textContent=mode==='copy'?'Đã chép ảnh ✓':mode==='share'?'Đã chia sẻ ✓':mode==='dl'?'Đã tải ảnh ✓':'Không chép được';btn.classList.toggle('ok',!!mode);setTimeout(()=>{btn.textContent=old;btn.classList.remove('ok');},1800);}}
 async function copyText(t,btn){let ok=false;try{await navigator.clipboard.writeText(t);ok=true;}catch(e){try{const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();ok=document.execCommand('copy');ta.remove();}catch(e2){}}
  if(btn){const old=btn.dataset.lab||btn.textContent;btn.dataset.lab=old;btn.textContent=ok?'Đã chép ✓':'Không chép được';btn.classList.toggle('ok',ok);setTimeout(()=>{btn.textContent=old;btn.classList.remove('ok');},1600);}}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-copy]');if(b){e.preventDefault();copyText(b.dataset.copy,b);}});
@@ -1193,7 +1226,7 @@ function boardText(){const t=$('rsT').textContent,b=$('rsBoard');let o=[t];const
  if(tk){tk.querySelectorAll('.row').forEach(r=>{o.push(r.querySelector('.lb').textContent+': '+[...r.querySelectorAll('.nm')].map(x=>x.textContent).join(' '));});}
  else{const tb=b.querySelector('.mnb table');if(tb){const hs=[...tb.querySelectorAll('thead th')].slice(1).map(x=>x.textContent);hs.forEach((h,j)=>{o.push('');o.push(h+':');tb.querySelectorAll('tbody tr').forEach(tr=>{const c=tr.children;o.push(c[0].textContent+': '+[...c[j+1].querySelectorAll('.nm')].map(x=>x.textContent).join(' '));});});}}
  const sl=R.region==='mb'?'xsmb':R.region==='mn'?'xsmn':'xsmt',dd=(rs.date||'').split('-').reverse().join('-'),u=dd?`https://xslab.live/${sl}/${dd}/`:'https://xslab.live/';o.push('');o.push('Xem đủ giải, lô tô, dò vé: '+u);o.push('XS Lab – kết quả xổ số không quảng cáo');return o.join('\n').replace(/★ /g,'');}
-document.addEventListener('click',e=>{const c=e.target.closest('#rsCopy');if(c){e.preventDefault();copyText(boardText(),c);return;}
+document.addEventListener('click',e=>{const c=e.target.closest('#rsCopy');if(c){e.preventDefault();if(copyImgOK())copyImg(c);else copyText(boardText(),c);return;}
  const td=e.target.closest('.lt4 td');if(!td)return;const tr=td.parentElement,i=+tr.children[0].textContent,col=[...tr.children].indexOf(td),side=col<2?'h':'t',card=td.closest('.card')||document;
  const key=side+i,on=card.dataset.hl!==key;card.dataset.hl=on?key:'';card.querySelectorAll('.lt4 tr.hl').forEach(x=>x.classList.remove('hl','hlt'));
  document.querySelectorAll('.nm.hl').forEach(x=>x.classList.remove('hl'));if(!on)return;tr.classList.add('hl');if(side==='t')tr.classList.add('hlt');
@@ -1212,7 +1245,7 @@ function renderBoard(){
  const U=upInfo(),up=false;rsBcSet(rs.date,true);
  const i=RD.indexOf(rs.date);$('rsDate').min=RD[0];$('rsDate').max=up?U.n.date:RD[RD.length-1];$('rsDate').value=up?U.n.date:rs.date;
  $('rsPrev').disabled=!up&&i<=0;const canUp=false;$('rsNext').disabled=up||(i>=RD.length-1&&!canUp);
- const cd=$('rsCd');if(cd){cd.hidden=!U;$('rsCopy').hidden=false;if(U){cd.href=XS_ROOT+(R.region==='mb'?'truc-tiep-xsmb/':R.region==='mn'?'truc-tiep-xsmn/':'truc-tiep-xsmt/');upTick();if(!rs.cd)rs.cd=setInterval(upTick,1000);}}
+ const cd=$('rsCd');if(cd){cd.hidden=!U;{const rc=$('rsCopy'),im=copyImgOK();rc.hidden=false;rc.textContent=im?'Sao chép ảnh':'Sao chép';rc.dataset.lab=rc.textContent;rc.title=im?'Sao chép ảnh kết quả để gửi Zalo, Messenger':'Sao chép kết quả để gửi Zalo, Messenger';}if(U){cd.href=XS_ROOT+(R.region==='mb'?'truc-tiep-xsmb/':R.region==='mn'?'truc-tiep-xsmn/':'truc-tiep-xsmt/');upTick();if(!rs.cd)rs.cd=setInterval(upTick,1000);}}
  $('rsPrev').onclick=()=>{rs.pick=true;if(!up)rs.date=RD[i-1];renderBoard();renderHighlights();};$('rsNext').onclick=()=>{if(canUp){rs.pick=false;}else{rs.pick=true;rs.date=RD[i+1];}renderBoard();renderHighlights();};$('rsLatest').onclick=()=>{rs.pick=false;rs.date=RD[RD.length-1];renderBoard();renderHighlights();};
  $('rsDate').onchange=()=>{rs.pick=true;const v=$('rsDate').value;let j=RD.findIndex(d=>d>=v);if(j<0)j=RD.length-1;rs.date=RD[j];renderBoard();renderHighlights();};
  const d=rs.date;
