@@ -53,7 +53,7 @@ details.pg .in{padding:0 12px 12px}
   <h2>Chữ trên ảnh sao chép</h2>
   <p class="sub">Áp dụng cho ảnh khi bấm “Sao chép” ở bảng kết quả (60 ngày gần nhất) và ở các bảng xếp hạng. Để trống = dùng chữ mặc định.</p>
   <label for="a_dau">Dải đỏ trên cùng</label><input type="text" id="a_dau" data-a="dau" maxlength="120" placeholder="xslab.live – KQXS không quảng cáo">
-  <label for="a_cuoi_kq">Dòng cuối ảnh kết quả</label><input type="text" id="a_cuoi_kq" data-a="cuoi_kq" maxlength="120" placeholder="XS Lab – KQXS {mien} – {ngay}">
+  <label for="a_cuoi_kq">Dòng cuối ảnh kết quả</label><input type="text" id="a_cuoi_kq" data-a="cuoi_kq" maxlength="120" placeholder="Truy cập ngay xslab.live">
   <label for="a_cuoi_tk">Dòng cuối ảnh bảng xếp hạng</label><input type="text" id="a_cuoi_tk" data-a="cuoi_tk" maxlength="120" placeholder="XS Lab – Thống kê {mien} – {ngay}">
   <label for="a_ghi_chu_tk">Ghi chú nhỏ dưới ảnh bảng xếp hạng</label><input type="text" id="a_ghi_chu_tk" data-a="ghi_chu_tk" maxlength="120" placeholder="Thống kê kết quả đã quay, không phải dự đoán.">
   <p class="vars">Chèn được: <code>{mien}</code> (MB, MN, MT) · <code>{ngay}</code> (25/11/2026)</p>
@@ -92,7 +92,7 @@ function api(path,opt){opt=opt||{};opt.headers=Object.assign({'Content-Type':'ap
 function preview(){var c=$('prev').getContext('2d'),W=840,H=300,F='system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif';c.clearRect(0,0,W,H);c.fillStyle='#fff';c.fillRect(0,0,W,H);c.fillStyle='#d01f3c';c.fillRect(0,0,W,70);c.fillStyle='#fff';c.textAlign='center';c.textBaseline='middle';c.font='800 28px '+F;
  var g=function(k,d){var v=(cfg.anh[k]||'').trim();return v||d;};c.fillText(g('dau','xslab.live – KQXS không quảng cáo'),W/2,36);
  c.fillStyle='#e9e6e0';c.fillRect(30,90,W-60,90);c.fillStyle='#8b8792';c.font='600 18px '+F;c.fillText('(bảng kết quả)',W/2,135);
- c.fillStyle='#6b6872';c.font='700 20px '+F;c.fillText(g('cuoi_kq','XS Lab – KQXS {mien} – {ngay}').split('{mien}').join('MB').split('{ngay}').join('25/11/2026'),W/2,212);
+ c.save();c.shadowColor='rgba(0,0,0,.55)';c.shadowOffsetY=2;c.shadowBlur=3;c.fillStyle='#d01f3c';c.font='800 22px '+F;c.fillText(g('cuoi_kq','Truy cập ngay xslab.live').split('{mien}').join('MB').split('{ngay}').join('25/11/2026'),W/2,212);c.restore();
  c.font='600 16px '+F;c.fillText(g('cuoi_tk','XS Lab – Thống kê {mien} – {ngay}').split('{mien}').join('MN').split('{ngay}').join('25/11/2026')+'  (ảnh bảng xếp hạng)',W/2,250);
  c.font='500 14px '+F;c.fillText(g('ghi_chu_tk','Thống kê kết quả đã quay, không phải dự đoán.'),W/2,276);}
 function bindAnh(){document.querySelectorAll('[data-a]').forEach(function(i){i.value=cfg.anh[i.dataset.a]||'';counter(i,120);i.addEventListener('input',function(){var v=i.value;if(v.trim())cfg.anh[i.dataset.a]=v;else delete cfg.anh[i.dataset.a];setDirty();preview();});});preview();}
