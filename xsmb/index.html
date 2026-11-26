@@ -1032,7 +1032,7 @@ function drawBoard(D){const S=2,W=720,P=24,F='system-ui,-apple-system,"Segoe UI"
  const yF=y+14;y=yF+46;const H=y;
  const cv=document.createElement('canvas');cv.width=W*S;cv.height=H*S;const c=cv.getContext('2d');c.scale(S,S);c.textBaseline='middle';
  c.fillStyle='#fff';c.fillRect(0,0,W,H);c.fillStyle=RED;c.fillRect(0,0,W,HB);c.fillStyle='#fff';c.textAlign='center';c.font=`800 24px ${F}`;c.fillText(cfgA('dau','xslab.live – KQXS không quảng cáo'),W/2,HB/2+1);
- c.fillStyle=INK;c.font=`700 21px ${F}`;c.fillText(title,W/2,yT);
+ const CX=P+LW+(TW-LW)/2;c.fillStyle=INK;c.font=`700 21px ${F}`;c.fillText(title,CX,yT);
  let yy=yTab;c.strokeStyle=LINE;c.lineWidth=1;
  if(!D.mb){const cw=(TW-LW)/D.cols.length;c.fillStyle='#efede9';c.fillRect(P,yy,TW,38);c.fillStyle=INK;c.font=`700 16px ${F}`;D.cols.forEach((h,j)=>c.fillText(h,P+LW+cw*j+cw/2,yy+19));c.fillStyle=MUT;c.font=`700 14px ${F}`;c.fillText('Giải',P+LW/2,yy+19);yy+=38;
   lay.forEach((r,i)=>{if(i%2)(c.fillStyle=ZB,c.fillRect(P,yy,TW,r.h));c.fillStyle=MUT;c.font=`700 15px ${F}`;c.fillText(r.lb,P+LW/2,yy+r.h/2);
@@ -1044,7 +1044,7 @@ function drawBoard(D){const S=2,W=720,P=24,F='system-ui,-apple-system,"Segoe UI"
    c.beginPath();c.moveTo(P,yy+r.h+.5);c.lineTo(P+TW,yy+r.h+.5);c.stroke();yy+=r.h;});
   const x=P+LW+.5;c.beginPath();c.moveTo(x,yTab);c.lineTo(x,yy);c.stroke();}
  c.strokeRect(P+.5,yTab+.5,TW-1,yy-yTab-1);
- c.fillStyle=MUT;c.font=`700 17px ${F}`;c.fillText(cfgA('cuoi_kq','XS Lab – KQXS {mien} – {ngay}').split('{mien}').join(reg).split('{ngay}').join(dd),W/2,yF+18);
+ c.fillStyle=MUT;c.font=`700 17px ${F}`;c.fillText(cfgA('cuoi_kq','XS Lab – KQXS {mien} – {ngay}').split('{mien}').join(reg).split('{ngay}').join(dd),CX,yF+18);
  return cv;}
 async function copyImg(btn){const D=boardData();if(!D){copyText(boardText(),btn);return;}
  const cv=drawBoard(D),blobP=new Promise(r=>cv.toBlob(r,'image/png')),reg=R.region==='mb'?'xsmb':R.region==='mn'?'xsmn':'xsmt',fn=`xslab-${reg}-${(rs.date||'').split('-').reverse().join('-')}.png`;let mode='';
