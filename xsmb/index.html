@@ -231,6 +231,8 @@ body.home3 #h3-tk{order:-8}body.home3 .qtools{display:none!important}.h3st{scrol
 .xdbg{position:fixed;inset:auto 8px 90px 8px;z-index:10000;background:#fff;color:#111;border:2px solid #d01f3c;border-radius:12px;padding:10px;font:12px/1.4 system-ui,sans-serif;max-height:70vh;overflow:auto}.xdbg table{width:100%;border-collapse:collapse;margin:6px 0}.xdbg td{border-top:1px solid #ddd;padding:4px;vertical-align:top;word-break:break-word}.xdbg td:first-child{font-weight:600;white-space:nowrap}.xdbg button{width:100%;min-height:36px;border:0;border-radius:8px;background:#d01f3c;color:#fff}
 .cpi2,.cpt2{border:1px solid #d01f3c;background:transparent;color:#d01f3c}.cpn{margin:10px 0 0;font-size:13.5px;color:var(--mute);line-height:1.45}.cpn:empty{display:none}.cpa>*{flex:1 1 45%}
 .xdbg tr,.xdbg td{background:#fff!important;color:#111!important}
+.cptoast{flex-direction:column;gap:2px;padding:9px 16px;border-radius:12px;font-size:14px;text-align:center;width:auto;bottom:calc(88px + env(safe-area-inset-bottom))}.cptoast span{font-weight:600}.cptoast button{background:none!important;padding:2px 0!important;font-weight:400!important;font-size:12.5px!important;color:#cfcbd6!important;text-decoration:underline;text-underline-offset:2px}
+.cptoast button{white-space:nowrap}
 
 .regsw{display:inline-flex;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
 .regsw button{border:0;background:none;min-height:38px;padding:0 16px;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;color:var(--mute)}
@@ -1115,9 +1117,9 @@ async function cpClip(im){if(!(window.ClipboardItem&&navigator.clipboard&&naviga
 async function cpShare(im,fn){try{const f=new File([im.blob],fn,{type:'image/png'});if(!(navigator.canShare&&navigator.canShare({files:[f]})))return '';await navigator.share({files:[f]});return 'share';}catch(e){return e&&e.name==='AbortError'?'none':'';}}
 async function copyCanvas(cv,fn,btn,txt){let im;try{im=cvBlob(cv);}catch(e){cpLab(btn,'Không tạo được ảnh');return;}
  if(C_AND||(C_APP&&!C_IOS)){const r=await cpShare(im,fn);if(r==='share'){cpLab(btn,'Đã chia sẻ ✓',1);return;}if(r==='none')return;
-  if(!C_APP&&await cpClip(im)){cpLab(btn,'Đã chép ✓',1);cpToast('Đã chép ảnh. Dán vào Zalo, Messenger.','Không dán được?',()=>cpSheet(im,fn,txt));return;}
+  if(!C_APP&&await cpClip(im)){cpLab(btn,'Đã chép ✓',1);cpToast('✓ Đã sao chép','Nếu không dán được, nhấn vào đây',()=>cpSheet(im,fn,txt));return;}
   cpSheet(im,fn,txt);return;}
- if(await cpClip(im)){cpLab(btn,'Đã chép ✓',1);cpToast('Đã chép ảnh, dán vào khung chat để gửi.','Không dán được?',()=>cpSheet(im,fn,txt));return;}
+ if(await cpClip(im)){cpLab(btn,'Đã chép ✓',1);cpToast('✓ Đã sao chép','Nếu không dán được, nhấn vào đây',()=>cpSheet(im,fn,txt));return;}
  if(C_MOB){const r=await cpShare(im,fn);if(r==='share'){cpLab(btn,'Đã chia sẻ ✓',1);return;}if(r==='none')return;}
  cpSheet(im,fn,txt);}
 function rkCopy(btn){const wrap=btn.closest('.rkt'),tb=wrap&&wrap.querySelector('table');if(!tb)return;
