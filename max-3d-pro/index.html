@@ -1928,12 +1928,12 @@ function renderAbout(){
  $('aboutDoc').innerHTML=`<h2>Về dữ liệu</h2><p class="sub">Toàn bộ dữ liệu, cách cập nhật và cách tính của XS Lab. Mọi con số trên app là thống kê của các kỳ đã quay; XS Lab không đưa ra dự đoán kết quả.</p>
  <div class="kpis" style="margin:10px 0"><div class="kpi"><b>${vn(mbN)}</b><span>kỳ XSMB · ${vnDate(mb[0].date)} – ${vnDate(mb[mbN-1].date)}</span></div><div class="kpi"><b>${vn(mnN)}</b><span>kết quả đài XSMN (${Object.keys(RAW.mn.by).length} đài) · ${vnDate(RAW.mn.dates[0])} – ${vnDate(lastMN)}</span></div><div class="kpi"><b>${vn(mtN)}</b><span>kết quả đài XSMT (${RAW.mt?Object.keys(RAW.mt.by).length:0} đài) · ${RAW.mt?vnDate(RAW.mt.dates[0])+' – '+vnDate(RAW.mt.last):''}</span></div><div class="kpi"><b>3</b><span>tệp dữ liệu mở: <a href="${XS_ROOT}xsmb.csv" style="color:inherit">xsmb.csv</a>, <a href="${XS_ROOT}xsmn.csv" style="color:inherit">xsmn.csv</a>, <a href="${XS_ROOT}xsmt.csv" style="color:inherit">xsmt.csv</a></span></div></div>
  <h3>Nguồn</h3><ul>
-  <li><b>XSMB</b>: bộ dữ liệu mở <a href="https://github.com/kina2711/vietnam-lottery-xsmb">kina2711/vietnam-lottery-xsmb</a> (giấy phép MIT, thu thập từ Minh Ngọc), đối chiếu với 3 bộ tương tự (khiemdoan, daiduong-eth, xmanzero); mỗi lần cập nhật lấy bộ mới nhất.</li>
-  <li><b>XSMN</b>: gộp 2 bộ độc lập <a href="https://github.com/tuanseo5t-alt/xosomn-xosomt">tuanseo5t-alt/xosomn-xosomt</a> và <a href="https://github.com/Hpbt/xsmn-thong-ke">Hpbt/xsmn-thong-ke</a>.</li>
-  <li><b>XSMT</b>: bộ dữ liệu mở <a href="https://github.com/tuanseo5t-alt/xosomn-xosomt">tuanseo5t-alt/xosomn-xosomt</a> (từ 2009, 14 đài); đã đối chiếu ngẫu nhiên với bảng kết quả của Minh Ngọc.</li>
-  <li><b>Vietlott</b> (Mega 6/45 từ kỳ 198, Power 6/55 từ kỳ 1): bộ dữ liệu mở <a href="https://github.com/vietvudanh/vietlott-data">vietvudanh/vietlott-data</a>; mỗi kỳ được kiểm tra đủ 6 số khác nhau trong khoảng 1–45 hoặc 1–55.</li>
+  <li><b>XSMB</b>: bộ dữ liệu mở kina2711/vietnam-lottery-xsmb (giấy phép MIT, thu thập từ Minh Ngọc), đối chiếu với 3 bộ tương tự (khiemdoan, daiduong-eth, xmanzero); mỗi lần cập nhật lấy bộ mới nhất.</li>
+  <li><b>XSMN</b>: gộp 2 bộ độc lập tuanseo5t-alt/xosomn-xosomt và Hpbt/xsmn-thong-ke.</li>
+  <li><b>XSMT</b>: bộ dữ liệu mở tuanseo5t-alt/xosomn-xosomt (từ 2009, 14 đài); đã đối chiếu ngẫu nhiên với bảng kết quả của Minh Ngọc.</li>
+  <li><b>Vietlott</b> (Mega 6/45 từ kỳ 198, Power 6/55 từ kỳ 1): bộ dữ liệu mở vietvudanh/vietlott-data; mỗi kỳ được kiểm tra đủ 6 số khác nhau trong khoảng 1–45 hoặc 1–55.</li>
   <li><b>Keno trong ngày</b>: máy chủ đọc bảng kết quả Keno công khai (minhchinh.com) khoảng 15 phút một lần, chỉ ghi kỳ có đủ 20 số khác nhau trong 1–80; đã đối chiếu khớp hoàn toàn với bộ dữ liệu mở ở các kỳ trùng nhau.</li>
-  <li><b>Ngay sau giờ quay</b>: máy chủ đọc bảng kết quả công khai của <a href="https://www.minhngoc.net.vn">Minh Ngọc</a>, chỉ ghi khi đủ số giải và đúng số chữ số; trên trình duyệt, kết quả quay trực tiếp được đưa ngay vào tab Kết quả với nhãn "chờ đối chiếu".</li>
+  <li><b>Ngay sau giờ quay</b>: máy chủ đọc bảng kết quả công khai của Minh Ngọc, chỉ ghi khi đủ số giải và đúng số chữ số; trên trình duyệt, kết quả quay trực tiếp được đưa ngay vào tab Kết quả với nhãn "chờ đối chiếu".</li>
   <li><b>Khi nguồn mở chậm</b>: kết quả trong ngày được lấy từ trang kết quả (xskt.com.vn, xosodaiphat.com) và chỉ ghi vào khi hai trang khớp hoàn toàn và đủ số giải, đúng số chữ số.</li></ul>
  <h3>Kiểm tra chất lượng</h3><ul>
   <li>XSMN: hai nguồn trùng nhau ở 21.239 kết quả đài và <b>khớp 100%</b>; nguồn thứ hai bù thêm 33 kết quả còn thiếu ở nguồn thứ nhất. Đã đối chiếu ngẫu nhiên với kết quả đăng trên báo.</li>
@@ -2063,7 +2063,7 @@ function lvRender(){
  $('lvProg').style.width=tot?Math.round(done/tot*100)+'%':'0';
  const last=items.map(x=>x.d&&x.d.at).filter(Boolean).sort().pop();
  $('lvTime').textContent=[todayAll||phase!=='before'?`Đã ra ${done}/${tot} giải`:'',last?`cập nhật lúc ${last}`:''].filter(Boolean).join(' · ');
- if(LV.failed&&!items.some(x=>x.d)){$('lvBoard').innerHTML=`<p class="note">Mở trang trực tiếp: <a href="https://www.xoso.net/xo-so-truc-tiep.html" style="color:var(--red)">xoso.net/xo-so-truc-tiep.html</a></p>`;$('lvLoto').innerHTML='';return;}
+ if(LV.failed&&!items.some(x=>x.d)){$('lvBoard').innerHTML=`<p class="note">Mở trang trực tiếp: <a href="https://www.xoso.net/xo-so-truc-tiep.html" rel="nofollow noopener" target="_blank" style="color:var(--red)">xoso.net/xo-so-truc-tiep.html</a></p>`;$('lvLoto').innerHTML='';return;}
  const DRAW=reg==='mb'?['g1','g2','g3','g4','g5','g6','g7','db']:['g8','g7','g6','g5','g4','g3','g2','g1','db'],LEN=reg==='mb'?{db:5,g1:5,g2:5,g3:5,g4:4,g5:4,g6:3,g7:2}:{db:6,g1:5,g2:5,g3:5,g4:5,g5:4,g6:4,g7:3,g8:2};
  const nextOf={},lastOf={};for(const x of items){const d=x.d,key=reg==='mb'?'mien-bac':x.s;if(!d||d.date!==n.date||phase!=='live'||d.done===d.tot)continue;let prev=null;
   outer:for(const g of DRAW){for(let i=0;i<d.pr[g].length;i++){if(!d.pr[g][i]){nextOf[key]=g+'|'+i;break outer;}prev=g+'|'+i;}}lastOf[key]=prev;if(d.rolling)nextOf[key]=d.rolling;}
