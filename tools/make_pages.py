@@ -1059,6 +1059,46 @@ for _reg in ("xsmn", "xsmt"):
             open(_f, "w", encoding="utf-8").write(f'<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8">{_RD_MARK}<meta name="robots" content="noindex,follow"><link rel="canonical" href="{_to}"><meta http-equiv="refresh" content="0;url={_to}"><title>Chuyển tới kết quả ngày {_dd}</title></head><body><p>Trang này đã chuyển tới <a href="{_to}">{_to}</a>.</p></body></html>')
 
 
+# Viết sẵn kết quả mới nhất vào HTML các trang ứng dụng (để Google đọc được không cần chạy JavaScript).
+def _ssr_blocks():
+    def lj(fn):
+        try: return json.load(open(os.path.join(ROOT, fn), encoding="utf-8"))
+        except Exception: return []
+    MB = sorted(lj("recent.json"), key=lambda r: r["date"])
+    MNT = {"mn": lj("recent_mn.json"), "mt": lj("recent_mt.json")}
+    NAME = {"mb": ("XSMB", "miền Bắc", "xsmb"), "mn": ("XSMN", "miền Nam", "xsmn"), "mt": ("XSMT", "miền Trung", "xsmt")}
+    def block(reg, back=0):
+        lab, name, sl = NAME[reg]
+        if reg == "mb":
+            if len(MB) <= back: return ""
+            r = MB[-1 - back]; d = r["date"]
+            intro = f'Giải Đặc biệt <b>{esc(r["db"][0])}</b>, giải Nhất <b>{esc(r["g1"][0])}</b>.'
+            tb = mb_table(r)
+        else:
+            rows = MNT[reg]; ds = sorted({x["date"] for x in rows})
+            if len(ds) <= back: return ""
+            d = ds[-1 - back]; recs = sorted([x for x in rows if x["date"] == d], key=lambda x: ST.get(x["station"], x["station"]))
+            intro = "Giải Đặc biệt: " + "; ".join(f'{esc(ST.get(x["station"], x["station"]))} <b>{esc(x["db"][0])}</b>' for x in recs) + "."
+            tb = mn_table(recs)
+        dd = slug_d(d)
+        return (f'<h2>{lab} {WDL[wdi(d)]} {vn(d)} – Kết quả xổ số {name} ngày {vn(d)}</h2><p>{intro} '
+                f'<a href="/{sl}/{dd}/">Xem đủ giải, lô tô và thống kê {lab} {vn(d)}</a></p><div class="card">{tb}</div>')
+    M = {"": [("mb", 0), ("mn", 0), ("mt", 0)], "xsmb/": [("mb", 0)], "xsmn/": [("mn", 0)], "xsmt/": [("mt", 0)],
+         "xsmb-hom-qua/": [("mb", 1)], "xsmn-hom-qua/": [("mn", 1)], "xsmt-hom-qua/": [("mt", 1)],
+         "xsmb-30-ngay/": [("mb", 0)], "xsmn-30-ngay/": [("mn", 0)], "xsmt-30-ngay/": [("mt", 0)],
+         "xsmb-90-ngay/": [("mb", 0)], "xsmn-90-ngay/": [("mn", 0)], "xsmt-90-ngay/": [("mt", 0)],
+         "truc-tiep/": [("mn", 0), ("mt", 0), ("mb", 0)], "truc-tiep-xsmb/": [("mb", 0)], "truc-tiep-xsmn/": [("mn", 0)], "truc-tiep-xsmt/": [("mt", 0)],
+         "do-ve/": [("mb", 0), ("mn", 0), ("mt", 0)]}
+    return {k: '<div class="ssr">' + "".join(block(r, b) for r, b in v) + "</div>" for k, v in M.items()}
+_SSR = _ssr_blocks()
+def ssr_apply(pth, h):
+    blk = _SSR.get(pth)
+    h = re.sub(r"<!--ssr-->.*?<!--/ssr-->", "", h, flags=re.S)
+    if not blk: return h
+    tgt = '<div id="lvBoard">' if pth.startswith("truc-tiep") else '<div id="rsBoard">'
+    if tgt not in h: return h
+    return h.replace(tgt, tgt + "<!--ssr-->" + blk + "<!--/ssr-->", 1)
+
 # Áp tiêu đề SEO cho các trang ứng dụng (SPA) và ghi danh sách trang cho trang quản trị.
 def _spa_seo():
     lst = os.path.join(ROOT, "tools", "spa_pages.txt")
@@ -1081,6 +1121,7 @@ def _spa_seo():
         h2 = re.sub(r"<title>.*?</title>", lambda _: "<title>" + esc(ti) + " | XS Lab</title>", h, count=1, flags=re.S)
         for pat, val in ((r'(<meta name="description" content=")[^"]*(")', de), (r'(<meta property="og:title" content=")[^"]*(")', ti), (r'(<meta property="og:description" content=")[^"]*(")', de), (r'(<meta name="twitter:title" content=")[^"]*(")', ti), (r'(<meta name="twitter:description" content=")[^"]*(")', de)):
             h2 = re.sub(pat, lambda mm: mm.group(1) + esc(val) + mm.group(2), h2, count=1)
+        h2 = ssr_apply(pth, h2)
         if h2 != h or not m: open(fp, "w", encoding="utf-8").write(h2)
         rows.append({"path": pth, "loai": "Trang chính", "title": dflt["title"], "desc": dflt["desc"]})
     for pth, (t, d) in sorted(SEO_DEF.items()):
