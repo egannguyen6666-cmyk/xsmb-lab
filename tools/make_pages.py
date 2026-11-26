@@ -1126,6 +1126,40 @@ def _h3t_script():
           "o.push('<b>Miền Bắc 18:15:</b> <a href=\"/xsmb/\">XSMB</a>');document.getElementById('h3Today').innerHTML='Hôm nay '+W[w]+' quay: '+o.join('<span class=\"sep\">·</span>')}catch(e){}})();")
     return "<script>" + js + "</script>"
 _H3T = _h3t_script()
+def _h3_ssr():
+    def lj(fn):
+        try: return json.load(open(os.path.join(ROOT, fn), encoding="utf-8"))
+        except Exception: return []
+    WDV = ['Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7','Chủ nhật']
+    ok = lambda x: x.get("db") and all(str(v).isdigit() for v in x["db"])
+    def nsp(n): return f'<span class="nm"><i>{n[:-3]}</i><u>{n[-3:-2] if len(n) > 2 else ""}</u><b>{n[-2:]}</b></span>'
+    icon = '<svg class="cpi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>'
+    out = []
+    for i, (r, fn, lab, sl) in enumerate((("mb", "recent.json", "XSMB", "xsmb"), ("mt", "recent_mt.json", "XSMT", "xsmt"), ("mn", "recent_mn.json", "XSMN", "xsmn"))):
+        L = [x for x in lj(fn) if ok(x)]
+        if not L: continue
+        d = max(x["date"] for x in L); day = [x for x in L if x["date"] == d]
+        wl = WDV[wdi(d)]; t = f"{lab} {wl}, {vn(d)}"; dd = slug_d(d)
+        if r == "mb":
+            rec = day[-1]
+            board = '<div class="ticket">' + "".join(f'<div class="row {"db" if g == "db" else ""}"><div class="lb">{lb}</div><div class="nums">{"".join(nsp(n) for n in rec[g])}</div></div>' for lb, g in MB_G) + '</div>'
+            rk = f"/thong-ke/?mien=mb#rkCard"
+        else:
+            day.sort(key=lambda x: (x["station"] != "tp-hcm", ST.get(x["station"], x["station"])))
+            board = '<div class="mnb"><table><thead><tr><th>Giải</th>' + "".join(f'<th>{ST.get(x["station"], x["station"])}</th>' for x in day) + '</tr></thead><tbody>' + "".join(f'<tr class="{g}"><td>{lb}</td>' + "".join(f'<td>{"".join(nsp(n) for n in x.get(g, []))}</td>' for x in day) + '</tr>' for lb, g in MN_G) + '</tbody></table></div>'
+            rk = f"/thong-ke/?mien={r}&amp;dai={day[0]['station']}#rkCard"
+        digits = "".join(f'<button type="button" data-fd="{k}" aria-pressed="false">{k}</button>' for k in range(10))
+        out.append(f'<section class="card c12 h3r" id="h3-{r}" data-r="{r}" data-d="{d}" data-title="{t}" style="order:{-20 + i}"><div class="h3h"><h2><a href="/{sl}/">{lab}</a> {wl}, {vn(d)}</h2></div>{board}'
+                   f'<div class="h3f" role="group" aria-label="Lọc lô tô {lab}"><div class="h3fr"><span>Tô sáng lô tô theo</span><div class="seg"><button type="button" data-fm="h" aria-pressed="true">Đầu</button><button type="button" data-fm="t" aria-pressed="false">Đuôi</button></div><span class="h3fc" aria-live="polite"></span></div><div class="h3dg">{digits}</div></div>'
+                   f'<div class="h3a"><span class="h3al"><a href="/{sl}/{dd}/">Lô tô, thống kê kỳ này →</a><a href="{rk}">Bảng xếp hạng {lab} →</a></span><button type="button" class="copy h3cp" title="Sao chép ảnh kết quả để gửi Zalo, Messenger" aria-label="Sao chép kết quả {lab}">{icon}<span class="cpt">Sao chép</span></button></div></section>')
+    js = ("<script>(function(){try{var f=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Ho_Chi_Minh',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date()),g=function(k){for(var i=0;i<f.length;i++)if(f[i].type===k)return f[i].value},"
+          "td=g('year')+'-'+g('month')+'-'+g('day'),h=+g('hour')%24,m=h*60+ +g('minute'),"
+          "o=m>=1095?['mb','mt','mn']:m>=1035?['mt','mn','mb']:m>=975?['mn','mb','mt']:['mb','mt','mn'],W={mn:[975,1005,'xsmn'],mt:[1035,1065,'xsmt'],mb:[1095,1120,'xsmb']};"
+          "o.forEach(function(r,i){var e=document.getElementById('h3-'+r);if(!e)return;e.style.order=-20+i;var w=W[r];if(e.getAttribute('data-d')>=td)return;var c='';"
+          "if(m>=w[0]&&m<=w[1]+30)c='<a class=\"h3live\" href=\"/truc-tiep-'+w[2]+'/\"><i></i>Đang quay · xem trực tiếp</a>';else if(m<w[0])c='<a class=\"h3live soon\" href=\"/truc-tiep-'+w[2]+'/\">Hôm nay quay lúc '+('0'+Math.floor(w[0]/60)).slice(-2)+':'+('0'+w[0]%60).slice(-2)+'</a>';"
+          "if(c)e.querySelector('.h3h').insertAdjacentHTML('beforeend',c)})}catch(x){}})();</script>")
+    return "".join(out), js
+_H3S, _H3J = _h3_ssr()
 def ssr_apply(pth, h):
     blk = _SSR.get(pth)
     h = re.sub(r"<!--ssr-->.*?<!--/ssr-->", "", h, flags=re.S)
@@ -1136,10 +1170,13 @@ def ssr_apply(pth, h):
         if '<div class="h3today" id="h3Today"></div>' in h: h = h.replace('<div class="h3today" id="h3Today"></div>', '<div class="h3today" id="h3Today"></div><!--h3t-->' + _H3T + '<!--/h3t-->', 1)
         if _VLQ and '<div id="h3Vl">' in h: h = h.replace('<div id="h3Vl">', '<div id="h3Vl"><!--vlq-->' + _VLQ + '<!--/vlq-->', 1)
     if not blk: return h
-    if pth == "" and '<div class="h3only h3box" id="h3Box">' in h:
+    if pth == "" and '<div class="h3only h3box" id="h3Box">' in h and _H3S:
+        h = re.sub(r"<!--h3j-->.*?<!--/h3j-->", "", h, flags=re.S)
         tgt = '<div class="h3only h3box" id="h3Box">'
-        blk = blk.replace('<div class="ssr">', '<div class="ssr card c12">', 1)
-        return h.replace(tgt, tgt + "<!--ssr-->" + blk + "<!--/ssr-->", 1)
+        h = h.replace(tgt, tgt + "<!--ssr-->" + _H3S + "<!--/ssr-->", 1)
+        i = h.find("<!--/ssr-->", h.find(tgt)) + len("<!--/ssr-->")
+        j = h.find("</div>", i) + len("</div>")
+        return h[:j] + "<!--h3j-->" + _H3J + "<!--/h3j-->" + h[j:]
     tgt = '<div id="lvBoard">' if pth.startswith("truc-tiep") else '<div id="rsBoard">'
     if tgt not in h: return h
     return h.replace(tgt, tgt + "<!--ssr-->" + blk + "<!--/ssr-->", 1)
