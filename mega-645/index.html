@@ -1085,17 +1085,18 @@ function drawBoard(D,o){o=o||{};const S=2,W=720,P=24,F='system-ui,-apple-system,
  const yF=y+14;y=yF+46;const H=y;
  const cv=document.createElement('canvas');cv.width=W*S;cv.height=H*S;const c=cv.getContext('2d');c.scale(S,S);c.textBaseline='middle';
  c.fillStyle='#fff';c.fillRect(0,0,W,H);c.fillStyle=RED;c.fillRect(0,0,W,HB);c.fillStyle='#fff';c.textAlign='center';c.font=`800 24px ${F}`;c.fillText(cfgA('dau','xslab.live – KQXS không quảng cáo'),W/2,HB/2+1);
- const CX=P+LW+(TW-LW)/2;c.fillStyle=INK;c.font=`700 21px ${F}`;c.fillText(title,CX,yT);
+ const CX=W/2,DW=TW-2*LW;c.fillStyle=INK;c.font=`700 21px ${F}`;c.fillText(title,CX,yT);
  let yy=yTab;c.strokeStyle=LINE;c.lineWidth=1;
- if(!D.mb){const cw=(TW-LW)/D.cols.length;c.fillStyle='#efede9';c.fillRect(P,yy,TW,38);c.fillStyle=INK;c.font=`700 16px ${F}`;D.cols.forEach((h,j)=>c.fillText(h,P+LW+cw*j+cw/2,yy+19));c.fillStyle=MUT;c.font=`700 14px ${F}`;c.fillText('Giải',P+LW/2,yy+19);yy+=38;
+ if(!D.mb){const cw=DW/D.cols.length;c.fillStyle='#efede9';c.fillRect(P,yy,TW,38);c.fillStyle=INK;c.font=`700 16px ${F}`;D.cols.forEach((h,j)=>c.fillText(h,P+LW+cw*j+cw/2,yy+19));c.fillStyle=MUT;c.font=`700 14px ${F}`;c.fillText('Giải',P+LW/2,yy+19);yy+=38;
   lay.forEach((r,i)=>{if(i%2)(c.fillStyle=ZB,c.fillRect(P,yy,TW,r.h));c.fillStyle=MUT;c.font=`700 15px ${F}`;c.fillText(r.lb,P+LW/2,yy+r.h/2);
    r.cs.forEach((ns,j)=>{c.fillStyle=r.big||r.g8?RED:INK;c.font=`800 ${r.big?27:r.g8?26:22}px ${F}`;ns.forEach((v,k)=>c.fillText(v,P+LW+cw*j+cw/2,yy+6+r.lh*k+r.lh/2));});
    c.beginPath();c.moveTo(P,yy+r.h+.5);c.lineTo(P+TW,yy+r.h+.5);c.stroke();yy+=r.h;});
   for(let j=0;j<=D.cols.length;j++){const x=Math.round(P+LW+cw*j)+.5;c.beginPath();c.moveTo(x,yTab);c.lineTo(x,yy);c.stroke();}}
  else{lay.forEach((r,i)=>{if(i%2)(c.fillStyle=ZB,c.fillRect(P,yy,TW,r.h));c.fillStyle=MUT;c.font=`700 16px ${F}`;c.fillText(r.lb,P+LW/2,yy+r.h/2);
-   const vw=(TW-LW)/r.per;c.fillStyle=r.big?RED:INK;c.font=`800 ${r.big?34:24}px ${F}`;r.ns.forEach((v,k)=>c.fillText(v,P+LW+vw*(k%r.per)+vw/2,yy+6+r.lh*Math.floor(k/r.per)+r.lh/2));
+   const vw=DW/r.per;c.fillStyle=r.big?RED:INK;c.font=`800 ${r.big?34:24}px ${F}`;r.ns.forEach((v,k)=>c.fillText(v,P+LW+vw*(k%r.per)+vw/2,yy+6+r.lh*Math.floor(k/r.per)+r.lh/2));
    c.beginPath();c.moveTo(P,yy+r.h+.5);c.lineTo(P+TW,yy+r.h+.5);c.stroke();yy+=r.h;});
   const x=P+LW+.5;c.beginPath();c.moveTo(x,yTab);c.lineTo(x,yy);c.stroke();}
+ {const bx=P+TW-LW;c.fillStyle=RED;c.fillRect(bx,yTab,LW,yy-yTab);c.save();c.translate(bx+LW/2,(yTab+yy)/2);c.rotate(Math.PI/2);c.fillStyle='#fff';c.textAlign='center';c.textBaseline='middle';const vt='KQXS '+({MB:'MIỀN BẮC',MN:'MIỀN NAM',MT:'MIỀN TRUNG'}[reg]||reg);let fs=D.mb?24:22;c.font=`800 ${fs}px ${F}`;try{c.letterSpacing='4px';}catch(e){}while(c.measureText(vt).width>yy-yTab-30&&fs>12){fs--;c.font=`800 ${fs}px ${F}`;}c.fillText(vt,0,1);c.restore();try{c.letterSpacing='0px';}catch(e){}}
  c.strokeRect(P+.5,yTab+.5,TW-1,yy-yTab-1);
  c.fillStyle=MUT;c.font=`700 17px ${F}`;c.fillText(cfgA('cuoi_kq','XS Lab – KQXS {mien} – {ngay}').split('{mien}').join(reg).split('{ngay}').join(dd),CX,yF+18);
  return cv;}
