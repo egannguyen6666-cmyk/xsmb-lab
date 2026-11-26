@@ -1,0 +1,802 @@
+{
+"trang": [
+{
+"path": "",
+"loai": "Trang chính",
+"title": "KQXS hôm nay – XSMB, XSMN, XSMT, dò vé số, không quảng cáo",
+"desc": "KQXS hôm nay: kết quả XSMB, XSMN, XSMT đủ giải, dò cùng lúc tới 100 số, không quảng cáo. Trực tiếp XSMN 16h15, XSMT 17h15, XSMB 18h15, Vietlott, thống kê lô tô. Thông tin chỉ mang tính tham khảo."
+},
+{
+"path": "xsmb/",
+"loai": "Trang chính",
+"title": "XSMB hôm nay – Kết quả xổ số miền Bắc, dò vé, không quảng cáo",
+"desc": "XSMB hôm nay: kết quả xổ số miền Bắc (KQXSMB) đủ 27 giải ngay sau 18:15, dò cùng lúc tới 100 số, không quảng cáo. Lô tô, thống kê nhanh, sổ kết quả, cơ cấu giải. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "xsmn/",
+"loai": "Trang chính",
+"title": "XSMN hôm nay – Kết quả xổ số miền Nam, dò vé, không quảng cáo",
+"desc": "XSMN hôm nay: kết quả xổ số miền Nam (KQXSMN) từng đài ngay sau 16:15, dò nhiều số cùng lúc trên mọi đài, không quảng cáo. Lịch quay XSMN theo thứ, cơ cấu giải. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "xsmt/",
+"loai": "Trang chính",
+"title": "XSMT hôm nay – Kết quả xổ số miền Trung, dò vé, không quảng cáo",
+"desc": "XSMT hôm nay: kết quả xổ số miền Trung (KQXSMT) từng đài ngay sau 17:15, dò nhiều số cùng lúc trên mọi đài, không quảng cáo. Lịch quay XSMT theo thứ, cơ cấu giải. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "truc-tiep-xsmb/",
+"loai": "Trang chính",
+"title": "Trực tiếp XSMB hôm nay 18h15 – Xổ số miền Bắc, không quảng cáo",
+"desc": "Trực tiếp XSMB hôm nay từ 18h15: từng giải xổ số miền Bắc hiện ngay khi quay, cập nhật khoảng 3 giây một lần, không quảng cáo, kèm thống kê nổi bật của kỳ đang quay. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "truc-tiep-xsmn/",
+"loai": "Trang chính",
+"title": "Trực tiếp XSMN hôm nay 16h15 – Xổ số miền Nam, không quảng cáo",
+"desc": "Trực tiếp XSMN hôm nay từ 16h15: các đài xổ số miền Nam hiện từng giải ngay khi quay, cập nhật khoảng 3 giây một lần, không quảng cáo, kèm lịch quay XSMN theo thứ. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "truc-tiep-xsmt/",
+"loai": "Trang chính",
+"title": "Trực tiếp XSMT hôm nay 17h15 – Xổ số miền Trung, không quảng cáo",
+"desc": "Trực tiếp XSMT hôm nay từ 17h15: các đài xổ số miền Trung hiện từng giải ngay khi quay, cập nhật khoảng 3 giây một lần, không quảng cáo, kèm lịch quay XSMT theo thứ. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "xsmb-30-ngay/",
+"loai": "Trang chính",
+"title": "XSMB 30 ngày – Sổ kết quả xổ số miền Bắc 30 ngày gần nhất",
+"desc": "XSMB 30 ngày: sổ kết quả xổ số miền Bắc 30 ngày gần nhất, giải đặc biệt và lô tô từng ngày, không quảng cáo. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "xsmn-30-ngay/",
+"loai": "Trang chính",
+"title": "XSMN 30 ngày – Sổ kết quả xổ số miền Nam 30 ngày gần nhất",
+"desc": "XSMN 30 ngày: sổ kết quả xổ số miền Nam 30 ngày gần nhất theo từng đài, không quảng cáo. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "xsmt-30-ngay/",
+"loai": "Trang chính",
+"title": "XSMT 30 ngày – Sổ kết quả xổ số miền Trung 30 ngày gần nhất",
+"desc": "XSMT 30 ngày: sổ kết quả xổ số miền Trung 30 ngày gần nhất theo từng đài, không quảng cáo. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "xsmb-hom-qua/",
+"loai": "Trang chính",
+"title": "XSMB hôm qua – Kết quả xổ số miền Bắc hôm qua, dò vé",
+"desc": "XSMB hôm qua: kết quả xổ số miền Bắc kỳ trước đủ giải và lô tô, dò lại vé đã mua hôm qua, không quảng cáo. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "xsmb-90-ngay/",
+"loai": "Trang chính",
+"title": "XSMB 90 ngày – Sổ kết quả xổ số miền Bắc 90 ngày gần nhất",
+"desc": "XSMB 90 ngày: sổ kết quả xổ số miền Bắc khoảng 3 tháng gần nhất, giải Đặc biệt và lô tô từng kỳ, không quảng cáo. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "xsmn-hom-qua/",
+"loai": "Trang chính",
+"title": "XSMN hôm qua – Kết quả xổ số miền Nam hôm qua, dò vé",
+"desc": "XSMN hôm qua: kết quả xổ số miền Nam kỳ trước đủ giải và lô tô, dò lại vé đã mua hôm qua, không quảng cáo. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "xsmn-90-ngay/",
+"loai": "Trang chính",
+"title": "XSMN 90 ngày – Sổ kết quả xổ số miền Nam 90 ngày gần nhất",
+"desc": "XSMN 90 ngày: sổ kết quả xổ số miền Nam khoảng 3 tháng gần nhất, giải Đặc biệt và lô tô từng kỳ, không quảng cáo. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "xsmt-hom-qua/",
+"loai": "Trang chính",
+"title": "XSMT hôm qua – Kết quả xổ số miền Trung hôm qua, dò vé",
+"desc": "XSMT hôm qua: kết quả xổ số miền Trung kỳ trước đủ giải và lô tô, dò lại vé đã mua hôm qua, không quảng cáo. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "xsmt-90-ngay/",
+"loai": "Trang chính",
+"title": "XSMT 90 ngày – Sổ kết quả xổ số miền Trung 90 ngày gần nhất",
+"desc": "XSMT 90 ngày: sổ kết quả xổ số miền Trung khoảng 3 tháng gần nhất, giải Đặc biệt và lô tô từng kỳ, không quảng cáo. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "truc-tiep/",
+"loai": "Trang chính",
+"title": "Trực tiếp xổ số hôm nay: XSMN 16h15, XSMT 17h15, XSMB 18h15",
+"desc": "Trực tiếp xổ số ba miền hôm nay: XSMN 16h15, XSMT 17h15, XSMB 18h15, hiện từng giải ngay khi quay, không quảng cáo. Quay xong dò vé ngay trên trang. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "do-ve/",
+"loai": "Trang chính",
+"title": "Dò vé số hôm nay – dò nhiều số cùng lúc XSMB, XSMN, XSMT, không quảng cáo",
+"desc": "Dò vé số hôm nay, không quảng cáo: XSMB, XSMN, XSMT theo ngày quay, dán cùng lúc tới 100 số, dò 2 số cuối mọi giải và mọi đài, dò vé đủ 5–6 chữ số; tự lưu nhóm số để lần sau dò tiếp. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "thong-ke/",
+"loai": "Trang chính",
+"title": "Thống kê lô tô XSMB, XSMN, XSMT – lô gan, đầu đuôi, giải đặc biệt",
+"desc": "Thống kê lô tô từ dữ liệu quá khứ: tra cứu số, lô gan, đầu đuôi, bảng giải đặc biệt, phân bố tổng và chẵn lẻ của XSMB, XSMN, XSMT. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "thong-ke-dan/",
+"loai": "Trang chính",
+"title": "Thống kê nhóm số – nhóm 4, 6, 10 số trong các kỳ đã quay",
+"desc": "Thống kê nhóm số trong dữ liệu đã quay: số kỳ có ít nhất 1 số về, số kỳ cả nhóm cùng về, so với mức theo xác suất. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "thong-ke-dan-xsmb/",
+"loai": "Trang chính",
+"title": "Thống kê nhóm số XSMB – nhóm số, 3 càng, 4 càng miền Bắc",
+"desc": "Thống kê nhóm số XSMB trong dữ liệu đã quay từ 2005: số kỳ có ít nhất 1 số về, cả nhóm cùng về, tra cứu 3 càng, 4 càng xổ số miền Bắc. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "thong-ke-dan-xsmn/",
+"loai": "Trang chính",
+"title": "Thống kê nhóm số XSMN – nhóm số theo từng đài miền Nam",
+"desc": "Thống kê nhóm số XSMN theo từng đài trong dữ liệu đã quay: số kỳ có số về, cả nhóm cùng về, tra cứu 3 càng, 4 càng xổ số miền Nam. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "thong-ke-dan-xsmt/",
+"loai": "Trang chính",
+"title": "Thống kê nhóm số XSMT – nhóm số theo từng đài miền Trung",
+"desc": "Thống kê nhóm số XSMT theo từng đài trong dữ liệu đã quay: số kỳ có số về, cả nhóm cùng về, tra cứu 3 càng, 4 càng xổ số miền Trung. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "vietlott/",
+"loai": "Trang chính",
+"title": "Kết quả Vietlott hôm nay – Keno, Mega 6/45, Power 6/55, Max 3D, Max 3D Pro",
+"desc": "Kết quả xổ số Vietlott hôm nay: Keno, Mega 6/45, Power 6/55, Max 3D, Max 3D Pro, dò vé, thống kê tần suất, cách chơi và cơ cấu giải. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "keno/",
+"loai": "Trang chính",
+"title": "Keno Vietlott hôm nay – Kết quả Keno, chẵn lẻ, lớn nhỏ",
+"desc": "Kết quả Keno Vietlott hôm nay theo từng kỳ, đếm ngược kỳ tiếp theo, chẵn lẻ, lớn nhỏ, dò vé bậc 1–10 và cơ cấu giải Keno đầy đủ. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "mega-645/",
+"loai": "Trang chính",
+"title": "Kết quả Vietlott Mega 6/45 hôm nay",
+"desc": "Kết quả xổ số Vietlott Mega 6/45 các kỳ, dò vé, thống kê tần suất 45 số, cách chơi, cơ cấu giải và xác suất trúng Jackpot. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "power-655/",
+"loai": "Trang chính",
+"title": "Kết quả Vietlott Power 6/55 hôm nay",
+"desc": "Kết quả xổ số Vietlott Power 6/55 các kỳ, số đặc biệt, dò vé, thống kê tần suất 55 số, cơ cấu giải Jackpot 1, Jackpot 2. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "max-3d/",
+"loai": "Trang chính",
+"title": "Kết quả Vietlott Max 3D hôm nay",
+"desc": "Kết quả xổ số Vietlott Max 3D các kỳ, dò vé bộ ba số, thống kê chữ số và bộ số, cách chơi và cơ cấu giải Max 3D. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "max-3d-pro/",
+"loai": "Trang chính",
+"title": "Kết quả Vietlott Max 3D Pro hôm nay",
+"desc": "Kết quả xổ số Vietlott Max 3D Pro các kỳ, dò vé 2 bộ ba số, thống kê, cách chơi và cơ cấu giải Max 3D Pro. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "ban-do-so/",
+"loai": "Trang chính",
+"title": "Bản đồ tần suất lô tô 00–99 XSMB, XSMN, XSMT",
+"desc": "Bản đồ nhiệt tần suất 100 lô tô 00–99 theo các khung thời gian cho XSMB và từng đài XSMN, XSMT, từ dữ liệu đã quay. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "kiem-dinh/",
+"loai": "Trang chính",
+"title": "Kiểm định độ ngẫu nhiên kết quả xổ số XSMB, XSMN, XSMT",
+"desc": "Kiểm định chi-bình phương độ ngẫu nhiên kết quả xổ số theo năm và mức lặp lại của các bảng thống kê ở kỳ sau, trên dữ liệu đã quay. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "mo-phong/",
+"loai": "Trang chính",
+"title": "Mô phỏng xổ số – quay thử XSMB, XSMN, XSMT và mô phỏng cách chơi",
+"desc": "Mô phỏng xổ số: quay thử XSMB, XSMN, XSMT như thật trên trình duyệt và mô phỏng quỹ giả định trên dữ liệu đã quay để thấy kỳ vọng âm của mọi cách chơi. Không phải dự đoán. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "hoi-dap/",
+"loai": "Trang chính",
+"title": "Hỏi đáp (FAQ) về kết quả xổ số",
+"desc": "Câu hỏi thường gặp: giờ quay xổ số ba miền, cách dò vé XSMB, XSMN, XSMT, thời hạn lĩnh thưởng, thuế, lịch quay Vietlott. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "mien-tru-trach-nhiem/",
+"loai": "Trang chính",
+"title": "Tuyên bố miễn trừ trách nhiệm",
+"desc": "Tuyên bố miễn trừ trách nhiệm của XS Lab về tính chất và độ chính xác của thông tin kết quả xổ số. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "chinh-sach-bao-mat/",
+"loai": "Trang chính",
+"title": "Chính sách bảo mật",
+"desc": "Chính sách bảo mật của XS Lab: không thu thập dữ liệu cá nhân, lựa chọn hiển thị chỉ lưu trên thiết bị. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "cookies/",
+"loai": "Trang chính",
+"title": "Chính sách cookie",
+"desc": "Chính sách cookie của XS Lab: không tự đặt cookie, chỉ dùng bộ nhớ cục bộ để nhớ lựa chọn hiển thị. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "rss/",
+"loai": "Trang chính",
+"title": "RSS kết quả xổ số",
+"desc": "Theo dõi kết quả xổ số XSMB, XSMN, XSMT và Vietlott qua nguồn RSS của XS Lab. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "ve-du-lieu/",
+"loai": "Trang chính",
+"title": "Về dữ liệu XS Lab",
+"desc": "Nguồn dữ liệu, cách cập nhật, kiểm tra chất lượng và cách tính của XS Lab. Thông tin chỉ mang tính chất tham khảo."
+},
+{
+"path": "cai-dat-app/",
+"loai": "Trang thống kê, thông tin",
+"title": "Cài app XS Lab – xem kết quả xổ số không quảng cáo trên điện thoại",
+"desc": "Hướng dẫn cài XS Lab lên màn hình chính iPhone và Android: mở nhanh như app, toàn màn hình, không quảng cáo, miễn phí, không cần tải từ kho ứng dụng."
+},
+{
+"path": "dieu-khoan-su-dung/",
+"loai": "Trang thống kê, thông tin",
+"title": "Điều khoản sử dụng XS Lab",
+"desc": "Điều khoản sử dụng trang XS Lab: tính chất thông tin, giới hạn trách nhiệm, sử dụng dữ liệu và độ tuổi."
+},
+{
+"path": "gioi-thieu/",
+"loai": "Trang thống kê, thông tin",
+"title": "Giới thiệu XS Lab – trang kết quả xổ số và thống kê dữ liệu không quảng cáo",
+"desc": "XS Lab là trang kết quả xổ số XSMB, XSMN, XSMT, Vietlott và thống kê dữ liệu quá khứ, không quảng cáo, không dự đoán. Nguồn dữ liệu, cách cập nhật và nguyên tắc biên tập."
+},
+{
+"path": "khong-tim-thay-tmp/",
+"loai": "Trang thống kê, thông tin",
+"title": "Không tìm thấy trang",
+"desc": "Trang bạn tìm không có trên XS Lab."
+},
+{
+"path": "lien-he/",
+"loai": "Trang thống kê, thông tin",
+"title": "Liên hệ XS Lab – góp ý, báo lỗi kết quả xổ số",
+"desc": "Liên hệ XS Lab để góp ý, báo lỗi kết quả XSMB, XSMN, XSMT, Vietlott hoặc đề xuất tính năng."
+},
+{
+"path": "max-3d-pro/lich-su/",
+"loai": "Trang thống kê, thông tin",
+"title": "Lịch sử kết quả Max 3D Pro – tất cả các kỳ từ 2021",
+"desc": "Lịch sử kết quả Vietlott Max 3D Pro: 809 kỳ quay từ 14/09/2021, tra cứu theo năm và từng kỳ."
+},
+{
+"path": "max-3d/lich-su/",
+"loai": "Trang thống kê, thông tin",
+"title": "Lịch sử kết quả Max 3D – tất cả các kỳ từ 2019",
+"desc": "Lịch sử kết quả Vietlott Max 3D: 1.163 kỳ quay từ 22/04/2019, tra cứu theo năm và từng kỳ."
+},
+{
+"path": "mega-645/lich-su/",
+"loai": "Trang thống kê, thông tin",
+"title": "Lịch sử kết quả Mega 6/45 – tất cả các kỳ từ 2017",
+"desc": "Lịch sử kết quả Vietlott Mega 6/45: 1.396 kỳ quay từ 25/10/2017, tra cứu theo năm và từng kỳ."
+},
+{
+"path": "mo-phong/quay-thu-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Quay thử XSMB – mô phỏng quay số miền Bắc như thật",
+"desc": "Quay thử XSMB: mô phỏng buổi quay xổ số miền Bắc trên trình duyệt, số nhảy và ra từng giải như thật, chọn tốc độ Nhanh, Vừa hoặc Như thật. Số ngẫu nhiên, không phải dự đoán."
+},
+{
+"path": "mo-phong/quay-thu-xsmn/",
+"loai": "Trang thống kê, thông tin",
+"title": "Quay thử XSMN – mô phỏng quay số miền Nam như thật",
+"desc": "Quay thử XSMN: mô phỏng buổi quay xổ số miền Nam trên trình duyệt, số nhảy và ra từng giải như thật, chọn tốc độ Nhanh, Vừa hoặc Như thật. Số ngẫu nhiên, không phải dự đoán."
+},
+{
+"path": "mo-phong/quay-thu-xsmt/",
+"loai": "Trang thống kê, thông tin",
+"title": "Quay thử XSMT – mô phỏng quay số miền Trung như thật",
+"desc": "Quay thử XSMT: mô phỏng buổi quay xổ số miền Trung trên trình duyệt, số nhảy và ra từng giải như thật, chọn tốc độ Nhanh, Vừa hoặc Như thật. Số ngẫu nhiên, không phải dự đoán."
+},
+{
+"path": "power-655/lich-su/",
+"loai": "Trang thống kê, thông tin",
+"title": "Lịch sử kết quả Power 6/55 – tất cả các kỳ từ 2017",
+"desc": "Lịch sử kết quả Vietlott Power 6/55: 1.428 kỳ quay từ 01/08/2017, tra cứu theo năm và từng kỳ."
+},
+{
+"path": "so/",
+"loai": "Trang thống kê, thông tin",
+"title": "Tra cứu thống kê số 00–99 XSMB, XSMN, XSMT",
+"desc": "Tra cứu thống kê từng số từ 00 đến 99: số lần về, số kỳ chưa về, kỷ lục gan ở XSMB, XSMN, XSMT, cập nhật đến 25/11/2026."
+},
+{
+"path": "thong-ke/3-cang-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê 3 càng XSMB – 3 càng giải đặc biệt",
+"desc": "Thống kê 3 càng XSMB đến 25/11/2026: 3 càng giải đặc biệt 30 kỳ, 3 càng về nhiều nhất, lâu chưa về và 3 càng ở mọi giải. Không quảng cáo."
+},
+{
+"path": "thong-ke/3-cang-xsmn/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê 3 càng XSMN – 3 càng giải đặc biệt",
+"desc": "3 càng giải đặc biệt XSMN 14 ngày gần nhất theo đài, 3 càng về nhiều nhất và đầu 3 càng trong 365 ngày, đến 25/11/2026."
+},
+{
+"path": "thong-ke/3-cang-xsmt/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê 3 càng XSMT – 3 càng giải đặc biệt",
+"desc": "3 càng giải đặc biệt XSMT 14 ngày gần nhất theo đài, 3 càng về nhiều nhất và đầu 3 càng trong 365 ngày, đến 25/11/2026."
+},
+{
+"path": "thong-ke/30-ky-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê XSMB 30 kỳ gần nhất – tính đến 25/11/2026",
+"desc": "Thống kê XSMB 30 kỳ gần nhất tính đến 25/11/2026: giải Đặc biệt và 2 số cuối các giải, lô về nhiều, lô gan, số chưa về, đầu đuôi. Chỉ là thống kê, không dự đoán."
+},
+{
+"path": "thong-ke/30-ky-xsmn/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê XSMN 30 kỳ gần nhất – tính đến 25/11/2026",
+"desc": "Thống kê XSMN 30 kỳ gần nhất tính đến 25/11/2026: giải Đặc biệt và 2 số cuối các giải, lô về nhiều, lô gan, số chưa về, đầu đuôi. Chỉ là thống kê, không dự đoán."
+},
+{
+"path": "thong-ke/30-ky-xsmt/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê XSMT 30 kỳ gần nhất – tính đến 25/11/2026",
+"desc": "Thống kê XSMT 30 kỳ gần nhất tính đến 25/11/2026: giải Đặc biệt và 2 số cuối các giải, lô về nhiều, lô gan, số chưa về, đầu đuôi. Chỉ là thống kê, không dự đoán."
+},
+{
+"path": "thong-ke/4-cang-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê 4 càng XSMB – 4 càng giải đặc biệt",
+"desc": "Thống kê 4 càng XSMB đến 25/11/2026: 4 càng giải đặc biệt 30 kỳ, 4 càng về nhiều nhất, lâu chưa về và 4 càng ở mọi giải. Không quảng cáo."
+},
+{
+"path": "thong-ke/bang-thong-ke/",
+"loai": "Trang thống kê, thông tin",
+"title": "Bảng thống kê xổ số XSMB, XSMN, XSMT – lô gan, 3 càng, giải đặc biệt",
+"desc": "Tổng hợp các bảng thống kê XSMB, XSMN, XSMT: lô gan, tần suất lô tô, đầu đuôi, giải đặc biệt, giải nhất, giải tám, 3 càng, 4 càng. Không quảng cáo."
+},
+{
+"path": "thong-ke/dau-duoi-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê đầu đuôi lô tô XSMB",
+"desc": "Thống kê đầu đuôi lô tô và giải đặc biệt XSMB đến 25/11/2026. Không quảng cáo."
+},
+{
+"path": "thong-ke/giai-8-xsmn/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê giải tám XSMN – giải 8 miền Nam",
+"desc": "Giải tám XSMN 14 ngày gần nhất theo đài, tần suất giải 8 trong 90 ngày và số lâu chưa về ở giải 8, đến 25/11/2026."
+},
+{
+"path": "thong-ke/giai-8-xsmt/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê giải tám XSMT – giải 8 miền Trung",
+"desc": "Giải tám XSMT 14 ngày gần nhất theo đài, tần suất giải 8 trong 90 ngày và số lâu chưa về ở giải 8, đến 25/11/2026."
+},
+{
+"path": "thong-ke/giai-dac-biet-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê giải đặc biệt XSMB – bảng đặc biệt tuần",
+"desc": "Bảng giải đặc biệt XSMB theo tuần 12 tuần gần nhất, đầu đuôi và 2 số cuối giải đặc biệt lâu chưa về, đến 25/11/2026."
+},
+{
+"path": "thong-ke/giai-dac-biet-xsmn/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê giải đặc biệt XSMN",
+"desc": "Giải đặc biệt XSMN 14 ngày gần nhất theo đài, tần suất 2 số cuối giải đặc biệt 180 ngày và số lâu chưa về, đến 25/11/2026."
+},
+{
+"path": "thong-ke/giai-dac-biet-xsmt/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê giải đặc biệt XSMT",
+"desc": "Giải đặc biệt XSMT 14 ngày gần nhất theo đài, tần suất 2 số cuối giải đặc biệt 180 ngày và số lâu chưa về, đến 25/11/2026."
+},
+{
+"path": "thong-ke/giai-nhat-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê giải nhất XSMB",
+"desc": "Giải nhất XSMB 30 kỳ gần nhất và tần suất 2 số cuối giải nhất 100 kỳ, đến 25/11/2026."
+},
+{
+"path": "thong-ke/giai-nhat-xsmn/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê giải nhất XSMN",
+"desc": "Giải nhất XSMN 14 ngày gần nhất theo đài và tần suất 2 số cuối giải nhất 90 ngày, đến 25/11/2026."
+},
+{
+"path": "thong-ke/giai-nhat-xsmt/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê giải nhất XSMT",
+"desc": "Giải nhất XSMT 14 ngày gần nhất theo đài và tần suất 2 số cuối giải nhất 90 ngày, đến 25/11/2026."
+},
+{
+"path": "thong-ke/lo-gan-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Lô gan XSMB – thống kê lô lâu chưa về miền Bắc",
+"desc": "Lô gan XSMB đến 25/11/2026: 30 lô lâu chưa về nhất, kỷ lục gan của từng lô từ 2005. Không quảng cáo."
+},
+{
+"path": "thong-ke/lo-kep-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê lô kép XSMB – kép bằng, kép lệch",
+"desc": "Thống kê lô kép XSMB đến 25/11/2026: số lần về 30, 90 kỳ, số kỳ chưa về và kỷ lục gan của từng lô kép bằng, kép lệch. Không quảng cáo."
+},
+{
+"path": "thong-ke/so-dao-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê số đảo XSMB – lô đảo về cùng kỳ",
+"desc": "Thống kê 45 cặp số đảo XSMB (12 – 21, 36 – 63…) đến 25/11/2026: số kỳ cùng về trong 90, 365 kỳ, số kỳ chưa cùng về và kỷ lục. Không quảng cáo."
+},
+{
+"path": "thong-ke/so-ganh-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê số gánh XSMB – 3 càng gánh giải đặc biệt",
+"desc": "Thống kê số gánh XSMB đến 25/11/2026: giải đặc biệt có 3 số cuối dạng gánh (121, 353…), tần suất, số kỳ chưa về và số gánh ở mọi giải. Không quảng cáo."
+},
+{
+"path": "thong-ke/tan-suat-lo-to-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Tần suất lô tô XSMB 30, 90 ngày – bảng 00–99",
+"desc": "Tần suất lô tô XSMB 00–99 trong 30 và 90 kỳ gần nhất đến 25/11/2026. Không quảng cáo."
+},
+{
+"path": "thong-ke/tong-chan-le-dac-biet-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Thống kê tổng, chẵn lẻ, to nhỏ giải đặc biệt XSMB",
+"desc": "Thống kê tổng 2 số cuối, chẵn lẻ và to nhỏ của giải đặc biệt XSMB 100 kỳ gần nhất, số kỳ chưa về của từng tổng, đến 25/11/2026. Không quảng cáo."
+},
+{
+"path": "xsmb/chu-nhat/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMB Chủ nhật – Kết quả xổ số miền Bắc Chủ nhật hằng tuần",
+"desc": "XSMB Chủ nhật: kết quả xổ số miền Bắc Chủ nhật các tuần gần nhất, đủ 27 giải. Không quảng cáo."
+},
+{
+"path": "xsmb/so-ket-qua/",
+"loai": "Trang thống kê, thông tin",
+"title": "Sổ kết quả XSMB – lưu trữ kết quả xổ số miền Bắc từ 2005",
+"desc": "Sổ kết quả XSMB: lưu trữ kết quả xổ số miền Bắc đủ giải từ 01/10/2005, theo năm, tháng, ngày, theo thứ. Không quảng cáo."
+},
+{
+"path": "xsmb/thu-2/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMB Thứ 2 – Kết quả xổ số miền Bắc thứ Hai hằng tuần",
+"desc": "XSMB Thứ 2: kết quả xổ số miền Bắc thứ Hai các tuần gần nhất, đủ 27 giải. Không quảng cáo."
+},
+{
+"path": "xsmb/thu-3/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMB Thứ 3 – Kết quả xổ số miền Bắc thứ Ba hằng tuần",
+"desc": "XSMB Thứ 3: kết quả xổ số miền Bắc thứ Ba các tuần gần nhất, đủ 27 giải. Không quảng cáo."
+},
+{
+"path": "xsmb/thu-4/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMB Thứ 4 – Kết quả xổ số miền Bắc thứ Tư hằng tuần",
+"desc": "XSMB Thứ 4: kết quả xổ số miền Bắc thứ Tư các tuần gần nhất, đủ 27 giải. Không quảng cáo."
+},
+{
+"path": "xsmb/thu-5/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMB Thứ 5 – Kết quả xổ số miền Bắc thứ Năm hằng tuần",
+"desc": "XSMB Thứ 5: kết quả xổ số miền Bắc thứ Năm các tuần gần nhất, đủ 27 giải. Không quảng cáo."
+},
+{
+"path": "xsmb/thu-6/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMB Thứ 6 – Kết quả xổ số miền Bắc thứ Sáu hằng tuần",
+"desc": "XSMB Thứ 6: kết quả xổ số miền Bắc thứ Sáu các tuần gần nhất, đủ 27 giải. Không quảng cáo."
+},
+{
+"path": "xsmb/thu-7/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMB Thứ 7 – Kết quả xổ số miền Bắc thứ Bảy hằng tuần",
+"desc": "XSMB Thứ 7: kết quả xổ số miền Bắc thứ Bảy các tuần gần nhất, đủ 27 giải. Không quảng cáo."
+},
+{
+"path": "xsmn/an-giang/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số An Giang (XSAG) – Kết quả XSAG hôm nay, lô gan An Giang",
+"desc": "XSAG: kết quả xổ số An Giang (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Năm, lô gan và lô về nhiều của đài An Giang. Không quảng cáo."
+},
+{
+"path": "xsmn/bac-lieu/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Bạc Liêu (XSBL) – Kết quả XSBL hôm nay, lô gan Bạc Liêu",
+"desc": "XSBL: kết quả xổ số Bạc Liêu (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Ba, lô gan và lô về nhiều của đài Bạc Liêu. Không quảng cáo."
+},
+{
+"path": "xsmn/ben-tre/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Bến Tre (XSBT) – Kết quả XSBT hôm nay, lô gan Bến Tre",
+"desc": "XSBT (còn gọi XSBTR): kết quả xổ số Bến Tre (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Ba, lô gan và lô về nhiều của đài Bến Tre. Không quảng cáo."
+},
+{
+"path": "xsmn/binh-duong/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Bình Dương (XSBD) – Kết quả XSBD hôm nay, lô gan Bình Dương",
+"desc": "XSBD: kết quả xổ số Bình Dương (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Sáu, lô gan và lô về nhiều của đài Bình Dương. Không quảng cáo."
+},
+{
+"path": "xsmn/binh-phuoc/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Bình Phước (XSBP) – Kết quả XSBP hôm nay, lô gan Bình Phước",
+"desc": "XSBP: kết quả xổ số Bình Phước (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Bảy, lô gan và lô về nhiều của đài Bình Phước. Không quảng cáo."
+},
+{
+"path": "xsmn/binh-thuan/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Bình Thuận (XSBTH) – Kết quả XSBTH hôm nay, lô gan Bình Thuận",
+"desc": "XSBTH: kết quả xổ số Bình Thuận (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Năm, lô gan và lô về nhiều của đài Bình Thuận. Không quảng cáo."
+},
+{
+"path": "xsmn/ca-mau/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Cà Mau (XSCM) – Kết quả XSCM hôm nay, lô gan Cà Mau",
+"desc": "XSCM: kết quả xổ số Cà Mau (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Hai, lô gan và lô về nhiều của đài Cà Mau. Không quảng cáo."
+},
+{
+"path": "xsmn/can-tho/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Cần Thơ (XSCT) – Kết quả XSCT hôm nay, lô gan Cần Thơ",
+"desc": "XSCT: kết quả xổ số Cần Thơ (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Tư, lô gan và lô về nhiều của đài Cần Thơ. Không quảng cáo."
+},
+{
+"path": "xsmn/chu-nhat/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMN Chủ nhật – Kết quả xổ số miền Nam Chủ nhật hằng tuần",
+"desc": "XSMN Chủ nhật: kết quả xổ số miền Nam Chủ nhật các tuần gần nhất, các đài quay Chủ nhật, đủ 18 giải. Không quảng cáo."
+},
+{
+"path": "xsmn/da-lat/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Đà Lạt (XSDL) – Kết quả XSDL hôm nay, lô gan Đà Lạt",
+"desc": "XSDL (còn gọi XSLD): kết quả xổ số Đà Lạt (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay Chủ nhật, lô gan và lô về nhiều của đài Đà Lạt. Không quảng cáo."
+},
+{
+"path": "xsmn/dong-nai/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Đồng Nai (XSDN) – Kết quả XSDN hôm nay, lô gan Đồng Nai",
+"desc": "XSDN: kết quả xổ số Đồng Nai (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Tư, lô gan và lô về nhiều của đài Đồng Nai. Không quảng cáo."
+},
+{
+"path": "xsmn/dong-thap/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Đồng Tháp (XSDT) – Kết quả XSDT hôm nay, lô gan Đồng Tháp",
+"desc": "XSDT: kết quả xổ số Đồng Tháp (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Hai, lô gan và lô về nhiều của đài Đồng Tháp. Không quảng cáo."
+},
+{
+"path": "xsmn/hau-giang/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Hậu Giang (XSHG) – Kết quả XSHG hôm nay, lô gan Hậu Giang",
+"desc": "XSHG: kết quả xổ số Hậu Giang (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Bảy, lô gan và lô về nhiều của đài Hậu Giang. Không quảng cáo."
+},
+{
+"path": "xsmn/kien-giang/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Kiên Giang (XSKG) – Kết quả XSKG hôm nay, lô gan Kiên Giang",
+"desc": "XSKG: kết quả xổ số Kiên Giang (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay Chủ nhật, lô gan và lô về nhiều của đài Kiên Giang. Không quảng cáo."
+},
+{
+"path": "xsmn/long-an/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Long An (XSLA) – Kết quả XSLA hôm nay, lô gan Long An",
+"desc": "XSLA: kết quả xổ số Long An (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Bảy, lô gan và lô về nhiều của đài Long An. Không quảng cáo."
+},
+{
+"path": "xsmn/so-ket-qua/",
+"loai": "Trang thống kê, thông tin",
+"title": "Sổ kết quả XSMN – lưu trữ kết quả xổ số miền Nam từ 2008",
+"desc": "Sổ kết quả XSMN: lưu trữ kết quả xổ số miền Nam đủ giải từ 01/01/2008, theo năm, tháng, ngày, theo thứ, theo đài. Không quảng cáo."
+},
+{
+"path": "xsmn/soc-trang/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Sóc Trăng (XSST) – Kết quả XSST hôm nay, lô gan Sóc Trăng",
+"desc": "XSST: kết quả xổ số Sóc Trăng (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Tư, lô gan và lô về nhiều của đài Sóc Trăng. Không quảng cáo."
+},
+{
+"path": "xsmn/tay-ninh/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Tây Ninh (XSTN) – Kết quả XSTN hôm nay, lô gan Tây Ninh",
+"desc": "XSTN: kết quả xổ số Tây Ninh (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Năm, lô gan và lô về nhiều của đài Tây Ninh. Không quảng cáo."
+},
+{
+"path": "xsmn/thu-2/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMN Thứ 2 – Kết quả xổ số miền Nam thứ Hai hằng tuần",
+"desc": "XSMN Thứ 2: kết quả xổ số miền Nam thứ Hai các tuần gần nhất, các đài quay thứ Hai, đủ 18 giải. Không quảng cáo."
+},
+{
+"path": "xsmn/thu-3/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMN Thứ 3 – Kết quả xổ số miền Nam thứ Ba hằng tuần",
+"desc": "XSMN Thứ 3: kết quả xổ số miền Nam thứ Ba các tuần gần nhất, các đài quay thứ Ba, đủ 18 giải. Không quảng cáo."
+},
+{
+"path": "xsmn/thu-4/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMN Thứ 4 – Kết quả xổ số miền Nam thứ Tư hằng tuần",
+"desc": "XSMN Thứ 4: kết quả xổ số miền Nam thứ Tư các tuần gần nhất, các đài quay thứ Tư, đủ 18 giải. Không quảng cáo."
+},
+{
+"path": "xsmn/thu-5/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMN Thứ 5 – Kết quả xổ số miền Nam thứ Năm hằng tuần",
+"desc": "XSMN Thứ 5: kết quả xổ số miền Nam thứ Năm các tuần gần nhất, các đài quay thứ Năm, đủ 18 giải. Không quảng cáo."
+},
+{
+"path": "xsmn/thu-6/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMN Thứ 6 – Kết quả xổ số miền Nam thứ Sáu hằng tuần",
+"desc": "XSMN Thứ 6: kết quả xổ số miền Nam thứ Sáu các tuần gần nhất, các đài quay thứ Sáu, đủ 18 giải. Không quảng cáo."
+},
+{
+"path": "xsmn/thu-7/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMN Thứ 7 – Kết quả xổ số miền Nam thứ Bảy hằng tuần",
+"desc": "XSMN Thứ 7: kết quả xổ số miền Nam thứ Bảy các tuần gần nhất, các đài quay thứ Bảy, đủ 18 giải. Không quảng cáo."
+},
+{
+"path": "xsmn/tien-giang/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Tiền Giang (XSTG) – Kết quả XSTG hôm nay, lô gan Tiền Giang",
+"desc": "XSTG: kết quả xổ số Tiền Giang (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay Chủ nhật, lô gan và lô về nhiều của đài Tiền Giang. Không quảng cáo."
+},
+{
+"path": "xsmn/tp-hcm/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số TP.HCM (XSHCM) – Kết quả XSHCM hôm nay, lô gan TP.HCM",
+"desc": "XSHCM (còn gọi XSTP): kết quả xổ số TP.HCM (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Hai, thứ Bảy, lô gan và lô về nhiều của đài TP.HCM. Không quảng cáo."
+},
+{
+"path": "xsmn/tra-vinh/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Trà Vinh (XSTV) – Kết quả XSTV hôm nay, lô gan Trà Vinh",
+"desc": "XSTV: kết quả xổ số Trà Vinh (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Sáu, lô gan và lô về nhiều của đài Trà Vinh. Không quảng cáo."
+},
+{
+"path": "xsmn/vinh-long/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Vĩnh Long (XSVL) – Kết quả XSVL hôm nay, lô gan Vĩnh Long",
+"desc": "XSVL: kết quả xổ số Vĩnh Long (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Sáu, lô gan và lô về nhiều của đài Vĩnh Long. Không quảng cáo."
+},
+{
+"path": "xsmn/vung-tau/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Vũng Tàu (XSVT) – Kết quả XSVT hôm nay, lô gan Vũng Tàu",
+"desc": "XSVT: kết quả xổ số Vũng Tàu (XSMN) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Ba, lô gan và lô về nhiều của đài Vũng Tàu. Không quảng cáo."
+},
+{
+"path": "xsmt/binh-dinh/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Bình Định (XSBDI) – Kết quả XSBDI hôm nay, lô gan Bình Định",
+"desc": "XSBDI: kết quả xổ số Bình Định (XSMT) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Năm, lô gan và lô về nhiều của đài Bình Định. Không quảng cáo."
+},
+{
+"path": "xsmt/chu-nhat/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMT Chủ nhật – Kết quả xổ số miền Trung Chủ nhật hằng tuần",
+"desc": "XSMT Chủ nhật: kết quả xổ số miền Trung Chủ nhật các tuần gần nhất, các đài quay Chủ nhật, đủ 18 giải. Không quảng cáo."
+},
+{
+"path": "xsmt/da-nang/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Đà Nẵng (XSDNG) – Kết quả XSDNG hôm nay, lô gan Đà Nẵng",
+"desc": "XSDNG (còn gọi XSDNA): kết quả xổ số Đà Nẵng (XSMT) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Tư, thứ Bảy, lô gan và lô về nhiều của đài Đà Nẵng. Không quảng cáo."
+},
+{
+"path": "xsmt/dak-lak/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Đắk Lắk (XSDLK) – Kết quả XSDLK hôm nay, lô gan Đắk Lắk",
+"desc": "XSDLK: kết quả xổ số Đắk Lắk (XSMT) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Ba, lô gan và lô về nhiều của đài Đắk Lắk. Không quảng cáo."
+},
+{
+"path": "xsmt/dak-nong/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Đắk Nông (XSDNO) – Kết quả XSDNO hôm nay, lô gan Đắk Nông",
+"desc": "XSDNO: kết quả xổ số Đắk Nông (XSMT) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Bảy, lô gan và lô về nhiều của đài Đắk Nông. Không quảng cáo."
+},
+{
+"path": "xsmt/gia-lai/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Gia Lai (XSGL) – Kết quả XSGL hôm nay, lô gan Gia Lai",
+"desc": "XSGL: kết quả xổ số Gia Lai (XSMT) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Sáu, lô gan và lô về nhiều của đài Gia Lai. Không quảng cáo."
+},
+{
+"path": "xsmt/khanh-hoa/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Khánh Hòa (XSKH) – Kết quả XSKH hôm nay, lô gan Khánh Hòa",
+"desc": "XSKH: kết quả xổ số Khánh Hòa (XSMT) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Tư, Chủ nhật, lô gan và lô về nhiều của đài Khánh Hòa. Không quảng cáo."
+},
+{
+"path": "xsmt/kon-tum/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Kon Tum (XSKT) – Kết quả XSKT hôm nay, lô gan Kon Tum",
+"desc": "XSKT: kết quả xổ số Kon Tum (XSMT) các kỳ gần nhất, đủ 18 giải, lịch quay Chủ nhật, lô gan và lô về nhiều của đài Kon Tum. Không quảng cáo."
+},
+{
+"path": "xsmt/ninh-thuan/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Ninh Thuận (XSNT) – Kết quả XSNT hôm nay, lô gan Ninh Thuận",
+"desc": "XSNT: kết quả xổ số Ninh Thuận (XSMT) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Sáu, lô gan và lô về nhiều của đài Ninh Thuận. Không quảng cáo."
+},
+{
+"path": "xsmt/phu-yen/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Phú Yên (XSPY) – Kết quả XSPY hôm nay, lô gan Phú Yên",
+"desc": "XSPY: kết quả xổ số Phú Yên (XSMT) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Hai, lô gan và lô về nhiều của đài Phú Yên. Không quảng cáo."
+},
+{
+"path": "xsmt/quang-binh/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Quảng Bình (XSQB) – Kết quả XSQB hôm nay, lô gan Quảng Bình",
+"desc": "XSQB: kết quả xổ số Quảng Bình (XSMT) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Năm, lô gan và lô về nhiều của đài Quảng Bình. Không quảng cáo."
+},
+{
+"path": "xsmt/quang-nam/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Quảng Nam (XSQNM) – Kết quả XSQNM hôm nay, lô gan Quảng Nam",
+"desc": "XSQNM (còn gọi XSQNA): kết quả xổ số Quảng Nam (XSMT) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Ba, lô gan và lô về nhiều của đài Quảng Nam. Không quảng cáo."
+},
+{
+"path": "xsmt/quang-ngai/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Quảng Ngãi (XSQNG) – Kết quả XSQNG hôm nay, lô gan Quảng Ngãi",
+"desc": "XSQNG: kết quả xổ số Quảng Ngãi (XSMT) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Bảy, lô gan và lô về nhiều của đài Quảng Ngãi. Không quảng cáo."
+},
+{
+"path": "xsmt/quang-tri/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Quảng Trị (XSQT) – Kết quả XSQT hôm nay, lô gan Quảng Trị",
+"desc": "XSQT: kết quả xổ số Quảng Trị (XSMT) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Năm, lô gan và lô về nhiều của đài Quảng Trị. Không quảng cáo."
+},
+{
+"path": "xsmt/so-ket-qua/",
+"loai": "Trang thống kê, thông tin",
+"title": "Sổ kết quả XSMT – lưu trữ kết quả xổ số miền Trung từ 2009",
+"desc": "Sổ kết quả XSMT: lưu trữ kết quả xổ số miền Trung đủ giải từ 27/01/2009, theo năm, tháng, ngày, theo thứ, theo đài. Không quảng cáo."
+},
+{
+"path": "xsmt/thu-2/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMT Thứ 2 – Kết quả xổ số miền Trung thứ Hai hằng tuần",
+"desc": "XSMT Thứ 2: kết quả xổ số miền Trung thứ Hai các tuần gần nhất, các đài quay thứ Hai, đủ 18 giải. Không quảng cáo."
+},
+{
+"path": "xsmt/thu-3/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMT Thứ 3 – Kết quả xổ số miền Trung thứ Ba hằng tuần",
+"desc": "XSMT Thứ 3: kết quả xổ số miền Trung thứ Ba các tuần gần nhất, các đài quay thứ Ba, đủ 18 giải. Không quảng cáo."
+},
+{
+"path": "xsmt/thu-4/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMT Thứ 4 – Kết quả xổ số miền Trung thứ Tư hằng tuần",
+"desc": "XSMT Thứ 4: kết quả xổ số miền Trung thứ Tư các tuần gần nhất, các đài quay thứ Tư, đủ 18 giải. Không quảng cáo."
+},
+{
+"path": "xsmt/thu-5/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMT Thứ 5 – Kết quả xổ số miền Trung thứ Năm hằng tuần",
+"desc": "XSMT Thứ 5: kết quả xổ số miền Trung thứ Năm các tuần gần nhất, các đài quay thứ Năm, đủ 18 giải. Không quảng cáo."
+},
+{
+"path": "xsmt/thu-6/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMT Thứ 6 – Kết quả xổ số miền Trung thứ Sáu hằng tuần",
+"desc": "XSMT Thứ 6: kết quả xổ số miền Trung thứ Sáu các tuần gần nhất, các đài quay thứ Sáu, đủ 18 giải. Không quảng cáo."
+},
+{
+"path": "xsmt/thu-7/",
+"loai": "Trang thống kê, thông tin",
+"title": "XSMT Thứ 7 – Kết quả xổ số miền Trung thứ Bảy hằng tuần",
+"desc": "XSMT Thứ 7: kết quả xổ số miền Trung thứ Bảy các tuần gần nhất, các đài quay thứ Bảy, đủ 18 giải. Không quảng cáo."
+},
+{
+"path": "xsmt/thua-thien-hue/",
+"loai": "Trang thống kê, thông tin",
+"title": "Xổ số Thừa Thiên Huế (XSTTH) – Kết quả XSTTH hôm nay, lô gan Thừa Thiên Huế",
+"desc": "XSTTH (còn gọi XSHUE): kết quả xổ số Thừa Thiên Huế (XSMT) các kỳ gần nhất, đủ 18 giải, lịch quay thứ Hai, Chủ nhật, lô gan và lô về nhiều của đài Thừa Thiên Huế. Không quảng cáo."
+}
+]
+}

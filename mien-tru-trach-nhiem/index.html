@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
+<head><!--seo-default:{&quot;title&quot;: &quot;Tuyên bố miễn trừ trách nhiệm&quot;, &quot;desc&quot;: &quot;Tuyên bố miễn trừ trách nhiệm của XS Lab về tính chất và độ chính xác của thông tin kết quả xổ số. Thông tin chỉ mang tính chất tham khảo.&quot;}-->
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-src 'self'; manifest-src 'self'; worker-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -13,8 +13,8 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="vi_VN">
 <meta property="og:site_name" content="XS Lab">
-<meta property="og:title" content="Tuyên bố miễn trừ trách nhiệm | XS Lab">
-<meta property="og:description" content="Tuyên bố miễn trừ trách nhiệm của XS Lab về tính chất và độ chính xác của thông tin kết quả xổ số.">
+<meta property="og:title" content="Tuyên bố miễn trừ trách nhiệm">
+<meta property="og:description" content="Tuyên bố miễn trừ trách nhiệm của XS Lab về tính chất và độ chính xác của thông tin kết quả xổ số. Thông tin chỉ mang tính chất tham khảo.">
 <meta property="og:url" content="https://xslab.live/mien-tru-trach-nhiem/">
 <meta property="og:image" content="https://xslab.live/icon-512.png">
 <meta name="twitter:card" content="summary">
@@ -1018,6 +1018,8 @@ function seg(el,items,cur,onPick){el.querySelectorAll('button').forEach(b=>b.rem
 const ball=(k,cls='',cap='')=>cap?`<div class="ballwrap"><div class="ball ${cls}">${pad(k)}</div><small>${cap}</small></div>`:`<div class="ball ${cls}">${pad(k)}</div>`;
 function axisTicks(y0,y1,n=4){const raw=(y1-y0)/n,mag=Math.pow(10,Math.floor(Math.log10(raw||1))),step=[1,2,5,10].map(x=>x*mag).find(x=>x>=raw)||mag;const t=[];for(let v=Math.ceil(y0/step)*step;v<=y1+1e-9;v+=step)t.push(v);return t;}
 const numTxt=a=>a.map(pad).join(' ');
+let XCFG={};try{fetch(XS_ROOT+'site-config.json',{cache:'no-cache'}).then(r=>r.ok?r.json():{}).then(j=>{XCFG=(j&&typeof j.anh==='object'&&j.anh)||{};}).catch(()=>{});}catch(e){}
+const cfgA=(k,d)=>{const v=XCFG&&typeof XCFG[k]==='string'?XCFG[k].trim():'';return v?v.slice(0,120):d;};
 function copyImgOK(){const RD=regionDates();if(!rs.date||!RD.length)return false;const last=new Date(RD[RD.length-1]+'T00:00:00'),d=new Date(rs.date+'T00:00:00');return (last-d)/864e5<=60;}
 function boardData(){const b=$('rsBoard'),tk=b.querySelector('.ticket'),nm=el=>[...el.querySelectorAll('.nm')].map(x=>x.textContent.replace(/\D/g,'')).filter(Boolean);
  if(tk)return{mb:true,rows:[...tk.querySelectorAll('.row')].map(r=>[r.querySelector('.lb').textContent.trim(),nm(r)])};
@@ -1030,7 +1032,7 @@ function drawBoard(D){const S=2,W=720,P=24,F='system-ui,-apple-system,"Segoe UI"
  else{y+=38;D.rows.forEach(([lb,cs])=>{const n=Math.max(1,...cs.map(c=>c.length)),big=/^ĐB/i.test(lb),lh=big?36:30;lay.push({lb,cs,h:n*lh+12,lh,big,g8:/^G\.?8$/i.test(lb.replace(/\s/g,''))});y+=n*lh+12;});}
  const yF=y+14;y=yF+46;const H=y;
  const cv=document.createElement('canvas');cv.width=W*S;cv.height=H*S;const c=cv.getContext('2d');c.scale(S,S);c.textBaseline='middle';
- c.fillStyle='#fff';c.fillRect(0,0,W,H);c.fillStyle=RED;c.fillRect(0,0,W,HB);c.fillStyle='#fff';c.textAlign='center';c.font=`800 24px ${F}`;c.fillText('xslab.live – KQXS không quảng cáo',W/2,HB/2+1);
+ c.fillStyle='#fff';c.fillRect(0,0,W,H);c.fillStyle=RED;c.fillRect(0,0,W,HB);c.fillStyle='#fff';c.textAlign='center';c.font=`800 24px ${F}`;c.fillText(cfgA('dau','xslab.live – KQXS không quảng cáo'),W/2,HB/2+1);
  c.fillStyle=INK;c.font=`700 21px ${F}`;c.fillText(title,W/2,yT);
  let yy=yTab;c.strokeStyle=LINE;c.lineWidth=1;
  if(!D.mb){const cw=(TW-LW)/D.cols.length;c.fillStyle='#efede9';c.fillRect(P,yy,TW,38);c.fillStyle=INK;c.font=`700 16px ${F}`;D.cols.forEach((h,j)=>c.fillText(h,P+LW+cw*j+cw/2,yy+19));c.fillStyle=MUT;c.font=`700 14px ${F}`;c.fillText('Giải',P+LW/2,yy+19);yy+=38;
@@ -1043,7 +1045,7 @@ function drawBoard(D){const S=2,W=720,P=24,F='system-ui,-apple-system,"Segoe UI"
    c.beginPath();c.moveTo(P,yy+r.h+.5);c.lineTo(P+TW,yy+r.h+.5);c.stroke();yy+=r.h;});
   const x=P+LW+.5;c.beginPath();c.moveTo(x,yTab);c.lineTo(x,yy);c.stroke();}
  c.strokeRect(P+.5,yTab+.5,TW-1,yy-yTab-1);
- c.fillStyle=MUT;c.font=`700 17px ${F}`;c.fillText(`XS Lab – KQXS ${reg} – ${dd}`,W/2,yF+18);
+ c.fillStyle=MUT;c.font=`700 17px ${F}`;c.fillText(cfgA('cuoi_kq','XS Lab – KQXS {mien} – {ngay}').split('{mien}').join(reg).split('{ngay}').join(dd),W/2,yF+18);
  return cv;}
 async function copyImg(btn){const D=boardData();if(!D){copyText(boardText(),btn);return;}
  const cv=drawBoard(D),blobP=new Promise(r=>cv.toBlob(r,'image/png')),reg=R.region==='mb'?'xsmb':R.region==='mn'?'xsmn':'xsmt',fn=`xslab-${reg}-${(rs.date||'').split('-').reverse().join('-')}.png`;let mode='';
@@ -1057,12 +1059,12 @@ function drawTableImg(M){const S=2,W=720,P=24,F='system-ui,-apple-system,"Segoe 
  const fT=`700 21px ${F}`,fS=`500 15px ${F}`,tl=wrap(M.title,fT,TW),sl=wrap(M.sub,fS,TW);
  let y=HB+22;const yT=y;y+=tl.length*28;const yS=y;y+=sl.length*22+12;const yTab=y;y+=HH+M.rows.length*RH;const yF=y+16;const H=yF+60;
  const cv=document.createElement('canvas');cv.width=W*S;cv.height=H*S;const c=cv.getContext('2d');c.scale(S,S);c.textBaseline='middle';c.textAlign='center';
- c.fillStyle='#fff';c.fillRect(0,0,W,H);c.fillStyle=RED;c.fillRect(0,0,W,HB);c.fillStyle='#fff';c.font=`800 24px ${F}`;c.fillText('xslab.live – KQXS không quảng cáo',W/2,HB/2+1);
+ c.fillStyle='#fff';c.fillRect(0,0,W,H);c.fillStyle=RED;c.fillRect(0,0,W,HB);c.fillStyle='#fff';c.font=`800 24px ${F}`;c.fillText(cfgA('dau','xslab.live – KQXS không quảng cáo'),W/2,HB/2+1);
  c.fillStyle=INK;c.font=fT;tl.forEach((l,i)=>c.fillText(l,W/2,yT+14+i*28));c.fillStyle=MUT;c.font=fS;sl.forEach((l,i)=>c.fillText(l,W/2,yS+11+i*22));
  c.fillStyle='#efede9';c.fillRect(P,yTab,TW,HH);let x=P;c.fillStyle=MUT;c.font=`700 14px ${F}`;M.head.forEach((h,j)=>{c.fillText(h,x+ws[j]/2,yTab+HH/2);x+=ws[j];});
  let yy=yTab+HH;M.rows.forEach((r,i)=>{if(i%2){c.fillStyle=ZB;c.fillRect(P,yy,TW,RH);}let x=P;r.forEach((v,j)=>{c.fillStyle=j===1?RED:j===0?MUT:INK;c.font=j===1?`800 22px ${F}`:j===0?`700 15px ${F}`:`600 17px ${F}`;c.fillText(v,x+ws[j]/2,yy+RH/2);x+=ws[j];});yy+=RH;});
  c.strokeStyle=LINE;c.lineWidth=1;c.strokeRect(P+.5,yTab+.5,TW-1,yy-yTab-1);
- c.fillStyle=MUT;c.font=`700 17px ${F}`;c.fillText(M.foot,W/2,yF+14);c.font=`500 13px ${F}`;c.fillText('Thống kê kết quả đã quay, không phải dự đoán.',W/2,yF+38);
+ c.fillStyle=MUT;c.font=`700 17px ${F}`;c.fillText(M.foot,W/2,yF+14);c.font=`500 13px ${F}`;c.fillText(cfgA('ghi_chu_tk','Thống kê kết quả đã quay, không phải dự đoán.'),W/2,yF+38);
  return cv;}
 async function copyCanvas(cv,fn,btn){const blobP=new Promise(r=>cv.toBlob(r,'image/png'));let mode='';
  try{if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){await navigator.clipboard.write([new ClipboardItem({'image/png':blobP})]);mode='copy';}}catch(e){}
@@ -1075,7 +1077,7 @@ function rkCopy(btn){const wrap=btn.closest('.rkt'),tb=wrap&&wrap.querySelector(
  const ht=h?h.textContent.trim():'',st=sec?sec.textContent.trim():'',title=st&&ht.indexOf(st)<0?`${st} – ${ht}`:(ht||st||'Bảng xếp hạng');
  const dt=h2?(h2.textContent.match(/\d{2}\/\d{2}\/\d{4}/)||[''])[0]:'',reg=R.region==='mb'?'MB':R.region==='mn'?'MN':'MT';
  const head=[...tb.querySelectorAll('thead th')].map(x=>x.textContent.trim()),rows=[...tb.querySelectorAll('tbody tr')].filter(tr=>!tr.hidden).slice(0,30).map(tr=>[...tr.children].map(td=>td.textContent.trim()));
- const cv=drawTableImg({title,sub:`${R.region==='mb'?'XSMB':(R.region==='mn'?'XSMN ':'XSMT ')+where()} · tính đến kỳ ${dt}`,head,rows,foot:`XS Lab – Thống kê ${reg} – ${dt}`});
+ const cv=drawTableImg({title,sub:`${R.region==='mb'?'XSMB':(R.region==='mn'?'XSMN ':'XSMT ')+where()} · tính đến kỳ ${dt}`,head,rows,foot:cfgA('cuoi_tk','XS Lab – Thống kê {mien} – {ngay}').split('{mien}').join(reg).split('{ngay}').join(dt)});
  copyCanvas(cv,`xslab-thong-ke-${reg.toLowerCase()}-${dt.replace(/\//g,'-')}.png`,btn);}
 document.addEventListener('click',e=>{const b=e.target.closest('.rkcp');if(b){e.preventDefault();rkCopy(b);}});
 async function copyText(t,btn){let ok=false;try{await navigator.clipboard.writeText(t);ok=true;}catch(e){try{const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();ok=document.execCommand('copy');ta.remove();}catch(e2){}}

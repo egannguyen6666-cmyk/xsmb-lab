@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quản trị XS Lab</title>
+<link rel="icon" type="image/png" href="/icon-192.png">
+<style>
+:root{--bg:#f4f2ee;--panel:#fff;--ink:#17161c;--mut:#6b6872;--line:#e3e0da;--red:#d01f3c;--ok:#1a8f4c;--warn:#b86e00}
+@media(prefers-color-scheme:dark){:root{--bg:#121117;--panel:#1b1a21;--ink:#eeedf2;--mut:#a3a0ab;--line:#2e2c36}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--panel);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+header h1{font-size:17px;margin:0;flex:1}header small{color:var(--mut)}
+main{max-width:900px;margin:0 auto;padding:16px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+h2{font-size:17px;margin:0 0 4px}p.sub{color:var(--mut);margin:0 0 14px;font-size:14px}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+input[type=text],textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 11px}
+textarea{min-height:64px;resize:vertical}
+input:focus,textarea:focus{outline:2px solid var(--red);outline-offset:1px}
+.hint{color:var(--mut);font-size:12.5px;margin-top:3px;display:flex;justify-content:space-between;gap:8px}
+.hint .over{color:var(--red);font-weight:700}
+.vars{font-size:13px;color:var(--mut);margin:6px 0 0}.vars code{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:0 5px}
+button{font:inherit;font-weight:700;border-radius:999px;padding:9px 18px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
+button.pri{background:var(--red);border-color:var(--red);color:#fff}button:disabled{opacity:.5;cursor:default}
+#msg{font-size:14px}#msg.ok{color:var(--ok)}#msg.err{color:var(--red)}#msg.warn{color:var(--warn)}
+.fam{border-top:1px solid var(--line);padding-top:6px;margin-top:14px}.fam:first-of-type{border-top:0;margin-top:0}
+.ex{font-size:13px;color:var(--mut);margin-top:2px}
+#q{margin-bottom:10px}
+details.pg{border:1px solid var(--line);border-radius:10px;margin:6px 0;background:var(--bg)}
+details.pg>summary{cursor:pointer;padding:9px 12px;list-style:none;display:flex;gap:10px;align-items:baseline}
+details.pg>summary::-webkit-details-marker{display:none}
+details.pg>summary b{font-size:14px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+details.pg>summary code{font-size:12px;color:var(--mut)}
+details.pg .in{padding:0 12px 12px}
+.tag{font-size:11px;font-weight:700;border-radius:999px;padding:1px 8px;background:var(--red);color:#fff}
+.dflt{font-size:13px;color:var(--mut);background:var(--panel);border:1px dashed var(--line);border-radius:8px;padding:6px 9px;margin-top:4px}
+#prev{width:100%;max-width:420px;border:1px solid var(--line);border-radius:10px;margin-top:10px;display:block}
+.gate{text-align:center;padding:40px 16px}
+</style></head>
+<body>
+<header><h1>Quản trị XS Lab</h1><small id="who"></small><span id="msg" role="status" aria-live="polite"></span><button class="pri" id="save" disabled>Lưu thay đổi</button></header>
+<main id="app">
+ <section class="gate" id="gate"><p>Đang tải cấu hình…</p></section>
+ <div id="ui" hidden>
+ <section>
+  <h2>Trạng thái cập nhật</h2>
+  <p class="sub">Sau khi lưu, bot dựng lại web trong khoảng 3–5 phút. Tiêu đề SEO thay đổi ngay trong trang; Google cần vài ngày để cập nhật kết quả tìm kiếm.</p>
+  <div id="st">Đang kiểm tra…</div>
+ </section>
+ <section>
+  <h2>Chữ trên ảnh sao chép</h2>
+  <p class="sub">Áp dụng cho ảnh khi bấm “Sao chép” ở bảng kết quả (60 ngày gần nhất) và ở các bảng xếp hạng. Để trống = dùng chữ mặc định.</p>
+  <label for="a_dau">Dải đỏ trên cùng</label><input type="text" id="a_dau" data-a="dau" maxlength="120" placeholder="xslab.live – KQXS không quảng cáo">
+  <label for="a_cuoi_kq">Dòng cuối ảnh kết quả</label><input type="text" id="a_cuoi_kq" data-a="cuoi_kq" maxlength="120" placeholder="XS Lab – KQXS {mien} – {ngay}">
+  <label for="a_cuoi_tk">Dòng cuối ảnh bảng xếp hạng</label><input type="text" id="a_cuoi_tk" data-a="cuoi_tk" maxlength="120" placeholder="XS Lab – Thống kê {mien} – {ngay}">
+  <label for="a_ghi_chu_tk">Ghi chú nhỏ dưới ảnh bảng xếp hạng</label><input type="text" id="a_ghi_chu_tk" data-a="ghi_chu_tk" maxlength="120" placeholder="Thống kê kết quả đã quay, không phải dự đoán.">
+  <p class="vars">Chèn được: <code>{mien}</code> (MB, MN, MT) · <code>{ngay}</code> (25/11/2026)</p>
+  <canvas id="prev" width="840" height="300" aria-label="Xem trước đầu và cuối ảnh"></canvas>
+ </section>
+ <section>
+  <h2>Mẫu tiêu đề cho nhóm trang</h2>
+  <p class="sub">Một mẫu áp cho cả nghìn trang cùng loại. Để trống = giữ tiêu đề hiện tại. Tiêu đề nên dưới 60 ký tự, mô tả dưới 160 ký tự; “| XS Lab” được tự thêm sau tiêu đề.</p>
+  <div id="fams"></div>
+ </section>
+ <section>
+  <h2>Tiêu đề từng trang</h2>
+  <p class="sub">Trang chủ, Trực tiếp, Thống kê, các trang đài, trang thông tin… Bấm vào trang để sửa. Để trống = giữ mặc định.</p>
+  <input type="text" id="q" placeholder="Tìm trang theo tên hoặc đường dẫn…" aria-label="Tìm trang">
+  <div id="pages"></div>
+ </section>
+ </div>
+</main>
+<script>
+(function(){
+'use strict';
+if(window.top!==window.self){document.body.innerHTML='';return;}
+var $=function(i){return document.getElementById(i);};
+var FAMS=[
+ {k:'ngay_mien',n:'Trang kết quả theo ngày của cả miền',ex:'xslab.live/xsmb/25-11-2026/',dt:'XSMB 25/11/2026 – Kết quả xổ số miền Bắc thứ Tư ngày 25/11/2026',vars:['mien_ma','mien','ngay','ngay_ngan','thu']},
+ {k:'ngay_dai',n:'Trang kết quả theo ngày của từng đài',ex:'xslab.live/xsmn/can-tho/25-11-2026/',dt:'XSCT 25/11, Xổ số Cần Thơ 25/11/2026 – Kết quả XSCT thứ Tư',vars:['dai','dai_ma','mien_ma','ngay','ngay_ngan','thu']},
+ {k:'so',n:'Trang thống kê từng số 00–99',ex:'xslab.live/so/37/',dt:'Thống kê số 37 – số 37 XSMB, XSMN, XSMT về bao nhiêu lần',vars:['so']}];
+var VARN={mien_ma:'XSMB / XSMN / XSMT',mien:'miền Bắc…',ngay:'25/11/2026',ngay_ngan:'25/11',thu:'thứ Tư',dai:'Cần Thơ',dai_ma:'XSCT',so:'37'};
+var cfg={anh:{},seo_mau:{},seo_trang:{}},sha=null,dirty=false,pages=[];
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function msg(t,c){var m=$('msg');m.textContent=t||'';m.className=c||'';}
+function setDirty(){dirty=true;$('save').disabled=false;msg('Có thay đổi chưa lưu','warn');}
+function counter(inp,lim){var h=document.createElement('div');h.className='hint';inp.after(h);function u(){var n=inp.value.trim().length;h.innerHTML='<span>'+(n?'':'Đang dùng mặc định')+'</span><span class="'+(n>lim?'over':'')+'">'+n+'/'+lim+'</span>';}inp.addEventListener('input',u);u();}
+function api(path,opt){opt=opt||{};opt.headers=Object.assign({'Content-Type':'application/json','X-Requested-With':'xslab-admin'},opt.headers||{});opt.credentials='same-origin';
+ return fetch('/admin/api/'+path,opt).then(function(r){return r.json().catch(function(){return {};}).then(function(j){if(!r.ok)throw new Error(j.error||('Lỗi '+r.status));return j;});});}
+function preview(){var c=$('prev').getContext('2d'),W=840,H=300,F='system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif';c.clearRect(0,0,W,H);c.fillStyle='#fff';c.fillRect(0,0,W,H);c.fillStyle='#d01f3c';c.fillRect(0,0,W,70);c.fillStyle='#fff';c.textAlign='center';c.textBaseline='middle';c.font='800 28px '+F;
+ var g=function(k,d){var v=(cfg.anh[k]||'').trim();return v||d;};c.fillText(g('dau','xslab.live – KQXS không quảng cáo'),W/2,36);
+ c.fillStyle='#e9e6e0';c.fillRect(30,90,W-60,90);c.fillStyle='#8b8792';c.font='600 18px '+F;c.fillText('(bảng kết quả)',W/2,135);
+ c.fillStyle='#6b6872';c.font='700 20px '+F;c.fillText(g('cuoi_kq','XS Lab – KQXS {mien} – {ngay}').split('{mien}').join('MB').split('{ngay}').join('25/11/2026'),W/2,212);
+ c.font='600 16px '+F;c.fillText(g('cuoi_tk','XS Lab – Thống kê {mien} – {ngay}').split('{mien}').join('MN').split('{ngay}').join('25/11/2026')+'  (ảnh bảng xếp hạng)',W/2,250);
+ c.font='500 14px '+F;c.fillText(g('ghi_chu_tk','Thống kê kết quả đã quay, không phải dự đoán.'),W/2,276);}
+function bindAnh(){document.querySelectorAll('[data-a]').forEach(function(i){i.value=cfg.anh[i.dataset.a]||'';counter(i,120);i.addEventListener('input',function(){var v=i.value;if(v.trim())cfg.anh[i.dataset.a]=v;else delete cfg.anh[i.dataset.a];setDirty();preview();});});preview();}
+function fieldPair(box,obj,key,dT,dD,setFn){var o=obj[key]||{};
+ var l1=document.createElement('label');l1.textContent='Tiêu đề';var t=document.createElement('input');t.type='text';t.maxLength=200;t.value=o.title||'';t.placeholder=dT;
+ var l2=document.createElement('label');l2.textContent='Mô tả (meta description)';var d=document.createElement('textarea');d.maxLength=400;d.value=o.desc||'';d.placeholder=dD||'';
+ box.append(l1,t);counter(t,60);box.append(l2,d);counter(d,160);
+ function u(){var x={};if(t.value.trim())x.title=t.value;if(d.value.trim())x.desc=d.value;if(x.title||x.desc)obj[key]=x;else delete obj[key];setDirty();if(setFn)setFn();}
+ t.addEventListener('input',u);d.addEventListener('input',u);}
+function bindFams(){var box=$('fams');FAMS.forEach(function(f){var w=document.createElement('div');w.className='fam';w.innerHTML='<h3 style="margin:8px 0 0;font-size:15px">'+esc(f.n)+'</h3><div class="ex">Ví dụ: '+esc(f.ex)+' · hiện tại: “'+esc(f.dt)+'”</div>';
+  fieldPair(w,cfg.seo_mau,f.k,f.dt,'Giữ mô tả hiện tại');
+  var v=document.createElement('p');v.className='vars';v.innerHTML='Chèn được: '+f.vars.map(function(x){return '<code>{'+x+'}</code> '+esc(VARN[x]);}).join(' · ');w.append(v);box.append(w);});}
+function renderPages(){var q=$('q').value.trim().toLowerCase(),box=$('pages');box.innerHTML='';var shown=0;
+ pages.forEach(function(p){var hay=(p.path+' '+p.title).toLowerCase();if(q&&hay.indexOf(q)<0)return;if(++shown>60&&!q)return;
+  var d=document.createElement('details');d.className='pg';var on=!!cfg.seo_trang[p.path];
+  d.innerHTML='<summary><b>'+esc((cfg.seo_trang[p.path]&&cfg.seo_trang[p.path].title)||p.title)+'</b>'+(on?'<span class="tag">Đã sửa</span>':'')+'<code>/'+esc(p.path)+'</code></summary>';
+  var inn=document.createElement('div');inn.className='in';d.append(inn);
+  d.addEventListener('toggle',function(){if(!d.open||inn.childElementCount)return;
+   inn.innerHTML='<div class="dflt"><b>Mặc định:</b> '+esc(p.title)+'<br>'+esc(p.desc)+'</div>';
+   fieldPair(inn,cfg.seo_trang,p.path,p.title,p.desc,function(){var s=d.querySelector('summary'),tg=s.querySelector('.tag'),has=!!cfg.seo_trang[p.path];s.querySelector('b').textContent=(has&&cfg.seo_trang[p.path].title)||p.title;if(has&&!tg){tg=document.createElement('span');tg.className='tag';tg.textContent='Đã sửa';s.querySelector('code').before(tg);}if(!has&&tg)tg.remove();});});
+  box.append(d);});
+ if(!q&&pages.length>60){var n=document.createElement('p');n.className='sub';n.textContent='Đang hiện 60/'+pages.length+' trang. Gõ vào ô tìm kiếm để tìm trang khác.';box.append(n);}}
+function status(){api('status').then(function(s){var el=$('st');if(!s||!s.created){el.textContent='Chưa có lần áp cấu hình nào.';return;}
+ var t=new Date(s.created).toLocaleString('vi-VN'),txt=s.status!=='completed'?'⏳ Đang dựng lại web (bắt đầu '+t+')':s.conclusion==='success'?'✓ Lần cập nhật gần nhất thành công lúc '+t:'✗ Lần cập nhật lúc '+t+' bị lỗi';
+ el.innerHTML=esc(txt)+(s.url?' · <a href="'+esc(s.url)+'" target="_blank" rel="noopener">xem chi tiết trên GitHub</a>':'');if(s.status!=='completed')setTimeout(status,15000);}).catch(function(){$('st').textContent='Không đọc được trạng thái.';});}
+$('q').addEventListener('input',renderPages);
+$('save').addEventListener('click',function(){var b=$('save');b.disabled=true;msg('Đang lưu…','');
+ api('config',{method:'PUT',body:JSON.stringify({config:cfg,sha:sha})}).then(function(r){sha=r.sha;dirty=false;msg('Đã lưu. Web sẽ cập nhật sau 3–5 phút.','ok');setTimeout(status,8000);}).catch(function(e){b.disabled=false;msg(e.message,'err');});});
+window.addEventListener('beforeunload',function(e){if(dirty){e.preventDefault();e.returnValue='';}});
+Promise.all([api('config'),fetch('/admin/pages.json',{cache:'no-cache'}).then(function(r){return r.json();})]).then(function(a){
+ var c={};try{c=JSON.parse(a[0].content||'{}');}catch(e){}cfg.anh=c.anh||{};cfg.seo_mau=c.seo_mau||{};cfg.seo_trang=c.seo_trang||{};sha=a[0].sha;$('who').textContent=a[0].email||'';
+ pages=(a[1].trang||[]);$('gate').remove();$('ui').hidden=false;bindAnh();bindFams();renderPages();status();msg('','');
+}).catch(function(e){$('gate').innerHTML='<p><b>Chưa vào được trang quản trị.</b></p><p class="sub">'+esc(e.message)+'</p><p class="sub">Nếu bạn vừa cài đặt, kiểm tra Worker xslab-admin và Cloudflare Access cho đường dẫn xslab.live/admin.</p>';});
+})();
+</script>
+</body></html>

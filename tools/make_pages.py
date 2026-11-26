@@ -46,6 +46,23 @@ def slug_d(d): return f"{d[8:10]}-{d[5:7]}-{d[:4]}"
 def wdi(d): return datetime.date.fromisoformat(d).weekday()
 def esc(s): return html.escape(s, quote=True)
 
+# Cấu hình sửa từ trang quản trị (site-config.json): tiêu đề SEO từng trang và mẫu cho nhóm trang.
+try: CFG = json.load(open(os.path.join(ROOT, "site-config.json"), encoding="utf-8"))
+except Exception: CFG = {}
+SEO_DEF = {}
+def _tpl(t, v):
+    for k, x in v.items(): t = t.replace("{" + k + "}", str(x))
+    return t
+def seo_apply(path, title, desc, fam=None):
+    if fam:
+        m = (CFG.get("seo_mau") or {}).get(fam[0]) or {}
+        if str(m.get("title", "")).strip(): title = _tpl(m["title"].strip(), fam[1])
+        if str(m.get("desc", "")).strip(): desc = _tpl(m["desc"].strip(), fam[1])
+        return title, desc
+    SEO_DEF[path] = (title, desc)
+    o = (CFG.get("seo_trang") or {}).get(path) or {}
+    return (str(o.get("title", "")).strip() or title), (str(o.get("desc", "")).strip() or desc)
+
 
 # ---------- tệp giao diện dùng chung cho mọi trang tĩnh (mỗi trang nhẹ hơn, trình duyệt lưu đệm) ----------
 import hashlib
@@ -65,7 +82,8 @@ AV = hashlib.md5((_css + _svg + shell.MENU_JS).encode()).hexdigest()[:8]
 WROTE = [0, 0]
 
 
-def page(path, title, desc, crumbs, h1, body, ld=None):
+def page(path, title, desc, crumbs, h1, body, ld=None, fam=None):
+    title, desc = seo_apply(path, title, desc, fam)
     url = BASE + path
     bc = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": BASE + u} for i, (n, u) in enumerate([("XS Lab", "")] + crumbs)]}
     depth = path.count("/")
@@ -216,7 +234,7 @@ for reg, fn in (("xsmn", "recent_mn.json"), ("xsmt", "recent_mt.json")):
                     + '<p class="note">Số liệu là thống kê các kỳ đã quay của đài, không phải dự đoán.</p>'
                     + (f'<p>Cùng ngày: ' + ' · '.join(f'<a href="../../{k2[1]}/{slug_d(d)}/">{AB.get(k2[1], "")} {ST.get(k2[1], "")}</a>' for k2 in others) + f' · <a href="../../{slug_d(d)}/">Cả {lab} {vn(d)}</a></p>' if others else '')
                     + f'<p>{"".join(nav)}<a class="cta" href="../">Xổ số {nm}</a><a class="cta" href="../../../do-ve/">Dò vé số</a></p>')
-                page(pth, f"{ab} {vn(d)[:5]}, Xổ số {nm} {vn(d)} – Kết quả {ab} {WDL[w]}", f"{ab} {vn(d)}: kết quả xổ số {nm}{alt} {WDL[w]} ngày {vn(d)} đủ 18 giải, lô tô, giải Đặc biệt 10 kỳ trước và lô gan đài {nm}. Không quảng cáo.", [(lab, reg + "/"), (f"Xổ số {nm}", f"{reg}/{st}/"), (f"{ab} {vn(d)}", pth)], f"{ab} {vn(d)} – Xổ số {nm} {WDL[w]}", body)
+                page(pth, f"{ab} {vn(d)[:5]}, Xổ số {nm} {vn(d)} – Kết quả {ab} {WDL[w]}", f"{ab} {vn(d)}: kết quả xổ số {nm}{alt} {WDL[w]} ngày {vn(d)} đủ 18 giải, lô tô, giải Đặc biệt 10 kỳ trước và lô gan đài {nm}. Không quảng cáo.", [(lab, reg + "/"), (f"Xổ số {nm}", f"{reg}/{st}/"), (f"{ab} {vn(d)}", pth)], f"{ab} {vn(d)} – Xổ số {nm} {WDL[w]}", body, fam=("ngay_dai", {"dai": nm, "dai_ma": ab, "mien_ma": lab, "ngay": vn(d), "ngay_ngan": vn(d)[:5], "thu": WDL[w]}))
                 STATION_SM[reg].append((BASE + pth, d)); made.add(d)
             for k in lo2: seen[k] = i
         res = ''.join(f'<h2>{ab} {vn(r["date"])} – Xổ số {nm} {WDL[wdi(r["date"])]}</h2><div class="card">{mn_table([r])}</div><p class="note">' + (f'<a href="{slug_d(r["date"])}/">{ab} {vn(r["date"])}: lô tô, lô gan, Đặc biệt 10 kỳ</a> · ' if r["date"] in made else '') + f'<a href="../{slug_d(r["date"])}/">Xem cả các đài {lab} ngày {vn(r["date"])}</a></p>' for r in mine[:6])
@@ -300,7 +318,7 @@ for reg in REG:
                     ''.join(f'<h2>Lô tô {ST.get(r["station"], r["station"])} {vn(d)} ({AB.get(r["station"], "")})</h2>' + (f'<p class="note"><a href="../{r["station"]}/{slug_d(d)}/">Trang riêng {AB.get(r["station"], "")} {vn(d)}: lô gan, Đặc biệt 10 kỳ của đài</a></p>' if os.path.isdir(os.path.join(ROOT, reg, r["station"], slug_d(d))) else '') + f'<div class="card">{loto_table(lotos(r, MN_G))}</div><ul class="facts"><li>Về lại sau thời gian dài nhất (so với các kỳ trước của đài): {gtxt((d, r["station"]), "kỳ")}.</li><li>{dbtxt(r)}.</li><li>Xem các kỳ khác: <a href="../{r["station"]}/">Xổ số {ST.get(r["station"], r["station"])}</a></li></ul>' for r in rs) + nav + links)
             desc = f"{lab} {vn(d)}: kết quả xổ số {name} {WDL[w]} ngày {vn(d)} các đài {names} ({', '.join(AB.get(r['station'], '') for r in rs)}), đủ 18 giải mỗi đài, lô tô đầu đuôi và thống kê kỳ quay."
         p = f"{reg}/{slug_d(d)}/"
-        page(p, f"{lab} {vn(d)} – Kết quả xổ số {name} {WDL[w]} ngày {vn(d)}", desc, [(lab, reg + "/"), (f"Sổ kết quả", reg + "/so-ket-qua/"), (f"{lab} {vn(d)}", p)], f"{lab} {vn(d)} – Kết quả xổ số {name} {WDL[w]} {vn(d)}", body)
+        page(p, f"{lab} {vn(d)} – Kết quả xổ số {name} {WDL[w]} ngày {vn(d)}", desc, [(lab, reg + "/"), (f"Sổ kết quả", reg + "/so-ket-qua/"), (f"{lab} {vn(d)}", p)], f"{lab} {vn(d)} – Kết quả xổ số {name} {WDL[w]} {vn(d)}", body, fam=("ngay_mien", {"mien_ma": lab, "mien": name, "ngay": vn(d), "ngay_ngan": vn(d)[:5], "thu": WDL[w]}))
         SITEMAP_ARCH[reg].append((BASE + p, d))
     # trang theo tháng
     yms = sorted(MONTHS[reg])
@@ -660,7 +678,7 @@ for k in range(100):
             f' · <a href="../../thong-ke/lo-gan-xsmb/">Lô gan XSMB</a> · <a href="../../thong-ke/so-dao-xsmb/">Thống kê số đảo</a></p>' +
             "<h2>Tra cứu số khác</h2><p class='note'>Số nhỏ dưới mỗi ô là số kỳ XSMB chưa về.</p>" + grid_links(k))
     page(f"so/{kk}/", f"Thống kê số {kk} – số {kk} XSMB, XSMN, XSMT về bao nhiêu lần", f"Số {kk}: số lần về trong 30, 90, 365 kỳ XSMB, số kỳ chưa về, kỷ lục gan, lần làm giải đặc biệt và các lần về gần nhất ở XSMB, XSMN, XSMT, cập nhật đến {vn(lastd)}.",
-         [("Tra cứu số", "so/"), (f"Số {kk}", f"so/{kk}/")], f"Thống kê số {kk}", body)
+         [("Tra cứu số", "so/"), (f"Số {kk}", f"so/{kk}/")], f"Thống kê số {kk}", body, fam=("so", {"so": kk}))
 hubb = SCSS + SEARCH_FORM("../") + f"<p>Chọn một số từ 00 đến 99 để xem thống kê chi tiết ở XSMB, XSMN, XSMT. Số nhỏ dưới mỗi ô là số kỳ XSMB chưa về, tính đến {vn(lastd)}.</p>" + card(grid_links().replace('href="../', 'href="./'))
 page("so/", "Tra cứu thống kê số 00–99 XSMB, XSMN, XSMT", f"Tra cứu thống kê từng số từ 00 đến 99: số lần về, số kỳ chưa về, kỷ lục gan ở XSMB, XSMN, XSMT, cập nhật đến {vn(lastd)}.", [("Tra cứu số", "so/")], "Tra cứu thống kê số 00–99", hubb)
 
@@ -1039,3 +1057,37 @@ for _reg in ("xsmn", "xsmt"):
             _to = f"{BASE}{_reg}/{_dd}/"
             if not os.path.exists(os.path.join(_rb, _dd, "index.html")): _to = f"{BASE}{_reg}/{_st}/"
             open(_f, "w", encoding="utf-8").write(f'<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8">{_RD_MARK}<meta name="robots" content="noindex,follow"><link rel="canonical" href="{_to}"><meta http-equiv="refresh" content="0;url={_to}"><title>Chuyển tới kết quả ngày {_dd}</title></head><body><p>Trang này đã chuyển tới <a href="{_to}">{_to}</a>.</p></body></html>')
+
+
+# Áp tiêu đề SEO cho các trang ứng dụng (SPA) và ghi danh sách trang cho trang quản trị.
+def _spa_seo():
+    lst = os.path.join(ROOT, "tools", "spa_pages.txt")
+    paths = [""] + ([l.strip().strip("/") + "/" for l in open(lst, encoding="utf-8") if l.strip()] if os.path.exists(lst) else [])
+    rows = []
+    for pth in paths:
+        fp = os.path.join(ROOT, pth, "index.html")
+        if not os.path.exists(fp): continue
+        h = open(fp, encoding="utf-8").read()
+        m = re.search(r"<!--seo-default:(.*?)-->", h)
+        if m:
+            dflt = json.loads(html.unescape(m.group(1)))
+        else:
+            t = re.search(r"<title>(.*?)</title>", h, re.S); dm = re.search(r'<meta name="description" content="([^"]*)"', h)
+            if not t: continue
+            dflt = {"title": html.unescape(re.sub(r"\s*\|\s*XS Lab\s*$", "", t.group(1).strip())), "desc": html.unescape(dm.group(1)) if dm else ""}
+            h = h.replace("<head>", "<head><!--seo-default:" + esc(json.dumps(dflt, ensure_ascii=False)) + "-->", 1)
+        o = (CFG.get("seo_trang") or {}).get(pth) or {}
+        ti = str(o.get("title", "")).strip() or dflt["title"]; de = str(o.get("desc", "")).strip() or dflt["desc"]
+        h2 = re.sub(r"<title>.*?</title>", lambda _: "<title>" + esc(ti) + " | XS Lab</title>", h, count=1, flags=re.S)
+        for pat, val in ((r'(<meta name="description" content=")[^"]*(")', de), (r'(<meta property="og:title" content=")[^"]*(")', ti), (r'(<meta property="og:description" content=")[^"]*(")', de), (r'(<meta name="twitter:title" content=")[^"]*(")', ti), (r'(<meta name="twitter:description" content=")[^"]*(")', de)):
+            h2 = re.sub(pat, lambda mm: mm.group(1) + esc(val) + mm.group(2), h2, count=1)
+        if h2 != h or not m: open(fp, "w", encoding="utf-8").write(h2)
+        rows.append({"path": pth, "loai": "Trang chính", "title": dflt["title"], "desc": dflt["desc"]})
+    for pth, (t, d) in sorted(SEO_DEF.items()):
+        if (pth.startswith("so/") and pth != "so/") or re.search(r"/(ky-\d+|nam-\d+|thang-\d+-\d+)/$", pth): continue
+        rows.append({"path": pth, "loai": "Trang thống kê, thông tin", "title": t, "desc": d})
+    os.makedirs(os.path.join(ROOT, "admin"), exist_ok=True)
+    data = json.dumps({"trang": rows}, ensure_ascii=False, indent=0)
+    fp = os.path.join(ROOT, "admin", "pages.json")
+    if not os.path.exists(fp) or open(fp, encoding="utf-8").read() != data: open(fp, "w", encoding="utf-8").write(data)
+_spa_seo()
