@@ -1324,9 +1324,10 @@ function h3Today(){const el=$('h3Today');if(!el)return;const n=nowVN(),parts=[];
  for(const r of ['mn','mt','mb']){const L=h3Sts(r,n.date);if(!L.length)continue;const lab={mb:'Miền Bắc',mn:'Miền Nam',mt:'Miền Trung'}[r],[a]=LVWIN[r],tm=`${pad(Math.floor(a/60))}:${pad(a%60)}`;
   parts.push(`<b>${lab} ${tm}:</b> `+(r==='mb'?`<a href="${XS_ROOT}xsmb/">XSMB</a>`:L.map(s=>`<a href="${XS_ROOT}${RSL[r]}/${s}/">${ST[s]||s}</a>`).join(', ')));}
  el.innerHTML=parts.length?`Hôm nay ${wd(n.date)} quay: `+parts.join('<span class="sep">·</span>'):'';}
-function h3Rank(ord){const el=$('h3Rk');if(!el)return;const n=nowVN(),rows=[];
- for(const r of ord){if(r==='mb'){rows.push(`<a href="${XS_ROOT}thong-ke/?mien=mb#rkCard"><span class="rkl">BXH</span><b>XSMB</b></a>`);continue;}const o=h3Latest(r);const L=o?o.recs.map(x=>x.station):[];L.forEach(st=>rows.push(`<a href="${XS_ROOT}thong-ke/?mien=${r}&dai=${st}#rkCard"><span class="rkl">BXH</span><b>${ST[st]||st}</b></a>`));}
- el.innerHTML=rows.length?`<span class="h3rkt">Bảng xếp hạng các đài vừa quay:</span><div class="h3rkl">${rows.join('')}</div>`:'';}
+function h3Rank(ord){const el=$('h3Rk');if(!el)return;const n=nowVN(),today=n.min>=480,rows=[];
+ for(const r of ord){let L;if(today)L=h3Sts(r,n.date);else{const o=h3Latest(r);L=o?(r==='mb'?['mien-bac']:o.recs.map(x=>x.station)):[];}
+  L.forEach(st=>rows.push(r==='mb'?`<a href="${XS_ROOT}thong-ke/?mien=mb#rkCard"><span class="rkl">BXH</span><b>XSMB</b></a>`:`<a href="${XS_ROOT}thong-ke/?mien=${r}&dai=${st}#rkCard"><span class="rkl">BXH</span><b>${ST[st]||st}</b></a>`));}
+ el.innerHTML=rows.length?`<span class="h3rkt">${today?`Bảng xếp hạng các đài quay hôm nay (${wd(n.date)}, ${vnDate(n.date)}):`:'Bảng xếp hạng các đài vừa quay:'}</span><div class="h3rkl">${rows.join('')}</div>`:'';}
 function renderHome3(){const box=$('h3Box');if(!box)return;const ord=h3Order();
  const html=ord.map((r,i)=>h3Block(r,i)).join('');if(html)box.innerHTML=html;
  box.querySelectorAll('.h3r').forEach(h3Hl);h3Today();
