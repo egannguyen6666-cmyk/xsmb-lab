@@ -47,11 +47,11 @@ def home(up):
 
 
 def brand(up):
-    return f'<a class="brand" href="{home(up)}" aria-label="XS Lab – về trang chủ">{LOGO}<div><b>XS Lab</b><span>Kết quả &amp; thống kê xổ số</span></div></a>'
+    return f'<a class="brand" href="{home(up)}" title="Về trang chủ">{LOGO}<div><b>XS Lab</b><span>Kết quả &amp; thống kê xổ số</span></div></a>'
 
 
 def mhead(up, ic="#"):
-    return f'<header class="mhead"><a class="mlogo" href="{home(up)}" aria-label="XS Lab – về trang chủ">{LOGO.replace("lg1", "mg1").replace("lg2", "mg2")}<b>XS Lab</b></a><a class="mapp" id="mApp" href="{up}cai-dat-app/"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>Cài app</a><button class="mtheme" type="button" aria-label="Đổi giao diện sáng tối"><svg aria-hidden="true"><use href="{ic}i-moon"/></svg></button></header>'
+    return f'<header class="mhead"><a class="mlogo" href="{home(up)}" title="Về trang chủ">{LOGO.replace("lg1", "mg1").replace("lg2", "mg2")}<b>XS Lab</b></a><a class="mapp" id="mApp" href="{up}cai-dat-app/"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>Cài app</a><button class="mtheme" type="button" aria-label="Đổi giao diện sáng tối"><svg aria-hidden="true"><use href="{ic}i-moon"/></svg></button></header>'
 
 
 SIDE = [("Xổ số kiến thiết", [("Kết quả xổ số", "", "i-home"), ("Trực tiếp xổ số", "truc-tiep/", "i-live"), ("Dò vé số", "do-ve/", "i-ticket")]),
