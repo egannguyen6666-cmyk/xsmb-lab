@@ -117,7 +117,7 @@ function renderPages(){var q=$('q').value.trim().toLowerCase(),box=$('pages');bo
  if(!q&&pages.length>60){var n=document.createElement('p');n.className='sub';n.textContent='Đang hiện 60/'+pages.length+' trang. Gõ vào ô tìm kiếm để tìm trang khác.';box.append(n);}}
 function status(){api('status').then(function(s){var el=$('st');if(!s||!s.created){el.textContent='Chưa có lần áp cấu hình nào.';return;}
  var t=new Date(s.created).toLocaleString('vi-VN'),txt=s.status!=='completed'?'⏳ Đang dựng lại web (bắt đầu '+t+')':s.conclusion==='success'?'✓ Lần cập nhật gần nhất thành công lúc '+t:'✗ Lần cập nhật lúc '+t+' bị lỗi';
- el.innerHTML=esc(txt)+(s.url?' · <a href="'+esc(s.url)+'" target="_blank" rel="noopener">xem chi tiết trên GitHub</a>':'');if(s.status!=='completed')setTimeout(status,15000);}).catch(function(){$('st').textContent='Không đọc được trạng thái.';});}
+ el.textContent=txt;if(s.url&&/^https:\/\/github\.com\//.test(s.url)){var a=document.createElement('a');a.href=s.url;a.target='_blank';a.rel='noopener';a.textContent='xem chi tiết trên GitHub';el.append(' · ',a);}if(s.status!=='completed')setTimeout(status,15000);}).catch(function(){$('st').textContent='Không đọc được trạng thái.';});}
 $('q').addEventListener('input',renderPages);
 $('save').addEventListener('click',function(){var b=$('save');b.disabled=true;msg('Đang lưu…','');
  api('config',{method:'PUT',body:JSON.stringify({config:cfg,sha:sha})}).then(function(r){sha=r.sha;dirty=false;msg('Đã lưu. Web sẽ cập nhật sau 3–5 phút.','ok');setTimeout(status,8000);}).catch(function(e){b.disabled=false;msg(e.message,'err');});});
