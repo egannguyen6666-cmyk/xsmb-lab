@@ -2381,8 +2381,13 @@ document.querySelectorAll('.mtheme,.themebtn').forEach(function(b){b.addEventLis
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "d84c5ca70d434fb8b09440653ffd5b77"}'></script><script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
 (function(){try{localStorage.removeItem('xs-consent');}catch(e){}
-gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'granted'});
+var u=navigator.userAgent||'',h=location.hostname,ok=(h==='xslab.live'||h==='www.xslab.live')&&!navigator.webdriver&&!/bot|crawl|spider|slurp|lighthouse|pagespeed|headless|gtmetrix|pingdom|ptst|webpagetest|inspectiontool|googleother|google-read-aloud|mediapartners|adsbot|feedfetcher|phantom|selenium|puppeteer|playwright|electron|facebookexternalhit|bingpreview|semrush|ahrefs|mj12|dataprovider|petalsearch|bytespider|curl|wget|python|java\/|okhttp|axios|node-fetch|go-http/i.test(u);
+try{var q=location.search;if(/[?&]khongdem=1/.test(q))localStorage.setItem('xs-noga','1');if(/[?&]khongdem=0/.test(q))localStorage.removeItem('xs-noga');if(localStorage.getItem('xs-noga'))ok=false;}catch(e){}
+if(!ok)return;
+var start=function(){gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'granted'});
 gtag('js',new Date());gtag('config','G-Z58VHGRYTE',{allow_google_signals:false,allow_ad_personalization_signals:false});
-var done=0,ev=['pointerdown','keydown','touchstart','scroll'],go=function(){if(done)return;done=1;ev.forEach(function(e){removeEventListener(e,go,true)});var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-Z58VHGRYTE';document.head.appendChild(s);};ev.forEach(function(e){addEventListener(e,go,{capture:true,passive:true})});addEventListener('load',function(){setTimeout(go,6000)});})();
+var done=0,ev=['pointerdown','keydown','touchstart','scroll'],go=function(){if(done||document.visibilityState==='hidden')return;done=1;ev.forEach(function(e){removeEventListener(e,go,true)});var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-Z58VHGRYTE';document.head.appendChild(s);};ev.forEach(function(e){addEventListener(e,go,{capture:true,passive:true})});
+var t=function(){setTimeout(go,6000)};if(document.readyState==='complete')t();else addEventListener('load',t);};
+if(document.prerendering)document.addEventListener('prerenderingchange',start,{once:true});else start();})();
 </script></body>
 </html>
