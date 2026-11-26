@@ -212,7 +212,7 @@ for reg, fn in (("xsmn", "recent_mn.json"), ("xsmt", "recent_mt.json")):
                     + f'<div class="card">{mn_table([fr])}</div>'
                     + f'<h2>Lô tô {nm} {vn(d)}</h2><div class="card">{loto_list(lotos(fr, MN_G))}</div>'
                     + (f'<h2>Giải Đặc biệt {nm} 10 kỳ trước</h2><div class="card"><table><tr><th>Ngày</th><th>Đặc biệt</th></tr>' + ''.join(f'<tr><td><a href="{_sdl(x["date"])}">{vn(x["date"])}</a></td><td><b>{x["db"][0]}</b></td></tr>' for x in prevs) + '</table></div>' if prevs else '')
-                    + f'<h2>Lô gan {nm} tính đến {vn(d)}</h2><div class="g30">' + ''.join(f'<a class="c30" href="../../../so/{k:02d}/"><b>{SL(k)}</b><small>{i - after.get(k, -1)} kỳ</small></a>' for k in gan_d) + '</div>'
+                    + f'<h2>Lô gan {nm} tính đến {vn(d)}</h2><div class="g30">' + ''.join(f'<a class="c30" href="../../../so/{k:02d}/"><b>{k:02d}</b><small>{i - after.get(k, -1)} kỳ</small></a>' for k in gan_d) + '</div>'
                     + '<p class="note">Số liệu là thống kê các kỳ đã quay của đài, không phải dự đoán.</p>'
                     + (f'<p>Cùng ngày: ' + ' · '.join(f'<a href="../../{k2[1]}/{slug_d(d)}/">{AB.get(k2[1], "")} {ST.get(k2[1], "")}</a>' for k2 in others) + f' · <a href="../../{slug_d(d)}/">Cả {lab} {vn(d)}</a></p>' if others else '')
                     + f'<p>{"".join(nav)}<a class="cta" href="../">Xổ số {nm}</a><a class="cta" href="../../../do-ve/">Dò vé số</a></p>')
@@ -797,7 +797,7 @@ for reg, (lab, name, tm) in REG.items():
     tot = sum(cnt.values()); E = tot / 100
     dbs = [(d, r) for d in win for r in sorted(byd[d], key=lambda r: ST.get(r["station"], ""))]
     dbd = Counter(r["db"][0][-2] for _, r in dbs); dbu = Counter(r["db"][0][-1] for _, r in dbs)
-    chip = lambda k, sub: f'<a class="c30" href="../../so/{k:02d}/"><b>{SL(k)}</b><small>{sub}</small></a>'
+    chip = lambda k, sub: f'<a class="c30" href="../../so/{k:02d}/"><b>{k:02d}</b><small>{sub}</small></a>'
     if reg == "xsmb":
         rows = ''.join(f'<tr><td><a href="../../xsmb/{slug_d(d)}/">{vn(d)[:5]}</a><small>{WD[wdi(d)]}</small></td><td class="db">{r["db"][0]}</td><td class="lo">{" ".join(SL(k) for k in sorted(lo_d[d]))}</td></tr>' for d in reversed(win) for r in byd[d])
         head = '<tr><th>Ngày</th><th>Đặc biệt</th><th>2 số cuối 27 giải</th></tr>'
