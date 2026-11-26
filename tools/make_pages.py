@@ -1091,10 +1091,36 @@ def _ssr_blocks():
          "do-ve/": [("mb", 0), ("mn", 0), ("mt", 0)]}
     return {k: '<div class="ssr">' + "".join(block(r, b) for r, b in v) + "</div>" for k, v in M.items()}
 _SSR = _ssr_blocks()
+def _vl_quick():
+    def last(fn):
+        try:
+            L = [l for l in open(os.path.join(ROOT, fn), encoding="utf-8").read().strip().splitlines()[1:] if l.strip()]
+            return L[-1].split(",") if L else None
+        except Exception: return None
+    out = []
+    for fn, nm, url, t in (("vietlott_645.csv", "Mega 6/45", "mega-645/", "6"), ("vietlott_655.csv", "Power 6/55", "power-655/", "6"), ("vietlott_3d.csv", "Max 3D", "max-3d/", "3"), ("vietlott_3dpro.csv", "Max 3D Pro", "max-3d-pro/", "3")):
+        p = last(fn)
+        if not p or len(p) < 3: continue
+        ky, d = p[0], p[1]
+        if t == "6":
+            balls = "".join(f"<i>{int(x):02d}</i>" for x in p[2:8]) + (f'<i class="sp" title="Số đặc biệt">{int(p[8]):02d}</i>' if len(p) > 8 and p[8].strip() else "")
+        else:
+            balls = "".join(f'<i class="w">{esc(x)}</i>' for x in p[2].split())
+        out.append(f'<a class="vlqr" href="/{url}"><b>{nm}</b><span class="vlqd">Kỳ #{int(ky):05d} · {["Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7","Chủ nhật"][wdi(d)]} {vn(d)}</span><span class="vlqn">{"<span class=\"vlqt\">ĐB</span>" if t == "3" else ""}{balls}</span></a>')
+    return '<div class="vlq">' + "".join(out) + "</div>" if out else ""
+_VLQ = _vl_quick()
 def ssr_apply(pth, h):
     blk = _SSR.get(pth)
     h = re.sub(r"<!--ssr-->.*?<!--/ssr-->", "", h, flags=re.S)
+    h = re.sub(r"<!--vlq-->.*?<!--/vlq-->", "", h, flags=re.S)
+    if pth == "":
+        if '<body>' in h: h = h.replace('<body>', '<body class="home3">', 1)
+        if _VLQ and '<div id="h3Vl">' in h: h = h.replace('<div id="h3Vl">', '<div id="h3Vl"><!--vlq-->' + _VLQ + '<!--/vlq-->', 1)
     if not blk: return h
+    if pth == "" and '<div class="h3only h3box" id="h3Box">' in h:
+        tgt = '<div class="h3only h3box" id="h3Box">'
+        blk = blk.replace('<div class="ssr">', '<div class="ssr card c12">', 1)
+        return h.replace(tgt, tgt + "<!--ssr-->" + blk + "<!--/ssr-->", 1)
     tgt = '<div id="lvBoard">' if pth.startswith("truc-tiep") else '<div id="rsBoard">'
     if tgt not in h: return h
     return h.replace(tgt, tgt + "<!--ssr-->" + blk + "<!--/ssr-->", 1)
