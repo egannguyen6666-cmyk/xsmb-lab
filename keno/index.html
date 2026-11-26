@@ -196,6 +196,13 @@ p{margin:0 0 10px;max-width:72ch}
 
 .ssr h2{font-size:17px;margin:14px 0 6px}.ssr p{margin:0 0 8px;font-size:14px;color:var(--mute)}.ssr table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}.ssr td,.ssr th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:center}.ssr td.l{font-weight:700;color:var(--mute);width:48px}.ssr span{display:inline-block;margin:0 6px;font-weight:700;font-size:17px}.ssr tr.db span{color:var(--red,#d01f3c);font-size:20px}
 
+.rstools{flex-wrap:wrap;row-gap:8px}.rstools .dgsw{flex-wrap:nowrap;gap:6px}.rstools .dgsw button,.rstools .copy{min-height:38px;padding:0 13px;font-size:14px;line-height:1;white-space:nowrap}.rstools .copy{margin-left:auto}@media(max-width:420px){.rstools{gap:6px}.rstools .dgsw{gap:5px}.rstools .dgsw button,.rstools .copy{min-height:36px;padding:0 10px;font-size:13px}}@media(max-width:350px){.rstools .dgsw button,.rstools .copy{padding:0 8px;font-size:12.5px}}
+
+.rstools #rsCopy{min-height:38px;gap:6px}.rstools #rsCopy .cpi{flex:none}@media(max-width:420px){.rstools #rsCopy{min-height:36px}}@media(max-width:400px){.rstools #rsCopy{padding:0 10px}.rstools #rsCopy .cpi{display:none}}
+@media(max-width:340px){.rstools{gap:4px}.rstools .dgsw{gap:4px}.rstools .dgsw button{padding:0 7px;font-size:12px}.rstools #rsCopy{padding:0 9px}.rstools #rsCopy .cpt{display:none}.rstools #rsCopy .cpi{display:block}}
+
+.rstools{flex-wrap:nowrap}.rstools .dgsw{margin:0;min-width:0}@media(max-width:440px){.rstools{gap:6px}.rstools .dgsw{gap:5px}.rstools .dgsw button,.rstools #rsCopy{min-height:36px;padding:0 10px;font-size:13px}.rstools #rsCopy .cpi{display:none}}@media(max-width:385px){.rstools .dgsw{gap:4px}.rstools .dgsw button,.rstools #rsCopy{padding:0 8px;font-size:12.5px}}@media(max-width:345px){.rstools{gap:4px}.rstools .dgsw button{padding:0 7px;font-size:12px}.rstools #rsCopy{padding:0 9px}.rstools #rsCopy .cpt{display:none}.rstools #rsCopy .cpi{display:block}}
+
 .regsw{display:inline-flex;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
 .regsw button{border:0;background:none;min-height:38px;padding:0 16px;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;color:var(--mute)}
 .regsw button[aria-pressed=true]{background:#d01f3c;color:#fff}
@@ -449,7 +456,7 @@ html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7e
     <div class="card c7" id="rsCard">
      <h2 id="rsT">Kết quả</h2><nav class="rsbc" id="rsBc" aria-label="Đường dẫn kết quả"></nav>
      <div class="datenav"><button id="rsPrev" aria-label="Kỳ trước">‹</button><span class="dwrap"><input type="date" id="rsDate" aria-label="Chọn ngày"><span class="dlab" id="rsDateL" aria-hidden="true"></span></span><button id="rsNext" aria-label="Kỳ sau">›</button><button id="rsLatest" style="padding:0 12px;font-weight:500">Mới nhất</button></div>
-     <div class="rstools"><div class="seg dgsw" role="group" aria-label="Cách hiển thị số"><button type="button" data-dg="0" aria-pressed="true">Đầy đủ</button><button type="button" data-dg="3" aria-pressed="false">3 số cuối</button><button type="button" data-dg="2" aria-pressed="false">2 số cuối</button></div><button type="button" class="copy" id="rsCopy" title="Sao chép kết quả để gửi Zalo, Messenger">Sao chép</button><a class="cdpill" id="rsCd" hidden></a></div>
+     <div class="rstools"><div class="seg dgsw" role="group" aria-label="Cách hiển thị số"><button type="button" data-dg="0" aria-pressed="true">Đầy đủ</button><button type="button" data-dg="3" aria-pressed="false">3 số cuối</button><button type="button" data-dg="2" aria-pressed="false">2 số cuối</button></div><button type="button" class="copy" id="rsCopy" title="Sao chép kết quả để gửi Zalo, Messenger" aria-label="Sao chép kết quả"><svg class="cpi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span class="cpt">Sao chép</span></button><a class="cdpill" id="rsCd" hidden></a></div>
      <div id="rsBoard"></div><!--/rsb-->
     </div>
     <div class="card c5" id="hlCard">
@@ -1069,7 +1076,7 @@ async function copyImg(btn){const D=boardData();if(!D){copyText(boardText(),btn)
  try{if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){await navigator.clipboard.write([new ClipboardItem({'image/png':blobP})]);mode='copy';}}catch(e){}
  if(!mode){try{const bl=await blobP,f=new File([bl],fn,{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});mode='share';}catch(e){mode=e&&e.name==='AbortError'?'none':'';}}}catch(e){}}
  if(!mode){try{const bl=await blobP,u=URL.createObjectURL(bl),a=document.createElement('a');a.href=u;a.download=fn;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);mode='dl';}catch(e){}}
- if(btn&&mode!=='none'){const old=btn.dataset.lab||btn.textContent;btn.dataset.lab=old;btn.textContent=mode==='copy'?'Đã chép ✓':mode==='share'?'Đã chia sẻ ✓':mode==='dl'?'Đã tải ảnh ✓':'Không chép được';btn.classList.toggle('ok',!!mode);setTimeout(()=>{btn.textContent=old;btn.classList.remove('ok');},1800);}}
+ if(btn&&mode!=='none'){const L=btn.querySelector('.cpt')||btn,old=btn.dataset.lab||L.textContent;btn.dataset.lab=old;L.textContent=mode==='copy'?'Đã chép ✓':mode==='share'?'Đã chia sẻ ✓':mode==='dl'?'Đã tải ảnh ✓':'Không chép được';btn.classList.toggle('ok',!!mode);setTimeout(()=>{L.textContent=old;btn.classList.remove('ok');},1800);}}
 function drawTableImg(M){const S=2,W=720,P=24,F='system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif',RED='#d01f3c',INK='#17161c',MUT='#6b6872',LINE='#e3e0da',ZB='#f7f6f2';
  const HB=58,RH=36,HH=38,nC=M.head.length,TW=W-2*P,ws=M.head.map((h,j)=>j===0?70:j===1?110:0),rest=(TW-ws[0]-ws[1])/Math.max(1,nC-2);for(let j=2;j<nC;j++)ws[j]=rest;
  const c0=document.createElement('canvas').getContext('2d'),wrap=(t,f,mw)=>{c0.font=f;const out=[];let line='';t.split(' ').forEach(w=>{const tt=line?line+' '+w:w;if(c0.measureText(tt).width>mw&&line){out.push(line);line=w;}else line=tt;});if(line)out.push(line);return out;};
@@ -1087,7 +1094,7 @@ async function copyCanvas(cv,fn,btn){const blobP=new Promise(r=>cv.toBlob(r,'ima
  try{if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){await navigator.clipboard.write([new ClipboardItem({'image/png':blobP})]);mode='copy';}}catch(e){}
  if(!mode){try{const bl=await blobP,f=new File([bl],fn,{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});mode='share';}catch(e){mode=e&&e.name==='AbortError'?'none':'';}}}catch(e){}}
  if(!mode){try{const bl=await blobP,u=URL.createObjectURL(bl),a=document.createElement('a');a.href=u;a.download=fn;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);mode='dl';}catch(e){}}
- if(btn&&mode!=='none'){const old=btn.dataset.lab||btn.textContent;btn.dataset.lab=old;btn.textContent=mode==='copy'?'Đã chép ✓':mode==='share'?'Đã chia sẻ ✓':mode==='dl'?'Đã tải ảnh ✓':'Không chép được';btn.classList.toggle('ok',!!mode);setTimeout(()=>{btn.textContent=old;btn.classList.remove('ok');},1800);}}
+ if(btn&&mode!=='none'){const L=btn.querySelector('.cpt')||btn,old=btn.dataset.lab||L.textContent;btn.dataset.lab=old;L.textContent=mode==='copy'?'Đã chép ✓':mode==='share'?'Đã chia sẻ ✓':mode==='dl'?'Đã tải ảnh ✓':'Không chép được';btn.classList.toggle('ok',!!mode);setTimeout(()=>{L.textContent=old;btn.classList.remove('ok');},1800);}}
 function rkCopy(btn){const wrap=btn.closest('.rkt'),tb=wrap&&wrap.querySelector('table');if(!tb)return;
  let h=wrap.previousElementSibling;while(h&&!/^(H3|B|H4)$/.test(h.tagName))h=h.previousElementSibling;if(!h){const col=wrap.parentNode;h=col&&col.querySelector('h3,b');}
  const sec=(wrap.closest('details')||{}).querySelector?wrap.closest('details').querySelector('summary b'):null,card=$('rkCard'),h2=card&&card.querySelector('h2');
@@ -1098,7 +1105,7 @@ function rkCopy(btn){const wrap=btn.closest('.rkt'),tb=wrap&&wrap.querySelector(
  copyCanvas(cv,`xslab-thong-ke-${reg.toLowerCase()}-${dt.replace(/\//g,'-')}.png`,btn);}
 document.addEventListener('click',e=>{const b=e.target.closest('.rkcp');if(b){e.preventDefault();rkCopy(b);}});
 async function copyText(t,btn){let ok=false;try{await navigator.clipboard.writeText(t);ok=true;}catch(e){try{const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();ok=document.execCommand('copy');ta.remove();}catch(e2){}}
- if(btn){const old=btn.dataset.lab||btn.textContent;btn.dataset.lab=old;btn.textContent=ok?'Đã chép ✓':'Không chép được';btn.classList.toggle('ok',ok);setTimeout(()=>{btn.textContent=old;btn.classList.remove('ok');},1600);}}
+ if(btn){const L=btn.querySelector('.cpt')||btn,old=btn.dataset.lab||L.textContent;btn.dataset.lab=old;L.textContent=ok?'Đã chép ✓':'Không chép được';btn.classList.toggle('ok',ok);setTimeout(()=>{L.textContent=old;btn.classList.remove('ok');},1600);}}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-copy]');if(b){e.preventDefault();copyText(b.dataset.copy,b);}});
 const copyBtn=(lab,txt,cls='')=>`<button class="copy ${cls}" data-copy="${txt.replace(/"/g,'&quot;')}">${lab}</button>`;
 function lotoChips(i,hl){const a=[];for(let k=0;k<100;k++)for(let c=0;c<cnt[i*100+k];c++)a.push(k);a.sort((x,y)=>x-y);return a.map(k=>`<span class="n${hl&&hl.includes(k)?' h':''}">${pad(k)}</span>`).join('');}
@@ -1276,7 +1283,7 @@ function renderBoard(){
  const U=upInfo(),up=false;rsBcSet(rs.date,true);
  const i=RD.indexOf(rs.date);$('rsDate').min=RD[0];$('rsDate').max=up?U.n.date:RD[RD.length-1];$('rsDate').value=up?U.n.date:rs.date;
  $('rsPrev').disabled=!up&&i<=0;const canUp=false;$('rsNext').disabled=up||(i>=RD.length-1&&!canUp);
- const cd=$('rsCd');if(cd){cd.hidden=!U;{const rc=$('rsCopy'),im=copyImgOK();rc.hidden=false;rc.textContent='Sao chép';rc.dataset.lab=rc.textContent;rc.title=im?'Sao chép ảnh kết quả để gửi Zalo, Messenger':'Sao chép kết quả để gửi Zalo, Messenger';}if(U){cd.href=XS_ROOT+(R.region==='mb'?'truc-tiep-xsmb/':R.region==='mn'?'truc-tiep-xsmn/':'truc-tiep-xsmt/');upTick();if(!rs.cd)rs.cd=setInterval(()=>{if(!document.hidden)upTick()},1000);}}
+ const cd=$('rsCd');if(cd){cd.hidden=!U;{const rc=$('rsCopy'),im=copyImgOK();rc.hidden=false;(rc.querySelector('.cpt')||rc).textContent='Sao chép';rc.dataset.lab='Sao chép';rc.title=im?'Sao chép ảnh kết quả để gửi Zalo, Messenger':'Sao chép kết quả để gửi Zalo, Messenger';}if(U){cd.href=XS_ROOT+(R.region==='mb'?'truc-tiep-xsmb/':R.region==='mn'?'truc-tiep-xsmn/':'truc-tiep-xsmt/');upTick();if(!rs.cd)rs.cd=setInterval(()=>{if(!document.hidden)upTick()},1000);}}
  $('rsPrev').onclick=()=>{rs.pick=true;if(!up)rs.date=RD[i-1];renderBoard();renderHighlights();};$('rsNext').onclick=()=>{if(canUp){rs.pick=false;}else{rs.pick=true;rs.date=RD[i+1];}renderBoard();renderHighlights();};$('rsLatest').onclick=()=>{rs.pick=false;rs.date=RD[RD.length-1];renderBoard();renderHighlights();};
  $('rsDate').onchange=()=>{rs.pick=true;const v=$('rsDate').value;let j=RD.findIndex(d=>d>=v);if(j<0)j=RD.length-1;rs.date=RD[j];renderBoard();renderHighlights();};
  const d=rs.date;
