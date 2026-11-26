@@ -1316,13 +1316,13 @@ function h3Hl(sec){const r=sec.dataset.r,s=H3.f[r]||(H3.f[r]={m:'h',d:null});sec
 function h3Today(){const el=$('h3Today');if(!el)return;const n=nowVN(),parts=[];
  for(const r of ['mn','mt','mb']){const L=h3Sts(r,n.date);if(!L.length)continue;const lab={mb:'Miền Bắc',mn:'Miền Nam',mt:'Miền Trung'}[r],[a]=LVWIN[r],tm=`${pad(Math.floor(a/60))}:${pad(a%60)}`;
   parts.push(`<b>${lab} ${tm}:</b> `+(r==='mb'?`<a href="${XS_ROOT}xsmb/">XSMB</a>`:L.map(s=>`<a href="${XS_ROOT}${RSL[r]}/${s}/">${ST[s]||s}</a>`).join(', ')));}
- el.innerHTML=parts.length?`Hôm nay ${wd(n.date)} quay: `+parts.join('<span class="sep">·</span>'):'';}
+ if(parts.length<2&&el.textContent.trim())return;el.innerHTML=parts.length?`Hôm nay ${wd(n.date)} quay: `+parts.join('<span class="sep">·</span>'):'';}
 function h3Rank(ord){const el=$('h3Rk');if(!el)return;const n=nowVN(),today=n.min>=480,rows=[];
  for(const r of ord){let L;if(today)L=h3Sts(r,n.date);else{const o=h3Latest(r);L=o?(r==='mb'?['mien-bac']:o.recs.map(x=>x.station)):[];}
   L.forEach(st=>rows.push(r==='mb'?`<a href="${XS_ROOT}thong-ke/?mien=mb#rkCard"><span class="rkl">BXH</span><b>XSMB</b></a>`:`<a href="${XS_ROOT}thong-ke/?mien=${r}&dai=${st}#rkCard"><span class="rkl">BXH</span><b>${ST[st]||st}</b></a>`));}
  el.innerHTML=rows.length?`<span class="h3rkt">${today?`Bảng xếp hạng các đài quay hôm nay (${wd(n.date)}, ${vnDate(n.date)}):`:'Bảng xếp hạng các đài vừa quay:'}</span><div class="h3rkl">${rows.join('')}</div>`:'';}
 function renderHome3(){const box=$('h3Box');if(!box)return;const ord=h3Order();
- const html=ord.map((r,i)=>h3Block(r,i)).join('');if(html)box.innerHTML=html;
+ const html=ord.map((r,i)=>h3Block(r,i)).join('');if(html&&H3.sig!==html){box.innerHTML=html;H3.sig=html;}
  box.querySelectorAll('.h3r').forEach(h3Hl);h3Today();
  const jl=document.querySelector('.h3jl');if(jl){const A={};jl.querySelectorAll('a').forEach(a=>A[a.dataset.j]=a);ord.forEach(r=>A[r]&&jl.appendChild(A[r]));['vl','cal','tk'].forEach(k=>A[k]&&jl.appendChild(A[k]));}
  applyDG();if(!CAL.r){CAL.r=ord[0];}renderCal();h3Rank(ord);
@@ -2292,18 +2292,24 @@ function vsRun(){const f=$('vsT');if(!f)return;if(!f.dataset.ok){f.dataset.ok=1;
 async function loadAll(){
  const get=(f,j)=>fetch(XS_ROOT+f,{cache:'no-cache'}).then(r=>{if(!r.ok)throw new Error(f);return j?r.json():r.text();});
  const first=['mb','mn','mt'].includes(R.region)?R.region:'mb';
- const [txt,rmb,rmn,rmt]=await Promise.all([get(RFILE[first]),get('recent.json',1).catch(()=>[]),get('recent_mn.json',1).catch(()=>[]),get('recent_mt.json',1).catch(()=>[])]);
+ const lazy=!PG&&curView()==='ket-qua'&&!RAW[first];
+ const [txt,rmb,rmn,rmt]=await Promise.all([lazy?Promise.resolve(null):get(RFILE[first]),get('recent.json',1).catch(()=>[]),get('recent_mn.json',1).catch(()=>[]),get('recent_mt.json',1).catch(()=>[])]);
  RECS.mn=Array.isArray(rmn)?rmn:[];RECS.mt=Array.isArray(rmt)?rmt:[];REC_MB=Array.isArray(rmb)?rmb:[];
  return {first,txt};}
 const ro=new ResizeObserver(()=>{if(!N)return;const v=curView();if(v==='kiem-dinh')renderRandom();if(v==='kiem-dinh')drawRoll();if(v==='dan'&&dn.pts_)cumChart('dnChart','dnTip',dn.pts_);});
 ['roll','dnChart','rnC'].forEach(id=>{const el=$(id);if(el)ro.observe(el);});
 loadAll().then(d=>{
  try{if(h3On())renderHome3();}catch(e){}
- parseRegion(d.first,d.txt);
+ const full=txt=>{if(txt!=null&&!RAW[d.first])parseRegion(d.first,txt);
  R.region=d.first;setRegion(d.first);
  const rest=()=>['mb','mn','mt'].filter(r=>!RAW[r]).reduce((p,r)=>p.then(()=>needRegion(r)).catch(()=>{}),Promise.resolve()).then(()=>{if(curView()==='truc-tiep'||curView()==='do-ve')renderView(curView());});
  let restDone=false;window.xsRest=()=>{if(restDone)return;restDone=true;if(window.requestIdleCallback)requestIdleCallback(rest,{timeout:3000});else setTimeout(rest,800);};
  if(['truc-tiep','do-ve'].includes(curView()))xsRest();
+};
+ if(d.txt!==null){full(d.txt);return;}
+ try{renderMyTix();}catch(e){}
+ let started=false;const EV=['pointerdown','keydown','touchstart','scroll'];const go=()=>{if(started)return;started=true;EV.forEach(e=>removeEventListener(e,go,true));removeEventListener('hashchange',go);if(RAW[d.first]){full(null);return;}fetch(XS_ROOT+RFILE[d.first],{cache:'no-cache'}).then(r=>{if(!r.ok)throw new Error(RFILE[d.first]);return r.text();}).then(full).catch(e=>{$('status').textContent='Không tải được dữ liệu: '+e.message;});};
+ EV.forEach(e=>addEventListener(e,go,{capture:true,passive:true,once:false}));addEventListener('hashchange',go);
 }).catch(e=>{$('status').textContent='Không tải được dữ liệu: '+e.message;});
 route();
 }
@@ -2366,6 +2372,6 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 (function(){try{localStorage.removeItem('xs-consent');}catch(e){}
 gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'granted'});
 gtag('js',new Date());gtag('config','G-Z58VHGRYTE',{allow_google_signals:false,allow_ad_personalization_signals:false});
-var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-Z58VHGRYTE';document.head.appendChild(s);})();
+var done=0,ev=['pointerdown','keydown','touchstart','scroll'],go=function(){if(done)return;done=1;ev.forEach(function(e){removeEventListener(e,go,true)});var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-Z58VHGRYTE';document.head.appendChild(s);};ev.forEach(function(e){addEventListener(e,go,{capture:true,passive:true})});addEventListener('load',function(){setTimeout(go,6000)});})();
 </script></body>
 </html>

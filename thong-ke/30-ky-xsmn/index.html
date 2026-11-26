@@ -28,5 +28,5 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 (function(){try{localStorage.removeItem('xs-consent');}catch(e){}
 gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'granted'});
 gtag('js',new Date());gtag('config','G-Z58VHGRYTE',{allow_google_signals:false,allow_ad_personalization_signals:false});
-var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-Z58VHGRYTE';document.head.appendChild(s);})();
+var done=0,ev=['pointerdown','keydown','touchstart','scroll'],go=function(){if(done)return;done=1;ev.forEach(function(e){removeEventListener(e,go,true)});var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-Z58VHGRYTE';document.head.appendChild(s);};ev.forEach(function(e){addEventListener(e,go,{capture:true,passive:true})});addEventListener('load',function(){setTimeout(go,6000)});})();
 </script></body></html>

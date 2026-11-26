@@ -1109,12 +1109,31 @@ def _vl_quick():
         out.append(f'<a class="vlqr" href="/{url}"><b>{nm}</b><span class="vlqd">Kỳ #{int(ky):05d} · {["Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7","Chủ nhật"][wdi(d)]} {vn(d)}</span><span class="vlqn">{"<span class=\"vlqt\">ĐB</span>" if t == "3" else ""}{balls}</span></a>')
     return '<div class="vlq">' + "".join(out) + "</div>" if out else ""
 _VLQ = _vl_quick()
+def _h3t_script():
+    sch = {}
+    for reg, fn in (("mn", "recent_mn.json"), ("mt", "recent_mt.json")):
+        try: rows = json.load(open(os.path.join(ROOT, fn), encoding="utf-8"))
+        except Exception: rows = []
+        by = {}
+        for x in rows:
+            w = (wdi(x["date"]) + 1) % 7
+            by.setdefault(w, {}).setdefault(x["date"], set()).add(x["station"])
+        sch[reg] = {str(w): sorted([[st, ST.get(st, st)] for st in d[max(d)]], key=lambda t: (t[0] != "tp-hcm", t[1])) for w, d in by.items()}
+    js = ("(function(){try{var S=" + json.dumps(sch, ensure_ascii=False, separators=(",", ":")) +
+          ",p=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Ho_Chi_Minh',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()),w=new Date(p+'T00:00:00Z').getUTCDay(),"
+          "W=['Chủ nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7'],o=[],L={mn:['Miền Nam','16:15','xsmn'],mt:['Miền Trung','17:15','xsmt']};"
+          "['mn','mt'].forEach(function(r){var a=S[r][w];if(a&&a.length)o.push('<b>'+L[r][0]+' '+L[r][1]+':</b> '+a.map(function(t){return '<a href=\"/'+L[r][2]+'/'+t[0]+'/\">'+t[1]+'</a>'}).join(', '))});"
+          "o.push('<b>Miền Bắc 18:15:</b> <a href=\"/xsmb/\">XSMB</a>');document.getElementById('h3Today').innerHTML='Hôm nay '+W[w]+' quay: '+o.join('<span class=\"sep\">·</span>')}catch(e){}})();")
+    return "<script>" + js + "</script>"
+_H3T = _h3t_script()
 def ssr_apply(pth, h):
     blk = _SSR.get(pth)
     h = re.sub(r"<!--ssr-->.*?<!--/ssr-->", "", h, flags=re.S)
     h = re.sub(r"<!--vlq-->.*?<!--/vlq-->", "", h, flags=re.S)
     if pth == "":
         if '<body>' in h: h = h.replace('<body>', '<body class="home3">', 1)
+        h = re.sub(r"<!--h3t-->.*?<!--/h3t-->", "", h, flags=re.S)
+        if '<div class="h3today" id="h3Today"></div>' in h: h = h.replace('<div class="h3today" id="h3Today"></div>', '<div class="h3today" id="h3Today"></div><!--h3t-->' + _H3T + '<!--/h3t-->', 1)
         if _VLQ and '<div id="h3Vl">' in h: h = h.replace('<div id="h3Vl">', '<div id="h3Vl"><!--vlq-->' + _VLQ + '<!--/vlq-->', 1)
     if not blk: return h
     if pth == "" and '<div class="h3only h3box" id="h3Box">' in h:
