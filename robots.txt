@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Disallow: /live/
 Sitemap: https://xslab.live/sitemap.xml
