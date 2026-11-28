@@ -549,8 +549,9 @@ html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7e
      <div class="lvprog"><i id="lvProg" style="width:0"></i></div>
      <div class="acts" style="margin-top:12px"><button class="copy" id="lvRefresh">Làm mới</button><span class="sub" id="lvTime" style="align-self:center;margin:0"></span></div>
     </div>
-    <div class="card c12" id="lvYtCard" hidden><h2>Xem trực tiếp trên YouTube</h2><p class="sub" id="lvYtS"></p><div class="ytbox" id="lvYt"></div></div>
+    <div class="card c12" id="lvWait" hidden><h2>Trong lúc chờ quay</h2><p class="sub">Thống kê từ các kỳ đã quay của <b id="lvWR"></b>, cập nhật mỗi ngày. Chỉ là số liệu quá khứ, không phải dự đoán.</p><ul class="links" id="lvWL"></ul></div>
     <div class="card c12"><h2 id="lvBT">Bảng kết quả</h2><p class="sub" id="lvBS"></p><div class="seg dgsw" role="group" aria-label="Cách hiển thị số"><button type="button" data-dg="0" aria-pressed="true">Đầy đủ</button><button type="button" data-dg="3" aria-pressed="false">3 số cuối</button><button type="button" data-dg="2" aria-pressed="false">2 số cuối</button></div><div id="lvBoard"></div><div class="lvrk" id="lvRk"></div></div>
+    <div class="card c12" id="lvYtCard" hidden><h2>Xem quay số có giọng đọc trên YouTube</h2><p class="sub" id="lvYtS"></p><div class="ytbox" id="lvYt"></div></div>
     <div class="card c12"><h2 id="lvInsT">Thống kê nổi bật của kỳ đang quay</h2><p class="sub" id="lvInsS">So các số vừa về với dữ liệu quá khứ đến hết kỳ trước của từng đài. Cập nhật theo từng giải.</p><div id="lvIns"></div></div>
     <div class="card c12"><h2>Lô tô đang về</h2><p class="sub">2 số cuối của các giải đã ra, xếp theo đầu. Cập nhật cùng bảng kết quả.</p><div id="lvLoto"></div></div>
     <!--LVDAY--><!--/LVDAY-->
@@ -2155,8 +2156,15 @@ function renderLive(){
  $('lvRefresh').onclick=()=>{LV.rr=0;lvTick();};
  lvStart(LV.reg);}
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&curView()==='truc-tiep')lvTick();});
+const LVW={mb:[['soi-cau','Soi cầu XSMB'],['kiem-chung-du-doan','Dự đoán XSMB có chính xác không?'],['lo-gan','Lô gan XSMB'],['tan-suat-lo-to','Tần suất lô tô XSMB'],['dau-duoi','Đầu đuôi XSMB'],['giai-dac-biet','Giải đặc biệt XSMB'],['3-cang','3 càng XSMB'],['4-cang','4 càng XSMB'],['lo-kep','Lô kép XSMB'],['30-ky','Thống kê 30 kỳ XSMB']],mn:[['soi-cau','Soi cầu'],['giai-dac-biet','Giải đặc biệt'],['3-cang','3 càng'],['giai-8','Giải 8'],['giai-nhat','Giải nhất'],['30-ky','Thống kê 30 kỳ']]};
+function lvWait(reg,phase){const c=$('lvWait');if(!c)return;if(phase==='live'){c.hidden=true;return;}
+ const sl=reg==='mb'?'xsmb':reg==='mn'?'xsmn':'xsmt',U=RLAB[reg],L=(LVW[reg]||LVW.mn).map(([k,t])=>[XS_ROOT+'thong-ke/'+k+'-'+sl+'/',reg==='mb'?t:t+' '+U]);
+ L.push([XS_ROOT+'thong-ke-dan-'+sl+'/','Thống kê dàn '+U],[XS_ROOT+sl+'-30-ngay/',U+' 30 ngày']);
+ if(c.dataset.r!==reg){c.dataset.r=reg;$('lvWR').textContent=RNAME[reg];$('lvWL').innerHTML=L.map(([h,t])=>`<li><a href="${h}">${t}</a></li>`).join('');}
+ c.hidden=false;}
 function lvRender(){
  const n=nowVN(),reg=LV.reg,sts=lvStations(reg,n.date),phase=lvPhase(reg,n),G=reg==='mb'?LV_MB:LV_MN;
+ lvWait(reg,phase);
  const [wa]=LVWIN[reg],blank=()=>{const pr={};let t=0;for(const [,g,c] of G){pr[g]=Array(c).fill('');t+=c;}return {date:n.date,pr,done:0,tot:t,at:n.time,blank:true};};
  const wait=(phase==='live')||(phase==='before'&&n.min>=480);const items=sts.map(s=>{let d=LV.data[reg+':'+s];if(wait&&(!d||d.date!==n.date))d=Object.assign(blank(),d?{ve:d.ve}:{});return {s,d};});
  const tot=items.reduce((a,x)=>a+(x.d?x.d.tot:(reg==='mb'?27:18)),0),done=items.reduce((a,x)=>a+(x.d&&x.d.date===n.date?x.d.done:0),0);

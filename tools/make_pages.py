@@ -616,13 +616,66 @@ _bt1 = cau_backtest(fullmb[-62:], False); _bt2 = cau_backtest(fullmb[-62:], True
 _bt = _one[0] if _one else None
 spage("soi-cau-xsmb", f"Soi cầu XSMB – thống kê cầu lô miền Bắc {vn(_nd)}", f"Thống kê cầu XSMB {vn(_nd)}: cầu lô đang chạy dài nhất, cầu cả cặp, cầu bạch thủ, cầu Pascal từ kết quả {vn(_ld)}, kèm tỉ lệ thực tế trong 30 kỳ. Không quảng cáo.", "Thống kê cầu XSMB",
       f"Thống kê cầu lô miền Bắc tính từ {len(_mbrows)} kỳ gần nhất, kết quả mới nhất ngày {vn(_ld)}. Cặp số trong bảng được ghép từ kết quả {vn(_ld)} theo các cầu đang chạy.",
-      card(CAU_NOTE) +
+      card(CAU_NOTE + '<p>Xem thêm: <a href="../kiem-chung-du-doan-xsmb/">Dự đoán XSMB có chính xác không? Kiểm chứng trên toàn bộ kỳ quay</a>.</p>') +
       (f"<h2>Cầu bạch thủ</h2>" + card(f"<p>Cầu một chiều đang chạy dài nhất: <b style='font-size:1.4em'>{_bt[4]}</b>, ghép từ {_lab[_bt[2]]} + {_lab[_bt[3]]}, đã chạy {_bt[0]} kỳ, ăn {_bt[1]}/{_W} kỳ gần nhất.</p>") if _bt else "") +
       f"<h2>Cầu lô một chiều đang chạy</h2>" + card(tbl(["Cặp số", "Vị trí ghép", "Đã chạy", f"Ăn trong {_W} kỳ"], cau_rows(_one, _lab, False, _W)) +
            f"<p class='note'>Một cặp số bất kỳ có khoảng 24% khả năng có trong 27 lô của một kỳ." + (f" Kiểm tra lại {_W} kỳ qua: nếu mỗi kỳ lấy 15 cầu một chiều đang chạy dài nhất lúc đó, tỉ lệ cặp số có trong lô kỳ kế tiếp là <b>{_bt1}%</b>." if _bt1 is not None else "") + "</p>") +
       f"<h2>Cầu lô cả cặp (tính cả số lộn)</h2>" + card(tbl(["Cặp số", "Vị trí ghép", "Đã chạy", f"Ăn trong {_W} kỳ"], cau_rows(_two, _lab, True, _W)) +
            f"<p class='note'>Tính cả số lộn thì một cặp có khoảng 42% khả năng có trong lô mỗi kỳ." + (f" Kiểm tra lại {_W} kỳ qua: nếu mỗi kỳ lấy 15 cầu cả cặp đang chạy dài nhất lúc đó, tỉ lệ có trong lô kỳ kế tiếp là <b>{_bt2}%</b>." if _bt2 is not None else "") + "</p>") +
       f"<h2>Cầu Pascal</h2>" + card(f"<p>Ghép giải Đặc biệt và giải Nhất kỳ {vn(_ld)}, cộng từng cặp chữ số liền nhau (chỉ lấy hàng đơn vị) cho đến khi còn 2 chữ số:</p><pre style='white-space:pre-wrap;font-size:15px;line-height:1.6'>" + "\n".join(_ps) + f"</pre><p>Kết quả: <b style='font-size:1.3em'>{_ps[-1]}</b></p>"))
+# --- Kiểm chứng các cách "dự đoán" XSMB phổ biến bằng dữ liệu đã quay ---
+def _kc():
+    R = [(d, nums) for d, nums in fullmb if len(nums) == 27]
+    LO = [set(int(x[-2:]) for x in nums) for _, nums in R]; n = len(R)
+    def rate(fn, E):
+        ok = tot = 0
+        for t in range(n - 1 - E, n - 1):
+            for v in fn(t):
+                tot += 1; ok += v in LO[t + 1]
+        return (round(100 * ok / tot, 1), tot) if tot else (None, 0)
+    # Pascal từ giải ĐB + G1
+    def pas(t): return [int(pascal(R[t][1][0] + R[t][1][1])[-1])]
+    # lô gan nhất và lô về nhiều nhất 30 kỳ, tính đến kỳ t
+    lastseen = {}; gan_pick = {}; hot_pick = {}
+    from collections import Counter as _C, deque as _dq
+    win = _dq(); cnt = _C()
+    for t in range(n):
+        for v in LO[t]: lastseen[v] = t
+        win.append(LO[t]); cnt.update(LO[t])
+        if len(win) > 30: cnt.subtract(win.popleft())
+        gan_pick[t] = [min(range(100), key=lambda v: (lastseen.get(v, -1), v))]
+        hot_pick[t] = [max(range(100), key=lambda v: (cnt[v], -v))]
+    rows = []
+    for E in (30, 90, 365, n - 40):
+        rows.append((E, rate(pas, E), rate(lambda t: gan_pick[t], E), rate(lambda t: hot_pick[t], E), rate(lambda t: sorted(LO[t]), E)))
+    bt1 = cau_backtest(fullmb[-122:], False, top=1, E=90); bt15 = cau_backtest(fullmb[-122:], False, top=15, E=90); bt2 = cau_backtest(fullmb[-122:], True, top=15, E=90)
+    return rows, bt1, bt15, bt2, R[-1][0], n
+_kr, _kb1, _kb15, _kb2, _kd, _kn = _kc()
+_pc = lambda x: "–" if x[0] is None else f"{dec(x[0], 1)}%"
+_ktab = tbl(["Cách chọn số cho kỳ sau", "30 kỳ", "90 kỳ", "365 kỳ", f"Từ {fullmb[40][0][:4]} ({fm(_kn - 41)} kỳ)", "Mức ngẫu nhiên"], [
+    ("Cầu Pascal (ghép giải ĐB và giải Nhất)", *[_pc(r[1]) for r in _kr], "23,8%"),
+    ("Lô gan nhất (lâu chưa về nhất)", *[_pc(r[2]) for r in _kr], "23,8%"),
+    ("Lô về nhiều nhất 30 kỳ", *[_pc(r[3]) for r in _kr], "23,8%"),
+    ("Lô kỳ trước về lại (lô rơi)", *[_pc(r[4]) for r in _kr], "23,8%")])
+_ktab2 = tbl(["Cách chọn số", "Kiểm tra 90 kỳ", "Mức ngẫu nhiên"], [
+    ("Cầu bạch thủ (cầu một chiều chạy dài nhất)", f"{_kb1}%" if _kb1 is not None else "–", "23,8%"),
+    ("15 cầu một chiều chạy dài nhất", f"{_kb15}%" if _kb15 is not None else "–", "23,8%"),
+    ("15 cầu cả cặp chạy dài nhất (tính số lộn)", f"{_kb2}%" if _kb2 is not None else "–", "42,1%")])
+_kfaq = [("Có cách nào dự đoán kết quả XSMB chính xác không?", "Không. Kết quả được quay ngẫu nhiên công khai, mỗi kỳ độc lập với kỳ trước. Bảng trên kiểm tra các cách phổ biến trên hàng trăm kỳ thật và không cách nào trúng cao hơn mức ngẫu nhiên một cách đáng kể."),
+         ("Soi cầu có hiệu quả không?", "Cầu chỉ là chuỗi lặp lại tình cờ trong các kỳ đã quay. Khi kiểm tra lại, các cầu đang chạy dài nhất trúng ở kỳ kế tiếp với tỉ lệ ngang mức ngẫu nhiên."),
+         ("Lô gan lâu ngày có sắp về không?", "Không. Một lô lâu chưa về không vì thế mà dễ về hơn ở kỳ sau; khả năng mỗi kỳ vẫn như nhau, khoảng 23,8% cho mỗi lô."),
+         ("Vì sao các trang vẫn đăng dự đoán XSMB?", "Vì đây là cụm từ được tìm rất nhiều, kéo lượt truy cập và quảng cáo. Xslab.live không đăng dự đoán; trang này chỉ kiểm chứng các cách dự đoán bằng số liệu thật.")]
+_kslug = "kiem-chung-du-doan-xsmb"; STATP.append((_kslug, "Kiểm chứng dự đoán XSMB"))
+page(f"thong-ke/{_kslug}/", f"Dự đoán XSMB có chính xác không? Kiểm chứng {fm(_kn)} kỳ quay",
+     f"Dự đoán XSMB, soi cầu, lô gan, cầu Pascal có trúng nhiều hơn may rủi không? Kiểm chứng bằng kết quả thật 30, 90, 365 kỳ đến {vn(_kd)}. Không quảng cáo.",
+     [("Thống kê", "thong-ke/"), ("Kiểm chứng dự đoán XSMB", f"thong-ke/{_kslug}/")], "Dự đoán XSMB có chính xác không?",
+     f"<p>Nhiều trang đăng \"dự đoán XSMB\", \"soi cầu\", \"cầu bạch thủ\" mỗi ngày. Trang này không đưa ra con số nào cho kỳ tới. Thay vào đó, chúng tôi lấy chính các cách chọn số phổ biến, áp dụng cho từng kỳ trong quá khứ và đối chiếu với kết quả kỳ ngay sau, để xem chúng có trúng nhiều hơn chọn đại hay không. Dữ liệu đến kỳ {vn(_kd)}.</p>"
+     + "<h2>Mức ngẫu nhiên là bao nhiêu?</h2>" + card("<p>Mỗi kỳ XSMB có 27 lô (2 số cuối của 27 giải). Nếu chọn đại một số từ 00 đến 99, khả năng số đó có trong lô kỳ sau là khoảng <b>23,8%</b>. Nếu tính cả số lộn (ví dụ 18 hoặc 81) thì khoảng <b>42,1%</b>. Một cách \"dự đoán\" chỉ đáng tin nếu trúng cao hơn hẳn các mức này trong thời gian dài.</p>")
+     + "<h2>Kiểm chứng các cách chọn số phổ biến</h2>" + card(_ktab + "<p class='note'>Tỉ lệ trúng = số lần con số được chọn từ kỳ trước có trong lô của kỳ ngay sau, chia cho số lần thử. Chỉ do may rủi, tỉ lệ có thể lệch khỏi 23,8% khoảng ±15 điểm với 30 kỳ, ±9 điểm với 90 kỳ, ±4,4 điểm với 365 kỳ; cột toàn bộ dữ liệu cho con số đáng tin nhất.</p>")
+     + "<h2>Kiểm chứng soi cầu</h2>" + card(_ktab2 + "<p class='note'>Mỗi kỳ trong 90 kỳ qua, chọn các cầu đang chạy dài nhất tính đến kỳ đó (như cách các trang soi cầu đăng), rồi xem cặp số ghép được có trong lô kỳ kế tiếp không. Xem bảng cầu hằng ngày tại <a href=\"../soi-cau-xsmb/\">Thống kê cầu XSMB</a>.</p>")
+     + "<h2>Kết luận</h2>" + card("<p>Các cách trên đều trúng quanh mức ngẫu nhiên, có kỳ cao hơn, có kỳ thấp hơn một chút do may rủi. Không có cách nào giữ được tỉ lệ cao hơn hẳn trong thời gian dài. Lý do đơn giản: mỗi kỳ quay độc lập, bóng không nhớ kết quả hôm trước.</p><p>Thống kê vẫn hữu ích để tra cứu, so sánh, hiểu dữ liệu, như <a href=\"../lo-gan-xsmb/\">lô gan</a> hay <a href=\"../tan-suat-lo-to-xsmb/\">tần suất lô tô</a>, nhưng không giúp đoán trước kết quả. Xem thêm trang <a href=\"../../kiem-dinh/\">Kiểm định</a> về tính ngẫu nhiên của kết quả.</p>")
+     + "<h2>Câu hỏi thường gặp</h2>" + "".join(f"<h3>{esc(q)}</h3><p>{esc(a)}</p>" for q, a in _kfaq),
+     ld=[{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in _kfaq]}])
 # --- XSMN, XSMT: cầu của từng đài theo các kỳ quay của đài đó ---
 for _reg, _fn, _lb, _nm in (("xsmn", "xsmn_full.csv", "XSMN", "miền Nam"), ("xsmt", "xsmt_full.csv", "XSMT", "miền Trung")):
     try: _rows = [l.split(",") for l in open(os.path.join(ROOT, _fn)).read().strip().split("\n")[1:]]
