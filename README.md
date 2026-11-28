@@ -8,7 +8,7 @@ Trang kết quả XSMB, XSMN, XSMT, Vietlott và thống kê dữ liệu đã qu
 
 > Thông tin và kết quả xổ số trên XS Lab được chúng tôi cập nhật từ nguồn công khai và chỉ mang tính chất tham khảo.
 
-Mọi số liệu là thống kê của các kỳ đã quay. Từ 24/11/2026 trang không còn phần gợi ý số; các tệp `predictions*.json` chỉ là nhật ký cũ, giữ nguyên.
+Mọi số liệu là thống kê của các kỳ đã quay. Từ 24/11/2026 trang không còn phần gợi ý số. Các tệp nhật ký `predictions*.json` cũ đã được xoá ngày 28/11/2026.
 
 ---
 
@@ -58,7 +58,6 @@ Trang trực tiếp lấy số ngay trên trình duyệt người xem, từ ngu�
 | `xsmb_full.csv`, `xsmn_full.csv`, `xsmt_full.csv` | Kết quả đủ giải toàn bộ lịch sử |
 | `recent*.json` | Kết quả đủ giải các kỳ gần nhất, cho bảng kết quả |
 | `vietlott_*.csv` | Keno, Mega 6/45, Power 6/55, Max 3D, Max 3D Pro |
-| `predictions*.json` | Nhật ký cũ, giữ nguyên, không còn dùng |
 | `sitemap.xml` → `sitemap-chinh.xml`, `sitemap-xsmb.xml`, `sitemap-xsmn.xml`, `sitemap-xsmt.xml`, `sitemap-vietlott.xml` | Sơ đồ trang web cho Google |
 | `rss.xml`, `robots.txt`, `llms.txt`, `404.html` | RSS, hướng dẫn cho máy tìm kiếm, giới thiệu cho AI, trang không tìm thấy |
 | `assets/` | CSS, biểu tượng và JS dùng chung cho các trang tĩnh |
