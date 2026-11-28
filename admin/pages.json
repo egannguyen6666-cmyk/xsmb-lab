@@ -433,6 +433,24 @@
 "desc": "Thống kê số gánh XSMB đến 27/11/2026: giải đặc biệt có 3 số cuối dạng gánh (121, 353…), tần suất, số kỳ chưa về và số gánh ở mọi giải. Không quảng cáo."
 },
 {
+"path": "thong-ke/soi-cau-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu XSMB – thống kê cầu lô miền Bắc 28/11/2026",
+"desc": "Thống kê cầu XSMB 28/11/2026: cầu lô đang chạy dài nhất, cầu cả cặp, cầu bạch thủ, cầu Pascal từ kết quả 27/11/2026, kèm tỉ lệ thực tế trong 30 kỳ. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-xsmn/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu XSMN – thống kê cầu lô miền Nam 28/11/2026",
+"desc": "Thống kê cầu XSMN 28/11/2026: cầu lô đang chạy của Bình Phước, Hậu Giang, Long An, TP.HCM, kèm tỉ lệ thực tế. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-xsmt/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu XSMT – thống kê cầu lô miền Trung 28/11/2026",
+"desc": "Thống kê cầu XSMT 28/11/2026: cầu lô đang chạy của Quảng Ngãi, Đà Nẵng, Đắk Nông, kèm tỉ lệ thực tế. Không quảng cáo."
+},
+{
 "path": "thong-ke/tan-suat-lo-to-xsmb/",
 "loai": "Trang thống kê, thông tin",
 "title": "Tần suất lô tô XSMB 30, 90 ngày – bảng 00–99",

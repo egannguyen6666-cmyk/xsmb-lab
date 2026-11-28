@@ -522,6 +522,129 @@ spage("tong-chan-le-dac-biet-xsmb", "Thống kê tổng, chẵn lẻ, to nhỏ g
       "<h2>30 kỳ gần nhất</h2>" + card(tbl(["Ngày", "Giải Đặc biệt", "Tổng", "Chẵn lẻ", "To nhỏ"], [(vn(d), fmap[d][0], tong(t), cl(t), tn(t)) for d, t in dbt2[-30:][::-1]])) +
       "<p class='note'>Theo xác suất, trong 100 kỳ mỗi tổng trung bình về 10 lần, mỗi nhóm chẵn lẻ hoặc to nhỏ khoảng 25 lần.</p>")
 
+
+# ---------- thống kê cầu (soi cầu): ghép 2 chữ số ở 2 vị trí cố định của kỳ trước, đếm chuỗi kỳ liên tiếp cặp đó có trong lô kỳ sau ----------
+import datetime as _dt
+CAU_G = {"mb": [("ĐB", 1), ("G1", 1), ("G2", 2), ("G3", 6), ("G4", 4), ("G5", 6), ("G6", 3), ("G7", 4)],
+         "mn": [("ĐB", 1), ("G1", 1), ("G2", 1), ("G3", 2), ("G4", 7), ("G5", 1), ("G6", 3), ("G7", 1), ("G8", 1)]}
+def cau_labels(kind, nums):
+    out, k = [], 0
+    for g, c in CAU_G[kind]:
+        for i in range(c):
+            for j in range(len(nums[k])): out.append(f"{g}{'.' + str(i + 1) if c > 1 else ''} số {j + 1}")
+            k += 1
+    return out
+def cau_scan(rows, W=30, minrun=3):
+    """rows: [(date, [số...])] cũ → mới. Trả về các cầu đang chạy (một chiều, cả cặp), đã sắp xếp."""
+    L = len("".join(rows[-1][1])); rows = [r for r in rows if len("".join(r[1])) == L]
+    D = ["".join(r[1]) for r in rows]; LO = [set(int(x[-2:]) for x in r[1]) for r in rows]; n = len(D)
+    if n < 5: return [], [], rows
+    one, two = [], []
+    for p in range(L):
+        for q in range(L):
+            if p == q: continue
+            r1 = r2 = 0; s1 = s2 = True; h1 = h2 = 0
+            for t in range(n - 2, -1, -1):
+                a, b = D[t][p], D[t][q]; v = int(a + b); rv = int(b + a); lo = LO[t + 1]
+                x1 = v in lo; x2 = x1 or rv in lo
+                if s1:
+                    if x1: r1 += 1
+                    else: s1 = False
+                if s2:
+                    if x2: r2 += 1
+                    else: s2 = False
+                if t >= n - 1 - W: h1 += x1; h2 += x2
+                elif not s1 and not s2: break
+            nx = D[-1][p] + D[-1][q]
+            if r1 >= minrun: one.append((r1, h1, p, q, nx))
+            if r2 >= minrun: two.append((r2, h2, p, q, nx))
+    key = lambda c: (-c[0], -c[1])
+    return sorted(one, key=key), sorted(two, key=key), rows
+def cau_backtest(rows, both, top=15, E=30):
+    """Kiểm tra lại: mỗi kỳ trong E kỳ gần nhất, lấy `top` cầu đang chạy dài nhất tính đến kỳ trước đó, xem cặp ghép có trong lô kỳ kế tiếp không."""
+    L = len("".join(rows[-1][1])); rows = [r for r in rows if len("".join(r[1])) == L]
+    D = ["".join(r[1]) for r in rows]; LO = [set(int(x[-2:]) for x in r[1]) for r in rows]; n = len(D)
+    if n < E + 5: return None
+    picks = [[] for _ in range(n)]   # picks[e]: (run, cặp ghép từ kỳ e) tốt nhất, chấm ở kỳ e+1
+    import heapq
+    for p in range(L):
+        for q in range(L):
+            if p == q: continue
+            run = 0
+            for t in range(n - 1):
+                a, b = D[t][p], D[t][q]; v = int(a + b); lo = LO[t + 1]
+                hit = v in lo or (both and int(b + a) in lo)
+                e = t + 1
+                if n - 1 - E <= e < n - 1:
+                    nx = D[e][p] + D[e][q]; hp = picks[e]
+                    item = (run + (1 if hit else 0), p * 1000 + q, nx)
+                    if len(hp) < top: heapq.heappush(hp, item)
+                    elif item > hp[0]: heapq.heapreplace(hp, item)
+                run = run + 1 if hit else 0
+    tot = ok = 0
+    for e in range(n - 1 - E, n - 1):
+        lo = LO[e + 1]
+        for _, _, nx in picks[e]:
+            tot += 1; ok += int(nx) in lo or (both and int(nx[::-1]) in lo)
+    return round(100 * ok / tot) if tot else None
+def cau_rows(lst, lab, both, W, top=15):
+    seen, out = set(), []
+    for r, h, p, q, nx in lst:
+        k = tuple(sorted((nx, nx[::-1]))) if both else nx
+        if k in seen: continue
+        seen.add(k); pair = f"{nx}" + (f" – {nx[::-1]}" if both and nx[0] != nx[1] else "")
+        out.append((f"<b>{pair}</b>", f"{lab[p]} + {lab[q]}", f"{r} kỳ", f"{h}/{W} ({round(100 * h / W)}%)"))
+        if len(out) >= top: break
+    return out
+def pascal(s):
+    steps = [s]
+    while len(s) > 2: s = "".join(str((int(s[i]) + int(s[i + 1])) % 10) for i in range(len(s) - 1)); steps.append(s)
+    return steps
+CAU_NOTE = ("<p><b>Cầu là gì?</b> Lấy 2 chữ số ở 2 vị trí cố định trong bảng kết quả kỳ trước ghép thành một cặp số, rồi xem cặp đó có nằm trong lô (2 số cuối các giải) của kỳ sau không. "
+            "Một cầu \"đang chạy 5 kỳ\" nghĩa là 5 kỳ liên tiếp gần nhất, cặp ghép được đều có trong lô kỳ kế tiếp. Bảng cũng ghi số lần cầu đó \"ăn\" trong 30 kỳ, và kết quả kiểm tra lại các cầu dài nhất ở kỳ ngay sau, để bạn so với mức ngẫu nhiên.</p>"
+            "<p><b>Lưu ý:</b> Mỗi kỳ quay độc lập. Cầu chỉ là chuỗi lặp lại tình cờ trong các kỳ đã quay, không làm tăng khả năng trúng ở kỳ sau. Đây là số liệu thống kê, không phải dự đoán hay lời khuyên chơi.</p>")
+# --- XSMB ---
+_mbrows = fullmb[-61:]
+_one, _two, _mbrows = cau_scan(_mbrows)
+_lab = cau_labels("mb", _mbrows[-1][1]); _ld = _mbrows[-1][0]
+_nd = (_dt.date.fromisoformat(_ld) + _dt.timedelta(days=1)).isoformat()
+_W = 30
+_avg1 = round(100 * sum(c[1] for c in _one[:15]) / (_W * max(1, min(15, len(_one))))) if _one else 0
+_avg2 = round(100 * sum(c[1] for c in _two[:15]) / (_W * max(1, min(15, len(_two))))) if _two else 0
+_ps = pascal(_mbrows[-1][1][0] + _mbrows[-1][1][1])
+_bt1 = cau_backtest(fullmb[-62:], False); _bt2 = cau_backtest(fullmb[-62:], True)
+_bt = _one[0] if _one else None
+spage("soi-cau-xsmb", f"Soi cầu XSMB – thống kê cầu lô miền Bắc {vn(_nd)}", f"Thống kê cầu XSMB {vn(_nd)}: cầu lô đang chạy dài nhất, cầu cả cặp, cầu bạch thủ, cầu Pascal từ kết quả {vn(_ld)}, kèm tỉ lệ thực tế trong 30 kỳ. Không quảng cáo.", "Thống kê cầu XSMB",
+      f"Thống kê cầu lô miền Bắc tính từ {len(_mbrows)} kỳ gần nhất, kết quả mới nhất ngày {vn(_ld)}. Cặp số trong bảng được ghép từ kết quả {vn(_ld)} theo các cầu đang chạy.",
+      card(CAU_NOTE) +
+      (f"<h2>Cầu bạch thủ</h2>" + card(f"<p>Cầu một chiều đang chạy dài nhất: <b style='font-size:1.4em'>{_bt[4]}</b>, ghép từ {_lab[_bt[2]]} + {_lab[_bt[3]]}, đã chạy {_bt[0]} kỳ, ăn {_bt[1]}/{_W} kỳ gần nhất.</p>") if _bt else "") +
+      f"<h2>Cầu lô một chiều đang chạy</h2>" + card(tbl(["Cặp số", "Vị trí ghép", "Đã chạy", f"Ăn trong {_W} kỳ"], cau_rows(_one, _lab, False, _W)) +
+           f"<p class='note'>Một cặp số bất kỳ có khoảng 24% khả năng có trong 27 lô của một kỳ." + (f" Kiểm tra lại {_W} kỳ qua: nếu mỗi kỳ lấy 15 cầu một chiều đang chạy dài nhất lúc đó, tỉ lệ cặp số có trong lô kỳ kế tiếp là <b>{_bt1}%</b>." if _bt1 is not None else "") + "</p>") +
+      f"<h2>Cầu lô cả cặp (tính cả số lộn)</h2>" + card(tbl(["Cặp số", "Vị trí ghép", "Đã chạy", f"Ăn trong {_W} kỳ"], cau_rows(_two, _lab, True, _W)) +
+           f"<p class='note'>Tính cả số lộn thì một cặp có khoảng 42% khả năng có trong lô mỗi kỳ." + (f" Kiểm tra lại {_W} kỳ qua: nếu mỗi kỳ lấy 15 cầu cả cặp đang chạy dài nhất lúc đó, tỉ lệ có trong lô kỳ kế tiếp là <b>{_bt2}%</b>." if _bt2 is not None else "") + "</p>") +
+      f"<h2>Cầu Pascal</h2>" + card(f"<p>Ghép giải Đặc biệt và giải Nhất kỳ {vn(_ld)}, cộng từng cặp chữ số liền nhau (chỉ lấy hàng đơn vị) cho đến khi còn 2 chữ số:</p><pre style='white-space:pre-wrap;font-size:15px;line-height:1.6'>" + "\n".join(_ps) + f"</pre><p>Kết quả: <b style='font-size:1.3em'>{_ps[-1]}</b></p>"))
+# --- XSMN, XSMT: cầu của từng đài theo các kỳ quay của đài đó ---
+for _reg, _fn, _lb, _nm in (("xsmn", "xsmn_full.csv", "XSMN", "miền Nam"), ("xsmt", "xsmt_full.csv", "XSMT", "miền Trung")):
+    try: _rows = [l.split(",") for l in open(os.path.join(ROOT, _fn)).read().strip().split("\n")[1:]]
+    except Exception: continue
+    _by = {}
+    for d, st, nums in _rows: _by.setdefault(st, []).append((d, nums.split()))
+    _last = max(r[0] for r in _rows); _nxt = _dt.date.fromisoformat(_last) + _dt.timedelta(days=1)
+    _wk = (_nxt - _dt.timedelta(days=7)).isoformat()
+    _sts = sorted({st for d, st, _ in _rows if d == _wk}, key=lambda x: ST.get(x, x))
+    _body = card(CAU_NOTE.replace("kỳ trước", "kỳ trước của cùng đài").replace("kỳ sau", "kỳ sau của đài đó").replace("trong 30 kỳ, và kết quả kiểm tra lại các cầu dài nhất ở kỳ ngay sau,", "trong 20 kỳ gần nhất của đài"))
+    for st in _sts:
+        o, t, rr = cau_scan(_by[st][-31:], W=20, minrun=2)
+        if not rr: continue
+        lab = cau_labels("mn", rr[-1][1])
+        _body += f"<h2>Xổ số {ST.get(st, st)} – kỳ {vn(_nxt.isoformat())}</h2>" + card(
+            f"<p class='note'>Ghép từ kết quả {ST.get(st, st)} ngày {vn(rr[-1][0])}, tính trên {len(rr)} kỳ gần nhất của đài.</p>" +
+            "<h3>Một chiều</h3>" + tbl(["Cặp số", "Vị trí ghép", "Đã chạy", "Ăn trong 20 kỳ"], cau_rows(o, lab, False, 20, 8)) +
+            "<h3>Cả cặp</h3>" + tbl(["Cặp số", "Vị trí ghép", "Đã chạy", "Ăn trong 20 kỳ"], cau_rows(t, lab, True, 20, 8)) +
+            "<p class='note'>Mỗi kỳ có 18 lô: một cặp bất kỳ có khoảng 17% khả năng có trong lô (khoảng 30% nếu tính cả số lộn).</p>")
+    spage(f"soi-cau-{_reg}", f"Soi cầu {_lb} – thống kê cầu lô {_nm} {vn(_nxt.isoformat())}", f"Thống kê cầu {_lb} {vn(_nxt.isoformat())}: cầu lô đang chạy của {', '.join(ST.get(x, x) for x in _sts)}, kèm tỉ lệ thực tế. Không quảng cáo.", f"Thống kê cầu {_lb}",
+          f"Thống kê cầu lô các đài {_nm} quay ngày {vn(_nxt.isoformat())}: {', '.join(ST.get(x, x) for x in _sts)}.", _body)
+
 hub = "<p>Các bảng thống kê kết quả XSMB, XSMN, XSMT được tạo lại mỗi ngày từ dữ liệu đã quay.</p>" + "".join(f"<h2>{REG[r][0]}</h2><ul class='ls'>" + "".join(f'<li><a href="../{s}/">{h}</a></li>' for s, h in STATP if s.endswith(r)) + "</ul>" for r in REG)
 page("thong-ke/bang-thong-ke/", "Bảng thống kê xổ số XSMB, XSMN, XSMT – lô gan, 3 càng, giải đặc biệt", "Tổng hợp các bảng thống kê XSMB, XSMN, XSMT: lô gan, tần suất lô tô, đầu đuôi, giải đặc biệt, giải nhất, giải tám, 3 càng, 4 càng. Không quảng cáo.", [("Thống kê", "thong-ke/"), ("Bảng thống kê", "thong-ke/bang-thong-ke/")], "Bảng thống kê xổ số", hub)
 
