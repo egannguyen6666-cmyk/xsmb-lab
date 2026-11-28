@@ -2166,7 +2166,8 @@ async function lvTick(){
 /* nhúng buổi live YouTube của kênh XS Lab (ID lấy từ yt-live.json, cập nhật 15 phút một lần) — chỉ tải video khi bấm */
 const YT={j:null,at:0,cur:''};
 async function ytJ(){if(!YT.j||Date.now()-YT.at>300000){try{const r=await fetch(XS_ROOT+'yt-live.json?t='+Math.floor(Date.now()/60000),{cache:'no-store'});YT.j=r.ok?await r.json():null;}catch(e){YT.j=null;}YT.at=Date.now();}return YT.j;}
-function ytFill(box,e){if(box.dataset.id===e.id)return;box.dataset.id=e.id;box.innerHTML=`<button type="button" class="ytf" aria-label="Phát video trực tiếp trên YouTube"><img src="https://i.ytimg.com/vi/${e.id}/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"><span class="ytp" aria-hidden="true"></span></button>`;
+function ytFill(box,e){if(box.dataset.id===e.id)return;box.dataset.id=e.id;box.innerHTML=`<button type="button" class="ytf" aria-label="Phát video trực tiếp trên YouTube"><img src="https://i.ytimg.com/vi/${e.id}/maxresdefault.jpg" alt="" loading="lazy" decoding="async" width="1280" height="720"><span class="ytp" aria-hidden="true"></span></button>`;
+ {const im=box.querySelector('img'),fb=()=>{if(!im.dataset.fb){im.dataset.fb=1;im.src=`https://i.ytimg.com/vi/${e.id}/hqdefault.jpg`;}};im.onerror=fb;im.onload=()=>{if(im.naturalWidth<=120)fb();};}
  box.querySelector('button').onclick=()=>{box.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${e.id}?autoplay=1&rel=0" title="Trực tiếp xổ số trên YouTube" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;};}
 const okId=e=>e&&/^[\w-]{11}$/.test(e.id||'');
 async function lvYt(){const card=$('lvYtCard');if(!card)return;const n=nowVN();const j=await ytJ();
