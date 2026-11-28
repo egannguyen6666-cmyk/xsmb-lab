@@ -307,6 +307,12 @@
 "desc": "Tra cứu thống kê từng số từ 00 đến 99: số lần về, số kỳ chưa về, kỷ lục gan ở XSMB, XSMN, XSMT, cập nhật đến 27/11/2026."
 },
 {
+"path": "soi-cau/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu XSMB, XSMN, XSMT hôm nay 28/11/2026 – thống kê cầu lô 3 miền",
+"desc": "Soi cầu 3 miền 28/11/2026: cầu XSMB, XSMN, XSMT, soi cầu từng đài, cầu bạch thủ, cầu Pascal, lô xiên, kèm đối chiếu kết quả thật. Không quảng cáo."
+},
+{
 "path": "thong-ke/3-cang-xsmb/",
 "loai": "Trang thống kê, thông tin",
 "title": "Thống kê 3 càng XSMB – 3 càng giải đặc biệt",
@@ -353,6 +359,42 @@
 "loai": "Trang thống kê, thông tin",
 "title": "Bảng thống kê xổ số XSMB, XSMN, XSMT – lô gan, 3 càng, giải đặc biệt",
 "desc": "Tổng hợp các bảng thống kê XSMB, XSMN, XSMT: lô gan, tần suất lô tô, đầu đuôi, giải đặc biệt, giải nhất, giải tám, 3 càng, 4 càng. Không quảng cáo."
+},
+{
+"path": "thong-ke/cau-bach-thu-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Cầu bạch thủ XSMB 28/11/2026 – thống kê cầu bạch thủ miền Bắc",
+"desc": "Cầu bạch thủ XSMB 28/11/2026: cầu bạch thủ một chiều chạy dài nhất ở mỗi biên độ từ kết quả 27/11/2026, kèm đối chiếu 10 kỳ gần nhất và tỉ lệ thực tế. Không quảng cáo."
+},
+{
+"path": "thong-ke/cau-bach-thu-xsmn/",
+"loai": "Trang thống kê, thông tin",
+"title": "Cầu bạch thủ XSMN 28/11/2026 – thống kê cầu bạch thủ miền Nam",
+"desc": "Cầu bạch thủ XSMN 28/11/2026 của Bình Phước, Hậu Giang, Long An, TP.HCM: cầu bạch thủ một chiều chạy dài nhất ở mỗi biên độ, kèm đối chiếu 10 kỳ gần nhất của từng đài. Không quảng cáo."
+},
+{
+"path": "thong-ke/cau-bach-thu-xsmt/",
+"loai": "Trang thống kê, thông tin",
+"title": "Cầu bạch thủ XSMT 28/11/2026 – thống kê cầu bạch thủ miền Trung",
+"desc": "Cầu bạch thủ XSMT 28/11/2026 của Quảng Ngãi, Đà Nẵng, Đắk Nông: cầu bạch thủ một chiều chạy dài nhất ở mỗi biên độ, kèm đối chiếu 10 kỳ gần nhất của từng đài. Không quảng cáo."
+},
+{
+"path": "thong-ke/cau-pascal-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Cầu Pascal XSMB 28/11/2026 – thống kê cầu pascal miền Bắc",
+"desc": "Cầu Pascal XSMB 28/11/2026: cặp Pascal ghép từ giải Đặc biệt và giải Nhất từ kết quả 27/11/2026, kèm đối chiếu 10 kỳ gần nhất và tỉ lệ thực tế. Không quảng cáo."
+},
+{
+"path": "thong-ke/cau-pascal-xsmn/",
+"loai": "Trang thống kê, thông tin",
+"title": "Cầu Pascal XSMN 28/11/2026 – thống kê cầu pascal miền Nam",
+"desc": "Cầu Pascal XSMN 28/11/2026 của Bình Phước, Hậu Giang, Long An, TP.HCM: cặp Pascal ghép từ giải Đặc biệt và giải Nhất, kèm đối chiếu 10 kỳ gần nhất của từng đài. Không quảng cáo."
+},
+{
+"path": "thong-ke/cau-pascal-xsmt/",
+"loai": "Trang thống kê, thông tin",
+"title": "Cầu Pascal XSMT 28/11/2026 – thống kê cầu pascal miền Trung",
+"desc": "Cầu Pascal XSMT 28/11/2026 của Quảng Ngãi, Đà Nẵng, Đắk Nông: cặp Pascal ghép từ giải Đặc biệt và giải Nhất, kèm đối chiếu 10 kỳ gần nhất của từng đài. Không quảng cáo."
 },
 {
 "path": "thong-ke/dau-duoi-xsmb/",
@@ -425,6 +467,24 @@
 "loai": "Trang thống kê, thông tin",
 "title": "Thống kê lô kép XSMB – kép bằng, kép lệch",
 "desc": "Thống kê lô kép XSMB đến 27/11/2026: số lần về 30, 90 kỳ, số kỳ chưa về và kỷ lục gan của từng lô kép bằng, kép lệch. Không quảng cáo."
+},
+{
+"path": "thong-ke/lo-xien-xsmb/",
+"loai": "Trang thống kê, thông tin",
+"title": "Lô xiên XSMB 28/11/2026 – thống kê lô xiên miền Bắc",
+"desc": "Lô xiên XSMB 28/11/2026: xiên 2, xiên 3 ghép từ các cầu chạy dài nhất từ kết quả 27/11/2026, kèm đối chiếu 10 kỳ gần nhất và tỉ lệ thực tế. Không quảng cáo."
+},
+{
+"path": "thong-ke/lo-xien-xsmn/",
+"loai": "Trang thống kê, thông tin",
+"title": "Lô xiên XSMN 28/11/2026 – thống kê lô xiên miền Nam",
+"desc": "Lô xiên XSMN 28/11/2026 của Bình Phước, Hậu Giang, Long An, TP.HCM: xiên 2, xiên 3 ghép từ các cầu chạy dài nhất, kèm đối chiếu 10 kỳ gần nhất của từng đài. Không quảng cáo."
+},
+{
+"path": "thong-ke/lo-xien-xsmt/",
+"loai": "Trang thống kê, thông tin",
+"title": "Lô xiên XSMT 28/11/2026 – thống kê lô xiên miền Trung",
+"desc": "Lô xiên XSMT 28/11/2026 của Quảng Ngãi, Đà Nẵng, Đắk Nông: xiên 2, xiên 3 ghép từ các cầu chạy dài nhất, kèm đối chiếu 10 kỳ gần nhất của từng đài. Không quảng cáo."
 },
 {
 "path": "thong-ke/so-dao-xsmb/",

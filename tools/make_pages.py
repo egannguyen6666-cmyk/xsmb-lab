@@ -70,7 +70,8 @@ EXTRA_CSS = """@view-transition{navigation:auto}::view-transition-old(root),::vi
 .mgrid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}.mgrid a,.mgrid span{display:block;text-align:center;padding:6px 0;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-size:13px;color:var(--ink);background:var(--panel)}.mgrid span{color:var(--mute);opacity:.5}.mgrid a:hover{border-color:#d01f3c;color:var(--red)}
 .yr{display:grid;grid-template-columns:64px minmax(0,1fr);gap:8px;align-items:center;margin:0 0 6px}.yr b{font-variant-numeric:tabular-nums}
 @media(max-width:600px){.mgrid{grid-template-columns:repeat(6,minmax(0,1fr))}.yr{grid-template-columns:1fr}.vb{width:38px;height:38px;font-size:16px}}
-.facts li{margin-bottom:4px}"""
+.facts li{margin-bottom:4px}
+.cauln{margin:12px 0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel);line-height:1.9}.cauln a{font-weight:600;white-space:nowrap}"""
 _css = shell.STATIC_CSS + shell.MENU_CSS + EXTRA_CSS
 _svg = shell.SPRITE.replace('<svg width="0" height="0" style="position:absolute" aria-hidden="true">', '<svg xmlns="http://www.w3.org/2000/svg">')
 os.makedirs(os.path.join(ROOT, "assets"), exist_ok=True)
@@ -107,6 +108,12 @@ def page(path, title, desc, crumbs, h1, body, ld=None, fam=None):
     open(fp, "w").write(out); WROTE[0] += 1
 
 
+def cau_nav_d(reg, up="../../", sts=()):
+    lb = {"xsmb": "XSMB", "xsmn": "XSMN", "xsmt": "XSMT"}[reg]
+    it = [(f"thong-ke/soi-cau-{reg}/", f"Soi cầu {lb}"), (f"thong-ke/cau-bach-thu-{reg}/", f"Cầu bạch thủ {lb}"), (f"thong-ke/cau-pascal-{reg}/", f"Cầu Pascal {lb}"), (f"thong-ke/lo-xien-{reg}/", f"Lô xiên {lb}")]
+    it += [(f"thong-ke/soi-cau-{x}/", f"Soi cầu {ST.get(x, x)}") for x in sts]
+    if reg == "xsmb": it.append(("thong-ke/kiem-chung-du-doan-xsmb/", "Dự đoán XSMB có chính xác?"))
+    return "<p class='cauln'>" + " · ".join(f'<a href="{up}{u}">{t}</a>' for u, t in it) + "</p>"
 def tbl(head, rows): return '<table><tr>' + ''.join(f'<th>{h}</th>' for h in head) + '</tr>' + ''.join('<tr>' + ''.join(f'<td>{c}</td>' for c in r) + '</tr>' for r in rows) + '</table>'
 def card(x): return f'<div class="card">{x}</div>'
 def cells(vals): return ''.join(f'<span>{v[:-2]}<b>{v[-2:]}</b></span>' for v in vals)
@@ -233,7 +240,7 @@ for reg, fn in (("xsmn", "recent_mn.json"), ("xsmt", "recent_mt.json")):
                     + f'<h2>Lô gan {nm} tính đến {vn(d)}</h2><div class="g30">' + ''.join(f'<a class="c30" href="../../../so/{k:02d}/"><b>{k:02d}</b><small>{i - after.get(k, -1)} kỳ</small></a>' for k in gan_d) + '</div>'
                     + '<p class="note">Số liệu là thống kê các kỳ đã quay của đài, không phải dự đoán.</p>'
                     + (f'<p>Cùng ngày: ' + ' · '.join(f'<a href="../../{k2[1]}/{slug_d(d)}/">{AB.get(k2[1], "")} {ST.get(k2[1], "")}</a>' for k2 in others) + f' · <a href="../../{slug_d(d)}/">Cả {lab} {vn(d)}</a></p>' if others else '')
-                    + f'<p>{"".join(nav)}<a class="cta" href="../">Xổ số {nm}</a><a class="cta" href="../../../do-ve/">Dò vé số</a></p>')
+                    + f'<p>{"".join(nav)}<a class="cta" href="../">Xổ số {nm}</a><a class="cta" href="../../../thong-ke/soi-cau-{st}/">Soi cầu {nm}</a><a class="cta" href="../../../do-ve/">Dò vé số</a></p>')
                 page(pth, f"{ab} {vn(d)[:5]}, Xổ số {nm} {vn(d)} – Kết quả {ab} {WDL[w]}", f"{ab} {vn(d)}: kết quả xổ số {nm}{alt} {WDL[w]} ngày {vn(d)} đủ 18 giải, lô tô, giải Đặc biệt 10 kỳ trước và lô gan đài {nm}. Không quảng cáo.", [(lab, reg + "/"), (f"Xổ số {nm}", f"{reg}/{st}/"), (f"{ab} {vn(d)}", pth)], f"{ab} {vn(d)} – Xổ số {nm} {WDL[w]}", body, fam=("ngay_dai", {"dai": nm, "dai_ma": ab, "mien_ma": lab, "ngay": vn(d), "ngay_ngan": vn(d)[:5], "thu": WDL[w]}))
                 STATION_SM[reg].append((BASE + pth, d)); made.add(d)
             for k in lo2: seen[k] = i
@@ -305,6 +312,7 @@ for reg in REG:
             return f"2 số cuối giải Đặc biệt <b>{r['db'][0][-2:]}</b> lần trước làm 2 số cuối giải Đặc biệt{' của đài' if r['station'] else ''} ngày {vn(pd)}" if pd else f"2 số cuối giải Đặc biệt <b>{r['db'][0][-2:]}</b> lần đầu xuất hiện ở giải Đặc biệt{' của đài' if r['station'] else ''} trong dữ liệu"
         nav = f'<div class="pn">{f"<a href='../{slug_d(prv)}/'>‹ {lab} {vn(prv)}</a>" if prv else "<span></span>"}{f"<a href='../{slug_d(nxt)}/'>{lab} {vn(nxt)} ›</a>" if nxt else "<span></span>"}</div>'
         links = f'<p><a class="cta" href="../../thong-ke/30-ky-{reg}/">Thống kê {lab} 30 kỳ</a><a class="cta" href="{mlink}">{lab} tháng {d[5:7]}/{d[:4]}</a><a class="cta" href="../{WDS[w]}/">{lab} {WD[w]}</a><a class="cta" href="../so-ket-qua/">Sổ kết quả {lab}</a><a class="cta" href="../">{lab} hôm nay</a></p>'
+        links = cau_nav_d(reg, sts=[r["station"] for r in rs if r.get("station") in ST] if reg != "xsmb" else ()) + links
         if reg == "xsmb":
             r = rs[0]; lo = lotos(r, MB_G)
             body = (diemtin(lab, d, [r], MB_G, [lo], gapinfo.get((d, "")) or []) + f'<p>Kết quả xổ số miền Bắc (XSMB) {WDL[w]} ngày {vn(d)}, quay lúc 18:15: giải Đặc biệt <b>{r["db"][0]}</b>, giải Nhất {r["g1"][0]}. Bảng đủ 27 giải và lô tô đầu – đuôi bên dưới.</p>'
@@ -657,17 +665,18 @@ def cau_report(rows, kind, nm, W=30, E=30):
     dN, dP = rows[-1][0], rows[-2][0]; loN = lo_of(rows[-1][1]); nlo = len(loN)
     oN, tN, _ = cau_scan(rows, W=W, minrun=2); oP, tP, _ = cau_scan(rows[:-1], W=W, minrun=2)
     lab = cau_labels(kind, rows[-1][1]); labP = cau_labels(kind, rows[-2][1])
-    h = f"<h2>Kết quả {nm} ngày {vn(dN)}</h2>" + card(kq_block(kind, rows[-1][1]) + f"<p class='note'>Các phân tích bên dưới so cầu của kỳ {vn(dP)} với kết quả này, rồi ghép cầu mới từ kết quả này.</p>")
+    S = {}
+    S["kq"] = f"<h2>Kết quả {nm} ngày {vn(dN)}</h2>" + card(kq_block(kind, rows[-1][1]) + f"<p class='note'>Các phân tích bên dưới so cầu của kỳ {vn(dP)} với kết quả này, rồi ghép cầu mới từ kết quả này.</p>")
     # Pascal
     pP = pascal(rows[-2][1][0] + rows[-2][1][1]); pN = pascal(rows[-1][1][0] + rows[-1][1][1])
-    h += f"<h2>Phân tích cầu Pascal {nm}</h2>" + card(
+    S["pascal"] = f"<h2>Phân tích cầu Pascal {nm}</h2>" + card(
         f"<p><b>Đối chiếu kỳ trước:</b> giải Đặc biệt {rows[-2][1][0]} và giải Nhất {rows[-2][1][1]} ngày {vn(dP)} ghép Pascal ra cặp <b>{pP[-1]} – {pP[-1][::-1]}</b>. Kết quả ngày {vn(dN)}: {nhay_pair(pP[-1], loN)}.</p>"
         f"<p><b>Cầu Pascal từ kết quả {vn(dN)}:</b> ghép giải Đặc biệt <b>{rows[-1][1][0]}</b> và giải Nhất <b>{rows[-1][1][1]}</b>, cộng từng cặp chữ số liền nhau, chỉ giữ hàng đơn vị, đến khi còn 2 chữ số:</p>"
         f"<pre style='white-space:pre-wrap;font-size:15px;line-height:1.5;text-align:center;margin:8px 0'>" + "\n".join(pN) + f"</pre><p>Cặp Pascal: <b style='font-size:1.3em'>{pN[-1]} – {pN[-1][::-1]}</b></p>")
     # Cầu nhiều nháy theo biên độ (cả cặp)
     bP = cau_bands(tP, True); bN = cau_bands(tN, True)
     def pr(nx): return f"{nx} – {nx[::-1]}" if nx[0] != nx[1] else nx
-    h += f"<h2>Phân tích cầu nhiều nháy {nm}</h2>" + card(
+    S["nhay"] = f"<h2>Phân tích cầu nhiều nháy {nm}</h2>" + card(
         f"<p><b>Đối chiếu kỳ trước:</b> các cầu cả cặp đang chạy dài nhất tính đến ngày {vn(dP)}, so với lô ngày {vn(dN)}:</p><ul>" +
         "".join(f"<li>Biên độ cầu {r} kỳ: " + "; ".join(nhay_sum(nx, loN) for nx, *_ in xs[:3]) + "</li>" for r, xs in bP) + "</ul>"
         f"<p><b>Cầu đang chạy tính đến ngày {vn(dN)}</b> (tính cả số lộn):</p><ul>" +
@@ -676,7 +685,7 @@ def cau_report(rows, kind, nm, W=30, E=30):
     # Lô xiên
     xP = cau_xien(oP); xN = cau_xien(oN)
     def xok(ns): return all(int(x) in loN for x in ns)
-    h += f"<h2>Phân tích lô xiên {nm}</h2>" + card(
+    S["xien"] = f"<h2>Phân tích lô xiên {nm}</h2>" + card(
         f"<p><b>Đối chiếu kỳ trước:</b> ghép xiên từ các cầu một chiều chạy dài nhất đến ngày {vn(dP)}:</p><ul>" +
         "".join(f"<li>{t}: " + " · ".join(nhay(int(x), loN) for x in ns) + (" – <b>đủ cả xiên</b>" if xok(ns) else " – không đủ xiên") + "</li>" for t, ns in xP) + "</ul>"
         f"<p><b>Cặp xiên ghép từ cầu đến ngày {vn(dN)}:</b></p><ul>" + "".join(f"<li>{t}: <b>{' – '.join(ns)}</b></li>" for t, ns in xN) + "</ul>"
@@ -684,15 +693,43 @@ def cau_report(rows, kind, nm, W=30, E=30):
     # Bạch thủ theo biên độ (một chiều)
     btP = cau_bands(oP, False, per=1); btN = cau_bands(oN, False, per=1)
     bt = cau_backtest(rows, False, top=1, E=E)
-    h += f"<h2>Phân tích cầu bạch thủ {nm}</h2>" + card(
+    S["bt"] = f"<h2>Phân tích cầu bạch thủ {nm}</h2>" + card(
         f"<p><b>Đối chiếu kỳ trước:</b> cầu bạch thủ (một chiều) chạy dài nhất ở mỗi biên độ, tính đến ngày {vn(dP)}:</p><ul>" +
         "".join(f"<li>Biên độ {r} kỳ: {nhay(int(xs[0][0]), loN)} <span class='note'>({labP[xs[0][2]]} + {labP[xs[0][3]]})</span></li>" for r, xs in btP) + "</ul>"
         f"<p><b>Cầu bạch thủ đến ngày {vn(dN)}:</b></p><ul>" +
         "".join(f"<li>Biên độ {r} kỳ: <b style='font-size:1.15em'>{xs[0][0]}</b> <span class='note'>({lab[xs[0][2]]} + {lab[xs[0][3]]}, ăn {xs[0][1]}/{W} kỳ)</span></li>" for r, xs in btN) + "</ul>"
         + (f"<p class='note'>Kiểm tra lại {E} kỳ gần nhất: nếu mỗi kỳ lấy cầu bạch thủ chạy dài nhất lúc đó, số ghép được có trong lô kỳ sau <b>{bt}%</b> số lần. Chọn một số bất kỳ: khoảng {rnd(nlo)}.</p>" if bt is not None else ""))
-    summ = {"dN": dN, "pascal": pN[-1], "bt": btN[0][1][0][0] if btN else None, "btr": btN[0][0] if btN else 0,
+    h = "".join(S[k] for k in ("kq", "pascal", "nhay", "xien", "bt"))
+    summ = {"S": S, "dN": dN, "pascal": pN[-1], "bt": btN[0][1][0][0] if btN else None, "btr": btN[0][0] if btN else 0,
             "btP": btP[0][1][0][0] if btP else None, "lo": loN, "pP": pP[-1], "oN": oN, "tN": tN, "lab": lab, "rows": rows}
     return h, summ
+def cau_hist(rows, W=30, K=10):
+    """K kỳ gần nhất: cầu bạch thủ, xiên 2, Pascal ghép từ kỳ trước đó, đối chiếu với kỳ đó."""
+    L = len("".join(rows[-1][1])); rows = [r for r in rows if len("".join(r[1])) == L]; out = []
+    for k in range(1, K + 1):
+        sub = rows[:len(rows) - k]
+        if len(sub) < W + 2: break
+        tgt = rows[len(rows) - k]; lo = lo_of(tgt[1]); o, _, _ = cau_scan(sub, W=W, minrun=2)
+        bt = o[0][4] if o else None; cx = cau_xien(o); xs = cx[0][1] if cx else []
+        ps = pascal(sub[-1][1][0] + sub[-1][1][1])[-1]
+        out.append({"d": tgt[0], "bt": bt, "btn": lo.count(int(bt)) if bt else 0, "xs": xs, "xok": bool(xs) and all(int(x) in lo for x in xs),
+                    "xn": [lo.count(int(x)) for x in xs], "ps": ps, "psn": lo.count(int(ps)) + (lo.count(int(ps[::-1])) if ps[0] != ps[1] else 0)})
+    return out
+def nh_txt(c): return f'<b style="color:var(--red,#c8102e)">{c} nháy</b>' if c else "không về"
+def hist_tbl(H, kind):
+    if not H: return ""
+    if kind == "bt":
+        ok = sum(1 for x in H if x["btn"]); return tbl(["Ngày quay", "Cầu bạch thủ", "Kết quả"], [(vn(x["d"]), f"<b>{x['bt']}</b>", nh_txt(x["btn"])) for x in H]) + f"<p class='note'>{len(H)} kỳ gần nhất: cầu bạch thủ có trong lô {ok}/{len(H)} kỳ.</p>"
+    if kind == "ps":
+        ok = sum(1 for x in H if x["psn"]); return tbl(["Ngày quay", "Cặp Pascal", "Kết quả"], [(vn(x["d"]), f"<b>{x['ps']} – {x['ps'][::-1]}</b>", nh_txt(x["psn"])) for x in H]) + f"<p class='note'>{len(H)} kỳ gần nhất: cặp Pascal có ít nhất một số về {ok}/{len(H)} kỳ.</p>"
+    ok = sum(1 for x in H if x["xok"]); return tbl(["Ngày quay", "Xiên 2", "Kết quả"], [(vn(x["d"]), "<b>" + " – ".join(x["xs"]) + "</b>", " · ".join(f"{a}: {nh_txt(c)}" for a, c in zip(x["xs"], x["xn"])) + (" – <b>đủ xiên</b>" if x["xok"] else "")) for x in H]) + f"<p class='note'>{len(H)} kỳ gần nhất: xiên 2 về đủ cả 2 số {ok}/{len(H)} kỳ.</p>"
+CAU_TYPES = [("cau-bach-thu", "Cầu bạch thủ", "bt", "bt"), ("cau-pascal", "Cầu Pascal", "pascal", "ps"), ("lo-xien", "Lô xiên", "xien", "xi")]
+def cau_nav(up, reg):
+    lb = {"xsmb": "XSMB", "xsmn": "XSMN", "xsmt": "XSMT"}[reg]
+    items = [(f"thong-ke/soi-cau-{reg}/", f"Soi cầu {lb}")] + [(f"thong-ke/{sl}-{reg}/", f"{t} {lb}") for sl, t, _, _ in CAU_TYPES]
+    if reg == "xsmb": items.append(("thong-ke/kiem-chung-du-doan-xsmb/", "Dự đoán XSMB có chính xác?"))
+    items.append(("soi-cau/", "Tất cả soi cầu"))
+    return "<p class='cauln'>" + " · ".join(f'<a href="{up}{u}">{t}</a>' for u, t in items) + "</p>"
 def next_draw(dates):
     wd = {_dt.date.fromisoformat(d).weekday() for d in dates[-8:]}
     d = _dt.date.fromisoformat(dates[-1])
@@ -710,12 +747,22 @@ _lab = _mbs["lab"]; _one, _two = _mbs["oN"], _mbs["tN"]
 _bt1 = cau_backtest(fullmb[-62:], False); _bt2 = cau_backtest(fullmb[-62:], True)
 spage("soi-cau-xsmb", f"Soi cầu XSMB {vn(_nd)} – thống kê cầu lô miền Bắc, cầu Pascal, bạch thủ", f"Thống kê cầu XSMB {vn(_nd)}: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả {vn(_ld)}, kèm đối chiếu kỳ trước và tỉ lệ thực tế. Không quảng cáo.", "Soi cầu XSMB",
       f"Thống kê cầu lô miền Bắc cho kỳ {vn(_nd)}, ghép từ kết quả XSMB ngày {vn(_ld)} và {_W} kỳ gần nhất. Mỗi phần đều có đối chiếu cầu kỳ trước với kết quả thật.",
-      _mbh +
+      cau_nav("../../", "xsmb") + _mbh +
       f"<h2>Bảng cầu lô một chiều đang chạy</h2>" + card(tbl(["Cặp số", "Vị trí ghép", "Đã chạy", f"Ăn trong {_W} kỳ"], cau_rows(_one, _lab, False, _W)) +
            f"<p class='note'>Một cặp số bất kỳ có khoảng 24% khả năng có trong 27 lô của một kỳ." + (f" Kiểm tra lại {_W} kỳ qua: mỗi kỳ lấy 15 cầu một chiều đang chạy dài nhất lúc đó, tỉ lệ cặp số có trong lô kỳ sau là <b>{_bt1}%</b>." if _bt1 is not None else "") + "</p>") +
       f"<h2>Bảng cầu lô cả cặp (tính cả số lộn)</h2>" + card(tbl(["Cặp số", "Vị trí ghép", "Đã chạy", f"Ăn trong {_W} kỳ"], cau_rows(_two, _lab, True, _W)) +
            f"<p class='note'>Tính cả số lộn thì một cặp có khoảng 42% khả năng có trong lô mỗi kỳ." + (f" Kiểm tra lại {_W} kỳ qua: mỗi kỳ lấy 15 cầu cả cặp đang chạy dài nhất lúc đó, tỉ lệ có trong lô kỳ sau là <b>{_bt2}%</b>." if _bt2 is not None else "") + "</p>") +
       "<h2>Cầu là gì?</h2>" + card(CAU_NOTE + CAU_LINKS("../../")))
+_mbH = cau_hist(fullmb[-75:], W=_W)
+CAU_DESC = {"bt": ("cầu bạch thủ một chiều chạy dài nhất ở mỗi biên độ", "Cầu bạch thủ là một con số duy nhất ghép từ 2 vị trí trong bảng kết quả, đang ăn liên tiếp nhiều kỳ nhất."),
+            "pascal": ("cặp Pascal ghép từ giải Đặc biệt và giải Nhất", "Cầu Pascal ghép các chữ số của giải Đặc biệt và giải Nhất rồi cộng dồn từng cặp chữ số liền nhau cho tới khi còn 2 chữ số."),
+            "xien": ("xiên 2, xiên 3 ghép từ các cầu chạy dài nhất", "Lô xiên là nhóm 2 hoặc 3 số cùng phải có trong lô của một kỳ. Ở đây các số được lấy từ những cầu một chiều đang chạy dài nhất.")}
+for _sl, _t, _k, _hk in CAU_TYPES:
+    page(f"thong-ke/{_sl}-xsmb/", f"{_t} XSMB {vn(_nd)} – thống kê {_t.lower()} miền Bắc", f"{_t} XSMB {vn(_nd)}: {CAU_DESC[_k][0]} từ kết quả {vn(_ld)}, kèm đối chiếu 10 kỳ gần nhất và tỉ lệ thực tế. Không quảng cáo.",
+         [("Thống kê", "thong-ke/"), ("Soi cầu XSMB", "thong-ke/soi-cau-xsmb/"), (f"{_t} XSMB", f"thong-ke/{_sl}-xsmb/")], f"{_t} XSMB",
+         f"<p>{CAU_DESC[_k][1]} Số liệu cho kỳ {vn(_nd)}, ghép từ kết quả XSMB ngày {vn(_ld)}.</p>" + cau_nav("../../", "xsmb") + _mbs["S"][_k] +
+         f"<h2>Đối chiếu {_t.lower()} XSMB 10 kỳ gần nhất</h2>" + card(hist_tbl(_mbH, _hk)) + _mbs["S"]["kq"] +
+         "<h2>Cầu là gì?</h2>" + card(CAU_NOTE + CAU_LINKS("../../")) + '<p class="note">Các bảng trên là thống kê kết quả đã quay, cập nhật mỗi ngày; không phải dự đoán. Mỗi kỳ quay độc lập.</p>')
 # --- Kiểm chứng các cách "dự đoán" XSMB phổ biến bằng dữ liệu đã quay ---
 def _kc():
     R = [(d, nums) for d, nums in fullmb if len(nums) == 27]
@@ -770,7 +817,7 @@ page(f"thong-ke/{_kslug}/", f"Dự đoán XSMB có chính xác không? Kiểm ch
      + "<h2>Câu hỏi thường gặp</h2>" + "".join(f"<h3>{esc(q)}</h3><p>{esc(a)}</p>" for q, a in _kfaq),
      ld=[{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in _kfaq]}])
 # --- XSMN, XSMT: trang soi cầu từng đài + trang tổng theo ngày quay kế tiếp ---
-CAU_ST = {}
+CAU_ST = {}; CAU_REG = {}
 for _reg, _fn, _lb, _nm, _rp in (("xsmn", "xsmn_full.csv", "XSMN", "miền Nam", "xsmn"), ("xsmt", "xsmt_full.csv", "XSMT", "miền Trung", "xsmt")):
     try: _rows = [l.split(",") for l in open(os.path.join(ROOT, _fn)).read().strip().split("\n")[1:]]
     except Exception: continue
@@ -790,14 +837,14 @@ for _reg, _fn, _lb, _nm, _rp in (("xsmn", "xsmn_full.csv", "XSMN", "miền Nam",
         page(f"thong-ke/soi-cau-{st}/", f"Soi cầu {nm} ({ab}) {vn(nd)} – thống kê cầu lô xổ số {nm}",
              f"Thống kê cầu xổ số {nm} ({ab}) kỳ {vn(nd)}: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả {vn(ss['dN'])}, kèm đối chiếu kỳ trước. Không quảng cáo.",
              [("Thống kê", "thong-ke/"), (f"Soi cầu {_lb}", f"thong-ke/soi-cau-{_reg}/"), (f"Soi cầu {nm}", f"thong-ke/soi-cau-{st}/")], f"Soi cầu {nm} ({ab})",
-             f"<p>Thống kê cầu lô xổ số {nm} cho kỳ quay {WDL[_dt.date.fromisoformat(nd).weekday()]} {vn(nd)}, ghép từ kết quả ngày {vn(ss['dN'])} và 20 kỳ gần nhất của đài {nm}.</p>" + hh +
+             cau_nav("../../", _reg) + f"<p>Thống kê cầu lô xổ số {nm} cho kỳ quay {WDL[_dt.date.fromisoformat(nd).weekday()]} {vn(nd)}, ghép từ kết quả ngày {vn(ss['dN'])} và 20 kỳ gần nhất của đài {nm}.</p>" + hh +
              "<h2>Bảng cầu lô một chiều đang chạy</h2>" + card(tbl(["Cặp số", "Vị trí ghép", "Đã chạy", "Ăn trong 20 kỳ"], cau_rows(ss["oN"], ss["lab"], False, 20, 10))) +
              "<h2>Bảng cầu lô cả cặp</h2>" + card(tbl(["Cặp số", "Vị trí ghép", "Đã chạy", "Ăn trong 20 kỳ"], cau_rows(ss["tN"], ss["lab"], True, 20, 10)) + f"<p class='note'>Mỗi kỳ có 18 lô: một cặp bất kỳ có khoảng {rnd(18)} khả năng có trong lô ({rnd(18, True)} nếu tính cả số lộn).</p>") +
              "<h2>Cầu là gì?</h2>" + card(CAU_NOTE.replace("kỳ trước", "kỳ trước của cùng đài").replace("kỳ sau", "kỳ sau của đài đó").replace("trong 30 kỳ", "trong 20 kỳ") + CAU_LINKS("../../")) +
              f"<p><a class='cta' href='../../{_reg}/{st}/'>Kết quả xổ số {nm}</a><a class='cta' href='../soi-cau-{_reg}/'>Soi cầu {_lb} hôm nay</a></p>"
              f"<h2>Soi cầu các đài {_nm} khác</h2><p>{others}</p>"
              '<p class="note">Các bảng trên là thống kê kết quả đã quay, cập nhật mỗi ngày; không phải dự đoán. Mỗi kỳ quay độc lập.</p>')
-    _body = ""
+    _body = cau_nav("../../", _reg)
     for st in _sts:
         if st not in _sum: continue
         ss, nd = _sum[st]; nm = ST[st]
@@ -809,8 +856,48 @@ for _reg, _fn, _lb, _nm, _rp in (("xsmn", "xsmn_full.csv", "XSMN", "miền Nam",
             f"</ul><p><a href='../soi-cau-{st}/'>Xem đầy đủ soi cầu {nm}: Pascal, nhiều nháy, lô xiên, bạch thủ ›</a></p>")
     _body += f"<h2>Soi cầu từng đài {_nm}</h2>" + card("<ul class='ls'>" + "".join(f'<li><a href="../soi-cau-{x}/">Soi cầu {ST[x]}</a></li>' for x in _act if x in _sum) + "</ul>")
     _body += "<h2>Cầu là gì?</h2>" + card(CAU_NOTE.replace("kỳ trước", "kỳ trước của cùng đài").replace("kỳ sau", "kỳ sau của đài đó").replace("trong 30 kỳ", "trong 20 kỳ") + CAU_LINKS("../../"))
+    _H = {st: cau_hist(_by[st][-45:], W=20) for st in _sts if st in _sum}
+    for _sl, _t, _k, _hk in CAU_TYPES:
+        _tb = cau_nav("../../", _reg)
+        for st in _sts:
+            if st not in _sum: continue
+            ss, nd = _sum[st]
+            _tb += ss["S"][_k] + card(f"<h3>Đối chiếu {_t.lower()} {ST[st]} 10 kỳ gần nhất</h3>" + hist_tbl(_H[st], _hk) + f"<p><a href='../soi-cau-{st}/'>Soi cầu {ST[st]} đầy đủ ›</a></p>")
+        _tb += f"<h2>{_t} từng đài {_nm}</h2>" + card("<p>" + " · ".join(f'<a href="../soi-cau-{x}/">{ST[x]}</a>' for x in _act if x in _sum) + "</p>")
+        _tb += "<h2>Cầu là gì?</h2>" + card(CAU_NOTE.replace("kỳ trước", "kỳ trước của cùng đài").replace("kỳ sau", "kỳ sau của đài đó").replace("trong 30 kỳ", "trong 20 kỳ") + CAU_LINKS("../../"))
+        _tb += '<p class="note">Các bảng trên là thống kê kết quả đã quay, cập nhật mỗi ngày; không phải dự đoán. Mỗi kỳ quay độc lập.</p>'
+        _n2 = ", ".join(ST.get(x, x) for x in _sts)
+        page(f"thong-ke/{_sl}-{_reg}/", f"{_t} {_lb} {vn(_nxt.isoformat())} – thống kê {_t.lower()} {_nm}", f"{_t} {_lb} {vn(_nxt.isoformat())} của {_n2}: {CAU_DESC[_k][0]}, kèm đối chiếu 10 kỳ gần nhất của từng đài. Không quảng cáo.",
+             [("Thống kê", "thong-ke/"), (f"Soi cầu {_lb}", f"thong-ke/soi-cau-{_reg}/"), (f"{_t} {_lb}", f"thong-ke/{_sl}-{_reg}/")], f"{_t} {_lb}",
+             f"<p>{CAU_DESC[_k][1]} Các đài {_nm} quay ngày {vn(_nxt.isoformat())}: {_n2}.</p>" + _tb)
+    CAU_REG[_reg] = (_sts, _sum, _act, _nxt.isoformat())
     spage(f"soi-cau-{_reg}", f"Soi cầu {_lb} {vn(_nxt.isoformat())} – thống kê cầu lô {_nm}, cầu Pascal, bạch thủ", f"Thống kê cầu {_lb} {vn(_nxt.isoformat())}: cầu Pascal, cầu bạch thủ, cầu cả cặp của {', '.join(ST.get(x, x) for x in _sts)}, kèm đối chiếu kỳ trước. Không quảng cáo.", f"Soi cầu {_lb}",
           f"Thống kê cầu lô các đài {_nm} quay ngày {vn(_nxt.isoformat())}: {', '.join(ST.get(x, x) for x in _sts)}. Bấm tên đài để xem đầy đủ phân tích.", _body)
+
+# --- Trang tổng cụm soi cầu ---
+def _soi_hub():
+    up = "../"; RL = {"xsmb": "XSMB", "xsmn": "XSMN", "xsmt": "XSMT"}
+    grid = "".join(f"<h3>{RL[r]}</h3><p class='cauln'>" + " · ".join([f'<a href="{up}thong-ke/soi-cau-{r}/">Soi cầu {RL[r]}</a>'] + [f'<a href="{up}thong-ke/{sl}-{r}/">{t} {RL[r]}</a>' for sl, t, _, _ in CAU_TYPES]) + "</p>" for r in RL)
+    today = f"<h3>XSMB kỳ {vn(_nd)}</h3><ul><li>Cầu Pascal: <b>{_mbs['pascal']} – {_mbs['pascal'][::-1]}</b></li>" + (f"<li>Cầu bạch thủ chạy dài nhất ({_mbs['btr']} kỳ): <b>{_mbs['bt']}</b></li>" if _mbs['bt'] else "") + f"</ul><p><a href='{up}thong-ke/soi-cau-xsmb/'>Soi cầu XSMB đầy đủ ›</a></p>"
+    for r in ("xsmn", "xsmt"):
+        if r not in CAU_REG: continue
+        sts, sm, act, nd = CAU_REG[r]
+        today += f"<h3>{RL[r]} kỳ {vn(nd)}</h3><ul>" + "".join(f"<li><a href='{up}thong-ke/soi-cau-{st}/'>{ST[st]}</a>: Pascal <b>{sm[st][0]['pascal']}</b>" + (f", bạch thủ <b>{sm[st][0]['bt']}</b>" if sm[st][0]['bt'] else "") + "</li>" for st in sts if st in sm) + "</ul>"
+    byst = "".join(f"<h3>Soi cầu các đài {REG[r][1]}</h3><ul class='ls'>" + "".join(f'<li><a href="{up}thong-ke/soi-cau-{x}/">Soi cầu {ST[x]}</a></li>' for x in CAU_REG[r][2] if x in CAU_REG[r][1]) + "</ul>" for r in ("xsmn", "xsmt") if r in CAU_REG)
+    faq = [("Soi cầu là gì?", "Soi cầu là cách lấy các chữ số ở những vị trí cố định trong bảng kết quả kỳ trước để ghép thành cặp số, rồi theo dõi cặp đó có xuất hiện trong lô kỳ sau không."),
+           ("Soi cầu có trúng không?", "Các trang trên đều có phần đối chiếu với kết quả thật. Tính trên nhiều kỳ, tỉ lệ trúng của cầu ngang mức chọn ngẫu nhiên, vì mỗi kỳ quay độc lập."),
+           ("Số liệu cập nhật khi nào?", "Mỗi ngày sau khi có kết quả: XSMN sau 16:35, XSMT sau 17:35, XSMB sau 18:35.")]
+    body = ("<p>Tổng hợp các trang thống kê cầu xổ số trên XS Lab: soi cầu XSMB, XSMN, XSMT, soi cầu từng đài, cầu bạch thủ, cầu Pascal và lô xiên. Mỗi trang ghép cầu từ kết quả mới nhất và đối chiếu cầu của kỳ trước với kết quả thật.</p>"
+            + "<h2>Cầu hôm nay</h2>" + card(today)
+            + "<h2>Soi cầu theo miền và loại cầu</h2>" + card(grid)
+            + "<h2>Soi cầu từng đài</h2>" + card(byst)
+            + "<h2>Kiểm chứng</h2>" + card(f"<p><a href='{up}thong-ke/kiem-chung-du-doan-xsmb/'>Dự đoán XSMB có chính xác không?</a> Kiểm tra các cách chọn số phổ biến (Pascal, lô gan, lô về nhiều, bắt cầu) trên toàn bộ kỳ quay từ 2005.</p>")
+            + "<h2>Câu hỏi thường gặp</h2>" + "".join(f"<h3>{esc(q)}</h3><p>{esc(a)}</p>" for q, a in faq)
+            + '<p class="note">Các trang soi cầu là thống kê kết quả đã quay, không phải dự đoán. Mỗi kỳ quay độc lập.</p>')
+    page("soi-cau/", f"Soi cầu XSMB, XSMN, XSMT hôm nay {vn(_nd)} – thống kê cầu lô 3 miền", f"Soi cầu 3 miền {vn(_nd)}: cầu XSMB, XSMN, XSMT, soi cầu từng đài, cầu bạch thủ, cầu Pascal, lô xiên, kèm đối chiếu kết quả thật. Không quảng cáo.",
+         [("Soi cầu", "soi-cau/")], "Soi cầu XSMB, XSMN, XSMT", body,
+         ld=[{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]}])
+_soi_hub()
 
 hub = "<p>Các bảng thống kê kết quả XSMB, XSMN, XSMT được tạo lại mỗi ngày từ dữ liệu đã quay.</p>" + "".join(f"<h2>{REG[r][0]}</h2><ul class='ls'>" + "".join(f'<li><a href="../{s}/">{h}</a></li>' for s, h in STATP if s.endswith(r)) + "</ul>" for r in REG)
 page("thong-ke/bang-thong-ke/", "Bảng thống kê xổ số XSMB, XSMN, XSMT – lô gan, 3 càng, giải đặc biệt", "Tổng hợp các bảng thống kê XSMB, XSMN, XSMT: lô gan, tần suất lô tô, đầu đuôi, giải đặc biệt, giải nhất, giải tám, 3 càng, 4 càng. Không quảng cáo.", [("Thống kê", "thong-ke/"), ("Bảng thống kê", "thong-ke/bang-thong-ke/")], "Bảng thống kê xổ số", hub)
@@ -1246,7 +1333,7 @@ for path, typ, title, desc, crumb, h1, body in INFO_PAGES:
     page(path, title, desc, [(crumb, path)], h1, body, ld=[ORG, webpage_ld(typ, path, h1)])
 
 spa = [x.strip() for x in open(os.path.join(ROOT, "tools", "spa_pages.txt")).read().split() if x.strip()]
-core = [BASE] + [BASE + s + "/" for s in spa] + [BASE + x[0] for x in INFO_PAGES] + [BASE + "so/"] + [BASE + f"mo-phong/quay-thu-{r}/" for r in REG]
+core = [BASE] + [BASE + s + "/" for s in spa] + [BASE + x[0] for x in INFO_PAGES] + [BASE + "so/", BASE + "soi-cau/"] + [BASE + f"mo-phong/quay-thu-{r}/" for r in REG]
 for reg in list(REG) + ["thong-ke", "so"]:
     for x in sorted(os.listdir(os.path.join(ROOT, reg))):
         if re.match(r"\d{2}-\d{2}-\d{4}$", x) or x.startswith("thang-"): continue
