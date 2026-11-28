@@ -2,7 +2,7 @@
 <html lang="vi">
 <head><!--seo-default:{&quot;title&quot;: &quot;XSMB hôm qua – Kết quả xổ số miền Bắc hôm qua, dò vé&quot;, &quot;desc&quot;: &quot;XSMB hôm qua: kết quả xổ số miền Bắc kỳ trước đủ giải và lô tô, dò lại vé đã mua hôm qua, không quảng cáo. Thông tin chỉ mang tính chất tham khảo.&quot;}-->
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-src 'self'; manifest-src 'self'; worker-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://i.ytimg.com https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-src 'self' https://www.youtube-nocookie.com; manifest-src 'self'; worker-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script>window.__xe=[];addEventListener("error",function(e){__xe.push((e.message||"lỗi")+" @"+(e.lineno||"")+":"+(e.colno||""))});addEventListener("unhandledrejection",function(e){__xe.push("promise: "+(e.reason&&e.reason.message||e.reason))});</script>
 <meta name="msvalidate.01" content="31FBDEBF16D954096E445E5322EEE48D">
@@ -235,6 +235,13 @@ body.home3 #h3-tk{order:-8}body.home3 .qtools{display:none!important}.h3st{scrol
 .cptoast button{white-space:nowrap}
 .ticket .lb,.mnb td:first-child,.mnb th:first-child{color:light-dark(#46434e,#d2ced9)!important}
 .cal span.d{opacity:1;color:light-dark(#6b6872,#a9a5b1);font-weight:400}
+
+.ytbox{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;margin-top:10px}
+.ytbox iframe,.ytf{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ytf{padding:0;cursor:pointer;background:#000}.ytf img{width:100%;height:100%;object-fit:cover;display:block}
+.ytp{position:absolute;left:50%;top:50%;width:72px;height:50px;margin:-25px 0 0 -36px;border-radius:14px;background:#e00;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.ytp::after{content:"";position:absolute;left:29px;top:15px;border-style:solid;border-width:10px 0 10px 17px;border-color:transparent transparent transparent #fff}
+.ytf:hover .ytp{background:#f00}
 
 .regsw{display:inline-flex;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
 .regsw button{border:0;background:none;min-height:38px;padding:0 16px;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;color:var(--mute)}
@@ -532,6 +539,7 @@ html:root{--side:light-dark(#ffffff,#16151b);--sideink:light-dark(#17161c,#e9e7e
      <div class="lvprog"><i id="lvProg" style="width:0"></i></div>
      <div class="acts" style="margin-top:12px"><button class="copy" id="lvRefresh">Làm mới</button><span class="sub" id="lvTime" style="align-self:center;margin:0"></span></div>
     </div>
+    <div class="card c12" id="lvYtCard" hidden><h2>Xem trực tiếp trên YouTube</h2><p class="sub" id="lvYtS"></p><div class="ytbox" id="lvYt"></div></div>
     <div class="card c12"><h2 id="lvBT">Bảng kết quả</h2><p class="sub" id="lvBS"></p><div class="seg dgsw" role="group" aria-label="Cách hiển thị số"><button type="button" data-dg="0" aria-pressed="true">Đầy đủ</button><button type="button" data-dg="3" aria-pressed="false">3 số cuối</button><button type="button" data-dg="2" aria-pressed="false">2 số cuối</button></div><div id="lvBoard"></div><div class="lvrk" id="lvRk"></div></div>
     <div class="card c12"><h2 id="lvInsT">Thống kê nổi bật của kỳ đang quay</h2><p class="sub" id="lvInsS">So các số vừa về với dữ liệu quá khứ đến hết kỳ trước của từng đài. Cập nhật theo từng giải.</p><div id="lvIns"></div></div>
     <div class="card c12"><h2>Lô tô đang về</h2><p class="sub">2 số cuối của các giải đã ra, xếp theo đầu. Cập nhật cùng bảng kết quả.</p><div id="lvLoto"></div></div>
@@ -2113,7 +2121,17 @@ async function lvTick(){
  if(LV.failed&&!all.some(Boolean))return;
  if(needInit)LV.timer=setTimeout(lvTick,1200);
  else if(phase==='live'&&!complete)LV.timer=setTimeout(lvTick,5000);}
-function lvStart(reg){lvStop();if(LV.reg!==reg)LV.seen={};LV.reg=reg;LV.rr=0;document.querySelectorAll('#lvSched button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.r===reg));lvRender();lvTick();}
+/* nhúng buổi live YouTube của kênh XS Lab (ID lấy từ yt-live.json, cập nhật 15 phút một lần) — chỉ tải video khi bấm */
+const YT={j:null,at:0,cur:''};
+async function lvYt(){const card=$('lvYtCard');if(!card)return;const n=nowVN();
+ if(!YT.j||Date.now()-YT.at>300000){try{const r=await fetch(XS_ROOT+'yt-live.json?t='+Math.floor(Date.now()/60000),{cache:'no-store'});YT.j=r.ok?await r.json():null;}catch(e){YT.j=null;}YT.at=Date.now();}
+ const j=YT.j,reg=LV.reg,e=j&&j.date===n.date?(j[reg]||j.tong):null;
+ if(!e||!/^[\w-]{11}$/.test(e.id||'')){card.hidden=true;YT.cur='';return;}
+ card.hidden=false;if(YT.cur===e.id)return;YT.cur=e.id;
+ $('lvYtS').textContent=(j[reg]?'Buổi phát '+RLAB[reg]+' hôm nay':'Phiên tổng 3 miền hôm nay')+' trên kênh YouTube XS Lab, có giọng đọc từng giải.';
+ const box=$('lvYt');box.innerHTML=`<button type="button" class="ytf" aria-label="Phát video trực tiếp trên YouTube"><img src="https://i.ytimg.com/vi/${e.id}/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"><span class="ytp" aria-hidden="true"></span></button>`;
+ box.querySelector('button').onclick=()=>{box.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${e.id}?autoplay=1&rel=0" title="Trực tiếp xổ số trên YouTube" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;};}
+function lvStart(reg){lvStop();setTimeout(lvYt,0);if(LV.reg!==reg)LV.seen={};LV.reg=reg;LV.rr=0;document.querySelectorAll('#lvSched button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.r===reg));lvRender();lvTick();}
 function lvSchedTick(){if(curView()!=='truc-tiep'){clearInterval(LV.st);LV.st=null;return;}const n=nowVN(),[h,m,sx]=n.time.split(':').map(Number),now=h*3600+m*60+sx;
  document.querySelectorAll('#lvSched button[data-r]').forEach(b=>{const r=b.dataset.r,[a]=LVWIN[r],p=lvPhase(r,n),sts=lvStations(r,n.date),left=a*60-now,sp=b.querySelector('span');if(!sp)return;
   const hm=`${pad(Math.floor(a/60))}:${pad(a%60)}`,cnt=sts.length?sts.length+(r==='mb'?' kỳ':' đài'):'nghỉ';let tail;
