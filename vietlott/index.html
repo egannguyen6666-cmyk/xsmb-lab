@@ -2176,7 +2176,8 @@ const LVW={mb:[['soi-cau','Soi cầu XSMB'],['kiem-chung-du-doan','Dự đoán X
 function lvWait(reg,phase){const c=$('lvWait');if(!c)return;if(phase==='live'){c.hidden=true;return;}
  const sl=reg==='mb'?'xsmb':reg==='mn'?'xsmn':'xsmt',U=RLAB[reg],L=(LVW[reg]||LVW.mn).map(([k,t])=>[XS_ROOT+'thong-ke/'+k+'-'+sl+'/',reg==='mb'?t:t+' '+U]);
  L.push([XS_ROOT+'thong-ke-dan-'+sl+'/','Thống kê dàn '+U],[XS_ROOT+sl+'-30-ngay/',U+' 30 ngày']);
- if(c.dataset.r!==reg){c.dataset.r=reg;$('lvWR').textContent=RNAME[reg];$('lvWL').innerHTML=L.map(([h,t])=>`<li><a href="${h}">${t}</a></li>`).join('');}
+ const dt=nowVN().date;if(reg!=='mb')L.splice(1,0,...lvStations(reg,dt).map(x=>[XS_ROOT+'thong-ke/soi-cau-'+x+'/','Soi cầu '+ST[x]]));
+ if(c.dataset.r!==reg+dt){c.dataset.r=reg+dt;$('lvWR').textContent=RNAME[reg];$('lvWL').innerHTML=L.map(([h,t])=>`<li><a href="${h}">${t}</a></li>`).join('');}
  c.hidden=false;}
 function lvRender(){
  const n=nowVN(),reg=LV.reg,sts=lvStations(reg,n.date),phase=lvPhase(reg,n),G=reg==='mb'?LV_MB:LV_MN;

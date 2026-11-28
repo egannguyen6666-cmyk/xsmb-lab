@@ -439,22 +439,232 @@
 "desc": "Thống kê số gánh XSMB đến 27/11/2026: giải đặc biệt có 3 số cuối dạng gánh (121, 353…), tần suất, số kỳ chưa về và số gánh ở mọi giải. Không quảng cáo."
 },
 {
+"path": "thong-ke/soi-cau-an-giang/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu An Giang (XSAG) 03/12/2026 – thống kê cầu lô xổ số An Giang",
+"desc": "Thống kê cầu xổ số An Giang (XSAG) kỳ 03/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 26/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-bac-lieu/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Bạc Liêu (XSBL) 01/12/2026 – thống kê cầu lô xổ số Bạc Liêu",
+"desc": "Thống kê cầu xổ số Bạc Liêu (XSBL) kỳ 01/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 24/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-ben-tre/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Bến Tre (XSBT) 01/12/2026 – thống kê cầu lô xổ số Bến Tre",
+"desc": "Thống kê cầu xổ số Bến Tre (XSBT) kỳ 01/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 24/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-binh-dinh/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Bình Định (XSBDI) 03/12/2026 – thống kê cầu lô xổ số Bình Định",
+"desc": "Thống kê cầu xổ số Bình Định (XSBDI) kỳ 03/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 26/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-binh-duong/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Bình Dương (XSBD) 04/12/2026 – thống kê cầu lô xổ số Bình Dương",
+"desc": "Thống kê cầu xổ số Bình Dương (XSBD) kỳ 04/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 27/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-binh-phuoc/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Bình Phước (XSBP) 28/11/2026 – thống kê cầu lô xổ số Bình Phước",
+"desc": "Thống kê cầu xổ số Bình Phước (XSBP) kỳ 28/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 21/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-binh-thuan/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Bình Thuận (XSBTH) 03/12/2026 – thống kê cầu lô xổ số Bình Thuận",
+"desc": "Thống kê cầu xổ số Bình Thuận (XSBTH) kỳ 03/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 26/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-ca-mau/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Cà Mau (XSCM) 30/11/2026 – thống kê cầu lô xổ số Cà Mau",
+"desc": "Thống kê cầu xổ số Cà Mau (XSCM) kỳ 30/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 23/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-can-tho/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Cần Thơ (XSCT) 02/12/2026 – thống kê cầu lô xổ số Cần Thơ",
+"desc": "Thống kê cầu xổ số Cần Thơ (XSCT) kỳ 02/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 25/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-da-lat/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Đà Lạt (XSDL) 29/11/2026 – thống kê cầu lô xổ số Đà Lạt",
+"desc": "Thống kê cầu xổ số Đà Lạt (XSDL) kỳ 29/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 22/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-da-nang/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Đà Nẵng (XSDNG) 28/11/2026 – thống kê cầu lô xổ số Đà Nẵng",
+"desc": "Thống kê cầu xổ số Đà Nẵng (XSDNG) kỳ 28/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 25/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-dak-lak/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Đắk Lắk (XSDLK) 01/12/2026 – thống kê cầu lô xổ số Đắk Lắk",
+"desc": "Thống kê cầu xổ số Đắk Lắk (XSDLK) kỳ 01/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 24/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-dak-nong/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Đắk Nông (XSDNO) 28/11/2026 – thống kê cầu lô xổ số Đắk Nông",
+"desc": "Thống kê cầu xổ số Đắk Nông (XSDNO) kỳ 28/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 21/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-dong-nai/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Đồng Nai (XSDN) 02/12/2026 – thống kê cầu lô xổ số Đồng Nai",
+"desc": "Thống kê cầu xổ số Đồng Nai (XSDN) kỳ 02/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 25/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-dong-thap/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Đồng Tháp (XSDT) 30/11/2026 – thống kê cầu lô xổ số Đồng Tháp",
+"desc": "Thống kê cầu xổ số Đồng Tháp (XSDT) kỳ 30/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 23/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-gia-lai/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Gia Lai (XSGL) 04/12/2026 – thống kê cầu lô xổ số Gia Lai",
+"desc": "Thống kê cầu xổ số Gia Lai (XSGL) kỳ 04/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 27/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-hau-giang/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Hậu Giang (XSHG) 28/11/2026 – thống kê cầu lô xổ số Hậu Giang",
+"desc": "Thống kê cầu xổ số Hậu Giang (XSHG) kỳ 28/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 21/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-khanh-hoa/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Khánh Hòa (XSKH) 29/11/2026 – thống kê cầu lô xổ số Khánh Hòa",
+"desc": "Thống kê cầu xổ số Khánh Hòa (XSKH) kỳ 29/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 25/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-kien-giang/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Kiên Giang (XSKG) 29/11/2026 – thống kê cầu lô xổ số Kiên Giang",
+"desc": "Thống kê cầu xổ số Kiên Giang (XSKG) kỳ 29/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 22/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-kon-tum/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Kon Tum (XSKT) 29/11/2026 – thống kê cầu lô xổ số Kon Tum",
+"desc": "Thống kê cầu xổ số Kon Tum (XSKT) kỳ 29/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 22/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-long-an/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Long An (XSLA) 28/11/2026 – thống kê cầu lô xổ số Long An",
+"desc": "Thống kê cầu xổ số Long An (XSLA) kỳ 28/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 21/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-ninh-thuan/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Ninh Thuận (XSNT) 04/12/2026 – thống kê cầu lô xổ số Ninh Thuận",
+"desc": "Thống kê cầu xổ số Ninh Thuận (XSNT) kỳ 04/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 27/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-phu-yen/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Phú Yên (XSPY) 30/11/2026 – thống kê cầu lô xổ số Phú Yên",
+"desc": "Thống kê cầu xổ số Phú Yên (XSPY) kỳ 30/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 23/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-quang-binh/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Quảng Bình (XSQB) 03/12/2026 – thống kê cầu lô xổ số Quảng Bình",
+"desc": "Thống kê cầu xổ số Quảng Bình (XSQB) kỳ 03/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 26/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-quang-nam/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Quảng Nam (XSQNM) 01/12/2026 – thống kê cầu lô xổ số Quảng Nam",
+"desc": "Thống kê cầu xổ số Quảng Nam (XSQNM) kỳ 01/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 24/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-quang-ngai/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Quảng Ngãi (XSQNG) 28/11/2026 – thống kê cầu lô xổ số Quảng Ngãi",
+"desc": "Thống kê cầu xổ số Quảng Ngãi (XSQNG) kỳ 28/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 21/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-quang-tri/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Quảng Trị (XSQT) 03/12/2026 – thống kê cầu lô xổ số Quảng Trị",
+"desc": "Thống kê cầu xổ số Quảng Trị (XSQT) kỳ 03/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 26/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-soc-trang/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Sóc Trăng (XSST) 02/12/2026 – thống kê cầu lô xổ số Sóc Trăng",
+"desc": "Thống kê cầu xổ số Sóc Trăng (XSST) kỳ 02/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 25/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-tay-ninh/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Tây Ninh (XSTN) 03/12/2026 – thống kê cầu lô xổ số Tây Ninh",
+"desc": "Thống kê cầu xổ số Tây Ninh (XSTN) kỳ 03/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 26/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-thua-thien-hue/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Thừa Thiên Huế (XSTTH) 29/11/2026 – thống kê cầu lô xổ số Thừa Thiên Huế",
+"desc": "Thống kê cầu xổ số Thừa Thiên Huế (XSTTH) kỳ 29/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 23/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-tien-giang/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Tiền Giang (XSTG) 29/11/2026 – thống kê cầu lô xổ số Tiền Giang",
+"desc": "Thống kê cầu xổ số Tiền Giang (XSTG) kỳ 29/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 22/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-tp-hcm/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu TP.HCM (XSHCM) 28/11/2026 – thống kê cầu lô xổ số TP.HCM",
+"desc": "Thống kê cầu xổ số TP.HCM (XSHCM) kỳ 28/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 23/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-tra-vinh/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Trà Vinh (XSTV) 04/12/2026 – thống kê cầu lô xổ số Trà Vinh",
+"desc": "Thống kê cầu xổ số Trà Vinh (XSTV) kỳ 04/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 27/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-vinh-long/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Vĩnh Long (XSVL) 04/12/2026 – thống kê cầu lô xổ số Vĩnh Long",
+"desc": "Thống kê cầu xổ số Vĩnh Long (XSVL) kỳ 04/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 27/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
+"path": "thong-ke/soi-cau-vung-tau/",
+"loai": "Trang thống kê, thông tin",
+"title": "Soi cầu Vũng Tàu (XSVT) 01/12/2026 – thống kê cầu lô xổ số Vũng Tàu",
+"desc": "Thống kê cầu xổ số Vũng Tàu (XSVT) kỳ 01/12/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 24/11/2026, kèm đối chiếu kỳ trước. Không quảng cáo."
+},
+{
 "path": "thong-ke/soi-cau-xsmb/",
 "loai": "Trang thống kê, thông tin",
-"title": "Soi cầu XSMB – thống kê cầu lô miền Bắc 28/11/2026",
-"desc": "Thống kê cầu XSMB 28/11/2026: cầu lô đang chạy dài nhất, cầu cả cặp, cầu bạch thủ, cầu Pascal từ kết quả 27/11/2026, kèm tỉ lệ thực tế trong 30 kỳ. Không quảng cáo."
+"title": "Soi cầu XSMB 28/11/2026 – thống kê cầu lô miền Bắc, cầu Pascal, bạch thủ",
+"desc": "Thống kê cầu XSMB 28/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ ghép từ kết quả 27/11/2026, kèm đối chiếu kỳ trước và tỉ lệ thực tế. Không quảng cáo."
 },
 {
 "path": "thong-ke/soi-cau-xsmn/",
 "loai": "Trang thống kê, thông tin",
-"title": "Soi cầu XSMN – thống kê cầu lô miền Nam 28/11/2026",
-"desc": "Thống kê cầu XSMN 28/11/2026: cầu lô đang chạy của Bình Phước, Hậu Giang, Long An, TP.HCM, kèm tỉ lệ thực tế. Không quảng cáo."
+"title": "Soi cầu XSMN 28/11/2026 – thống kê cầu lô miền Nam, cầu Pascal, bạch thủ",
+"desc": "Thống kê cầu XSMN 28/11/2026: cầu Pascal, cầu bạch thủ, cầu cả cặp của Bình Phước, Hậu Giang, Long An, TP.HCM, kèm đối chiếu kỳ trước. Không quảng cáo."
 },
 {
 "path": "thong-ke/soi-cau-xsmt/",
 "loai": "Trang thống kê, thông tin",
-"title": "Soi cầu XSMT – thống kê cầu lô miền Trung 28/11/2026",
-"desc": "Thống kê cầu XSMT 28/11/2026: cầu lô đang chạy của Quảng Ngãi, Đà Nẵng, Đắk Nông, kèm tỉ lệ thực tế. Không quảng cáo."
+"title": "Soi cầu XSMT 28/11/2026 – thống kê cầu lô miền Trung, cầu Pascal, bạch thủ",
+"desc": "Thống kê cầu XSMT 28/11/2026: cầu Pascal, cầu bạch thủ, cầu cả cặp của Quảng Ngãi, Đà Nẵng, Đắk Nông, kèm đối chiếu kỳ trước. Không quảng cáo."
 },
 {
 "path": "thong-ke/tan-suat-lo-to-xsmb/",
