@@ -340,19 +340,19 @@
 "path": "so/",
 "loai": "Trang thống kê, thông tin",
 "title": "Tra cứu thống kê số 00–99 XSMB, XSMN, XSMT",
-"desc": "Tra cứu thống kê từng số từ 00 đến 99: số lần về, số kỳ chưa về, kỷ lục gan ở XSMB, XSMN, XSMT, cập nhật đến 27/11/2026."
+"desc": "Tra cứu thống kê từng số từ 00 đến 99: số lần về, số kỳ chưa về, kỷ lục gan ở XSMB, XSMN, XSMT, cập nhật đến 28/11/2026."
 },
 {
 "path": "soi-cau/",
 "loai": "Trang thống kê, thông tin",
 "title": "Soi cầu XSMB, XSMN, XSMT – thống kê cầu lô 3 miền, đối chiếu kết quả",
-"desc": "Thống kê soi cầu 3 miền kỳ 27/11/2026: cầu XSMB, XSMN, XSMT, từng đài, cầu bạch thủ, Pascal, lô xiên đối chiếu với kết quả thật. Chỉ số liệu đã quay. Không quảng cáo."
+"desc": "Thống kê soi cầu 3 miền kỳ 28/11/2026: cầu XSMB, XSMN, XSMT, từng đài, cầu bạch thủ, Pascal, lô xiên đối chiếu với kết quả thật. Chỉ số liệu đã quay. Không quảng cáo."
 },
 {
 "path": "thong-ke/3-cang-xsmb/",
 "loai": "Trang thống kê, thông tin",
 "title": "Thống kê 3 càng XSMB – 3 càng giải đặc biệt",
-"desc": "Thống kê 3 càng XSMB đến 27/11/2026: 3 càng giải đặc biệt 30 kỳ, 3 càng về nhiều nhất, lâu chưa về và 3 càng ở mọi giải. Không quảng cáo."
+"desc": "Thống kê 3 càng XSMB đến 28/11/2026: 3 càng giải đặc biệt 30 kỳ, 3 càng về nhiều nhất, lâu chưa về và 3 càng ở mọi giải. Không quảng cáo."
 },
 {
 "path": "thong-ke/3-cang-xsmn/",
@@ -369,8 +369,8 @@
 {
 "path": "thong-ke/30-ky-xsmb/",
 "loai": "Trang thống kê, thông tin",
-"title": "Thống kê XSMB 30 kỳ gần nhất – tính đến 27/11/2026",
-"desc": "Thống kê XSMB 30 kỳ gần nhất tính đến 27/11/2026: giải Đặc biệt và 2 số cuối các giải, lô về nhiều, lô gan, số chưa về, đầu đuôi. Chỉ là thống kê, không dự đoán."
+"title": "Thống kê XSMB 30 kỳ gần nhất – tính đến 28/11/2026",
+"desc": "Thống kê XSMB 30 kỳ gần nhất tính đến 28/11/2026: giải Đặc biệt và 2 số cuối các giải, lô về nhiều, lô gan, số chưa về, đầu đuôi. Chỉ là thống kê, không dự đoán."
 },
 {
 "path": "thong-ke/30-ky-xsmn/",
@@ -388,7 +388,7 @@
 "path": "thong-ke/4-cang-xsmb/",
 "loai": "Trang thống kê, thông tin",
 "title": "Thống kê 4 càng XSMB – 4 càng giải đặc biệt",
-"desc": "Thống kê 4 càng XSMB đến 27/11/2026: 4 càng giải đặc biệt 30 kỳ, 4 càng về nhiều nhất, lâu chưa về và 4 càng ở mọi giải. Không quảng cáo."
+"desc": "Thống kê 4 càng XSMB đến 28/11/2026: 4 càng giải đặc biệt 30 kỳ, 4 càng về nhiều nhất, lâu chưa về và 4 càng ở mọi giải. Không quảng cáo."
 },
 {
 "path": "thong-ke/bang-thong-ke/",
@@ -399,8 +399,8 @@
 {
 "path": "thong-ke/cau-bach-thu-xsmb/",
 "loai": "Trang thống kê, thông tin",
-"title": "Cầu bạch thủ XSMB 27/11/2026 – thống kê cầu bạch thủ miền Bắc",
-"desc": "Cầu bạch thủ XSMB kỳ 27/11/2026: thống kê cầu bạch thủ một chiều chạy dài nhất ở mỗi biên độ, đối chiếu kết quả thật 10 kỳ gần nhất. Chỉ số liệu đã quay. Không quảng cáo."
+"title": "Cầu bạch thủ XSMB 28/11/2026 – thống kê cầu bạch thủ miền Bắc",
+"desc": "Cầu bạch thủ XSMB kỳ 28/11/2026: thống kê cầu bạch thủ một chiều chạy dài nhất ở mỗi biên độ, đối chiếu kết quả thật 10 kỳ gần nhất. Chỉ số liệu đã quay. Không quảng cáo."
 },
 {
 "path": "thong-ke/cau-bach-thu-xsmn/",
@@ -417,8 +417,8 @@
 {
 "path": "thong-ke/cau-pascal-xsmb/",
 "loai": "Trang thống kê, thông tin",
-"title": "Cầu Pascal XSMB 27/11/2026 – thống kê cầu pascal miền Bắc",
-"desc": "Cầu Pascal XSMB kỳ 27/11/2026: thống kê cặp Pascal ghép từ giải Đặc biệt và giải Nhất, đối chiếu kết quả thật 10 kỳ gần nhất. Chỉ số liệu đã quay. Không quảng cáo."
+"title": "Cầu Pascal XSMB 28/11/2026 – thống kê cầu pascal miền Bắc",
+"desc": "Cầu Pascal XSMB kỳ 28/11/2026: thống kê cặp Pascal ghép từ giải Đặc biệt và giải Nhất, đối chiếu kết quả thật 10 kỳ gần nhất. Chỉ số liệu đã quay. Không quảng cáo."
 },
 {
 "path": "thong-ke/cau-pascal-xsmn/",
@@ -436,7 +436,7 @@
 "path": "thong-ke/dau-duoi-xsmb/",
 "loai": "Trang thống kê, thông tin",
 "title": "Thống kê đầu đuôi lô tô XSMB",
-"desc": "Thống kê đầu đuôi lô tô và giải đặc biệt XSMB đến 27/11/2026. Không quảng cáo."
+"desc": "Thống kê đầu đuôi lô tô và giải đặc biệt XSMB đến 28/11/2026. Không quảng cáo."
 },
 {
 "path": "thong-ke/giai-8-xsmn/",
@@ -454,7 +454,7 @@
 "path": "thong-ke/giai-dac-biet-xsmb/",
 "loai": "Trang thống kê, thông tin",
 "title": "Thống kê giải đặc biệt XSMB – bảng đặc biệt tuần",
-"desc": "Bảng giải đặc biệt XSMB theo tuần 12 tuần gần nhất, đầu đuôi và 2 số cuối giải đặc biệt lâu chưa về, đến 27/11/2026."
+"desc": "Bảng giải đặc biệt XSMB theo tuần 12 tuần gần nhất, đầu đuôi và 2 số cuối giải đặc biệt lâu chưa về, đến 28/11/2026."
 },
 {
 "path": "thong-ke/giai-dac-biet-xsmn/",
@@ -472,7 +472,7 @@
 "path": "thong-ke/giai-nhat-xsmb/",
 "loai": "Trang thống kê, thông tin",
 "title": "Thống kê giải nhất XSMB",
-"desc": "Giải nhất XSMB 30 kỳ gần nhất và tần suất 2 số cuối giải nhất 100 kỳ, đến 27/11/2026."
+"desc": "Giải nhất XSMB 30 kỳ gần nhất và tần suất 2 số cuối giải nhất 100 kỳ, đến 28/11/2026."
 },
 {
 "path": "thong-ke/giai-nhat-xsmn/",
@@ -489,26 +489,26 @@
 {
 "path": "thong-ke/kiem-chung-du-doan-xsmb/",
 "loai": "Trang thống kê, thông tin",
-"title": "Dự đoán XSMB có chính xác không? Kiểm chứng 7.614 kỳ quay",
-"desc": "Dự đoán XSMB, soi cầu, lô gan, cầu Pascal có trúng nhiều hơn may rủi không? Kiểm chứng bằng kết quả thật 30, 90, 365 kỳ đến 27/11/2026. Không quảng cáo."
+"title": "Dự đoán XSMB có chính xác không? Kiểm chứng 7.615 kỳ quay",
+"desc": "Dự đoán XSMB, soi cầu, lô gan, cầu Pascal có trúng nhiều hơn may rủi không? Kiểm chứng bằng kết quả thật 30, 90, 365 kỳ đến 28/11/2026. Không quảng cáo."
 },
 {
 "path": "thong-ke/lo-gan-xsmb/",
 "loai": "Trang thống kê, thông tin",
 "title": "Lô gan XSMB – thống kê lô lâu chưa về miền Bắc",
-"desc": "Lô gan XSMB đến 27/11/2026: 30 lô lâu chưa về nhất, kỷ lục gan của từng lô từ 2005. Không quảng cáo."
+"desc": "Lô gan XSMB đến 28/11/2026: 30 lô lâu chưa về nhất, kỷ lục gan của từng lô từ 2005. Không quảng cáo."
 },
 {
 "path": "thong-ke/lo-kep-xsmb/",
 "loai": "Trang thống kê, thông tin",
 "title": "Thống kê lô kép XSMB – kép bằng, kép lệch",
-"desc": "Thống kê lô kép XSMB đến 27/11/2026: số lần về 30, 90 kỳ, số kỳ chưa về và kỷ lục gan của từng lô kép bằng, kép lệch. Không quảng cáo."
+"desc": "Thống kê lô kép XSMB đến 28/11/2026: số lần về 30, 90 kỳ, số kỳ chưa về và kỷ lục gan của từng lô kép bằng, kép lệch. Không quảng cáo."
 },
 {
 "path": "thong-ke/lo-xien-xsmb/",
 "loai": "Trang thống kê, thông tin",
-"title": "Lô xiên XSMB 27/11/2026 – thống kê lô xiên miền Bắc",
-"desc": "Lô xiên XSMB kỳ 27/11/2026: thống kê xiên 2, xiên 3 ghép từ các cầu chạy dài nhất, đối chiếu kết quả thật 10 kỳ gần nhất. Chỉ số liệu đã quay. Không quảng cáo."
+"title": "Lô xiên XSMB 28/11/2026 – thống kê lô xiên miền Bắc",
+"desc": "Lô xiên XSMB kỳ 28/11/2026: thống kê xiên 2, xiên 3 ghép từ các cầu chạy dài nhất, đối chiếu kết quả thật 10 kỳ gần nhất. Chỉ số liệu đã quay. Không quảng cáo."
 },
 {
 "path": "thong-ke/lo-xien-xsmn/",
@@ -526,13 +526,13 @@
 "path": "thong-ke/so-dao-xsmb/",
 "loai": "Trang thống kê, thông tin",
 "title": "Thống kê số đảo XSMB – lô đảo về cùng kỳ",
-"desc": "Thống kê 45 cặp số đảo XSMB (12 – 21, 36 – 63…) đến 27/11/2026: số kỳ cùng về trong 90, 365 kỳ, số kỳ chưa cùng về và kỷ lục. Không quảng cáo."
+"desc": "Thống kê 45 cặp số đảo XSMB (12 – 21, 36 – 63…) đến 28/11/2026: số kỳ cùng về trong 90, 365 kỳ, số kỳ chưa cùng về và kỷ lục. Không quảng cáo."
 },
 {
 "path": "thong-ke/so-ganh-xsmb/",
 "loai": "Trang thống kê, thông tin",
 "title": "Thống kê số gánh XSMB – 3 càng gánh giải đặc biệt",
-"desc": "Thống kê số gánh XSMB đến 27/11/2026: giải đặc biệt có 3 số cuối dạng gánh (121, 353…), tần suất, số kỳ chưa về và số gánh ở mọi giải. Không quảng cáo."
+"desc": "Thống kê số gánh XSMB đến 28/11/2026: giải đặc biệt có 3 số cuối dạng gánh (121, 353…), tần suất, số kỳ chưa về và số gánh ở mọi giải. Không quảng cáo."
 },
 {
 "path": "thong-ke/soi-cau-an-giang/",
@@ -747,8 +747,8 @@
 {
 "path": "thong-ke/soi-cau-xsmb/",
 "loai": "Trang thống kê, thông tin",
-"title": "Soi cầu XSMB 27/11/2026 – thống kê cầu lô miền Bắc, đối chiếu kết quả",
-"desc": "Thống kê cầu XSMB kỳ 27/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ đối chiếu với kết quả thật, tỉ lệ trúng 10–30 kỳ. Chỉ số liệu đã quay. Không quảng cáo."
+"title": "Soi cầu XSMB 28/11/2026 – thống kê cầu lô miền Bắc, đối chiếu kết quả",
+"desc": "Thống kê cầu XSMB kỳ 28/11/2026: cầu Pascal, cầu nhiều nháy, lô xiên, cầu bạch thủ đối chiếu với kết quả thật, tỉ lệ trúng 10–30 kỳ. Chỉ số liệu đã quay. Không quảng cáo."
 },
 {
 "path": "thong-ke/soi-cau-xsmn/",
@@ -766,13 +766,13 @@
 "path": "thong-ke/tan-suat-lo-to-xsmb/",
 "loai": "Trang thống kê, thông tin",
 "title": "Tần suất lô tô XSMB 30, 90 ngày – bảng 00–99",
-"desc": "Tần suất lô tô XSMB 00–99 trong 30 và 90 kỳ gần nhất đến 27/11/2026. Không quảng cáo."
+"desc": "Tần suất lô tô XSMB 00–99 trong 30 và 90 kỳ gần nhất đến 28/11/2026. Không quảng cáo."
 },
 {
 "path": "thong-ke/tong-chan-le-dac-biet-xsmb/",
 "loai": "Trang thống kê, thông tin",
 "title": "Thống kê tổng, chẵn lẻ, to nhỏ giải đặc biệt XSMB",
-"desc": "Thống kê tổng 2 số cuối, chẵn lẻ và to nhỏ của giải đặc biệt XSMB 100 kỳ gần nhất, số kỳ chưa về của từng tổng, đến 27/11/2026. Không quảng cáo."
+"desc": "Thống kê tổng 2 số cuối, chẵn lẻ và to nhỏ của giải đặc biệt XSMB 100 kỳ gần nhất, số kỳ chưa về của từng tổng, đến 28/11/2026. Không quảng cáo."
 },
 {
 "path": "xsmb/chu-nhat/",
